@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const RegistrationForm = () => {
   const [name, setName] = useState("");
@@ -24,17 +25,53 @@ const RegistrationForm = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast({
-      title: "¡Registro exitoso!",
-      description: "Revisa tu bandeja de entrada para acceder a tu clase gratuita.",
-    });
-    
-    setName("");
-    setEmail("");
-    setIsSubmitting(false);
+    try {
+      // Save registration to database
+      const { error: dbError } = await supabase
+        .from("registrations")
+        .insert({ name: name.trim(), email: email.trim().toLowerCase() });
+      
+      if (dbError) {
+        if (dbError.code === "23505") {
+          // Unique constraint violation - email already registered
+          toast({
+            title: "Email ya registrado",
+            description: "Este correo ya está registrado. Revisa tu bandeja de entrada.",
+            variant: "destructive",
+          });
+          setIsSubmitting(false);
+          return;
+        }
+        throw dbError;
+      }
+
+      // Send confirmation email
+      const { error: emailError } = await supabase.functions.invoke("send-confirmation-email", {
+        body: { name: name.trim(), email: email.trim().toLowerCase() },
+      });
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Still show success since registration was saved
+      }
+      
+      toast({
+        title: "¡Registro exitoso!",
+        description: "Revisa tu bandeja de entrada para acceder a tu clase gratuita.",
+      });
+      
+      setName("");
+      setEmail("");
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast({
+        title: "Error",
+        description: "Hubo un problema al registrarte. Por favor intenta de nuevo.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
