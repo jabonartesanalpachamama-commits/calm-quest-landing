@@ -17,11 +17,11 @@ const GuaranteeSection = () => {
           </div>
 
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">
-            Garantía de <span className="text-gradient">Entrega Inmediata</span>
+            Garantía de <span className="text-gradient">Acceso Inmediato</span>
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
-            Al registrarte, recibirás el enlace de acceso <strong className="text-foreground">inmediatamente</strong> en tu bandeja de entrada para que comiences tu camino hacia la <span className="text-primary font-semibold">maestría personal</span> hoy mismo.
+            Al registrarte, obtendrás acceso <strong className="text-foreground">inmediatamente</strong> a tu clase gratuita para que comiences tu camino hacia la <span className="text-primary font-semibold">maestría personal</span> hoy mismo.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-muted-foreground">
