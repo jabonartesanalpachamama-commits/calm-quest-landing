@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ const RegistrationForm = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,13 +57,8 @@ const RegistrationForm = () => {
         // Still show success since registration was saved
       }
       
-      toast({
-        title: "¡Registro exitoso!",
-        description: "Revisa tu bandeja de entrada para acceder a tu clase gratuita.",
-      });
-      
-      setName("");
-      setEmail("");
+      // Navigate to free class page
+      navigate("/clase-gratuita");
     } catch (error) {
       console.error("Registration error:", error);
       toast({
