@@ -35,27 +35,14 @@ const RegistrationForm = () => {
       
       if (dbError) {
         if (dbError.code === "23505") {
-          // Unique constraint violation - email already registered
-          toast({
-            title: "Email ya registrado",
-            description: "Este correo ya está registrado. Revisa tu bandeja de entrada.",
-            variant: "destructive",
-          });
-          setIsSubmitting(false);
+          // Unique constraint violation - email already registered, just redirect
+          navigate("/clase-gratuita");
           return;
         }
         throw dbError;
       }
 
-      // Send confirmation email
-      const { error: emailError } = await supabase.functions.invoke("send-confirmation-email", {
-        body: { name: name.trim(), email: email.trim().toLowerCase() },
-      });
-
-      if (emailError) {
-        console.error("Email error:", emailError);
-        // Still show success since registration was saved
-      }
+      // Registration saved successfully - redirect to free class
       
       // Navigate to free class page
       navigate("/clase-gratuita");
@@ -82,7 +69,7 @@ const RegistrationForm = () => {
           Accede a tu Clase Gratuita
         </h3>
         <p className="text-muted-foreground">
-          Estamos listos para enviarte esta herramienta de transformación <strong className="text-foreground">sin costo alguno</strong>.
+          Obtén acceso inmediato a esta herramienta de transformación <strong className="text-foreground">sin costo alguno</strong>.
         </p>
       </div>
 
