@@ -28,23 +28,18 @@ const RegistrationForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Save registration to database
       const { error: dbError } = await supabase
         .from("registrations")
         .insert({ name: name.trim(), email: email.trim().toLowerCase() });
       
       if (dbError) {
         if (dbError.code === "23505") {
-          // Unique constraint violation - email already registered, just redirect
           navigate("/clase-gratuita");
           return;
         }
         throw dbError;
       }
 
-      // Registration saved successfully - redirect to free class
-      
-      // Navigate to free class page
       navigate("/clase-gratuita");
     } catch (error) {
       console.error("Registration error:", error);
@@ -60,16 +55,14 @@ const RegistrationForm = () => {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3 }}
-      className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 md:p-10 glow-primary"
+      className="bg-card border border-border/60 rounded-2xl p-8 md:p-10"
     >
       <div className="text-center mb-8">
         <h3 className="font-serif text-2xl md:text-3xl font-semibold mb-3">
           Accede a tu Clase Gratuita
         </h3>
         <p className="text-muted-foreground">
-          Obtén acceso inmediato a esta herramienta de transformación <strong className="text-foreground">sin costo alguno</strong>.
+          Obtén acceso inmediato sin costo alguno.
         </p>
       </div>
 
@@ -84,7 +77,7 @@ const RegistrationForm = () => {
             placeholder="Tu nombre completo"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="h-12 bg-background/50 border-border/50 focus:border-primary transition-colors"
+            className="h-12 bg-background border-border focus:border-primary transition-colors"
           />
         </div>
 
@@ -98,14 +91,14 @@ const RegistrationForm = () => {
             placeholder="tu@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-12 bg-background/50 border-border/50 focus:border-primary transition-colors"
+            className="h-12 bg-background border-border focus:border-primary transition-colors"
           />
         </div>
 
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full h-14 text-lg font-semibold bg-primary hover:bg-primary/90 text-primary-foreground glow-primary transition-all duration-300 hover:scale-[1.02]"
+          className="w-full h-14 text-lg font-medium transition-all duration-300"
         >
           {isSubmitting ? (
             <span className="flex items-center gap-2">
@@ -116,13 +109,13 @@ const RegistrationForm = () => {
               Procesando...
             </span>
           ) : (
-            "¡Quiero mi clase gratuita ahora!"
+            "Quiero mi clase gratuita"
           )}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        🔒 Tus datos están seguros. No compartimos tu información.
+        🔒 Tus datos están seguros y protegidos.
       </p>
     </motion.div>
   );
