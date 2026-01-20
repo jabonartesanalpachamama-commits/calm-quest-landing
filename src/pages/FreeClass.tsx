@@ -83,14 +83,6 @@ const FreeClass = () => {
           </div>
         </motion.div>
 
-        <div className="mt-8 text-center">
-          <Link to="/">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Volver al inicio
-            </Button>
-          </Link>
-        </div>
       </motion.div>
     </main>
   );
