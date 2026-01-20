@@ -24,7 +24,7 @@ const FreeClass = () => {
         <div className="relative w-full aspect-video bg-card rounded-2xl overflow-hidden shadow-2xl glow-primary">
           {/* Replace VIDEO_ID with your actual YouTube or Vimeo video ID */}
           <iframe
-            src="https://www.youtube.com/embed/73lQA_Lyz_I"
+            src="https://www.youtube.com/embed/73lQA_Lyz_I?autoplay=1&mute=1"
             title="Clase Gratuita"
             className="absolute inset-0 w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
