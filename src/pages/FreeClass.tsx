@@ -72,9 +72,11 @@ const FreeClass = () => {
           </div>
           
           <div className="text-center">
-            <Button size="lg" className="text-lg px-8 py-6 glow-primary">
-              Quiero el Programa Completo
-            </Button>
+            <a href="https://wa.link/xy0brl" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="text-lg px-8 py-6 glow-primary">
+                Quiero el Programa Completo
+              </Button>
+            </a>
             <p className="text-sm text-muted-foreground mt-4">
               Plazas limitadas • Acceso inmediato
             </p>
