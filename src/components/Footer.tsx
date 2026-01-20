@@ -3,16 +3,16 @@ import RegistrationForm from "./RegistrationForm";
 
 const Footer = () => {
   return (
-    <footer className="py-20 md:py-28 bg-secondary/50">
+    <footer className="py-24 md:py-32 bg-background">
       <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-xl mx-auto"
+          className="max-w-lg mx-auto"
         >
-          <div className="text-center mb-10">
+          <div className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold mb-4">
               Comienza tu <span className="text-gradient">Transformación</span>
             </h2>
@@ -23,7 +23,7 @@ const Footer = () => {
 
           <RegistrationForm />
 
-          <div className="mt-12 pt-8 border-t border-border/50 text-center">
+          <div className="mt-16 pt-8 border-t border-border/40 text-center">
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Kundalini Yoga Masterclass. Todos los derechos reservados.
             </p>
