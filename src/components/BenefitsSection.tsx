@@ -39,7 +39,7 @@ const BenefitsSection = () => {
             Beneficios que <span className="text-gradient">Obtendrás</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Transforma tu bienestar con solo 12 minutos de práctica diaria
+            Transforma tu bienestar con solo 30 minutos de práctica diaria
           </p>
         </motion.div>
 
