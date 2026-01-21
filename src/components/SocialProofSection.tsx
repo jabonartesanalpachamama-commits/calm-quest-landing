@@ -3,7 +3,7 @@ import { Users, Clock, BookOpen } from "lucide-react";
 
 const stats = [
   { icon: Users, value: "10,000+", label: "Profesionales Transformados" },
-  { icon: Clock, value: "12 min", label: "Práctica Diaria" },
+  { icon: Clock, value: "30 min", label: "Práctica Diaria" },
   { icon: BookOpen, value: "Ciencia", label: "Respaldada" },
 ];
 
