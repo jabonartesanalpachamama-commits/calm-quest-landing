@@ -28,6 +28,60 @@ const FreeClass = () => {
           />
         </div>
 
+        {/* Mantras Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-12 bg-card rounded-2xl p-8 md:p-10 border border-border/60"
+        >
+          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-semibold text-primary italic mb-8">
+            Kundalini Yoga<br />
+            Kriya y mantras para Crear Equilibrio
+          </h2>
+
+          <div className="space-y-8">
+            {/* Ong Namo Guru dev namo */}
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border-l-4 border-primary/40 flex items-center justify-center">
+                <span className="text-primary text-xl">💡</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg md:text-xl mb-2">Ong Namo Guru dev namo</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Es el Adi Mantra del Kundalini Yoga, que significa "Me inclino ante la sabiduría divina, me inclino ante el maestro divino interior", conectándote con la sabiduría universal y tu guía espiritual para centrarte y recibir energía en la práctica, uniendo tu yo finito con la conciencia infinita.
+                </p>
+              </div>
+            </div>
+
+            {/* Sat nam */}
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border-l-4 border-primary/40 flex items-center justify-center">
+                <span className="text-primary text-xl">💭</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg md:text-xl mb-2">Sat nam</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  "Yo soy la verdad", "Mi esencia es la verdad", o "La verdad que habita en mi, saluda la verdad que habita en ti"
+                </p>
+              </div>
+            </div>
+
+            {/* AR */}
+            <div className="flex gap-4">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border-l-4 border-primary/40 flex items-center justify-center">
+                <span className="text-primary text-xl">⭐</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg md:text-xl mb-2">AR</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Representa el <span className="font-semibold text-foreground">aspecto creativo infinito de Dios</span>, conectando con la abundancia, la prosperidad y el poder de la creación para manifestar oportunidades, eliminar bloqueos y atraer riqueza, ya sea material o espiritual, mediante la vibración y la contracción del punto del ombligo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Next Steps / CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
