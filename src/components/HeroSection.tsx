@@ -38,7 +38,7 @@ const HeroSection = () => {
             </p>
 
             <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Domina tu enfoque y elimina el estrés con una técnica milenaria de solo 30 minutos respaldada por la ciencia.
+              ¿La incapacidad para gestionar tus emociones está ganando la batalla?
             </p>
 
             {/* Mobile form indicator */}
