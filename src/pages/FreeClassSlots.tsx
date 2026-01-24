@@ -125,7 +125,7 @@ const FreeClassSlots = () => {
                             <div className="bg-primary h-full rounded-full w-[85%] animate-pulse" />
                         </div>
                         <p className="text-xs text-muted-foreground mt-2 text-center">
-                            ¡Casi lleno! <span className="font-semibold">17 personas</span> están viendo esta página
+                            ¡Casi lleno! <span className="font-semibold">17 personas</span> se han unido a la comunidad
                         </p>
                     </div>
 
