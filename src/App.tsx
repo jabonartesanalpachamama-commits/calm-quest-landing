@@ -15,8 +15,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <SalesNotification />
       <BrowserRouter>
+        <SalesNotification />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/clase-gratuita" element={<FreeClass />} />

@@ -1,13 +1,27 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const FreeClass = () => {
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-12">
+    <main className="min-h-screen bg-background flex flex-col items-center px-4 py-8 md:py-12">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex justify-center mb-8 md:mb-12"
+      >
+        <img
+          src={santoshaLogo}
+          alt="SantoSha Logo"
+          className="h-20 md:h-24 w-auto"
+        />
+      </motion.div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
         className="w-full max-w-4xl"
       >
         <div className="text-center mb-10">
@@ -93,11 +107,11 @@ const FreeClass = () => {
             ¿Listo para transformar tu vida?
           </h2>
           <p className="text-muted-foreground text-center mb-10 max-w-2xl mx-auto">
-            Esta clase es solo el comienzo. Descubre el programa completo de Kundalini Yoga 
-            y lleva tu práctica al siguiente nivel con meditaciones guiadas, kriyas poderosos 
+            Esta clase es solo el comienzo. Descubre el programa completo de Kundalini Yoga
+            y lleva tu práctica al siguiente nivel con meditaciones guiadas, kriyas poderosos
             y una comunidad de apoyo.
           </p>
-          
+
           <div className="grid md:grid-cols-3 gap-8 mb-10">
             <div className="text-center">
               <div className="w-14 h-14 border border-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -121,7 +135,7 @@ const FreeClass = () => {
               <p className="text-sm text-muted-foreground">Conecta con otros practicantes</p>
             </div>
           </div>
-          
+
           <div className="text-center">
             <a href="https://wa.link/xy0brl" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="text-lg px-10 py-6">

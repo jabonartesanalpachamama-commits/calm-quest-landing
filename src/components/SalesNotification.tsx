@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, User } from "lucide-react";
 
@@ -22,8 +23,14 @@ const mockSales: SaleNotification[] = [
 ];
 
 const SalesNotification = () => {
+  const location = useLocation();
   const [currentSale, setCurrentSale] = useState<SaleNotification | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  // Don't show on specific pages
+  if (location.pathname === "/clase-gratuita") {
+    return null;
+  }
 
   useEffect(() => {
     const showNotification = () => {
@@ -79,7 +86,7 @@ const SalesNotification = () => {
                 {currentSale.time}
               </p>
             </div>
-            <button 
+            <button
               onClick={() => setIsVisible(false)}
               className="absolute top-2 right-2 text-muted-foreground/40 hover:text-muted-foreground transition-colors"
             >
