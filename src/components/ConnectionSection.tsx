@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import meditationWoman from "@/assets/meditation-woman.jpg";
+import instructor from "@/assets/instructor.png";
 
 const ConnectionSection = () => {
   const scrollToTop = () => {
@@ -73,8 +73,8 @@ const ConnectionSection = () => {
           >
             <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/10">
               <img
-                src={meditationWoman}
-                alt="Mujer meditando en calma"
+                src={instructor}
+                alt="Profesora de Yoga"
                 className="w-full h-auto object-cover aspect-[4/5] md:aspect-[3/4] lg:aspect-auto"
               />
             </div>
