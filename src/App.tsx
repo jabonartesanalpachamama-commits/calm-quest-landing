@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import TrafficSplitter from "./components/TrafficSplitter";
 import FreeClass from "./pages/FreeClass";
 import NotFound from "./pages/NotFound";
 import SalesNotification from "./components/SalesNotification";
@@ -19,7 +20,7 @@ const App = () => (
         <SalesNotification />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/clase-gratuita" element={<FreeClass />} />
+          <Route path="/clase-gratuita" element={<TrafficSplitter />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
