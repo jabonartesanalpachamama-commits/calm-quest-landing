@@ -27,12 +27,10 @@ const SalesNotification = () => {
   const [currentSale, setCurrentSale] = useState<SaleNotification | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Don't show on specific pages
-  if (location.pathname === "/clase-gratuita") {
-    return null;
-  }
-
   useEffect(() => {
+    // Don't start the notification logic if we're on the free class page
+    if (location.pathname === "/clase-gratuita") return;
+
     const showNotification = () => {
       const randomIndex = Math.floor(Math.random() * mockSales.length);
       setCurrentSale(mockSales[randomIndex]);
@@ -56,7 +54,11 @@ const SalesNotification = () => {
       clearTimeout(initialDelay);
       clearInterval(interval);
     };
-  }, []);
+  }, [location.pathname]);
+
+  if (location.pathname === "/clase-gratuita") {
+    return null;
+  }
 
   return (
     <AnimatePresence>
