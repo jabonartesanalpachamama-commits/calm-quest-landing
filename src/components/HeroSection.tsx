@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import RegistrationForm from "./RegistrationForm";
+import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const HeroSection = () => {
   return (
@@ -11,6 +12,20 @@ const HeroSection = () => {
       </div>
 
       <div className="container relative z-10 px-4 py-20 md:py-28 lg:py-36">
+        {/* Logo Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mb-12"
+        >
+          <img 
+            src={santoshaLogo} 
+            alt="SantoSha Logo" 
+            className="h-28 md:h-32 w-auto"
+          />
+        </motion.div>
+
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Left content */}
           <motion.div
