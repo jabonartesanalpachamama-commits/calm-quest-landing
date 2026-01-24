@@ -28,7 +28,7 @@ const Footer = () => {
             <img 
               src={santoshaLogo} 
               alt="SantoSha Logo" 
-              className="h-20 w-auto mx-auto opacity-80"
+              className="h-28 md:h-32 w-auto mx-auto"
             />
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} SantoSha Yoga. Todos los derechos reservados.
