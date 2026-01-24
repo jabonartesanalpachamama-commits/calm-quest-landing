@@ -11,13 +11,13 @@ const HeroSection = () => {
         <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-gentle-pulse" style={{ animationDelay: "2s" }} />
       </div>
 
-      <div className="container relative z-10 px-4 py-20 md:py-28 lg:py-36">
+      <div className="container relative z-10 px-4 pt-8 md:pt-12 pb-20 md:pb-28 lg:pb-36">
         {/* Logo Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex justify-center mb-12"
+          className="flex justify-center mb-8 md:mb-12"
         >
           <img 
             src={santoshaLogo} 
