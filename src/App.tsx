@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import TrafficSplitter from "./components/TrafficSplitter";
 import FreeClass from "./pages/FreeClass";
+import FreeClassTime from "./pages/FreeClassTime";
+import FreeClassSlots from "./pages/FreeClassSlots";
 import NotFound from "./pages/NotFound";
 import SalesNotification from "./components/SalesNotification";
 
@@ -21,6 +23,12 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/clase-gratuita" element={<TrafficSplitter />} />
+
+          {/* Debug/Preview Routes for A/B Testing Variants */}
+          <Route path="/clase-gratuita-original" element={<FreeClass />} />
+          <Route path="/clase-gratuita-tiempo" element={<FreeClassTime />} />
+          <Route path="/clase-gratuita-cupos" element={<FreeClassSlots />} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
