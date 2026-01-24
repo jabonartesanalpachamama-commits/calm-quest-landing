@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import RegistrationForm from "./RegistrationForm";
+import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const Footer = () => {
   return (
@@ -23,9 +24,14 @@ const Footer = () => {
 
           <RegistrationForm />
 
-          <div className="mt-16 pt-8 border-t border-border/40 text-center">
+          <div className="mt-16 pt-8 border-t border-border/40 text-center space-y-6">
+            <img 
+              src={santoshaLogo} 
+              alt="SantoSha Logo" 
+              className="h-20 w-auto mx-auto opacity-80"
+            />
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Kundalini Yoga Masterclass. Todos los derechos reservados.
+              © {new Date().getFullYear()} SantoSha Yoga. Todos los derechos reservados.
             </p>
           </div>
         </motion.div>
