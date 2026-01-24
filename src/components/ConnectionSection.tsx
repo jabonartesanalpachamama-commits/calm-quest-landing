@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import meditationWoman from "@/assets/meditation-woman.jpg";
 
 const ConnectionSection = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <section className="py-24 md:py-32 bg-background overflow-hidden">
       <div className="container px-4">
@@ -35,10 +40,26 @@ const ConnectionSection = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="text-xl md:text-2xl text-foreground font-medium"
+                className="text-xl md:text-2xl text-foreground font-medium mb-8"
               >
                 Nuestra clase gratuita para <span className="text-primary">Crear Equilibrio Emocional</span> te ofrece una solución práctica para calmar tu sistema nervioso y recuperar el control de tus emociones.
               </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                className="pt-4"
+              >
+                <Button
+                  onClick={scrollToTop}
+                  size="lg"
+                  className="h-14 px-10 text-lg font-medium glow-primary hover:scale-105 transition-transform"
+                >
+                  Quiero mi clase gratuita
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
 
