@@ -6,34 +6,13 @@ const ConnectionSection = () => {
     <section className="py-24 md:py-32 bg-background overflow-hidden">
       <div className="container px-4">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image Column */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative"
-          >
-            <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/10">
-              <img
-                src={meditationWoman}
-                alt="Mujer meditando en calma"
-                className="w-full h-auto object-cover aspect-[4/5] md:aspect-[3/4] lg:aspect-auto"
-              />
-            </div>
-
-            {/* Decorative background elements behind image */}
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
-            <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-accent/5 rounded-full blur-3xl text-accent" />
-          </motion.div>
-
           {/* Content Column */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-left"
+            className="text-left order-2 lg:order-1"
           >
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 leading-tight">
               ¿La incapacidad para gestionar tus emociones está{" "}
@@ -61,6 +40,27 @@ const ConnectionSection = () => {
                 Nuestra clase gratuita para <span className="text-primary">Crear Equilibrio Emocional</span> te ofrece una solución práctica para calmar tu sistema nervioso y recuperar el control de tus emociones.
               </motion.p>
             </div>
+          </motion.div>
+
+          {/* Image Column */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative order-1 lg:order-2"
+          >
+            <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/10">
+              <img
+                src={meditationWoman}
+                alt="Mujer meditando en calma"
+                className="w-full h-auto object-cover aspect-[4/5] md:aspect-[3/4] lg:aspect-auto"
+              />
+            </div>
+
+            {/* Decorative background elements behind image */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+            <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-accent/5 rounded-full blur-3xl text-accent" />
           </motion.div>
         </div>
       </div>
