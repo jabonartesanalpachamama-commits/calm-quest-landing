@@ -7,13 +7,13 @@
 @layer base {
   :root {
     /* SantoSha magenta palette - #A64179 */
-    --background: 340 15% 98%;
+    --background: 0 0% 100%;
     --foreground: 330 20% 15%;
 
-    --card: 340 12% 96%;
+    --card: 340 12% 97%;
     --card-foreground: 330 20% 15%;
 
-    --popover: 340 15% 98%;
+    --popover: 0 0% 100%;
     --popover-foreground: 330 20% 15%;
 
     /* Magenta primary - #A64179 */
@@ -41,7 +41,7 @@
     --radius: 1rem;
 
     /* Custom tokens */
-    --hero-gradient: linear-gradient(180deg, hsl(340 15% 98%) 0%, hsl(335 12% 95%) 50%, hsl(330 15% 93%) 100%);
+    --hero-gradient: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(335 10% 98%) 50%, hsl(330 12% 96%) 100%);
     --glow-primary: 0 15px 40px -10px hsl(330 45% 52% / 0.25);
     --glow-accent: 0 10px 30px -8px hsl(325 40% 60% / 0.2);
     --text-gradient: linear-gradient(135deg, hsl(330 50% 45%) 0%, hsl(320 45% 55%) 100%);
