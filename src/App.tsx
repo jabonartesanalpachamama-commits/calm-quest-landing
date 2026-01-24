@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import FreeClass from "./pages/FreeClass";
 import NotFound from "./pages/NotFound";
+import SalesNotification from "./components/SalesNotification";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <SalesNotification />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
