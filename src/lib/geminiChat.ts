@@ -1,10 +1,16 @@
 /**
  * geminiChat.ts
- * Helper para comunicación con Gemini API + fallback estático.
- * Importar: import { createGeminiChat } from "@/lib/geminiChat";
+ * Helper para comunicación con el agente IA.
+ *
+ * ARQUITECTURA:
+ * - Las llamadas a Gemini van a través de la Supabase Edge Function "ai-chat"
+ * - La API key de Gemini se almacena como secreto del servidor (GEMINI_API_KEY)
+ * - El cliente NUNCA toca la API key directamente
+ *
+ * Si la Edge Function no está disponible, cae back a respuestas estáticas de FAQs.
  */
 
-import { GoogleGenerativeAI, GenerativeModel, ChatSession } from "@google/generative-ai";
+import { createClient } from "@supabase/supabase-js";
 import type { AiAgentConfig } from "./CmsFallbackData";
 
 export interface ChatMessage {
@@ -12,11 +18,10 @@ export interface ChatMessage {
   content: string;
 }
 
-/** Detecta si el texto contiene un email */
+// ─── Lead extraction ──────────────────────────────────────────────────────────
+
 const EMAIL_RE = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/;
-/** Detecta si el texto contiene un número de teléfono/WhatsApp (7-15 dígitos) */
 const PHONE_RE = /(\+?[\d\s\-().]{7,20})/;
-/** Detecta si el texto parece un nombre propio (2-4 palabras, primera letra mayúscula) */
 const NAME_RE = /(?:me llamo|soy|mi nombre es|llámame)\s+([A-ZÁÉÍÓÚÜÑa-záéíóúüñ][a-záéíóúüñ]+(?:\s+[A-ZÁÉÍÓÚÜÑa-záéíóúüñ][a-záéíóúüñ]+)*)/i;
 
 export interface ExtractedLead {
@@ -24,9 +29,6 @@ export interface ExtractedLead {
   contact?: string;
 }
 
-/**
- * Intenta extraer nombre y contacto de un mensaje del usuario
- */
 export function extractLeadFromText(text: string): ExtractedLead {
   const lead: ExtractedLead = {};
   const nameMatch = text.match(NAME_RE);
@@ -43,50 +45,48 @@ export function extractLeadFromText(text: string): ExtractedLead {
   return lead;
 }
 
+// ─── Supabase client (reutiliza la URL/KEY del .env) ─────────────────────────
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
+
+// ─── FAQ fallback matcher ─────────────────────────────────────────────────────
+
+function matchFaq(text: string, faqs: AiAgentConfig["faqs"]): string | null {
+  const q = text.toLowerCase();
+  for (const faq of faqs) {
+    const words = faq.question.toLowerCase().split(/\s+/);
+    const hits = words.filter(w => w.length > 3 && q.includes(w)).length;
+    if (hits >= 2 || q.includes(faq.question.toLowerCase().slice(0, 20))) {
+      return faq.answer;
+    }
+  }
+  return null;
+}
+
+// ─── Chat instance ────────────────────────────────────────────────────────────
+
 interface GeminiChatInstance {
   sendMessage: (text: string) => Promise<string>;
   isLive: boolean;
 }
 
 /**
- * Crea una sesión de chat con Gemini usando la config del agente.
- * Si no hay API key, devuelve un handler de fallback que responde con las FAQs.
+ * Crea una sesión de chat que llama a la Edge Function "ai-chat" de Supabase.
+ * La Edge Function tiene acceso al secreto GEMINI_API_KEY en el servidor.
+ *
+ * Fallback: si la Edge Function no está disponible, responde con FAQs estáticas.
  */
-export function createGeminiChat(
-  config: AiAgentConfig,
-  envApiKey?: string
-): GeminiChatInstance {
-  const apiKey = config.apiKey?.trim() || envApiKey?.trim() || "";
+export function createGeminiChat(config: AiAgentConfig): GeminiChatInstance {
+  const history: ChatMessage[] = [];
 
-  // ── Fallback estático si no hay API key ──────────────────────────────────
-  if (!apiKey) {
-    return {
-      isLive: false,
-      sendMessage: async (text: string): Promise<string> => {
-        const q = text.toLowerCase();
-        for (const faq of config.faqs) {
-          const words = faq.question.toLowerCase().split(/\s+/);
-          const hits = words.filter(w => w.length > 3 && q.includes(w)).length;
-          if (hits >= 2 || q.includes(faq.question.toLowerCase().slice(0, 20))) {
-            return faq.answer;
-          }
-        }
-        return `Hola 🌿 Soy ${config.botName}. En este momento estoy en modo básico. Por favor escríbenos directamente a nuestro WhatsApp o completa el formulario de la página y te contactaremos pronto.`;
-      }
-    };
-  }
-
-  // ── Gemini live ──────────────────────────────────────────────────────────
-  const genAI = new GoogleGenerativeAI(apiKey);
-  let model: GenerativeModel;
-  let chat: ChatSession;
-
+  // Construir el system prompt completo
   const faqsText = config.faqs.length > 0
-    ? "\n\nPREGUNTAS FRECUENTES QUE DEBES SABER RESPONDER:\n" +
+    ? "\n\nPREGUNTAS FRECUENTES:\n" +
       config.faqs.map((f, i) => `${i + 1}. P: ${f.question}\n   R: ${f.answer}`).join("\n")
     : "";
 
-  const systemInstruction = `${config.systemPrompt}${faqsText}
+  const systemPrompt = `${config.systemPrompt}${faqsText}
 
 REGLAS IMPORTANTES:
 - Responde SIEMPRE en español, con un tono cálido, empático y profesional.
@@ -95,30 +95,59 @@ REGLAS IMPORTANTES:
 - NO inventes información sobre precios, fechas o disponibilidad si no la conoces.
 - Si no sabes la respuesta, di que el equipo le contactará pronto.`;
 
-  try {
-    model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash-lite",
-      systemInstruction
-    });
-    chat = model.startChat({ history: [] });
-  } catch (e) {
-    console.error("[GeminiChat] Init error:", e);
-    return {
-      isLive: false,
-      sendMessage: async () => `Hola 🌿 Soy ${config.botName}. Escríbenos por WhatsApp y te atenderemos enseguida.`
-    };
-  }
+  const sendMessage = async (text: string): Promise<string> => {
+    // 1. Intentar Edge Function
+    try {
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error("Missing Supabase env vars");
+
+      const functionUrl = `${SUPABASE_URL}/functions/v1/ai-chat`;
+
+      const res = await fetch(functionUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          message: text,
+          systemPrompt,
+          history: [...history],
+        }),
+      });
+
+      if (!res.ok) {
+        const errBody = await res.text();
+        console.warn("[ai-chat] Edge function error:", res.status, errBody);
+        throw new Error(`Edge function ${res.status}`);
+      }
+
+      const data = await res.json();
+      const botReply = data.text || "No pude procesar tu mensaje. Inténtalo de nuevo.";
+
+      // Guardar en historial para el contexto de la conversación
+      history.push({ role: "user", content: text });
+      history.push({ role: "model", content: botReply });
+
+      return botReply;
+    } catch (edgeErr) {
+      console.warn("[ai-chat] Edge function unavailable, using FAQ fallback:", edgeErr);
+
+      // 2. Fallback a FAQs estáticas
+      const faqAnswer = matchFaq(text, config.faqs);
+      if (faqAnswer) {
+        history.push({ role: "user", content: text });
+        history.push({ role: "model", content: faqAnswer });
+        return faqAnswer;
+      }
+
+      const fallback = `Hola 🌿 Soy ${config.botName}. En este momento no puedo procesar tu consulta. Por favor completa el formulario de la página o escríbenos directamente y te atenderemos pronto.`;
+      return fallback;
+    }
+  };
 
   return {
-    isLive: true,
-    sendMessage: async (text: string): Promise<string> => {
-      try {
-        const result = await chat.sendMessage(text);
-        return result.response.text();
-      } catch (err) {
-        console.error("[GeminiChat] sendMessage error:", err);
-        return "Disculpa, tuve un problema al procesar tu mensaje. Por favor intenta de nuevo o escríbenos directamente.";
-      }
-    }
+    isLive: true, // Siempre true — la Edge Function es el canal principal
+    sendMessage,
   };
 }

@@ -275,22 +275,38 @@ export const AdminDashboard = () => {
     }
   };
 
-  // --- TEST AI AGENT API KEY ---
+  // --- TEST AI AGENT via Edge Function ---
   const handleTestAgent = async () => {
-    if (!agentConfig?.apiKey?.trim()) {
-      setAgentTestResult("❌ Ingresa una API Key de Gemini primero.");
-      return;
-    }
-    setAgentTestResult("🔄 Probando conexión con Gemini...");
+    setAgentTestResult("🔄 Probando conexión con la Edge Function...");
     try {
-      const { GoogleGenerativeAI } = await import("@google/generative-ai");
-      const genAI = new GoogleGenerativeAI(agentConfig.apiKey.trim());
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
-      const result = await model.generateContent("Responde solo: 'Conexión exitosa'");
-      const text = result.response.text();
-      setAgentTestResult(`✅ Gemini responde: "${text.slice(0, 60)}"`);
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+      const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
+      const res = await fetch(`${supabaseUrl}/functions/v1/ai-chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": anonKey,
+          "Authorization": `Bearer ${anonKey}`,
+        },
+        body: JSON.stringify({
+          message: "Responde solo con estas palabras exactas: Conexión exitosa",
+          systemPrompt: "Eres un asistente de prueba. Responde con lo que el usuario te pide.",
+          history: []
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        if (err.includes("GEMINI_API_KEY")) {
+          setAgentTestResult("⚠️ Edge Function activa, pero falta configurar el secreto GEMINI_API_KEY en Supabase.");
+        } else {
+          setAgentTestResult(`❌ Edge Function error ${res.status}: ${err.slice(0, 120)}`);
+        }
+        return;
+      }
+      const data = await res.json();
+      setAgentTestResult(`✅ IA activa y respondiendo: "${(data.text || "").slice(0, 80)}"`);
     } catch (err: any) {
-      setAgentTestResult(`❌ Error: ${err?.message || "API Key inválida o sin permisos"}`);
+      setAgentTestResult(`❌ Error: ${err?.message || "No se pudo conectar con la Edge Function"}`);
     }
   };
 
@@ -1423,43 +1439,74 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                     </div>
                   </Card>
 
-                  {/* API Key */}
+                  {/* API Key — configuración server-side */}
                   <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm space-y-4">
                     <div>
                       <h3 className="font-semibold text-sm flex items-center gap-2">
-                        <Key className="w-4 h-4 text-[#7EA172]" /> API Key de Gemini (IA en vivo)
+                        <Key className="w-4 h-4 text-[#7EA172]" /> Activar IA en tiempo real
                       </h3>
                       <p className="text-xs text-muted-foreground font-light">
-                        Sin API Key, el bot responde solo con las FAQs configuradas arriba. Con la clave, usa IA en tiempo real.
+                        La API key se configura de forma segura en el servidor de Supabase — nunca queda expuesta en el navegador.
                       </p>
                     </div>
-                    <div className="flex gap-2">
-                      <Input
-                        type="password"
-                        value={agentConfig.apiKey}
-                        onChange={(e) => setAgentConfig({ ...agentConfig, apiKey: e.target.value })}
-                        placeholder="AIza..."
-                        className="h-10 border-[#EBE7DF] rounded-xl focus:border-[#7EA172] font-mono text-xs flex-1"
-                      />
+
+                    {/* Steps */}
+                    <div className="space-y-3">
+                      {[
+                        {
+                          n: "1",
+                          title: "Obtén tu API Key gratis",
+                          desc: <>Ve a <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline text-[#7EA172] font-medium">aistudio.google.com/apikey</a> y crea una clave para el proyecto de este sitio.</>
+                        },
+                        {
+                          n: "2",
+                          title: "Ábrela en Supabase Secrets",
+                          desc: <>Ve a <a href={`https://supabase.com/dashboard/project/nuxkhblqwnfinzqdriyn/settings/functions`} target="_blank" rel="noopener noreferrer" className="underline text-[#7EA172] font-medium">Supabase → Settings → Edge Functions → Secrets</a></>
+                        },
+                        {
+                          n: "3",
+                          title: 'Agrega el secreto "GEMINI_API_KEY"',
+                          desc: <>En el campo <code className="font-mono bg-[#F0EDE8] px-1 rounded text-[10px]">Name</code> escribe <code className="font-mono bg-[#F0EDE8] px-1 rounded text-[10px]">GEMINI_API_KEY</code> y en <code className="font-mono bg-[#F0EDE8] px-1 rounded text-[10px]">Secret</code> pega tu API key. Haz clic en <strong>Save</strong>.</>
+                        },
+                        {
+                          n: "4",
+                          title: "¡Listo! El chatbot usará IA en vivo",
+                          desc: "La Edge Function ai-chat leerá el secreto automáticamente. Sin reinicios necesarios."
+                        }
+                      ].map(step => (
+                        <div key={step.n} className="flex gap-3">
+                          <div className="w-6 h-6 rounded-full bg-[#7EA172] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                            {step.n}
+                          </div>
+                          <div>
+                            <p className="text-xs font-semibold text-[#2C3E2B]">{step.title}</p>
+                            <p className="text-[11px] text-muted-foreground leading-relaxed">{step.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="bg-emerald-50 border border-emerald-100 rounded-2xl px-4 py-3 text-[11px] text-emerald-800 flex items-start gap-2">
+                      <span className="text-base leading-none">🔒</span>
+                      <span>
+                        Sin la API Key, el bot responde con las FAQs que hayas configurado arriba. Con la clave activa, usa <strong>gemini-2.0-flash-lite</strong> (1,500 consultas/día gratis).
+                      </span>
+                    </div>
+
+                    {/* Test connection button */}
+                    <div className="flex items-center gap-3 pt-1">
                       <Button
                         variant="outline"
                         onClick={handleTestAgent}
-                        className="rounded-xl border-[#7EA172] text-[#7EA172] hover:bg-[#7EA172]/10 text-xs whitespace-nowrap"
+                        className="rounded-xl border-[#7EA172] text-[#7EA172] hover:bg-[#7EA172]/10 text-xs"
                       >
-                        Probar Conexión
+                        🔌 Probar Conexión
                       </Button>
-                    </div>
-                    {agentTestResult && (
-                      <div className={`text-xs rounded-xl px-4 py-2.5 border ${agentTestResult.startsWith("✅") ? "bg-emerald-50 border-emerald-200 text-emerald-700" : agentTestResult.startsWith("❌") ? "bg-rose-50 border-rose-200 text-rose-700" : "bg-blue-50 border-blue-200 text-blue-700"}`}>
-                        {agentTestResult}
-                      </div>
-                    )}
-                    <div className="text-[10px] text-muted-foreground bg-[#F8F7F4] rounded-xl p-3 border border-[#EBE7DF]">
-                      🔑 Obtén tu API Key gratuita en{" "}
-                      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline text-[#7EA172]">
-                        aistudio.google.com/apikey
-                      </a>
-                      . La clave se guarda de forma segura en tu base de datos.
+                      {agentTestResult && (
+                        <span className={`text-xs font-medium ${agentTestResult.startsWith("✅") ? "text-emerald-700" : agentTestResult.startsWith("⚠️") ? "text-amber-700" : agentTestResult.startsWith("🔄") ? "text-blue-600" : "text-rose-700"}`}>
+                          {agentTestResult}
+                        </span>
+                      )}
                     </div>
                   </Card>
 

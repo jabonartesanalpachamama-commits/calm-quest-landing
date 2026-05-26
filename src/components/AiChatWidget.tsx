@@ -59,10 +59,7 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
   // ── Inicializar chat cuando se abre ──────────────────────────────────────
   useEffect(() => {
     if (!config || !isOpen || chatRef.current) return;
-    chatRef.current = createGeminiChat(
-      config,
-      import.meta.env.VITE_GEMINI_API_KEY as string
-    );
+    chatRef.current = createGeminiChat(config);
     // Agregar el mensaje de bienvenida
     setMessages([
       {
