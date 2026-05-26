@@ -82,9 +82,6 @@ export const CmsLogin = () => {
               className="h-12 bg-[#FBFBFA] border-[#EBE7DF] focus:border-[#7EA172] text-[#2C3E2B] transition-colors focus-visible:ring-1 focus-visible:ring-[#7EA172]"
               autoFocus
             />
-            <p className="text-xs text-[#5C6E5B] leading-relaxed">
-              💡 Tip: Utiliza la clave compartida con el equipo (ej. <code className="bg-[#FAF8FC] px-1 py-0.5 rounded text-primary">santosha2026</code>).
-            </p>
           </div>
 
           <Button
