@@ -778,13 +778,15 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
   };
 
   // Helper translations for section types (mental health focused)
-  const SECTION_TYPES_INFO = {
-    hero: { name: "Cabecera y Bienvenida (Hero)", desc: "Bloque inicial con título inspirador y botón de llamada a la acción." },
-    connection: { name: "Espacio de Conexión (Texto + Imagen)", desc: "Ideal para presentarte como terapeuta o explicar tu método de trabajo." },
-    benefits: { name: "Beneficios de la Terapia", desc: "Listado con iconos para destacar en qué aspectos ayuda tu enfoque." },
-    form: { name: "Formulario de Contacto / Registro", desc: "Bloque para capturar datos de pacientes interesados." },
-    testimonials: { name: "Experiencias de Pacientes", desc: "Bloque elegante de testimonios o citas anónimas inspiradoras." },
-    faq: { name: "Preguntas Frecuentes (FAQs)", desc: "Acordeón plegable para responder dudas frecuentes (tarifas, duración, etc.)." }
+  const SECTION_TYPES_INFO: Record<string, { name: string; desc: string }> = {
+    hero:           { name: "Cabecera y Bienvenida (Hero)",          desc: "Bloque inicial con título inspirador y botón de llamada a la acción." },
+    connection:     { name: "Espacio de Conexión (Texto + Imagen)",  desc: "Ideal para presentarte como terapeuta o explicar tu método de trabajo." },
+    benefits:       { name: "Beneficios / Items con Iconos",         desc: "Listado con emojis para destacar beneficios, estadísticas o garantías." },
+    form:           { name: "Formulario de Contacto / Registro",     desc: "Bloque para capturar datos de pacientes interesados." },
+    testimonials:   { name: "Testimonios y Experiencias",            desc: "Bloque elegante de testimonios o citas de pacientes / estudiantes." },
+    faq:            { name: "Preguntas Frecuentes (FAQs)",           desc: "Listado expandible para responder dudas (tarifas, duración, etc.)." },
+    transformation: { name: "Antes y Después (Transformación)",      desc: "Comparativa visual de situaciones problemáticas vs. resultados positivos." },
+    cta:            { name: "Llamada a la Acción Final (CTA)",       desc: "Sección de cierre emocional con botón destacado y texto de garantía." },
   };
 
   if (!settings) {
@@ -1525,6 +1527,22 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                           content = { title: "Experiencias", testimonials: [{ quote: "Excelente espacio.", author: "Anónimo" }] };
                         } else if (type === "faq") {
                           content = { title: "Preguntas Frecuentes", faqs: [{ question: "¿Qué duración tiene?", answer: "1 hora" }] };
+                        } else if (type === "transformation") {
+                          content = {
+                            title: "¿Reconoces alguna de estas situaciones?",
+                            beforeTitle: "Sin herramientas...",
+                            afterTitle: "Con nuestra práctica",
+                            before: ["Estrés y ansiedad constante", "Falta de concentración"],
+                            after: ["Calma y claridad mental", "Enfoque y energía renovada"],
+                            ctaText: "Quiero esta transformación"
+                          };
+                        } else if (type === "cta") {
+                          content = {
+                            title: "¿Cuántos días más quieres esperar?",
+                            subtitle: "Da el primer paso hacia tu bienestar hoy.",
+                            ctaText: "Comenzar Ahora",
+                            disclaimer: "Sin riesgo · Acceso inmediato"
+                          };
                         }
 
                         const newSection = {
@@ -1545,10 +1563,12 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                       <option value="">➕ Añadir Bloque...</option>
                       <option value="hero">Cabecera Bienvenida (Hero)</option>
                       <option value="connection">Presentación (Texto + Imagen)</option>
-                      <option value="benefits">Beneficios Terapia</option>
+                      <option value="benefits">Beneficios / Items con Iconos</option>
                       <option value="form">Formulario Captura Leads</option>
                       <option value="testimonials">Testimonios Pacientes</option>
                       <option value="faq">Preguntas Frecuentes (FAQ)</option>
+                      <option value="transformation">Antes y Después (Transformación)</option>
+                      <option value="cta">Llamada a la Acción Final (CTA)</option>
                     </select>
                   </div>
 
@@ -1879,26 +1899,300 @@ onChange={(e) => {
                               </div>
                             )}
 
-                            {/* OTHER SECTIONS (BENEFITS, TESTIMONIALS, FAQ) GENERAL TEXT EDIT (SIMPLE) */}
-                            {(section.type === "benefits" || section.type === "testimonials" || section.type === "faq") && (
-                              <div className="space-y-2 bg-[#FAF9F6] p-2.5 rounded-xl border border-border/60">
-                                <p className="text-[10px] leading-relaxed text-muted-foreground">
-                                  📌 Este bloque complejo contiene sub-ítems de datos. Puedes guardar y ver cómo se actualiza su previsualización interactiva a la derecha.
-                                </p>
-                                <div>
-                                  <label className="font-semibold block text-[10px] text-muted-foreground">Título Principal</label>
-                                  <input 
-                                    className="w-full border border-border rounded p-1 mt-0.5 bg-white" 
-                                    value={section.content.title || ""} 
-                                    onChange={(e) => {
+                            {/* ── BENEFITS SECTION FULL EDITOR ─────────────────────── */}
+                            {section.type === "benefits" && (() => {
+                              const updateField = (field: string, val: any) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content[field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const updateItem = (i: number, field: string, val: string) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content.items[i][field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const items: any[] = section.content.items || [];
+                              return (
+                                <div className="space-y-3">
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Título del Bloque</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.title || ""}
+                                      onChange={e => updateField("title", e.target.value)} />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Items / Beneficios ({items.length})</label>
+                                    {items.map((item: any, i: number) => (
+                                      <div key={i} className="bg-white border border-[#EBE7DF] rounded-xl p-2.5 space-y-1.5 relative">
+                                        <button type="button" onClick={() => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.items = items.filter((_: any, j: number) => j !== i);
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }} className="absolute top-1.5 right-1.5 text-rose-400 hover:text-rose-600 text-[10px] font-bold">✕</button>
+                                        <div className="grid grid-cols-[56px,1fr] gap-1.5">
+                                          <div>
+                                            <label className="text-[9px] text-muted-foreground font-semibold">Icono/Emoji</label>
+                                            <input className="w-full border border-border rounded p-1 text-xs bg-white text-center"
+                                              value={item.icon || ""} onChange={e => updateItem(i, "icon", e.target.value)} placeholder="🌿" />
+                                          </div>
+                                          <div>
+                                            <label className="text-[9px] text-muted-foreground font-semibold">Título del Item</label>
+                                            <input className="w-full border border-border rounded p-1 text-xs bg-white"
+                                              value={item.title || ""} onChange={e => updateItem(i, "title", e.target.value)} />
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <label className="text-[9px] text-muted-foreground font-semibold">Descripción</label>
+                                          <textarea rows={2} className="w-full border border-border rounded p-1 text-xs bg-white resize-none"
+                                            value={item.description || ""} onChange={e => updateItem(i, "description", e.target.value)} />
+                                        </div>
+                                      </div>
+                                    ))}
+                                    <button type="button" onClick={() => {
                                       const updated = [...editingPage.sections];
-                                      updated[index].content.title = e.target.value;
+                                      updated[index].content.items = [...items, { icon: "✨", title: "Nuevo beneficio", description: "Descripción del beneficio." }];
                                       setEditingPage({ ...editingPage, sections: updated });
-                                    }}
-                                  />
+                                    }} className="w-full text-[10px] font-semibold text-[#7EA172] border border-dashed border-[#7EA172]/50 rounded-lg py-1.5 hover:bg-[#F3F8F1] transition-colors">
+                                      + Agregar Item
+                                    </button>
+                                  </div>
                                 </div>
-                              </div>
-                            )}
+                              );
+                            })()}
+
+                            {/* ── TESTIMONIALS SECTION FULL EDITOR ─────────────────── */}
+                            {section.type === "testimonials" && (() => {
+                              const updateField = (field: string, val: any) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content[field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const updateTestimonial = (i: number, field: string, val: string) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content.testimonials[i][field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const items: any[] = section.content.testimonials || [];
+                              return (
+                                <div className="space-y-3">
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Título del Bloque</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.title || ""}
+                                      onChange={e => updateField("title", e.target.value)} />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Testimonios ({items.length})</label>
+                                    {items.map((item: any, i: number) => (
+                                      <div key={i} className="bg-white border border-[#EBE7DF] rounded-xl p-2.5 space-y-1.5 relative">
+                                        <button type="button" onClick={() => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.testimonials = items.filter((_: any, j: number) => j !== i);
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }} className="absolute top-1.5 right-1.5 text-rose-400 hover:text-rose-600 text-[10px] font-bold">✕</button>
+                                        <div className="grid grid-cols-2 gap-1.5">
+                                          <div>
+                                            <label className="text-[9px] text-muted-foreground font-semibold">Nombre / Autor</label>
+                                            <input className="w-full border border-border rounded p-1 text-xs bg-white"
+                                              value={item.author || ""} onChange={e => updateTestimonial(i, "author", e.target.value)} />
+                                          </div>
+                                          <div>
+                                            <label className="text-[9px] text-muted-foreground font-semibold">Rol / Cargo</label>
+                                            <input className="w-full border border-border rounded p-1 text-xs bg-white"
+                                              value={item.role || ""} onChange={e => updateTestimonial(i, "role", e.target.value)} />
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <label className="text-[9px] text-muted-foreground font-semibold">Cita / Testimonio</label>
+                                          <textarea rows={3} className="w-full border border-border rounded p-1 text-xs bg-white resize-none"
+                                            value={item.quote || ""} onChange={e => updateTestimonial(i, "quote", e.target.value)} />
+                                        </div>
+                                      </div>
+                                    ))}
+                                    <button type="button" onClick={() => {
+                                      const updated = [...editingPage.sections];
+                                      updated[index].content.testimonials = [...items, { author: "Nombre del paciente", role: "Profesión, edad", quote: "Su experiencia con nuestra práctica..." }];
+                                      setEditingPage({ ...editingPage, sections: updated });
+                                    }} className="w-full text-[10px] font-semibold text-[#7EA172] border border-dashed border-[#7EA172]/50 rounded-lg py-1.5 hover:bg-[#F3F8F1] transition-colors">
+                                      + Agregar Testimonio
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            })()}
+
+                            {/* ── FAQ SECTION FULL EDITOR ───────────────────────────── */}
+                            {section.type === "faq" && (() => {
+                              const updateField = (field: string, val: any) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content[field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const updateFaq = (i: number, field: string, val: string) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content.faqs[i][field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const items: any[] = section.content.faqs || [];
+                              return (
+                                <div className="space-y-3">
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Título del Bloque</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.title || ""}
+                                      onChange={e => updateField("title", e.target.value)} />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Preguntas Frecuentes ({items.length})</label>
+                                    {items.map((item: any, i: number) => (
+                                      <div key={i} className="bg-white border border-[#EBE7DF] rounded-xl p-2.5 space-y-1.5 relative">
+                                        <button type="button" onClick={() => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.faqs = items.filter((_: any, j: number) => j !== i);
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }} className="absolute top-1.5 right-1.5 text-rose-400 hover:text-rose-600 text-[10px] font-bold">✕</button>
+                                        <div>
+                                          <label className="text-[9px] text-muted-foreground font-semibold">Pregunta</label>
+                                          <input className="w-full border border-border rounded p-1 text-xs bg-white"
+                                            value={item.question || ""} onChange={e => updateFaq(i, "question", e.target.value)} />
+                                        </div>
+                                        <div>
+                                          <label className="text-[9px] text-muted-foreground font-semibold">Respuesta</label>
+                                          <textarea rows={2} className="w-full border border-border rounded p-1 text-xs bg-white resize-none"
+                                            value={item.answer || ""} onChange={e => updateFaq(i, "answer", e.target.value)} />
+                                        </div>
+                                      </div>
+                                    ))}
+                                    <button type="button" onClick={() => {
+                                      const updated = [...editingPage.sections];
+                                      updated[index].content.faqs = [...items, { question: "¿Nueva pregunta?", answer: "Respuesta detallada aquí." }];
+                                      setEditingPage({ ...editingPage, sections: updated });
+                                    }} className="w-full text-[10px] font-semibold text-[#7EA172] border border-dashed border-[#7EA172]/50 rounded-lg py-1.5 hover:bg-[#F3F8F1] transition-colors">
+                                      + Agregar Pregunta / Respuesta
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            })()}
+
+                            {/* ── TRANSFORMATION SECTION FULL EDITOR ───────────────── */}
+                            {section.type === "transformation" && (() => {
+                              const updateField = (field: string, val: any) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content[field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const updateListItem = (listKey: "before" | "after", i: number, val: string) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content[listKey][i] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              const beforeList: string[] = section.content.before || [];
+                              const afterList: string[] = section.content.after || [];
+                              return (
+                                <div className="space-y-3">
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Título del Bloque</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.title || ""} onChange={e => updateField("title", e.target.value)} />
+                                  </div>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Título columna "Antes"</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.beforeTitle || ""} onChange={e => updateField("beforeTitle", e.target.value)} />
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Título columna "Después"</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.afterTitle || ""} onChange={e => updateField("afterTitle", e.target.value)} />
+                                    </div>
+                                  </div>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div className="space-y-1.5">
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Lista "Antes" ({beforeList.length})</label>
+                                      {beforeList.map((item: string, i: number) => (
+                                        <div key={i} className="flex gap-1 items-start">
+                                          <textarea rows={2} className="flex-1 border border-border rounded p-1 text-[10px] bg-white resize-none"
+                                            value={item} onChange={e => updateListItem("before", i, e.target.value)} />
+                                          <button type="button" onClick={() => {
+                                            const updated = [...editingPage.sections];
+                                            updated[index].content.before = beforeList.filter((_: string, j: number) => j !== i);
+                                            setEditingPage({ ...editingPage, sections: updated });
+                                          }} className="text-rose-400 hover:text-rose-600 text-[9px] font-bold mt-1">✕</button>
+                                        </div>
+                                      ))}
+                                      <button type="button" onClick={() => {
+                                        const updated = [...editingPage.sections];
+                                        updated[index].content.before = [...beforeList, "Nueva situación problemática"];
+                                        setEditingPage({ ...editingPage, sections: updated });
+                                      }} className="w-full text-[9px] font-semibold text-rose-500 border border-dashed border-rose-300 rounded py-1 hover:bg-rose-50 transition-colors">
+                                        + Agregar
+                                      </button>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Lista "Después" ({afterList.length})</label>
+                                      {afterList.map((item: string, i: number) => (
+                                        <div key={i} className="flex gap-1 items-start">
+                                          <textarea rows={2} className="flex-1 border border-border rounded p-1 text-[10px] bg-white resize-none"
+                                            value={item} onChange={e => updateListItem("after", i, e.target.value)} />
+                                          <button type="button" onClick={() => {
+                                            const updated = [...editingPage.sections];
+                                            updated[index].content.after = afterList.filter((_: string, j: number) => j !== i);
+                                            setEditingPage({ ...editingPage, sections: updated });
+                                          }} className="text-rose-400 hover:text-rose-600 text-[9px] font-bold mt-1">✕</button>
+                                        </div>
+                                      ))}
+                                      <button type="button" onClick={() => {
+                                        const updated = [...editingPage.sections];
+                                        updated[index].content.after = [...afterList, "Nuevo resultado positivo"];
+                                        setEditingPage({ ...editingPage, sections: updated });
+                                      }} className="w-full text-[9px] font-semibold text-[#7EA172] border border-dashed border-[#7EA172]/50 rounded py-1 hover:bg-[#F3F8F1] transition-colors">
+                                        + Agregar
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Texto del Botón CTA</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.ctaText || ""} onChange={e => updateField("ctaText", e.target.value)} />
+                                  </div>
+                                </div>
+                              );
+                            })()}
+
+                            {/* ── CTA (CLOSING) SECTION FULL EDITOR ────────────────── */}
+                            {section.type === "cta" && (() => {
+                              const updateField = (field: string, val: string) => {
+                                const updated = [...editingPage.sections];
+                                updated[index].content[field] = val;
+                                setEditingPage({ ...editingPage, sections: updated });
+                              };
+                              return (
+                                <div className="space-y-2">
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Título Principal</label>
+                                    <textarea rows={2} className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs resize-none"
+                                      value={section.content.title || ""} onChange={e => updateField("title", e.target.value)} />
+                                  </div>
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Subtítulo / Descripción</label>
+                                    <textarea rows={3} className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs resize-none"
+                                      value={section.content.subtitle || ""} onChange={e => updateField("subtitle", e.target.value)} />
+                                  </div>
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Texto del Botón</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.ctaText || ""} onChange={e => updateField("ctaText", e.target.value)} />
+                                  </div>
+                                  <div>
+                                    <label className="font-semibold block text-[10px] text-muted-foreground">Texto de Garantía / Disclaimer</label>
+                                    <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                      value={section.content.disclaimer || ""} onChange={e => updateField("disclaimer", e.target.value)} />
+                                  </div>
+                                </div>
+                              );
+                            })()}
 
                           </div>
                         </div>
@@ -2067,6 +2361,89 @@ onChange={(e) => {
                             </div>
                           );
                         }
+
+                        case "testimonials":
+                          return (
+                            <div key={section.id} className={`py-8 px-6 border-b border-[#EBE7DF]/40 ${bgClass}`}>
+                              <h3 className="font-serif text-lg font-semibold mb-4 text-center">{section.content.title}</h3>
+                              <div className="grid gap-3">
+                                {section.content.testimonials?.map((t: any, i: number) => (
+                                  <div key={i} className="bg-white border border-[#EBE7DF] p-4 rounded-2xl shadow-xs space-y-2">
+                                    <p className="text-[10px] italic text-[#4A5568] leading-relaxed">"{t.quote}"</p>
+                                    <div>
+                                      <p className="text-[10px] font-bold text-[#2C3E2B]">{t.author}</p>
+                                      <p className="text-[9px] text-muted-foreground">{t.role}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+
+                        case "faq":
+                          return (
+                            <div key={section.id} className={`py-8 px-6 border-b border-[#EBE7DF]/40 ${bgClass}`}>
+                              <h3 className="font-serif text-lg font-semibold mb-4 text-center">{section.content.title}</h3>
+                              <div className="space-y-2">
+                                {section.content.faqs?.map((faq: any, i: number) => (
+                                  <div key={i} className="border border-[#EBE7DF] rounded-xl p-3 bg-white shadow-xs">
+                                    <p className="text-[10px] font-bold text-[#2C3E2B] mb-1">{faq.question}</p>
+                                    <p className="text-[9px] text-muted-foreground leading-relaxed">{faq.answer}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          );
+
+                        case "transformation":
+                          return (
+                            <div key={section.id} className={`py-8 px-4 border-b border-[#EBE7DF]/40 ${bgClass}`}>
+                              <h3 className="font-serif text-base font-semibold mb-4 text-center leading-snug">{section.content.title}</h3>
+                              <div className="grid grid-cols-2 gap-3 mb-4">
+                                <div className="bg-rose-50 border border-rose-100 rounded-xl p-3 space-y-1.5">
+                                  <p className="text-[9px] font-bold text-rose-700 uppercase tracking-wider">{section.content.beforeTitle}</p>
+                                  {section.content.before?.map((item: string, i: number) => (
+                                    <div key={i} className="flex items-start gap-1">
+                                      <span className="text-rose-400 text-[9px] mt-0.5 shrink-0">✗</span>
+                                      <p className="text-[9px] text-rose-800 leading-tight">{item}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 space-y-1.5">
+                                  <p className="text-[9px] font-bold text-emerald-700 uppercase tracking-wider">{section.content.afterTitle}</p>
+                                  {section.content.after?.map((item: string, i: number) => (
+                                    <div key={i} className="flex items-start gap-1">
+                                      <span className="text-emerald-500 text-[9px] mt-0.5 shrink-0">✓</span>
+                                      <p className="text-[9px] text-emerald-800 leading-tight">{item}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              {section.content.ctaText && (
+                                <div className="text-center">
+                                  <Button size="sm" className="bg-[#7EA172] text-white rounded-full text-[10px] font-semibold px-5 h-8 opacity-80 pointer-events-none">
+                                    {section.content.ctaText}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+
+                        case "cta":
+                          return (
+                            <div key={section.id} className="py-8 px-6 border-b border-[#EBE7DF]/40 bg-gradient-to-b from-[#2C3E2B] to-[#1a261a] text-white text-center">
+                              <h3 className="font-serif text-base font-bold leading-snug mb-2">{section.content.title}</h3>
+                              <p className="text-[10px] text-white/70 leading-relaxed mb-4 max-w-xs mx-auto">{section.content.subtitle}</p>
+                              {section.content.ctaText && (
+                                <Button size="sm" className="bg-white text-[#2C3E2B] rounded-full text-[10px] font-semibold px-6 h-8 mb-3 opacity-90 pointer-events-none">
+                                  {section.content.ctaText}
+                                </Button>
+                              )}
+                              {section.content.disclaimer && (
+                                <p className="text-[8px] text-white/40 mt-1">{section.content.disclaimer}</p>
+                              )}
+                            </div>
+                          );
 
                         default:
                           return null;
