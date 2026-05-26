@@ -25,7 +25,7 @@ const App = () => (
       <BrowserRouter>
         <SalesNotification />
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<DynamicPage />} />
           <Route path="/clase-gratuita" element={<TrafficSplitter />} />
 
           {/* Debug/Preview Routes for A/B Testing Variants */}

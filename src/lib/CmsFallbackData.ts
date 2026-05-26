@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import sLogo from "@/assets/santosha-logo.jpg";
+import instructorImage from "@/assets/instructor.png";
+
 export interface VisualIdentity {
   brandName: string;
   logoText: string;
@@ -224,6 +227,88 @@ const DEFAULT_FORMS: CmsForm[] = [
 ];
 
 const DEFAULT_PAGES: CmsPage[] = [
+  {
+    id: "home",
+    title: "Inicio SantoSha",
+    slug: "home",
+    published: true,
+    sections: [
+      {
+        id: "home-hero",
+        type: "hero",
+        content: {
+          title: "Encuentra tu Paz Interior",
+          subtitle: "Clase Maestra de Kundalini Yoga",
+          tagline: "Clase Maestra Gratuita",
+          buttonText: "Quiero mi clase gratuita",
+          buttonLink: "#form-home-hero",
+          formId: "b191c71b-a5d6-4767-9d7a-11f879685a4a"
+        }
+      },
+      {
+        id: "home-connection",
+        type: "connection",
+        content: {
+          title: "¿La incapacidad para gestionar tus emociones está ganando la batalla?",
+          description: "Las sensaciones de incomodidad que te drenan en tu día a día por no tener la capacidad o las herramientas para gestionar tus emociones y que están afectando no solo tu vitalidad, tu motivación, también la relación con los demás, sí tienen solución.\n\nNo tienes que aceptar vivir en un estado de descontento, constante irritabilidad y reactividad que nubla tu juicio y afecta tu salud mental y física.\n\nNuestra clase gratuita para Crear Equilibrio Emocional te ofrece una solución práctica para calmar tu sistema nervioso y recuperar el control de tus emociones.",
+          imageUrl: instructorImage,
+          layout: "image-right",
+          buttonText: "Quiero mi clase gratuita",
+          buttonLink: "#home-hero"
+        }
+      },
+      {
+        id: "home-benefits",
+        type: "benefits",
+        content: {
+          title: "Beneficios que Obtendrás",
+          items: [
+            { icon: "🧠", title: "Claridad Mental", description: "Estimula las áreas motoras y sensoriales del cerebro para mejorar tu memoria y agudeza cognitiva." },
+            { icon: "❤️", title: "Equilibrio Emocional", description: "Reduce los niveles de ansiedad y depresión, fomentando un estado de paz interior y resiliencia." },
+            { icon: "✨", title: "Vitalidad", description: "Utiliza la respiración consciente y mudras para estimular tus recursos naturales desde la primera práctica." },
+            { icon: "🌙", title: "Descanso Profundo", description: "Entrena tu cerebro para silenciar el ruido mental, accediendo a niveles de relajación más profundos." }
+          ]
+        }
+      },
+      {
+        id: "home-social-proof",
+        type: "benefits",
+        content: {
+          title: "Únete a una Comunidad de Transformación",
+          items: [
+            { icon: "👥", title: "10,000+", description: "Profesionales Transformados" },
+            { icon: "⏱️", title: "30 min", description: "Práctica Diaria" },
+            { icon: "📖", title: "Ciencia", description: "Respaldada Científicamente" }
+          ]
+        }
+      },
+      {
+        id: "home-testimonials",
+        type: "testimonials",
+        content: {
+          title: "Historias de Transformación Real",
+          testimonials: [
+            { author: "Patricia Mendoza", role: "Directora de Marketing, 45 años", quote: "Después de 15 años en el mundo corporativo, sentía que había perdido el control de mis emociones. Los primeros 30 minutos de práctica ya marcaron una diferencia. Ahora manejo las reuniones difíciles con una calma que antes me parecía imposible." },
+            { author: "Laura Fernández", role: "Emprendedora, 38 años", quote: "Entre mis hijos y mi negocio, vivía en un estado de agotamiento constante. Esta práctica me devolvió la energía y la paciencia que necesitaba. Mi familia ha notado el cambio." },
+            { author: "Dr. Carlos Ruiz", role: "Médico Internista, 52 años", quote: "Como médico, estaba escéptico al principio. Pero los resultados fueron innegables: mejor sueño, menos irritabilidad y más claridad para tomar decisiones clínicas. Ahora lo recomiendo a mis pacientes." },
+            { author: "Andrea Morales", role: "Diseñadora UX, 29 años", quote: "La ansiedad estaba afectando mi trabajo creativo. Después de un mes practicando, recuperé mi capacidad de concentración y mi confianza. Es la mejor inversión de tiempo que he hecho." }
+          ]
+        }
+      },
+      {
+        id: "home-guarantees",
+        type: "benefits",
+        content: {
+          title: "Acceso Inmediato y Gratuito",
+          items: [
+            { icon: "✓", title: "Sin tarjeta de crédito", description: "Acceso 100% gratuito." },
+            { icon: "✓", title: "Acceso inmediato", description: "Obtén tus credenciales al instante." },
+            { icon: "✓", title: "100% gratuito", description: "Sin cobros ocultos ni sorpresas." }
+          ]
+        }
+      }
+    ]
+  },
   {
     id: "terapia-individual",
     title: "Terapia Individual y Bienestar",

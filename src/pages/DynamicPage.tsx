@@ -192,7 +192,56 @@ export const DynamicPage = () => {
           switch (section.type) {
             
             // 1. HERO SECTION
-            case "hero":
+            case "hero": {
+              const heroForm = section.content.formId ? forms.find(f => f.id === section.content.formId) : null;
+              
+              if (heroForm) {
+                return (
+                  <section 
+                    key={section.id} 
+                    id="form-home-hero"
+                    className={`py-16 md:py-24 px-6 relative overflow-hidden ${bgSection} border-b border-border/10`}
+                  >
+                    {/* Decorative blurred glow circles */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
+                      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-gentle-pulse" />
+                      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-gentle-pulse" style={{ animationDelay: "2s" }} />
+                    </div>
+
+                    <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
+                      {/* Left text column */}
+                      <div className="text-center lg:text-left space-y-6">
+                        {section.content.tagline && (
+                          <span className={`inline-block px-5 py-2 mb-4 text-xs font-semibold tracking-wider uppercase text-primary border border-primary/30 rounded-full ${palette.secondaryText} ${palette.secondary}`}>
+                            {section.content.tagline}
+                          </span>
+                        )}
+                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+                          {section.content.title}
+                        </h1>
+                        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-xl">
+                          {section.content.subtitle}
+                        </p>
+                        <p className="text-md text-muted-foreground leading-relaxed font-light">
+                          {section.content.description || "Domina tu enfoque y elimina el estrés con una técnica milenaria de solo 30 minutos respaldada por la ciencia."}
+                        </p>
+                      </div>
+
+                      {/* Right form column */}
+                      <div className="relative z-10 w-full max-w-md mx-auto">
+                        <div className={`${isEven ? palette.cardBackground : palette.background} p-8 md:p-10 rounded-3xl border border-border/60 shadow-xl shadow-primary/5`}>
+                          <CmsFormRenderer 
+                            form={heroForm} 
+                            pageSlug={page.slug} 
+                            buttonClassName={palette.primary}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                );
+              }
+
               return (
                 <section 
                   key={section.id} 
@@ -222,6 +271,7 @@ export const DynamicPage = () => {
                   </div>
                 </section>
               );
+            }
 
             // 2. TEXT + IMAGE CONNECTION SECTION
             case "connection": {
