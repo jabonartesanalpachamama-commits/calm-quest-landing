@@ -5,7 +5,7 @@ import instructorImage from "@/assets/instructor.png";
 export interface VisualIdentity {
   brandName: string;
   logoText: string;
-  palette: "menta" | "lavanda" | "tierra" | "oceano";
+  palette: "menta" | "lavanda" | "tierra" | "oceano" | "loto" | "prana" | "savia";
   fontFamily: "serif" | "sans";
   whatsappNumber: string;
   footerText: string;
@@ -203,6 +203,114 @@ export const COLOR_PALETTES = {
       "--border": "202 18% 88%",
       "--input": "202 18% 88%",
       "--ring": "198 26% 49%",
+      "--radius": "1rem"
+    }
+  },
+  loto: {
+    name: "Loto Místico (Despertar y Kundalini Yoga)",
+    primary: "bg-[#846D89] text-white hover:bg-[#745D79]",
+    primaryText: "text-[#846D89]",
+    primaryBorder: "border-[#846D89]",
+    background: "bg-[#FAF7F2]",
+    cardBackground: "bg-white",
+    foreground: "text-[#3B2E3E]",
+    mutedForeground: "text-[#695D6C]",
+    secondary: "bg-[#E3D3D5]",
+    secondaryText: "text-[#684E51]",
+    accent: "bg-[#E5CE9F]",
+    accentText: "text-[#5D4B26]",
+    variables: {
+      "--background": "38 25% 96%",
+      "--foreground": "289 15% 21%",
+      "--card": "0 0% 100%",
+      "--card-foreground": "289 15% 21%",
+      "--popover": "0 0% 100%",
+      "--popover-foreground": "289 15% 21%",
+      "--primary": "289 11% 48%",
+      "--primary-foreground": "0 0% 100%",
+      "--secondary": "352 18% 86%",
+      "--secondary-foreground": "353 14% 36%",
+      "--muted": "352 10% 94%",
+      "--muted-foreground": "288 8% 39%",
+      "--accent": "40 55% 76%",
+      "--accent-foreground": "40 42% 26%",
+      "--destructive": "0 84% 60%",
+      "--destructive-foreground": "0 0% 98%",
+      "--border": "352 12% 90%",
+      "--input": "352 12% 90%",
+      "--ring": "289 11% 48%",
+      "--radius": "1rem"
+    }
+  },
+  prana: {
+    name: "Prana Dorado (Energía Vital, Sol y Radiancia)",
+    primary: "bg-[#CD7A5B] text-white hover:bg-[#B96A4C]",
+    primaryText: "text-[#CD7A5B]",
+    primaryBorder: "border-[#CD7A5B]",
+    background: "bg-[#FCFAF6]",
+    cardBackground: "bg-white",
+    foreground: "text-[#4E362A]",
+    mutedForeground: "text-[#826658]",
+    secondary: "bg-[#ECDDCF]",
+    secondaryText: "text-[#684C38]",
+    accent: "bg-[#ECC07E]",
+    accentText: "text-[#61441E]",
+    variables: {
+      "--background": "40 25% 98%",
+      "--foreground": "20 30% 24%",
+      "--card": "0 0% 100%",
+      "--card-foreground": "20 30% 24%",
+      "--popover": "0 0% 100%",
+      "--popover-foreground": "20 30% 24%",
+      "--primary": "16 54% 58%",
+      "--primary-foreground": "0 0% 100%",
+      "--secondary": "29 44% 87%",
+      "--secondary-foreground": "25 30% 31%",
+      "--muted": "29 20% 95% animate-pulse",
+      "--muted-foreground": "20 19% 43%",
+      "--accent": "36 74% 71%",
+      "--accent-foreground": "34 53% 25%",
+      "--destructive": "0 84% 60%",
+      "--destructive-foreground": "0 0% 98%",
+      "--border": "29 15% 88%",
+      "--input": "29 15% 88%",
+      "--ring": "16 54% 58%",
+      "--radius": "1rem"
+    }
+  },
+  savia: {
+    name: "Savia Eucalipto (Tranquilidad Natural y Respiración)",
+    primary: "bg-[#5F7D6B] text-white hover:bg-[#4F6D5C]",
+    primaryText: "text-[#5F7D6B]",
+    primaryBorder: "border-[#5F7D6B]",
+    background: "bg-[#F2F5F3]",
+    cardBackground: "bg-white",
+    foreground: "text-[#233229]",
+    mutedForeground: "text-[#516358]",
+    secondary: "bg-[#D9E3DC]",
+    secondaryText: "text-[#3F4F45]",
+    accent: "bg-[#D5C0A7]",
+    accentText: "text-[#524332]",
+    variables: {
+      "--background": "140 10% 95%",
+      "--foreground": "144 18% 17%",
+      "--card": "0 0% 100%",
+      "--card-foreground": "144 18% 17%",
+      "--popover": "0 0% 100%",
+      "--popover-foreground": "144 18% 17%",
+      "--primary": "144 14% 43%",
+      "--primary-foreground": "0 0% 100%",
+      "--secondary": "138 14% 87%",
+      "--secondary-foreground": "142 11% 28%",
+      "--muted": "138 8% 94%",
+      "--muted-foreground": "143 10% 35%",
+      "--accent": "33 39% 75%",
+      "--accent-foreground": "32 24% 26%",
+      "--destructive": "0 84% 60%",
+      "--destructive-foreground": "0 0% 98%",
+      "--border": "138 8% 90%",
+      "--input": "138 8% 90%",
+      "--ring": "144 14% 43%",
       "--radius": "1rem"
     }
   }
