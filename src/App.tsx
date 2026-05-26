@@ -8,8 +8,12 @@ import TrafficSplitter from "./components/TrafficSplitter";
 import FreeClass from "./pages/FreeClass";
 import FreeClassTime from "./pages/FreeClassTime";
 import FreeClassSlots from "./pages/FreeClassSlots";
-import NotFound from "./pages/NotFound";
 import SalesNotification from "./components/SalesNotification";
+
+// CMS Pages
+import CmsLogin from "./pages/CmsLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import DynamicPage from "./pages/DynamicPage";
 
 const queryClient = new QueryClient();
 
@@ -29,8 +33,12 @@ const App = () => (
           <Route path="/clase-gratuita-tiempo" element={<FreeClassTime />} />
           <Route path="/clase-gratuita-cupos" element={<FreeClassSlots />} />
 
+          {/* CMS Administration Panel */}
+          <Route path="/admin/login" element={<CmsLogin />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<DynamicPage />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
