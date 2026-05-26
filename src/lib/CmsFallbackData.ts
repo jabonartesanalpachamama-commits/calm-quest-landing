@@ -488,6 +488,10 @@ export const DEFAULT_PAGES: CmsPage[] = [
         type: "benefits",
         content: {
           title: "Beneficios que Obtendrás",
+          showCta: true,
+          ctaText: "Quiero estos beneficios ahora",
+          ctaLink: "",
+          ctaSubtext: "Sin costo · Sin tarjeta de crédito",
           items: [
             { icon: "🧠", title: "Claridad Mental", description: "Estimula las áreas motoras y sensoriales del cerebro para mejorar tu memoria y agudeza cognitiva." },
             { icon: "❤️", title: "Equilibrio Emocional", description: "Reduce los niveles de ansiedad y depresión, fomentando un estado de paz interior y resiliencia." },
@@ -514,6 +518,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
         type: "testimonials",
         content: {
           title: "Historias de Transformación Real",
+          ctaText: "Quiero mi transformación ahora",
+          ctaLink: "",
+          ctaSubtext: "Únete a +10,000 personas que ya cambiaron su vida",
           testimonials: [
             { author: "Patricia Mendoza", role: "Directora de Marketing, 45 años", quote: "Después de 15 años en el mundo corporativo, sentía que había perdido el control de mis emociones. Los primeros 30 minutos de práctica ya marcaron una diferencia. Ahora manejo las reuniones difíciles con una calma que antes me parecía imposible." },
             { author: "Laura Fernández", role: "Emprendedora, 38 años", quote: "Entre mis hijos y mi negocio, vivía en un estado de agotamiento constante. Esta práctica me devolvió la energía y la paciencia que necesitaba. Mi familia ha notado el cambio." },
@@ -558,7 +565,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
             "Respuestas conscientes, no reacciones impulsivas",
             "Presencia plena en tu vida y relaciones"
           ],
-          ctaText: "Quiero esta transformación"
+          ctaText: "Quiero esta transformación",
+          ctaLink: "",
+          ctaSubtext: "Gratuito · Sin compromisos · Acceso inmediato"
         }
       },
       {
@@ -568,6 +577,7 @@ export const DEFAULT_PAGES: CmsPage[] = [
           title: "¿Cuántos días más quieres vivir con esa tensión?",
           subtitle: "Miles de personas ya encontraron el equilibrio que buscas. Tu clase gratuita de Kundalini Yoga está esperando por ti.",
           ctaText: "Accede Gratis Ahora",
+          ctaLink: "",
           disclaimer: "Sin riesgo · Sin tarjeta · Sin compromisos · Acceso inmediato"
         }
       }
@@ -605,6 +615,10 @@ export const DEFAULT_PAGES: CmsPage[] = [
         type: "benefits",
         content: {
           title: "¿Cómo puede ayudarte nuestro enfoque?",
+          showCta: true,
+          ctaText: "Reserva tu primera sesión",
+          ctaLink: "https://wa.link/xy0brl",
+          ctaSubtext: "Primera consulta sin compromiso",
           items: [
             { icon: "🌿", title: "Reducción de la Ansiedad", description: "Aprende técnicas corporales y de respiración para calmar el sistema nervioso en momentos de crisis." },
             { icon: "🧘", title: "Autoconocimiento Profundo", description: "Comprende el origen de tus pensamientos y cómo influyen en tus emociones y decisiones." },
@@ -678,7 +692,7 @@ export const DEFAULT_POSTS: CmsPost[] = [
 // ─── LocalStorage versioned cache ───────────────────────────────────────────
 // Bump SCHEMA_VERSION any time DEFAULT_PAGES or DEFAULT_FORMS change structure.
 // On mismatch, the stale page/form cache is wiped and rebuilt from the new defaults.
-const SCHEMA_VERSION = "v5"; // bump this when page sections change
+const SCHEMA_VERSION = "v6"; // bump this when page sections change
 const VERSION_KEY    = "sant_cms_schema_version";
 
 const KEYS = {

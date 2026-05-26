@@ -518,7 +518,7 @@ export const DynamicPage = () => {
                     </div>
 
                     {/* Mid-section CTA after benefits */}
-                    {section.content.showCta !== false && section.content.items?.length >= 3 && (
+                    {section.content.showCta !== false && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}

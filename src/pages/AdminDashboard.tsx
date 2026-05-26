@@ -1520,11 +1520,24 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                         } else if (type === "connection") {
                           content = { title: "¿Quiénes somos?", description: "Descripción de conexión...", layout: "image-right" };
                         } else if (type === "benefits") {
-                          content = { title: "Lo que aprenderás", items: [{ icon: "🧘", title: "Paz", description: "Clases" }] };
+                          content = {
+                            title: "Lo que aprenderás",
+                            showCta: true,
+                            ctaText: "Quiero estos beneficios",
+                            ctaLink: "",
+                            ctaSubtext: "Sin costo · Sin compromisos",
+                            items: [{ icon: "🧘", title: "Paz interior", description: "Técnicas de respiración y meditación para calmar la mente." }]
+                          };
                         } else if (type === "form") {
                           content = { title: "Reserva tu plaza", subtitle: "Formulario de contacto", formId: forms[0]?.id || "" };
                         } else if (type === "testimonials") {
-                          content = { title: "Experiencias", testimonials: [{ quote: "Excelente espacio.", author: "Anónimo" }] };
+                          content = {
+                            title: "Experiencias",
+                            ctaText: "Quiero vivir esta transformación",
+                            ctaLink: "",
+                            ctaSubtext: "Únete a miles de personas que ya dieron el paso",
+                            testimonials: [{ quote: "Excelente espacio.", author: "Anónimo", role: "Practicante" }]
+                          };
                         } else if (type === "faq") {
                           content = { title: "Preguntas Frecuentes", faqs: [{ question: "¿Qué duración tiene?", answer: "1 hora" }] };
                         } else if (type === "transformation") {
@@ -1534,13 +1547,16 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                             afterTitle: "Con nuestra práctica",
                             before: ["Estrés y ansiedad constante", "Falta de concentración"],
                             after: ["Calma y claridad mental", "Enfoque y energía renovada"],
-                            ctaText: "Quiero esta transformación"
+                            ctaText: "Quiero esta transformación",
+                            ctaLink: "",
+                            ctaSubtext: "Gratuito · Sin compromisos · Acceso inmediato"
                           };
                         } else if (type === "cta") {
                           content = {
                             title: "¿Cuántos días más quieres esperar?",
                             subtitle: "Da el primer paso hacia tu bienestar hoy.",
                             ctaText: "Comenzar Ahora",
+                            ctaLink: "",
                             disclaimer: "Sin riesgo · Acceso inmediato"
                           };
                         }
@@ -1949,6 +1965,18 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                                     <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
                                       value={section.content.title || ""}
                                       onChange={e => updateField("title", e.target.value)} />
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <input
+                                      type="checkbox"
+                                      id={`showCta-${section.id}`}
+                                      checked={section.content.showCta !== false}
+                                      onChange={e => updateField("showCta", e.target.checked)}
+                                      className="rounded border-border w-3.5 h-3.5 accent-[#7EA172]"
+                                    />
+                                    <label htmlFor={`showCta-${section.id}`} className="text-[10px] font-semibold text-muted-foreground cursor-pointer select-none">
+                                      Mostrar botón CTA al pie de este bloque
+                                    </label>
                                   </div>
                                   <div className="space-y-2">
                                     <label className="font-semibold block text-[10px] text-muted-foreground">Items / Beneficios ({items.length})</label>
@@ -2415,6 +2443,13 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                                     <img src={section.content.imageUrl} alt="preview" className="w-full h-full object-cover" />
                                   </div>
                                 )}
+                                {section.content.buttonText && (
+                                  <div>
+                                    <Button size="sm" className="bg-[#7EA172] text-white hover:bg-[#6C8E61] rounded-full text-[10px] font-semibold px-5 opacity-80 pointer-events-none">
+                                      {section.content.buttonText}
+                                    </Button>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           );
@@ -2432,6 +2467,16 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                                   </div>
                                 ))}
                               </div>
+                              {section.content.showCta !== false && (
+                                <div className="text-center mt-4">
+                                  <Button size="sm" className="bg-[#7EA172] text-white hover:bg-[#6C8E61] rounded-full text-[10px] font-semibold px-5 opacity-80 pointer-events-none">
+                                    {section.content.ctaText || "Quiero estos beneficios ahora"}
+                                  </Button>
+                                  {section.content.ctaSubtext && (
+                                    <p className="text-[9px] text-muted-foreground mt-1.5">{section.content.ctaSubtext}</p>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           );
 
@@ -2480,6 +2525,14 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                                     </div>
                                   </div>
                                 ))}
+                              </div>
+                              <div className="text-center mt-4">
+                                <Button size="sm" className="bg-[#7EA172] text-white hover:bg-[#6C8E61] rounded-full text-[10px] font-semibold px-5 opacity-80 pointer-events-none">
+                                  {section.content.ctaText || "Quiero mi transformación"}
+                                </Button>
+                                {section.content.ctaSubtext && (
+                                  <p className="text-[9px] text-muted-foreground mt-1.5">{section.content.ctaSubtext}</p>
+                                )}
                               </div>
                             </div>
                           );
