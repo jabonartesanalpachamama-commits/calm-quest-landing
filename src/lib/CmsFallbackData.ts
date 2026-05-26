@@ -348,7 +348,7 @@ const DEFAULT_FORMS: CmsForm[] = [
   }
 ];
 
-const DEFAULT_PAGES: CmsPage[] = [
+export const DEFAULT_PAGES: CmsPage[] = [
   {
     id: "home",
     title: "Inicio SantoSha",
@@ -572,14 +572,39 @@ export const DEFAULT_POSTS: CmsPost[] = [
   }
 ];
 
-// LocalStorage helpers to run fully offline
+// ─── LocalStorage versioned cache ───────────────────────────────────────────
+// Bump SCHEMA_VERSION any time DEFAULT_PAGES or DEFAULT_FORMS change structure.
+// On mismatch, the stale page/form cache is wiped and rebuilt from the new defaults.
+const SCHEMA_VERSION = "v4"; // bump this when page sections change
+const VERSION_KEY    = "sant_cms_schema_version";
+
 const KEYS = {
-  SETTINGS: "sant_cms_settings",
-  PAGES: "sant_cms_pages",
-  FORMS: "sant_cms_forms",
+  SETTINGS:    "sant_cms_settings",
+  PAGES:       "sant_cms_pages",
+  FORMS:       "sant_cms_forms",
   SUBMISSIONS: "sant_cms_submissions",
-  POSTS: "sant_cms_posts"
+  POSTS:       "sant_cms_posts",
 };
+
+/** Wipe stale structural cache when the schema version changes. */
+const migrateIfNeeded = (): void => {
+  try {
+    const stored = localStorage.getItem(VERSION_KEY);
+    if (stored !== SCHEMA_VERSION) {
+      // Clear only structural data — preserve user submissions
+      localStorage.removeItem(KEYS.PAGES);
+      localStorage.removeItem(KEYS.FORMS);
+      // Keep SETTINGS so admin's palette/brand choices survive the reset
+      localStorage.setItem(VERSION_KEY, SCHEMA_VERSION);
+      console.info(`[CMS] Schema updated to ${SCHEMA_VERSION}. Page cache refreshed.`);
+    }
+  } catch (_) {
+    // localStorage may be blocked in some environments — fail silently
+  }
+};
+
+// Run migration once at module load time (fires when app starts)
+migrateIfNeeded();
 
 export const loadFromLocalStorage = <T>(key: string, defaultValue: T): T => {
   try {
@@ -599,20 +624,20 @@ export const saveToLocalStorage = <T>(key: string, value: T): void => {
   }
 };
 
-export const getLocalSettings = (): VisualIdentity => loadFromLocalStorage(KEYS.SETTINGS, DEFAULT_SETTINGS);
-export const saveLocalSettings = (settings: VisualIdentity): void => saveToLocalStorage(KEYS.SETTINGS, settings);
+export const getLocalSettings    = (): VisualIdentity   => loadFromLocalStorage(KEYS.SETTINGS,    DEFAULT_SETTINGS);
+export const saveLocalSettings   = (s: VisualIdentity)  => saveToLocalStorage(KEYS.SETTINGS,    s);
 
-export const getLocalPages = (): CmsPage[] => loadFromLocalStorage(KEYS.PAGES, DEFAULT_PAGES);
-export const saveLocalPages = (pages: CmsPage[]): void => saveToLocalStorage(KEYS.PAGES, pages);
+export const getLocalPages       = (): CmsPage[]        => loadFromLocalStorage(KEYS.PAGES,       DEFAULT_PAGES);
+export const saveLocalPages      = (p: CmsPage[])       => saveToLocalStorage(KEYS.PAGES,       p);
 
-export const getLocalForms = (): CmsForm[] => loadFromLocalStorage(KEYS.FORMS, DEFAULT_FORMS);
-export const saveLocalForms = (forms: CmsForm[]): void => saveToLocalStorage(KEYS.FORMS, forms);
+export const getLocalForms       = (): CmsForm[]        => loadFromLocalStorage(KEYS.FORMS,       DEFAULT_FORMS);
+export const saveLocalForms      = (f: CmsForm[])       => saveToLocalStorage(KEYS.FORMS,       f);
 
-export const getLocalSubmissions = (): CmsSubmission[] => loadFromLocalStorage(KEYS.SUBMISSIONS, DEFAULT_SUBMISSIONS);
-export const saveLocalSubmissions = (subs: CmsSubmission[]): void => saveToLocalStorage(KEYS.SUBMISSIONS, subs);
+export const getLocalSubmissions = (): CmsSubmission[]  => loadFromLocalStorage(KEYS.SUBMISSIONS, DEFAULT_SUBMISSIONS);
+export const saveLocalSubmissions= (s: CmsSubmission[]) => saveToLocalStorage(KEYS.SUBMISSIONS, s);
 
-export const getLocalPosts = (): CmsPost[] => loadFromLocalStorage(KEYS.POSTS, DEFAULT_POSTS);
-export const saveLocalPosts = (posts: CmsPost[]): void => saveToLocalStorage(KEYS.POSTS, posts);
+export const getLocalPosts       = (): CmsPost[]        => loadFromLocalStorage(KEYS.POSTS,       DEFAULT_POSTS);
+export const saveLocalPosts      = (p: CmsPost[])       => saveToLocalStorage(KEYS.POSTS,       p);
 
 export const applyCssVariablesForPalette = (paletteName: keyof typeof COLOR_PALETTES) => {
   const palette = COLOR_PALETTES[paletteName] || COLOR_PALETTES.menta;

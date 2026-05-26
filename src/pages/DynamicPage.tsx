@@ -8,6 +8,7 @@ import {
   CmsForm, 
   VisualIdentity, 
   COLOR_PALETTES,
+  DEFAULT_PAGES,
   getLocalPages, 
   getLocalSettings, 
   getLocalForms, 
@@ -101,11 +102,34 @@ export const DynamicPage = () => {
           foundPage = localPages.find(p => p.slug === pageSlug && p.published);
         }
 
+        // ── Smart section merge ──────────────────────────────────────────────
+        // If the page was loaded from cache/Supabase, it may be missing new
+        // section types added since it was last saved (e.g. "transformation",
+        // "cta"). We append any missing section types from the latest defaults
+        // without touching existing sections the admin may have customised.
+        if (foundPage) {
+          const defaultPage = DEFAULT_PAGES.find(p => p.slug === pageSlug);
+          if (defaultPage) {
+            const existingTypes = new Set(foundPage.sections.map((s: any) => s.type));
+            const missingSections = defaultPage.sections.filter(
+              s => !existingTypes.has(s.type)
+            );
+            if (missingSections.length > 0) {
+              foundPage = {
+                ...foundPage,
+                sections: [...foundPage.sections, ...missingSections],
+              };
+            }
+          }
+        }
+        // ────────────────────────────────────────────────────────────────────
+
         if (foundPage) {
           setPage(foundPage);
         } else {
           setError("Página no encontrada");
         }
+
       } catch (err: any) {
         console.error("Error loading dynamic page data:", err);
         setError("Ocurrió un error al cargar la página");
