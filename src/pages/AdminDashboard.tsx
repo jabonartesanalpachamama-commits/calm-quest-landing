@@ -531,6 +531,186 @@ export const AdminDashboard = () => {
     }
   };
 
+  // --- GENERATE AI ARTICLE ---
+  const handleGenerateAiArticle = async () => {
+    if (!aiPrompt.trim()) return;
+    setIsGeneratingAi(true);
+    
+    // Simulate natural AI generation delay for premium feel
+    setTimeout(() => {
+      try {
+        const prompt = aiPrompt.trim();
+        const capitalizedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
+        
+        let title = "";
+        let excerpt = "";
+        let content = "";
+        
+        // Define templates in Spanish based on tone and keywords
+        if (aiTone === "empatico") {
+          title = `${capitalizedPrompt}: Un Camino de Compasión y Autocuidado`;
+          excerpt = `Aprende a validar tus emociones y a transitar momentos difíciles con compasión, cuidado y un espacio seguro para tu mente.`;
+          content = `# ${title}
+
+En la búsqueda constante de bienestar, a menudo nos enfrentamos a desafíos emocionales que nos abruman. El estrés, la autoexigencia y el ritmo acelerado de la vida moderna pueden hacernos sentir desconectados de nosotros mismos. Cuando experimentamos momentos de tensión relacionados con **${prompt}**, la primera y más importante respuesta que podemos darnos es la **compasión**.
+
+La compasión no es debilidad ni resignación; es la valentía de mirar nuestro propio sufrimiento con un corazón abierto y sin juicios. Es el espacio seguro que nos permitimos para respirar, sentir y sanar.
+
+---
+
+## Validar tus Emociones: El Primer Paso
+
+Muchas veces, cuando nos sentimos ansiosos, tristes o estresados, nuestra primera reacción es luchar contra esa emoción. Nos decimos que "no deberíamos sentirnos así" o intentamos forzar un estado de positividad. Sin embargo, la psicología compasiva nos enseña que **lo que se resiste, persiste**.
+
+* **Date permiso para sentir**: Reconoce la emoción tal como es. Di mentalmente: *"En este momento, hay tensión en mí. Es natural sentirse así ante esta situación"*.
+* **Abraza la imperfección**: Recuerda que ser humano implica experimentar toda la gama de emociones. No estás solo en este sentir; es parte de la experiencia compartida de la vida.
+
+---
+
+## Ejercicio Práctico: Tu Ancla de Autocompasión
+
+Cuando sientas que la mente divaga o la presión aumenta debido a **${prompt}**, te invito a realizar esta pausa de autocompasión de 3 pasos:
+
+1. **Contacto Físico**: Coloca una mano sobre tu pecho, sintiendo el calor de tu palma y el latido de tu corazón. Este simple gesto activa el sistema de calma de tu cuerpo.
+2. **Respiración Consciente**: Inhala profundo por la nariz sintiendo cómo se expande tu pecho, y exhala suavemente por la boca, liberando cualquier rigidez en tus hombros.
+3. **Frase Amable**: Repítete con ternura: *"Que pueda tener paciencia conmigo. Que pueda darme el espacio para sanar. Que pueda estar en paz"*.
+
+El camino hacia la calma mental no se trata de no sentir dolor, sino de aprender a tratarnos con amor y suavidad en medio de la tormenta. ¡Sé paciente contigo hoy!`;
+        } else if (aiTone === "cientifico") {
+          title = `La Neurobiología de ${capitalizedPrompt}: Comprendiendo tu Sistema Nervioso`;
+          excerpt = `Una perspectiva científica y accesible sobre cómo el estrés y las emociones afectan tus circuitos cerebrales y técnicas para regular tu cuerpo de forma eficaz.`;
+          content = `# ${title}
+
+El cuerpo humano es una red biológica sumamente sofisticada donde la mente y el sistema nervioso se comunican de manera bidireccional cada milisegundo. Cuando nos enfrentamos a situaciones que disparan **${prompt}**, se activa una cascada fisiológica liderada por la amígdala cerebral, desencadenando la liberación de hormonas de estrés como el cortisol y la adrenalina.
+
+Esta respuesta de supervivencia adaptativa, diseñada para protegernos de amenazas físicas, a menudo se activa ante estresores psicológicos del día a día, generando un estado de alerta crónico que desgasta nuestra vitalidad.
+
+---
+
+## La Respuesta al Estrés y la Amígdala
+
+Cuando percibimos una amenaza, la amígdala cerebral envía una señal de socorro al hipotálamo, el cual activa el sistema nervioso simpático. Este proceso incrementa la frecuencia cardíaca, eleva la presión arterial y desvía la energía hacia los músculos en preparación para la "lucha o huida".
+
+* **El papel del cortisol**: El cortisol mantiene este estado de alerta elevado, pero su presencia prolongada en el torrente sanguíneo inhibe funciones no esenciales como la digestión, el sistema inmunológico y la toma de decisiones en el lóbulo frontal.
+* **Niebla Mental**: Es por esto que, bajo tensión por **${prompt}**, nos cuesta concentrarnos o tomar decisiones con claridad; la sangre y los recursos de nuestro cerebro se concentran en las áreas primitivas de supervivencia.
+
+---
+
+## Neuroplasticidad y Técnicas de Regulación
+
+La maravillosa noticia descubierta por la neurociencia es la **neuroplasticidad**: la capacidad de nuestro cerebro para reorganizar sus conexiones neuronales a través del aprendizaje y la práctica consciente.
+
+Podemos intervenir de forma activa en nuestro sistema nervioso para activar el sistema parasimpático (la respuesta de relajación) utilizando herramientas basadas en la ciencia:
+
+1. **El Suspiro Fisiológico**: Dos inhalaciones rápidas por la nariz seguidas de una exhalación larga y completa por la boca. Esto desinfla los alvéolos pulmonares y envía una señal inmediata al vago para bajar las pulsaciones.
+2. **Estimulación del Nervio Vago**: El nervio vago es la autopista principal que comunica el cuerpo con el cerebro. Cantar suavemente, tararear o exhalar el doble de tiempo de la inhalación estimula el tono vagal, promoviendo una calma profunda.
+
+Al comprender la ciencia detrás de nuestras emociones, nos liberamos de la culpa y adquirimos el poder de transformar nuestra biología desde adentro.`;
+        } else if (aiTone === "inspirador") {
+          title = `${capitalizedPrompt}: Despertando tu Energía Vital y Claridad Espiritual`;
+          excerpt = `Descubre cómo la sabiduría milenaria y las técnicas del Kundalini Yoga pueden desbloquear tu Prana para transitar las tormentas de la mente con presencia.`;
+          content = `# ${title}
+
+En la tradición del Kundalini Yoga, la vida se concibe como una danza sagrada de energía. La mente es un instrumento poderoso, pero a menudo se convierte en un laberinto de dudas, apegos y miedos. Cuando nos sentimos bloqueados por **${prompt}**, no se trata de una falla personal, sino de una interrupción en el flujo de nuestro **Prana** (la fuerza vital universal).
+
+A través de la respiración profunda, los cantos sagrados y la meditación activa, podemos disolver los bloqueos energéticos y recordar que nuestra naturaleza esencial es ilimitada y radiante.
+
+---
+
+## Prana y Apana: La Balanza del Bienestar
+
+La salud integral se sostiene en el equilibrio de dos fuerzas sutiles dentro de nuestro cuerpo energético:
+
+* **Prana**: La energía de absorción, la vitalidad que entra con cada respiración, la luz y la claridad mental.
+* **Apana**: La energía de eliminación, la capacidad de soltar toxinas, pensamientos negativos y viejos patrones de comportamiento.
+
+Cuando nos enfrentamos a tensiones relacionadas con **${prompt}**, acumulamos Apana y debilitamos nuestro Prana. La práctica regular de Kundalini Yoga nos permite limpiar los canales energéticos (*nadis*) para elevar la energía Kundalini a lo largo de la columna vertebral, expandiendo nuestro campo electromagnético y aportando una claridad mental inquebrantable.
+
+---
+
+## Kriya de Respiración para la Claridad Mental
+
+Si deseas elevar tu energía vital hoy, te invito a realizar este sencillo kriya respiratorio para despejar la mente:
+
+1. Siéntate cómodamente con la columna recta y los ojos cerrados, enfocándote en el tercer ojo (entrecejo).
+2. Tapa tu fosa nasal derecha con el pulgar derecho e inhala lenta y profundamente únicamente a través de la **fosa nasal izquierda**.
+3. Sostén el aire de 3 a 5 segundos.
+4. Tapa la fosa nasal izquierda con el dedo índice y exhala completamente a través de la **fosa nasal derecha**.
+5. Repite este ciclo de 3 a 5 minutos.
+
+Respirar por la fosa nasal izquierda estimula la energía de la luna (*Ida Nadi*), la cual está asociada con la calma, la receptividad, la intuición y la paz mental. Permítete sintonizar con tu propia luz hoy. *Sat Nam*.`;
+        } else {
+          // sencillo/directo
+          title = `5 Pasos Claros para Manejar ${capitalizedPrompt} Hoy Mismo`;
+          excerpt = `Una guía práctica, directa y libre de complicaciones con acciones concretas que puedes implementar de inmediato para recuperar el control y la paz.`;
+          content = `# ${title}
+
+Cuando el estrés o la mente nos abruman ante temas como **${prompt}**, lo último que necesitamos son teorías complejas o explicaciones infinitas. Necesitamos herramientas sencillas, efectivas y listas para usar.
+
+Aquí tienes una guía de 5 pasos prácticos orientados a la acción para recuperar tu centro y devolver la paz a tu mente hoy mismo.
+
+---
+
+## 1. El Filtro del Momento Presente
+
+El 90% de nuestras preocupaciones habitan en el pasado (culpa, añoranza) o en el futuro (ansiedad, expectativas). Hazte esta pregunta de inmediato: *"¿Qué problema real tengo exactamente en este preciso segundo?"*. Descubrirás que, en la inmensa mayoría de las veces, en el aquí y el ahora estás a seguro.
+
+## 2. Reduce los Estímulos
+
+El cerebro moderno sufre de sobrecarga sensorial. Ante la fatiga por **${prompt}**:
+* Pon tu teléfono en modo "No molestar" durante los próximos 30 minutos.
+* Cierra las pestañas innecesarias de tu ordenador.
+* Tómate 2 minutos de silencio absoluto, simplemente cerrando los ojos.
+
+## 3. La Regla del 4-4 (Respiración en Caja)
+
+Reinicia tu ritmo cardíaco y relaja tu diafragma con la respiración en caja:
+1. **Inhala** por la nariz en 4 segundos.
+2. **Sostén** el aire 4 segundos.
+3. **Exhala** por la boca en 4 segundos.
+4. **Mantén el vacío** 4 segundos.
+*Repite este ciclo 5 veces.*
+
+## 4. Mueve la Energía de tu Cuerpo
+
+Las emociones son energía en movimiento. Cuando se estancan, se sienten físicamente como opresión en el pecho o nudos en el estómago. Levántate de tu silla, estira tus brazos hacia el cielo, haz un suave giro de hombros o camina durante 3 minutos. El movimiento físico le indica a tu mente que es seguro soltar.
+
+## 5. Elige una Sola Acción Pequeña
+
+La parálisis por análisis ocurre cuando intentamos resolver todo a la vez. Elige **una sola tarea diminuta** relacionada con tu pendiente, de no más de 5 minutos, y llévala a cabo de inmediato. El cerebro premia la acción liberando dopamina, disminuyendo la sensación de agobio.
+
+Recuperar el control no requiere transformaciones titánicas, sino pequeños hábitos diarios repetidos de forma consciente. ¡Empieza con uno hoy!`;
+        }
+
+        // Apply generated content to editingPost state
+        setEditingPost({
+          ...editingPost,
+          title: title,
+          slug: title.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, ''),
+          excerpt: excerpt,
+          content: content,
+          publishedAt: new Date().toISOString()
+        });
+
+        setAiPrompt(""); // Reset AI prompt
+        
+        toast({
+          title: "¡Artículo redactado con éxito!",
+          description: `SantoSha AI ha estructurado tu borrador terapéutico bajo un enfoque ${aiTone}. ¡Edítalo y publícalo!`,
+        });
+      } catch (err) {
+        console.error("Error generating AI article:", err);
+        toast({
+          title: "Error al generar",
+          description: "Ocurrió un inconveniente al redactar el artículo. Intenta de nuevo.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsGeneratingAi(false);
+      }
+    }, 1500); // 1.5s delay for natural feeling
+  };
+
   // --- EXPORT TO CSV ---
   const handleExportCsv = () => {
     const filteredSubs = submissions.filter(sub => {
