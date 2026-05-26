@@ -558,20 +558,37 @@ export const AdminDashboard = () => {
                         ✏️ Editar Preguntas
                       </Button>
 
-                      {/* Prevent deleting system default forms if matches */}
                       <Button 
                         variant="ghost" 
                         size="sm" 
-                        disabled={f.id === "b191c71b-a5d6-4767-9d7a-11f879685a4a" || f.id === "e2a2c82c-b6e7-5878-ae8b-22f980796b5b"}
-                        onClick={() => {
-                          if (window.confirm("¿Seguro que deseas eliminar este formulario? Se borrarán también las páginas que lo utilicen.")) {
+                        onClick={async () => {
+                          if (window.confirm(`¿Seguro que deseas eliminar el formulario "${f.name}"? Se borrarán también las secciones de páginas que lo utilicen.`)) {
                             const filtered = forms.filter(item => item.id !== f.id);
                             setForms(filtered);
                             saveLocalForms(filtered);
-                            toast({ title: "Formulario eliminado" });
+
+                            try {
+                              const { error } = await supabase
+                                .from("cms_forms")
+                                .delete()
+                                .eq("id", f.id);
+
+                              if (error) throw error;
+
+                              toast({
+                                title: "Formulario eliminado",
+                                description: `El formulario "${f.name}" fue removido con éxito de la base de datos.`,
+                              });
+                            } catch (dbErr) {
+                              console.warn("Failed to delete form from Supabase, deleted locally:", dbErr);
+                              toast({
+                                title: "Eliminado localmente",
+                                description: "El formulario se eliminó del navegador. Revisa tu conexión con la base de datos.",
+                              });
+                            }
                           }
                         }} 
-                        className="text-[#C98A72] disabled:opacity-30 hover:bg-rose-50 rounded-full px-2"
+                        className="text-[#C98A72] hover:bg-rose-50 rounded-full px-2"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </Button>
