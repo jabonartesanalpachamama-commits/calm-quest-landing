@@ -202,43 +202,55 @@ export const DynamicPage = () => {
                   <section 
                     key={section.id} 
                     id="form-home-hero"
-                    className={`py-16 md:py-24 px-6 relative overflow-hidden ${bgSection} border-b border-border/10`}
+                    className={`py-20 md:py-28 px-6 relative overflow-hidden ${bgSection} border-b border-border/10`}
                   >
                     {/* Decorative blurred glow circles */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
-                      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-gentle-pulse" />
-                      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-gentle-pulse" style={{ animationDelay: "2s" }} />
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "8s" }} />
+                      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "3s", animationDuration: "10s" }} />
                     </div>
 
-                    <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
+                    <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-16 items-center relative z-10">
                       {/* Left text column */}
-                      <div className="text-center lg:text-left space-y-6">
+                      <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="lg:col-span-7 text-center lg:text-left space-y-6"
+                      >
                         {section.content.tagline && (
-                          <span className={`inline-block px-5 py-2 mb-4 text-xs font-semibold tracking-wider uppercase text-primary border border-primary/30 rounded-full ${palette.secondaryText} ${palette.secondary}`}>
-                            {section.content.tagline}
+                          <span className={`inline-block px-5 py-2 text-xs font-semibold tracking-wider uppercase text-primary border border-primary/20 rounded-full ${palette.secondaryText} ${palette.secondary}`}>
+                            ✨ {section.content.tagline}
                           </span>
                         )}
-                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-[#2C3E2B]">
                           {section.content.title}
                         </h1>
-                        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-xl">
+                        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl font-light">
                           {section.content.subtitle}
                         </p>
-                        <p className="text-md text-muted-foreground leading-relaxed font-light">
-                          {section.content.description || "Domina tu enfoque y elimina el estrés con una técnica milenaria de solo 30 minutos respaldada por la ciencia."}
-                        </p>
-                      </div>
+                        {section.content.description && (
+                          <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed font-light border-l border-primary/20 pl-4 py-1 max-w-lg text-left inline-block">
+                            {section.content.description}
+                          </p>
+                        )}
+                      </motion.div>
 
                       {/* Right form column */}
-                      <div className="relative z-10 w-full max-w-md mx-auto">
-                        <div className={`${isEven ? palette.cardBackground : palette.background} p-8 md:p-10 rounded-3xl border border-border/60 shadow-xl shadow-primary/5`}>
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.98, y: 15 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        className="lg:col-span-5 relative z-10 w-full max-w-md mx-auto"
+                      >
+                        <div className="bg-white p-8 md:p-10 rounded-[2rem] border border-[#EBE7DF] shadow-[0_20px_50px_-20px_rgba(126,161,114,0.12)]">
                           <CmsFormRenderer 
                             form={heroForm} 
                             pageSlug={page.slug} 
-                            buttonClassName={palette.primary}
+                            buttonClassName={`${palette.primary} rounded-full py-6 font-semibold shadow-sm`}
                           />
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
                   </section>
                 );
@@ -247,15 +259,24 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-16 md:py-24 px-6 text-center ${bgSection} border-b border-border/10`}
+                  className={`py-20 md:py-28 px-6 text-center ${bgSection} relative overflow-hidden border-b border-border/10`}
                 >
-                  <div className="max-w-3xl mx-auto space-y-6">
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "12s" }} />
+                  </div>
+
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="max-w-4xl mx-auto space-y-6 relative z-10"
+                  >
                     {section.content.tagline && (
                       <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider ${palette.secondary} ${palette.secondaryText}`}>
                         {section.content.tagline}
                       </span>
                     )}
-                    <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+                    <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-[#2C3E2B]">
                       {section.content.title}
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
@@ -264,13 +285,13 @@ export const DynamicPage = () => {
                     {section.content.buttonText && (
                       <div className="pt-4">
                         <a href={section.content.buttonLink || "#"} target="_blank" rel="noopener noreferrer">
-                          <Button size="lg" className={`${palette.primary} text-lg px-8 py-6 rounded-full shadow-md`}>
+                          <Button size="lg" className={`${palette.primary} text-base px-8 py-6 rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300`}>
                             {section.content.buttonText}
                           </Button>
                         </a>
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 </section>
               );
             }
@@ -281,36 +302,51 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-16 md:py-20 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
                 >
-                  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+                  <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                     
                     {/* Column Image */}
-                    <div className={`order-2 ${isImageLeft ? "md:order-1" : "md:order-2"}`}>
+                    <motion.div 
+                      initial={{ opacity: 0, x: isImageLeft ? -20 : 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      className={`order-2 ${isImageLeft ? "md:order-1" : "md:order-2"}`}
+                    >
                       {section.content.imageUrl ? (
-                        <div className="relative rounded-3xl overflow-hidden shadow-md border border-border/30 aspect-[4/3] md:aspect-square">
-                          <img 
-                            src={section.content.imageUrl} 
-                            alt={section.content.title} 
-                            className="w-full h-full object-cover"
-                          />
+                        <div className="p-2 bg-white border border-[#EBE7DF] rounded-[2.5rem] shadow-xl hover:scale-[1.01] transition-transform duration-500 relative">
+                          <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs">🌿</div>
+                          <div className="rounded-[2.2rem] overflow-hidden aspect-[4/3] md:aspect-square bg-muted">
+                            <img 
+                              src={section.content.imageUrl} 
+                              alt={section.content.title} 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
                         </div>
                       ) : (
-                        <div className="aspect-[4/3] rounded-3xl bg-muted flex items-center justify-center text-4xl">
-                          🌿
+                        <div className="aspect-[4/3] rounded-[2.5rem] bg-muted border border-border/30 flex items-center justify-center text-4xl shadow-inner">
+                          🧘
                         </div>
                       )}
-                    </div>
+                    </motion.div>
 
                     {/* Column Text */}
-                    <div className={`order-1 ${isImageLeft ? "md:order-2" : "md:order-1"} space-y-6`}>
-                      <h2 className="font-serif text-3xl md:text-4xl font-semibold leading-snug">
+                    <motion.div 
+                      initial={{ opacity: 0, x: isImageLeft ? 20 : -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      className={`order-1 ${isImageLeft ? "md:order-2" : "md:order-1"} space-y-6`}
+                    >
+                      <h2 className="font-serif text-3xl md:text-4xl font-bold leading-tight text-[#2C3E2B]">
                         {section.content.title}
                       </h2>
-                      <div className="text-muted-foreground leading-relaxed space-y-4 font-light text-md whitespace-pre-line">
+                      <div className="text-muted-foreground leading-relaxed space-y-4 font-light text-md whitespace-pre-line text-justify">
                         {section.content.description}
                       </div>
-                    </div>
+                    </motion.div>
 
                   </div>
                 </section>
@@ -322,29 +358,39 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-16 md:py-20 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
                 >
-                  <div className="max-w-5xl mx-auto text-center space-y-12">
-                    <h2 className="font-serif text-3xl md:text-4xl font-semibold max-w-2xl mx-auto">
+                  <div className="max-w-5xl mx-auto text-center space-y-16">
+                    <h2 className="font-serif text-3xl md:text-4xl font-bold max-w-2xl mx-auto text-[#2C3E2B] leading-tight">
                       {section.content.title}
                     </h2>
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                       {section.content.items?.map((item: any, i: number) => (
-                        <div 
+                        <motion.div 
                           key={i} 
-                          className={`p-8 rounded-3xl ${isEven ? palette.cardBackground : palette.background} border border-border/40 text-left space-y-4 shadow-sm hover:shadow-md transition-shadow`}
+                          initial={{ opacity: 0, y: 15 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                          className="p-8 rounded-[2rem] bg-white border border-[#EBE7DF] text-left space-y-5 shadow-sm hover:shadow-[0_15px_40px_-15px_rgba(126,161,114,0.15)] hover:-translate-y-1.5 hover:border-primary/20 transition-all duration-300 relative overflow-hidden group"
                         >
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${palette.secondary}`}>
-                            {item.icon || "✨"}
+                          {/* Large elegant serif index background number */}
+                          <span className="absolute top-6 right-8 font-serif text-5xl font-bold opacity-10 select-none text-primary group-hover:opacity-15 transition-opacity duration-300">
+                            0{i + 1}
+                          </span>
+
+                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl bg-primary/5 border border-primary/10 text-primary`}>
+                            {item.icon && !["✨", "🌿"].includes(item.icon) ? item.icon : "🍃"}
                           </div>
-                          <h3 className="font-serif text-xl font-semibold">
+                          
+                          <h3 className="font-serif text-lg font-bold text-[#2C3E2B]">
                             {item.title}
                           </h3>
-                          <p className="text-sm text-muted-foreground leading-relaxed font-light">
+                          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed font-light">
                             {item.description}
                           </p>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
@@ -358,33 +404,39 @@ export const DynamicPage = () => {
                 <section 
                   key={section.id} 
                   id={`form-${section.id}`}
-                  className={`py-16 md:py-20 px-6 text-center ${bgSection} border-b border-border/10`}
+                  className={`py-20 md:py-24 px-6 text-center ${bgSection} border-b border-border/10`}
                 >
                   <div className="max-w-xl mx-auto space-y-8">
                     <div className="space-y-3">
-                      <h2 className="font-serif text-3xl md:text-4xl font-semibold">
+                      <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C3E2B]">
                         {section.content.title}
                       </h2>
                       {section.content.subtitle && (
-                        <p className="text-muted-foreground font-light">
+                        <p className="text-muted-foreground font-light text-sm md:text-base">
                           {section.content.subtitle}
                         </p>
                       )}
                     </div>
 
-                    <div className={`${isEven ? palette.cardBackground : palette.background} p-8 md:p-10 rounded-3xl border border-border/40 shadow-sm`}>
+                    <motion.div 
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                      className="bg-white p-8 md:p-10 rounded-[2rem] border border-[#EBE7DF] shadow-[0_20px_50px_-20px_rgba(126,161,114,0.12)]"
+                    >
                       {formToEmbed ? (
                         <CmsFormRenderer 
                           form={formToEmbed} 
                           pageSlug={page.slug} 
-                          buttonClassName={palette.primary}
+                          buttonClassName={`${palette.primary} rounded-full py-6 font-semibold`}
                         />
                       ) : (
-                        <div className="text-amber-600 bg-amber-50 p-4 rounded-xl text-sm text-left">
+                        <div className="text-amber-600 bg-amber-50/50 border border-amber-100 p-4 rounded-xl text-sm text-left">
                           ⚠️ Formulario no configurado o eliminado. Edita la página desde el administrador.
                         </div>
                       )}
-                    </div>
+                    </motion.div>
                   </div>
                 </section>
               );
@@ -395,33 +447,50 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-16 md:py-20 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
                 >
-                  <div className="max-w-5xl mx-auto text-center space-y-12">
-                    <h2 className="font-serif text-3xl md:text-4xl font-semibold">
+                  <div className="max-w-5xl mx-auto text-center space-y-16">
+                    <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C3E2B]">
                       {section.content.title || "Lo que dicen nuestros pacientes"}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-8">
-                      {section.content.testimonials?.map((t: any, i: number) => (
-                        <div 
-                          key={i} 
-                          className={`p-8 rounded-3xl ${isEven ? palette.cardBackground : palette.background} border border-border/40 text-left space-y-6 shadow-sm`}
-                        >
-                          <p className="text-muted-foreground leading-relaxed italic font-light">
-                            "{t.quote}"
-                          </p>
-                          <div className="flex items-center gap-4 border-t border-border/40 pt-4">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${palette.secondary}`}>
-                              👤
+                      {section.content.testimonials?.map((t: any, i: number) => {
+                        // Generate initials for the avatar
+                        const initials = t.author
+                          ? t.author.split(" ").map((n: string) => n[0]).join("").slice(0, 2)
+                          : "P";
+                        return (
+                          <motion.div 
+                            key={i} 
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                            className="p-8 rounded-[2rem] bg-white border border-[#EBE7DF] text-left space-y-6 shadow-sm hover:shadow-[0_15px_40px_-15px_rgba(126,161,114,0.12)] hover:-translate-y-1 hover:border-primary/10 transition-all duration-300 relative overflow-hidden group"
+                          >
+                            {/* Premium Editorial quotation mark graphic */}
+                            <span className="font-serif text-7xl text-primary/10 leading-none select-none absolute top-4 left-6 pointer-events-none group-hover:text-primary/15 transition-colors">
+                              “
+                            </span>
+
+                            <p className="text-muted-foreground leading-relaxed italic font-light text-sm md:text-base relative z-10 pt-4 pl-4">
+                              "{t.quote}"
+                            </p>
+                            
+                            <div className="flex items-center gap-4 border-t border-gray-100 pt-5 relative z-10">
+                              {/* Beautiful initials circular badge */}
+                              <div className="w-10 h-10 rounded-full flex items-center justify-center font-serif text-xs font-bold uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">
+                                {initials}
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-sm text-[#2C3E2B]">{t.author}</h4>
+                                <p className="text-xs text-muted-foreground font-light">{t.role || "Paciente"}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h4 className="font-semibold text-sm">{t.author}</h4>
-                              <p className="text-xs text-muted-foreground font-light">{t.role || "Paciente"}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                          </motion.div>
+                        );
+                      })}
                     </div>
                   </div>
                 </section>
@@ -432,29 +501,36 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-16 md:py-20 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
                 >
-                  <div className="max-w-3xl mx-auto space-y-10">
-                    <h2 className="font-serif text-3xl md:text-4xl font-semibold text-center">
+                  <div className="max-w-3xl mx-auto space-y-12">
+                    <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C3E2B] text-center leading-tight">
                       {section.content.title || "Preguntas Frecuentes"}
                     </h2>
 
-                    <Accordion type="single" collapsible className="w-full space-y-3">
-                      {section.content.faqs?.map((faq: any, i: number) => (
-                        <AccordionItem 
-                          key={i} 
-                          value={`faq-${i}`}
-                          className={`border border-border/50 rounded-2xl px-6 ${isEven ? palette.cardBackground : palette.background}`}
-                        >
-                          <AccordionTrigger className="font-serif font-semibold text-left text-lg hover:no-underline hover:text-primary py-4">
-                            {faq.question}
-                          </AccordionTrigger>
-                          <AccordionContent className="text-muted-foreground font-light pb-4 pt-1 leading-relaxed">
-                            {faq.answer}
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <Accordion type="single" collapsible className="w-full space-y-4">
+                        {section.content.faqs?.map((faq: any, i: number) => (
+                          <AccordionItem 
+                            key={i} 
+                            value={`faq-${i}`}
+                            className="border border-[#EBE7DF] rounded-2xl px-6 bg-white shadow-xs hover:border-primary/20 transition-all duration-300"
+                          >
+                            <AccordionTrigger className="font-serif font-semibold text-left text-base md:text-lg hover:no-underline hover:text-primary py-4 transition-colors">
+                              {faq.question}
+                            </AccordionTrigger>
+                            <AccordionContent className="text-muted-foreground font-light pb-4 pt-1 leading-relaxed text-xs md:text-sm">
+                              {faq.answer}
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </motion.div>
                   </div>
                 </section>
               );
