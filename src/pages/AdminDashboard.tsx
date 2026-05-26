@@ -222,6 +222,15 @@ export const AdminDashboard = () => {
     const targetPage = pages.find(p => p.id === pageId);
     if (!targetPage) return;
 
+    if (targetPage.slug === "home") {
+      toast({
+        title: "Operación no permitida",
+        description: "No puedes eliminar la página de portada principal de tu web. Primero establece otra página como portada.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!window.confirm(`¿Estás seguro de que deseas eliminar la página "${targetPage.title}"?`)) return;
 
     const filtered = pages.filter(p => p.id !== pageId);
@@ -240,6 +249,79 @@ export const AdminDashboard = () => {
       toast({
         title: "Eliminada del navegador",
         description: "Se eliminó localmente.",
+      });
+    }
+  };
+
+  // --- SET PAGE AS HOMEPAGE ---
+  const handleSetAsHomepage = async (targetPage: CmsPage) => {
+    if (!window.confirm(`¿Estás seguro de que deseas establecer "${targetPage.title}" como la Portada Principal de tu web? La portada actual se guardará como una página secundaria.`)) {
+      return;
+    }
+
+    // 1. Find the current home page
+    const currentHome = pages.find(p => p.slug === "home");
+    let updatedPages = [...pages];
+
+    // If there is a current home page, rename its slug to a safe one based on its title or timestamp
+    if (currentHome) {
+      const sanitizedTitle = currentHome.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
+      
+      const newSlug = sanitizedTitle && sanitizedTitle !== "home" 
+        ? `${sanitizedTitle}-anterior`
+        : `inicio-previo-${Date.now().toString().slice(-4)}`;
+
+      // Update in our memory list
+      updatedPages = updatedPages.map(p => 
+        p.id === currentHome.id 
+          ? { ...p, slug: newSlug } 
+          : p
+      );
+
+      // Sincronizar el renombre en la base de datos
+      try {
+        await supabase
+          .from("cms_pages")
+          .update({ slug: newSlug })
+          .eq("id", currentHome.id);
+      } catch (dbErr) {
+        console.warn("Could not rename old home in database, working with local fallback:", dbErr);
+      }
+    }
+
+    // 2. Set target page slug to "home"
+    updatedPages = updatedPages.map(p => 
+      p.id === targetPage.id 
+        ? { ...p, slug: "home" } 
+        : p
+    );
+
+    // Save lists locally and in state
+    setPages(updatedPages);
+    saveLocalPages(updatedPages);
+
+    // Sincronizar el nuevo slug de portada en Supabase
+    try {
+      const { error } = await supabase
+        .from("cms_pages")
+        .update({ slug: "home" })
+        .eq("id", targetPage.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "¡Nueva Portada Activada!",
+        description: `"${targetPage.title}" es ahora la página de inicio principal de tu web.`,
+      });
+    } catch (dbErr) {
+      console.warn("Could not set new home in Supabase, saved locally:", dbErr);
+      toast({
+        title: "Portada cambiada localmente",
+        description: "Se guardó en tu dispositivo. Aplica la migración para sincronizar.",
       });
     }
   };
@@ -465,10 +547,19 @@ export const AdminDashboard = () => {
                   <Card key={p.id} className="bg-white border-[#EBE7DF] rounded-3xl shadow-sm overflow-hidden flex flex-col justify-between">
                     <CardHeader className="pb-4">
                       <div className="flex justify-between items-start">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider ${p.published ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-gray-100 text-gray-500 border border-gray-200"}`}>
-                          {p.published ? "PUBLICADA" : "BORRADOR"}
+                        <div className="flex gap-1.5 items-center">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider ${p.published ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-gray-100 text-gray-500 border border-gray-200"}`}>
+                            {p.published ? "PUBLICADA" : "BORRADOR"}
+                          </span>
+                          {p.slug === "home" && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 flex items-center gap-1 shadow-xs animate-pulse">
+                              ⭐ Inicio Principal
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[10px] text-muted-foreground font-mono">
+                          {p.slug === "home" ? "(Portada Principal)" : `/${p.slug}`}
                         </span>
-                        <span className="text-[10px] text-muted-foreground font-mono">/{p.slug}</span>
                       </div>
                       <CardTitle className="font-serif text-lg font-semibold pt-2">{p.title}</CardTitle>
                       <CardDescription className="text-xs text-[#5C6E5B] font-light">
@@ -477,7 +568,7 @@ export const AdminDashboard = () => {
                     </CardHeader>
                     
                     <CardFooter className="pt-2 border-t border-[#F8F7F4] flex justify-between gap-2">
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-1.5 items-center">
                         <Button 
                           variant="ghost" 
                           size="sm" 
@@ -486,7 +577,7 @@ export const AdminDashboard = () => {
                         >
                           ✏️ Editar Diseño
                         </Button>
-                        <Link to={`/${p.slug}`} target="_blank">
+                        <Link to={p.slug === "home" ? "/" : `/${p.slug}`} target="_blank">
                           <Button 
                             variant="ghost" 
                             size="sm" 
@@ -495,6 +586,16 @@ export const AdminDashboard = () => {
                             👁️ Ver Web
                           </Button>
                         </Link>
+                        {p.slug !== "home" && p.published && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleSetAsHomepage(p)}
+                            className="hover:bg-amber-50 hover:text-amber-700 text-xs font-semibold text-amber-600 px-3 rounded-full flex items-center gap-1"
+                          >
+                            🏠 Hacer Portada
+                          </Button>
+                        )}
                       </div>
 
                       <Button 
@@ -858,15 +959,21 @@ export const AdminDashboard = () => {
 
                   <div className="space-y-1">
                     <label className="text-xs font-semibold">Enlace corto de acceso (Slug)</label>
-                    <div className="flex items-center gap-1 bg-white border border-[#EBE7DF] rounded-xl px-2.5 h-9">
+                    <div className={`flex items-center gap-1 border border-[#EBE7DF] rounded-xl px-2.5 h-9 ${editingPage.slug === "home" ? "bg-amber-50/40 border-amber-200" : "bg-white"}`}>
                       <span className="text-[10px] text-muted-foreground font-mono">/</span>
                       <input 
                         value={editingPage.slug}
                         onChange={(e) => setEditingPage({ ...editingPage, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })}
                         placeholder="ej-talleres"
-                        className="bg-transparent border-0 outline-none text-xs w-full text-foreground/90 font-mono"
+                        disabled={editingPage.slug === "home"}
+                        className={`bg-transparent border-0 outline-none text-xs w-full font-mono ${editingPage.slug === "home" ? "text-amber-800 font-bold" : "text-foreground/90"}`}
                       />
                     </div>
+                    {editingPage.slug === "home" && (
+                      <p className="text-[9px] text-amber-700 font-medium leading-tight">
+                        🏠 Esta es tu portada de inicio principal. No se puede modificar su enlace.
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between pt-1">
@@ -875,9 +982,15 @@ export const AdminDashboard = () => {
                     </label>
                     <Switch 
                       checked={editingPage.published}
+                      disabled={editingPage.slug === "home"}
                       onCheckedChange={(val) => setEditingPage({ ...editingPage, published: val })}
                     />
                   </div>
+                  {editingPage.slug === "home" && (
+                    <p className="text-[9px] text-muted-foreground text-left leading-tight">
+                      La página de portada debe estar siempre publicada para que la web funcione correctamente.
+                    </p>
+                  )}
                 </div>
 
                 {/* Block Editor List */}
