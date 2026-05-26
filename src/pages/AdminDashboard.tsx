@@ -1062,8 +1062,7 @@ export const AdminDashboard = () => {
                                   <textarea 
                                     rows={4}
                                     className="w-full border border-border rounded p-1 mt-0.5" 
-                                    value={section.content.description} 
-                                    onChange={(e) => {
+onChange={(e) => {
                                       const updated = [...editingPage.sections];
                                       updated[index].content.description = e.target.value;
                                       setEditingPage({ ...editingPage, sections: updated });
@@ -1071,16 +1070,110 @@ export const AdminDashboard = () => {
                                   />
                                 </div>
                                 <div>
-                                  <label className="font-semibold block text-[10px] text-muted-foreground">Imagen URL (Unsplash o SantoSha)</label>
-                                  <input 
-                                    className="w-full border border-border rounded p-1 mt-0.5 font-mono text-[10px]" 
-                                    value={section.content.imageUrl || ""} 
-                                    onChange={(e) => {
-                                      const updated = [...editingPage.sections];
-                                      updated[index].content.imageUrl = e.target.value;
-                                      setEditingPage({ ...editingPage, sections: updated });
-                                    }}
-                                  />
+                                  <label className="font-semibold block text-[10px] text-muted-foreground mb-1">Imagen de la Sección</label>
+                                  
+                                  {/* Small thumbnail preview */}
+                                  {section.content.imageUrl && (
+                                    <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-[#EBE7DF] mb-2 bg-[#FAF9F6] flex items-center justify-center group">
+                                      <img 
+                                        src={section.content.imageUrl} 
+                                        alt="thumbnail preview" 
+                                        className="w-full h-full object-cover" 
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.imageUrl = "";
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }}
+                                        className="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-0.5 hover:bg-rose-600 transition-colors w-4 h-4 flex items-center justify-center text-[8px] font-bold"
+                                      >
+                                        ✕
+                                      </button>
+                                    </div>
+                                  )}
+
+                                  {/* Upload Area */}
+                                  <div className="flex gap-2 items-center">
+                                    <label className="cursor-pointer bg-white border border-[#EBE7DF] hover:bg-[#FAF9F6] transition-colors rounded-xl px-3 py-2 text-[10px] font-semibold flex items-center gap-1.5 shadow-xs w-full justify-center text-primary">
+                                      📷 Seleccionar Foto de tu Dispositivo
+                                      <input 
+                                        type="file" 
+                                        accept="image/*"
+                                        className="hidden" 
+                                        onChange={async (e) => {
+                                          const file = e.target.files?.[0];
+                                          if (!file) return;
+
+                                          toast({
+                                            title: "Procesando imagen...",
+                                            description: "Preparando tu fotografía para el sitio web.",
+                                          });
+
+                                          let publicUrl = "";
+                                          try {
+                                            const fileExt = file.name.split('.').pop();
+                                            const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+                                            const filePath = `cms/${fileName}`;
+
+                                            const { data, error: uploadErr } = await supabase.storage
+                                              .from("cms_images")
+                                              .upload(filePath, file);
+
+                                            if (!uploadErr && data) {
+                                              const { data: urlData } = supabase.storage
+                                                .from("cms_images")
+                                                .getPublicUrl(filePath);
+                                              publicUrl = urlData.publicUrl;
+                                            }
+                                          } catch (storageErr) {
+                                            console.warn("Storage upload failed, falling back to Base64:", storageErr);
+                                          }
+
+                                          if (!publicUrl) {
+                                            const reader = new FileReader();
+                                            reader.onload = (readerEvent) => {
+                                              const base64Url = readerEvent.target?.result as string;
+                                              const updated = [...editingPage.sections];
+                                              updated[index].content.imageUrl = base64Url;
+                                              setEditingPage({ ...editingPage, sections: updated });
+                                              toast({
+                                                title: "Imagen cargada con éxito",
+                                                description: "La foto se guardó localmente en tu navegador.",
+                                              });
+                                            };
+                                            reader.readAsDataURL(file);
+                                          } else {
+                                            const updated = [...editingPage.sections];
+                                            updated[index].content.imageUrl = publicUrl;
+                                            setEditingPage({ ...editingPage, sections: updated });
+                                            toast({
+                                              title: "¡Imagen subida a la nube!",
+                                              description: "La foto se guardó de forma segura en tu base de datos.",
+                                            });
+                                          }
+                                        }}
+                                      />
+                                    </label>
+                                  </div>
+
+                                  {/* URL Manual Input Toggle */}
+                                  <div className="mt-2">
+                                    <details className="text-[9px] text-[#5C6E5B] cursor-pointer">
+                                      <summary className="hover:underline select-none">O ingresar URL manualmente...</summary>
+                                      <input 
+                                        className="w-full border border-border rounded p-1 mt-1 font-mono text-[9px] bg-white cursor-text" 
+                                        placeholder="https://images.unsplash.com/..."
+                                        value={section.content.imageUrl || ""} 
+                                        onChange={(e) => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.imageUrl = e.target.value;
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }}
+                                      />
+                                    </details>
+                                  </div>
                                 </div>
                                 <div>
                                   <label className="font-semibold block text-[10px] text-muted-foreground">Distribución Visual</label>
