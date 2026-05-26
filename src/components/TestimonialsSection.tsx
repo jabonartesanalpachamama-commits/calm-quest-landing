@@ -116,7 +116,7 @@ const TestimonialsSection = () => {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">
-            Historias de <span className="text-gradient">Transformación Real</span>
+            Historias de <span className="text-primary">Transformación Real</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             Profesionales como tú que han recuperado el equilibrio emocional y transformado su bienestar.

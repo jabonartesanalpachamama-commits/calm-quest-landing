@@ -15,7 +15,7 @@ const Footer = () => {
         >
           <div className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl font-semibold mb-4">
-              Comienza tu <span className="text-gradient">Transformación</span>
+              Comienza tu <span className="text-primary">Transformación</span>
             </h2>
             <p className="text-muted-foreground">
               Da el primer paso hacia una vida con más claridad, paz y vitalidad.

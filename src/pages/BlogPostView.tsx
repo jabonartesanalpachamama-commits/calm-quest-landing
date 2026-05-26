@@ -114,7 +114,7 @@ export const BlogPostView = () => {
       // Italic *text*
       parsed = parsed.replace(/\*(.*?)\*/g, "<em>$1</em>");
       // Inline code `code`
-      parsed = parsed.replace(/`(.*?)`/g, "<code class='bg-[#F8F7F4] border border-[#EBE7DF] px-1 py-0.5 rounded text-xs font-mono font-bold text-amber-800'>$1</code>");
+      parsed = parsed.replace(/`(.*?)`/g, "<code class='bg-muted border border-border/60 px-1 py-0.5 rounded text-xs font-mono font-bold text-primary'>$1</code>");
       return parsed;
     };
 
@@ -163,7 +163,7 @@ export const BlogPostView = () => {
           inList = false;
         }
         renderedBlocks.push(
-          <hr key={`hr-${idx}`} className="my-10 border-[#EBE7DF]" />
+          <hr key={`hr-${idx}`} className="my-10 border-border/60" />
         );
       } 
       // Bullet list items (* item or - item)
@@ -174,7 +174,7 @@ export const BlogPostView = () => {
         if (!inList) {
           inList = true;
           renderedBlocks.push(
-            <ul key={`ul-${idx}`} className="list-disc pl-6 space-y-2 mb-6 font-serif text-[#2C3E2B]/85 font-light leading-relaxed text-md md:text-lg">
+            <ul key={`ul-${idx}`} className="list-disc pl-6 space-y-2 mb-6 font-serif text-foreground/85 font-light leading-relaxed text-md md:text-lg">
               <li dangerouslySetInnerHTML={{ __html: parsedText }} />
             </ul>
           );
@@ -182,7 +182,7 @@ export const BlogPostView = () => {
           // Append to the previous list block
           const lastBlock = renderedBlocks[renderedBlocks.length - 1];
           renderedBlocks[renderedBlocks.length - 1] = (
-            <ul key={lastBlock.key} className="list-disc pl-6 space-y-2 mb-6 font-serif text-[#2C3E2B]/85 font-light leading-relaxed text-md md:text-lg">
+            <ul key={lastBlock.key} className="list-disc pl-6 space-y-2 mb-6 font-serif text-foreground/85 font-light leading-relaxed text-md md:text-lg">
               {lastBlock.props.children}
               <li dangerouslySetInnerHTML={{ __html: parsedText }} />
             </ul>
@@ -204,7 +204,7 @@ export const BlogPostView = () => {
         renderedBlocks.push(
           <p 
             key={`p-${idx}`} 
-            className="leading-relaxed font-serif text-md md:text-lg text-[#2C3E2B]/85 font-light mb-6 text-justify"
+            className="leading-relaxed font-serif text-md md:text-lg text-foreground/85 font-light mb-6 text-justify"
             dangerouslySetInnerHTML={{ __html: parsedText }}
           />
         );
@@ -231,23 +231,23 @@ export const BlogPostView = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F4EF] text-[#2C3E2B]">
-        <div className="w-10 h-10 border-t-2 border-r-2 border-[#7EA172] rounded-full animate-spin mb-4" />
-        <p className="font-serif text-lg italic">Abriendo artículo...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground">
+        <div className="w-10 h-10 border-t-2 border-r-2 border-primary rounded-full animate-spin mb-4" />
+        <p className="font-serif text-lg italic text-muted-foreground">Abriendo artículo...</p>
       </div>
     );
   }
 
   if (error || !post || !settings) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F4EF] text-[#2C3E2B] px-4 text-center">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4 text-center">
         <span className="text-5xl mb-6">📚</span>
         <h1 className="font-serif text-3xl font-semibold mb-3">Lectura no disponible</h1>
         <p className="text-muted-foreground max-w-md mb-8">
           {error || "El artículo que buscas no existe o está programado para publicarse más adelante."}
         </p>
         <Link to="/blog">
-          <Button className="bg-[#7EA172] hover:bg-[#6C8E61] text-white px-6">
+          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6">
             Volver al Blog
           </Button>
         </Link>
@@ -264,7 +264,7 @@ export const BlogPostView = () => {
       {isAdmin && (
         <div className="fixed bottom-6 right-6 z-50">
           <Link to="/admin" state={{ tab: "blog", editPostId: post.id }}>
-            <Button className="bg-[#C98A72] text-white hover:bg-[#B57A63] shadow-lg rounded-full px-5 py-6 gap-2 flex items-center font-medium">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg rounded-full px-5 py-6 gap-2 flex items-center font-medium">
               <Edit className="w-4 h-4" /> ⚙️ Editar Artículo
             </Button>
           </Link>
@@ -319,7 +319,7 @@ export const BlogPostView = () => {
             {post.title}
           </h1>
 
-          <p className="text-lg md:text-xl italic text-[#5C6E5B] font-light leading-relaxed border-l-2 border-primary/30 pl-4 py-1 text-left">
+          <p className="text-lg md:text-xl italic text-muted-foreground font-light leading-relaxed border-l-2 border-primary/30 pl-4 py-1 text-left">
             {post.excerpt}
           </p>
         </div>
@@ -365,7 +365,7 @@ export const BlogPostView = () => {
       {/* Footer */}
       <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
         <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-[#2C3E2B]">{settings.brandName}</p>
+          <p className="font-serif font-semibold text-foreground">{settings.brandName}</p>
           <p className="font-light">{settings.footerText}</p>
         </div>
       </footer>

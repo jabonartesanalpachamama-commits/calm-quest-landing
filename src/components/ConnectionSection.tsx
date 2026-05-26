@@ -21,7 +21,7 @@ const ConnectionSection = () => {
           >
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 leading-tight">
               ¿La incapacidad para gestionar tus emociones está{" "}
-              <span className="text-gradient">ganando la batalla?</span>
+              <span className="text-primary">ganando la batalla?</span>
             </h2>
 
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">

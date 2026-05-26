@@ -105,9 +105,9 @@ export const BlogList = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F4EF] text-[#2C3E2B]">
-        <div className="w-10 h-10 border-t-2 border-r-2 border-[#7EA172] rounded-full animate-spin mb-4" />
-        <p className="font-serif text-lg italic">Abriendo biblioteca de bienestar...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground">
+        <div className="w-10 h-10 border-t-2 border-r-2 border-primary rounded-full animate-spin mb-4" />
+        <p className="font-serif text-lg italic text-muted-foreground">Abriendo biblioteca de bienestar...</p>
       </div>
     );
   }
@@ -159,7 +159,7 @@ export const BlogList = () => {
             placeholder="Buscar artículos por título o tema..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 h-11 bg-white border-[#EBE7DF] rounded-2xl shadow-sm focus:border-primary focus-visible:ring-1 focus-visible:ring-primary"
+            className="pl-10 h-11 bg-card border-border/60 rounded-2xl shadow-sm focus:border-primary focus-visible:ring-1 focus-visible:ring-primary"
           />
         </div>
       </section>
@@ -233,7 +233,7 @@ export const BlogList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 bg-white/40 border border-[#EBE7DF] rounded-3xl p-8 max-w-md mx-auto space-y-4">
+          <div className="text-center py-16 bg-card/40 border border-border/60 rounded-3xl p-8 max-w-md mx-auto space-y-4">
             <span className="text-4xl block">📚</span>
             <h3 className="font-serif text-xl font-semibold">No se encontraron artículos</h3>
             <p className="text-sm text-muted-foreground font-light leading-relaxed">
@@ -253,7 +253,7 @@ export const BlogList = () => {
       {/* Footer */}
       <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
         <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-[#2C3E2B]">{settings?.brandName || "SantoSha"}</p>
+          <p className="font-serif font-semibold text-foreground">{settings?.brandName || "SantoSha"}</p>
           <p className="font-light">{settings?.footerText || "© 2026 SantoSha - Espacio de Bienestar."}</p>
         </div>
       </footer>

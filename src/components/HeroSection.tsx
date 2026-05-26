@@ -45,7 +45,7 @@ const HeroSection = () => {
 
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold leading-[1.1] mb-8">
               Encuentra tu{" "}
-              <span className="text-gradient">Paz Interior</span>
+              <span className="text-primary">Paz Interior</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-6 max-w-xl mx-auto lg:mx-0">

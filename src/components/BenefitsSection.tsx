@@ -36,7 +36,7 @@ const BenefitsSection = () => {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-5">
-            Beneficios que <span className="text-gradient">Obtendrás</span>
+            Beneficios que <span className="text-primary">Obtendrás</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Transforma tu bienestar con solo 30 minutos de práctica diaria

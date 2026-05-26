@@ -118,29 +118,32 @@ export const DynamicPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F4EF] text-[#2C3E2B]">
-        <div className="w-10 h-10 border-t-2 border-r-2 border-[#7EA172] rounded-full animate-spin mb-4" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground">
+        <div className="w-10 h-10 border-t-2 border-r-2 border-primary rounded-full animate-spin mb-4" />
         <p className="font-serif text-lg italic">Cargando tu espacio de calma...</p>
       </div>
     );
   }
 
+  const tempPalette = settings ? (COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta) : COLOR_PALETTES.menta;
+
   if (error || !page || !settings) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F4EF] text-[#2C3E2B] px-4 text-center">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4 text-center">
         <span className="text-5xl mb-6">🍃</span>
         <h1 className="font-serif text-3xl font-semibold mb-3">Página no encontrada</h1>
-        <p className="text-muted-foreground max-w-md mb-8">
-          Lo sentimos, la página que buscas no existe o no se encuentra publicada actualmente en nuestro espacio.
+        <p className="text-muted-foreground max-w-md mb-8 font-light">
+          Lo sentimos, la página que buscas no existe o no se encuentra publicada actualmente en nuestro espacio de calma.
         </p>
         <Link to="/">
-          <Button className="bg-[#7EA172] hover:bg-[#6C8E61] text-white px-6">
+          <Button className={`${tempPalette.primary} px-6 rounded-full font-medium shadow-sm`}>
             Volver al inicio
           </Button>
         </Link>
       </div>
     );
   }
+
 
   const palette = COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta;
 
@@ -206,8 +209,8 @@ export const DynamicPage = () => {
                   >
                     {/* Decorative blurred glow circles */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
-                      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "8s" }} />
-                      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "3s", animationDuration: "10s" }} />
+                      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-gentle-pulse" />
+                      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-gentle-pulse" style={{ animationDelay: "3s" }} />
                     </div>
 
                     <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-16 items-center relative z-10">
@@ -223,7 +226,7 @@ export const DynamicPage = () => {
                             ✨ {section.content.tagline}
                           </span>
                         )}
-                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-[#2C3E2B]">
+                        <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
                           {section.content.title}
                         </h1>
                         <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl font-light">
@@ -243,7 +246,7 @@ export const DynamicPage = () => {
                         transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="lg:col-span-5 relative z-10 w-full max-w-md mx-auto"
                       >
-                        <div className="bg-white p-8 md:p-10 rounded-[2rem] border border-[#EBE7DF] shadow-[0_20px_50px_-20px_rgba(126,161,114,0.12)]">
+                        <div className="bg-card p-8 md:p-10 rounded-[2rem] border border-border/60 shadow-md shadow-foreground/[0.01]">
                           <CmsFormRenderer 
                             form={heroForm} 
                             pageSlug={page.slug} 
@@ -262,7 +265,7 @@ export const DynamicPage = () => {
                   className={`py-20 md:py-28 px-6 text-center ${bgSection} relative overflow-hidden border-b border-border/10`}
                 >
                   <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: "12s" }} />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-gentle-pulse" />
                   </div>
 
                   <motion.div 
@@ -276,7 +279,7 @@ export const DynamicPage = () => {
                         {section.content.tagline}
                       </span>
                     )}
-                    <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-[#2C3E2B]">
+                    <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
                       {section.content.title}
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
@@ -302,7 +305,7 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-24 md:py-32 px-6 ${bgSection} border-b border-border/10`}
                 >
                   <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                     
@@ -315,7 +318,7 @@ export const DynamicPage = () => {
                       className={`order-2 ${isImageLeft ? "md:order-1" : "md:order-2"}`}
                     >
                       {section.content.imageUrl ? (
-                        <div className="p-2 bg-white border border-[#EBE7DF] rounded-[2.5rem] shadow-xl hover:scale-[1.01] transition-transform duration-500 relative">
+                        <div className="p-2 bg-card border border-border/60 rounded-[2.5rem] shadow-md hover:scale-[1.01] transition-transform duration-500 relative">
                           <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs">🌿</div>
                           <div className="rounded-[2.2rem] overflow-hidden aspect-[4/3] md:aspect-square bg-muted">
                             <img 
@@ -340,10 +343,10 @@ export const DynamicPage = () => {
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                       className={`order-1 ${isImageLeft ? "md:order-2" : "md:order-1"} space-y-6`}
                     >
-                      <h2 className="font-serif text-3xl md:text-4xl font-bold leading-tight text-[#2C3E2B]">
+                      <h2 className="font-serif text-3xl md:text-4xl font-bold leading-tight text-foreground">
                         {section.content.title}
                       </h2>
-                      <div className="text-muted-foreground leading-relaxed space-y-4 font-light text-md whitespace-pre-line text-justify">
+                      <div className="text-muted-foreground leading-relaxed space-y-4 font-light text-md whitespace-pre-line text-justify max-w-2xl">
                         {section.content.description}
                       </div>
                     </motion.div>
@@ -358,38 +361,37 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-24 md:py-32 px-6 ${bgSection} border-b border-border/10`}
                 >
-                  <div className="max-w-5xl mx-auto text-center space-y-16">
-                    <h2 className="font-serif text-3xl md:text-4xl font-bold max-w-2xl mx-auto text-[#2C3E2B] leading-tight">
+                  <div className="max-w-4xl mx-auto space-y-16">
+                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-center text-foreground leading-tight max-w-2xl mx-auto">
                       {section.content.title}
                     </h2>
 
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="max-w-3xl mx-auto divide-y divide-border/30 text-left">
                       {section.content.items?.map((item: any, i: number) => (
                         <motion.div 
                           key={i} 
                           initial={{ opacity: 0, y: 15 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, margin: "-50px" }}
-                          transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                          className="p-8 rounded-[2rem] bg-white border border-[#EBE7DF] text-left space-y-5 shadow-sm hover:shadow-[0_15px_40px_-15px_rgba(126,161,114,0.15)] hover:-translate-y-1.5 hover:border-primary/20 transition-all duration-300 relative overflow-hidden group"
+                          transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                          className="py-8 first:pt-0 last:pb-0 flex flex-col sm:flex-row gap-6 sm:gap-10 items-start group"
                         >
-                          {/* Large elegant serif index background number */}
-                          <span className="absolute top-6 right-8 font-serif text-5xl font-bold opacity-10 select-none text-primary group-hover:opacity-15 transition-opacity duration-300">
+                          <span className="font-serif text-4xl md:text-5xl font-light text-primary/70 select-none sm:w-16">
                             0{i + 1}
                           </span>
-
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl bg-primary/5 border border-primary/10 text-primary`}>
-                            {item.icon && !["✨", "🌿"].includes(item.icon) ? item.icon : "🍃"}
+                          <div className="flex-1 space-y-2">
+                            <h3 className="font-serif text-xl font-bold text-foreground flex items-center gap-3">
+                              <span className="text-primary text-sm bg-primary/5 border border-primary/10 w-9 h-9 rounded-xl flex items-center justify-center">
+                                {item.icon && !["✨", "🌿"].includes(item.icon) ? item.icon : "🍃"}
+                              </span>
+                              {item.title}
+                            </h3>
+                            <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-light max-w-2xl">
+                              {item.description}
+                            </p>
                           </div>
-                          
-                          <h3 className="font-serif text-lg font-bold text-[#2C3E2B]">
-                            {item.title}
-                          </h3>
-                          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed font-light">
-                            {item.description}
-                          </p>
                         </motion.div>
                       ))}
                     </div>
@@ -404,11 +406,11 @@ export const DynamicPage = () => {
                 <section 
                   key={section.id} 
                   id={`form-${section.id}`}
-                  className={`py-20 md:py-24 px-6 text-center ${bgSection} border-b border-border/10`}
+                  className={`py-24 md:py-32 px-6 text-center ${bgSection} border-b border-border/10`}
                 >
                   <div className="max-w-xl mx-auto space-y-8">
                     <div className="space-y-3">
-                      <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C3E2B]">
+                      <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
                         {section.content.title}
                       </h2>
                       {section.content.subtitle && (
@@ -423,7 +425,7 @@ export const DynamicPage = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                      className="bg-white p-8 md:p-10 rounded-[2rem] border border-[#EBE7DF] shadow-[0_20px_50px_-20px_rgba(126,161,114,0.12)]"
+                      className="bg-card p-8 md:p-10 rounded-[2rem] border border-border/60 shadow-md shadow-foreground/[0.01]"
                     >
                       {formToEmbed ? (
                         <CmsFormRenderer 
@@ -447,10 +449,10 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-24 md:py-32 px-6 ${bgSection} border-b border-border/10`}
                 >
                   <div className="max-w-5xl mx-auto text-center space-y-16">
-                    <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C3E2B]">
+                    <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
                       {section.content.title || "Lo que dicen nuestros pacientes"}
                     </h2>
 
@@ -467,7 +469,7 @@ export const DynamicPage = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-50px" }}
                             transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                            className="p-8 rounded-[2rem] bg-white border border-[#EBE7DF] text-left space-y-6 shadow-sm hover:shadow-[0_15px_40px_-15px_rgba(126,161,114,0.12)] hover:-translate-y-1 hover:border-primary/10 transition-all duration-300 relative overflow-hidden group"
+                            className="p-8 rounded-[2rem] bg-card border border-border/60 text-left space-y-6 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-primary/20 transition-all duration-300 relative overflow-hidden group"
                           >
                             {/* Premium Editorial quotation mark graphic */}
                             <span className="font-serif text-7xl text-primary/10 leading-none select-none absolute top-4 left-6 pointer-events-none group-hover:text-primary/15 transition-colors">
@@ -478,13 +480,13 @@ export const DynamicPage = () => {
                               "{t.quote}"
                             </p>
                             
-                            <div className="flex items-center gap-4 border-t border-gray-100 pt-5 relative z-10">
+                            <div className="flex items-center gap-4 border-t border-gray-100/50 pt-5 relative z-10">
                               {/* Beautiful initials circular badge */}
                               <div className="w-10 h-10 rounded-full flex items-center justify-center font-serif text-xs font-bold uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">
                                 {initials}
                               </div>
                               <div>
-                                <h4 className="font-bold text-sm text-[#2C3E2B]">{t.author}</h4>
+                                <h4 className="font-bold text-sm text-foreground">{t.author}</h4>
                                 <p className="text-xs text-muted-foreground font-light">{t.role || "Paciente"}</p>
                               </div>
                             </div>
@@ -501,10 +503,10 @@ export const DynamicPage = () => {
               return (
                 <section 
                   key={section.id} 
-                  className={`py-20 md:py-24 px-6 ${bgSection} border-b border-border/10`}
+                  className={`py-24 md:py-32 px-6 ${bgSection} border-b border-border/10`}
                 >
                   <div className="max-w-3xl mx-auto space-y-12">
-                    <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#2C3E2B] text-center leading-tight">
+                    <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground text-center leading-tight">
                       {section.content.title || "Preguntas Frecuentes"}
                     </h2>
 
@@ -519,7 +521,7 @@ export const DynamicPage = () => {
                           <AccordionItem 
                             key={i} 
                             value={`faq-${i}`}
-                            className="border border-[#EBE7DF] rounded-2xl px-6 bg-white shadow-xs hover:border-primary/20 transition-all duration-300"
+                            className="border border-border/60 rounded-2xl px-6 bg-card shadow-xs hover:border-primary/20 transition-all duration-300"
                           >
                             <AccordionTrigger className="font-serif font-semibold text-left text-base md:text-lg hover:no-underline hover:text-primary py-4 transition-colors">
                               {faq.question}
@@ -544,7 +546,7 @@ export const DynamicPage = () => {
       {/* Dynamic Footer */}
       <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
         <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-[#2C3E2B]">{settings.brandName}</p>
+          <p className="font-serif font-semibold text-foreground">{settings.brandName}</p>
           <p className="font-light">{settings.footerText}</p>
           <div className="pt-4 flex justify-center gap-6">
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">

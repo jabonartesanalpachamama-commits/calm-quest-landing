@@ -58,7 +58,7 @@ const FreeClassSlots = () => {
                     <div className="space-y-8">
                         {/* Ong Namo Guru dev namo */}
                         <div className="flex gap-4">
-                            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border-l-4 border-primary/40 flex items-center justify-center">
+                            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
                                 <span className="text-primary text-xl">💡</span>
                             </div>
                             <div>
@@ -71,7 +71,7 @@ const FreeClassSlots = () => {
 
                         {/* Sat nam */}
                         <div className="flex gap-4">
-                            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border-l-4 border-primary/40 flex items-center justify-center">
+                            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
                                 <span className="text-primary text-xl">💭</span>
                             </div>
                             <div>
@@ -84,7 +84,7 @@ const FreeClassSlots = () => {
 
                         {/* AR */}
                         <div className="flex gap-4">
-                            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border-l-4 border-primary/40 flex items-center justify-center">
+                            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
                                 <span className="text-primary text-xl">⭐</span>
                             </div>
                             <div>

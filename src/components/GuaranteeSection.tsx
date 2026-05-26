@@ -19,7 +19,7 @@ const GuaranteeSection = () => {
           className="max-w-2xl mx-auto text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">
-            Acceso <span className="text-gradient">Inmediato</span>
+            Acceso <span className="text-primary">Inmediato</span>
           </h2>
 
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-12">
