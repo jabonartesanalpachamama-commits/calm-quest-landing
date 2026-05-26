@@ -2,14 +2,117 @@
 import sLogo from "@/assets/santosha-logo.jpg";
 import instructorImage from "@/assets/instructor.png";
 
+export type FontFamilyKey =
+  | "cormorant-lora"       // Classic editorial serif (current default)
+  | "playfair-lato"        // Elegant serif headline + modern body
+  | "eb-garamond-nunito"   // Warm oldstyle serif + humanist sans
+  | "cinzel-raleway"       // Majestic/spiritual uppercase + geometric
+  | "dm-serif-inter"       // Contemporary editorial serif + neutral sans
+  | "josefin-jost"         // Clean geometric sans pair
+  | "poppins-nunito"       // Friendly rounded sans pair (high readability)
+  | "marcellus-source"     // Refined display serif + clean sans
+  | "fraunces-figtree"     // Expressive literary serif + modern sans
+  | "bodoni-quicksand";    // High-contrast classical + soft rounded sans
+
 export interface VisualIdentity {
   brandName: string;
   logoText: string;
   palette: "menta" | "lavanda" | "tierra" | "oceano" | "loto" | "prana" | "savia";
-  fontFamily: "serif" | "sans";
+  fontFamily: FontFamilyKey;
   whatsappNumber: string;
   footerText: string;
 }
+
+/** Metadata for each font pair — used in admin UI and CSS application */
+export const FONT_PAIRS: Record<FontFamilyKey, {
+  name: string;
+  description: string;
+  headingFamily: string;
+  bodyFamily: string;
+  googleUrl: string;
+  category: string;
+}> = {
+  "cormorant-lora": {
+    name: "Cormorant & Lora",
+    description: "Clásico editorial, meditativo",
+    headingFamily: "'Cormorant Garamond', Georgia, serif",
+    bodyFamily: "'Lora', Georgia, serif",
+    googleUrl: "family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400",
+    category: "Serif"
+  },
+  "playfair-lato": {
+    name: "Playfair Display & Lato",
+    description: "Elegante y equilibrado",
+    headingFamily: "'Playfair Display', Georgia, serif",
+    bodyFamily: "'Lato', system-ui, sans-serif",
+    googleUrl: "family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;700",
+    category: "Serif"
+  },
+  "eb-garamond-nunito": {
+    name: "EB Garamond & Nunito",
+    description: "Cálido y humano, terapéutico",
+    headingFamily: "'EB Garamond', Georgia, serif",
+    bodyFamily: "'Nunito', system-ui, sans-serif",
+    googleUrl: "family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;500;600",
+    category: "Serif"
+  },
+  "cinzel-raleway": {
+    name: "Cinzel & Raleway",
+    description: "Espiritual y poderoso",
+    headingFamily: "'Cinzel', Georgia, serif",
+    bodyFamily: "'Raleway', system-ui, sans-serif",
+    googleUrl: "family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600",
+    category: "Display"
+  },
+  "dm-serif-inter": {
+    name: "DM Serif Display & Inter",
+    description: "Editorial contemporáneo",
+    headingFamily: "'DM Serif Display', Georgia, serif",
+    bodyFamily: "'Inter', system-ui, sans-serif",
+    googleUrl: "family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600",
+    category: "Serif"
+  },
+  "josefin-jost": {
+    name: "Josefin Sans & Jost",
+    description: "Limpio, minimalista, moderno",
+    headingFamily: "'Josefin Sans', system-ui, sans-serif",
+    bodyFamily: "'Jost', system-ui, sans-serif",
+    googleUrl: "family=Josefin+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500",
+    category: "Sans-Serif"
+  },
+  "poppins-nunito": {
+    name: "Poppins & Nunito",
+    description: "Amigable, accesible, legible",
+    headingFamily: "'Poppins', system-ui, sans-serif",
+    bodyFamily: "'Nunito', system-ui, sans-serif",
+    googleUrl: "family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600",
+    category: "Sans-Serif"
+  },
+  "marcellus-source": {
+    name: "Marcellus & Source Serif",
+    description: "Refinado y profesional",
+    headingFamily: "'Marcellus', Georgia, serif",
+    bodyFamily: "'Source Serif 4', Georgia, serif",
+    googleUrl: "family=Marcellus&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400",
+    category: "Serif"
+  },
+  "fraunces-figtree": {
+    name: "Fraunces & Figtree",
+    description: "Literario, expresivo y natural",
+    headingFamily: "'Fraunces', Georgia, serif",
+    bodyFamily: "'Figtree', system-ui, sans-serif",
+    googleUrl: "family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Figtree:wght@300;400;500;600",
+    category: "Serif"
+  },
+  "bodoni-quicksand": {
+    name: "Libre Bodoni & Quicksand",
+    description: "Alto contraste y elegancia",
+    headingFamily: "'Libre Bodoni', Georgia, serif",
+    bodyFamily: "'Quicksand', system-ui, sans-serif",
+    googleUrl: "family=Libre+Bodoni:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;400;500;600",
+    category: "Display"
+  },
+};
 
 export interface CmsField {
   id: string;
@@ -320,7 +423,7 @@ const DEFAULT_SETTINGS: VisualIdentity = {
   brandName: "SantoSha",
   logoText: "SantoSha",
   palette: "menta",
-  fontFamily: "serif",
+  fontFamily: "cormorant-lora",
   whatsappNumber: "+5491123456789",
   footerText: "© 2026 SantoSha - Espacio de Bienestar, Psicología y Kundalini Yoga."
 };
@@ -645,4 +748,37 @@ export const applyCssVariablesForPalette = (paletteName: keyof typeof COLOR_PALE
   Object.entries(palette.variables).forEach(([property, value]) => {
     root.style.setProperty(property, value);
   });
+};
+
+/**
+ * Dynamically loads the correct Google Fonts for the selected font pair
+ * and sets --font-heading + --font-body CSS variables on :root.
+ *
+ * Safe to call multiple times — replaces the existing font <link> tag
+ * instead of duplicating it.
+ */
+export const applyFontPair = (fontKey: FontFamilyKey) => {
+  // Backward-compat: map old values that might be stored in Supabase/localStorage
+  const normalized: FontFamilyKey =
+    (fontKey as string) === "serif" ? "cormorant-lora" :
+    (fontKey as string) === "sans"  ? "dm-serif-inter" :
+    fontKey;
+
+  const pair = FONT_PAIRS[normalized] || FONT_PAIRS["cormorant-lora"];
+
+  // 1. Inject / replace Google Fonts <link>
+  const LINK_ID = "sant-google-fonts";
+  let link = document.getElementById(LINK_ID) as HTMLLinkElement | null;
+  if (!link) {
+    link = document.createElement("link");
+    link.id = LINK_ID;
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+  }
+  link.href = `https://fonts.googleapis.com/css2?${pair.googleUrl}&display=swap`;
+
+  // 2. Set CSS variables
+  const root = document.documentElement;
+  root.style.setProperty("--font-heading", pair.headingFamily);
+  root.style.setProperty("--font-body",    pair.bodyFamily);
 };

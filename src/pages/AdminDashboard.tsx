@@ -10,6 +10,9 @@ import {
   CmsSubmission, 
   CmsPost,
   COLOR_PALETTES,
+  FONT_PAIRS,
+  FontFamilyKey,
+  applyFontPair,
   getLocalPages, 
   saveLocalPages,
   getLocalSettings, 
@@ -100,6 +103,7 @@ export const AdminDashboard = () => {
         console.warn("Db access error, using local settings");
       }
       setSettings(activeSettings);
+      applyFontPair(activeSettings.fontFamily);
 
       // 2. Load Pages
       let activePages = getLocalPages();
@@ -1332,17 +1336,68 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                     </div>
                   </div>
 
-                  {/* Typography selector */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold">Tipografía Emocional</label>
-                    <select
-                      value={settings.fontFamily}
-                      onChange={(e) => setSettings({...settings, fontFamily: e.target.value as any})}
-                      className="w-full h-11 border border-[#EBE7DF] px-3 py-2 text-sm rounded-xl outline-none focus:border-[#7EA172]"
-                    >
-                      <option value="serif">Serif Elegante (Recomendado para Psicología: Outfit & Playfair)</option>
-                      <option value="sans">Sans Moderno y Limpio (Inter & Roboto)</option>
-                    </select>
+                  {/* Typography selector — Visual font picker */}
+                  <div className="space-y-3">
+                    <label className="text-sm font-semibold">Tipografía de la Web</label>
+                    <p className="text-xs text-muted-foreground font-light">
+                      Elige el par tipográfico que mejor represente tu estilo. El cambio se aplica en toda la web de forma instantánea.
+                    </p>
+
+                    {/* Group by category */}
+                    {["Serif", "Sans-Serif", "Display"].map((category) => {
+                      const pairsInCategory = (Object.entries(FONT_PAIRS) as [FontFamilyKey, typeof FONT_PAIRS[FontFamilyKey]][]).filter(
+                        ([, p]) => p.category === category
+                      );
+                      if (pairsInCategory.length === 0) return null;
+                      return (
+                        <div key={category} className="space-y-2">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 px-0.5">{category}</p>
+                          <div className="grid grid-cols-1 gap-2">
+                            {pairsInCategory.map(([key, pair]) => {
+                              const isSelected = settings.fontFamily === key;
+                              return (
+                                <button
+                                  key={key}
+                                  id={`font-option-${key}`}
+                                  type="button"
+                                  onClick={() => {
+                                    setSettings({ ...settings, fontFamily: key as FontFamilyKey });
+                                    applyFontPair(key as FontFamilyKey);
+                                  }}
+                                  className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 flex items-center justify-between gap-4 hover:border-[#7EA172]/60 hover:bg-[#F8FAF7] ${
+                                    isSelected
+                                      ? "border-[#7EA172] bg-[#F3F8F1] shadow-sm"
+                                      : "border-[#EBE7DF] bg-white"
+                                  }`}
+                                >
+                                  <div className="flex-1 min-w-0 space-y-0.5">
+                                    {/* Heading sample — rendered in actual font */}
+                                    <p
+                                      className="text-base font-semibold leading-tight text-[#2C3E2B] truncate"
+                                      style={{ fontFamily: pair.headingFamily }}
+                                    >
+                                      Paz y Consciencia
+                                    </p>
+                                    {/* Body sample */}
+                                    <p
+                                      className="text-xs text-[#6B7B6A] leading-snug"
+                                      style={{ fontFamily: pair.bodyFamily }}
+                                    >
+                                      El camino hacia la calma interior
+                                    </p>
+                                    {/* Name + description */}
+                                    <p className="text-[10px] text-muted-foreground/60 font-medium pt-0.5">
+                                      {pair.name} · {pair.description}
+                                    </p>
+                                  </div>
+                                  {isSelected && <Check className="w-4 h-4 text-[#7EA172] shrink-0" />}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* WhatsApp contact number */}

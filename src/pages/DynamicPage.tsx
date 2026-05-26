@@ -12,7 +12,8 @@ import {
   getLocalPages, 
   getLocalSettings, 
   getLocalForms, 
-  applyCssVariablesForPalette 
+  applyCssVariablesForPalette,
+  applyFontPair
 } from "@/lib/CmsFallbackData";
 import { CmsFormRenderer } from "@/components/CmsFormRenderer";
 import FloatingCTA from "@/components/FloatingCTA";
@@ -53,8 +54,11 @@ export const DynamicPage = () => {
         } catch (e) {
           console.warn("Using offline fallback for CMS settings");
         }
-        setSettings(activeSettings);
-        applyCssVariablesForPalette(activeSettings.palette);
+        if (activeSettings) {
+          applyCssVariablesForPalette(activeSettings.palette);
+          applyFontPair(activeSettings.fontFamily);
+          setSettings(activeSettings);
+        }
 
         // 2. Load Forms (for rendering embedded forms)
         let activeForms = getLocalForms();
