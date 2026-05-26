@@ -29,7 +29,7 @@ export interface CmsForm {
 
 export interface CmsSection {
   id: string;
-  type: "hero" | "connection" | "benefits" | "form" | "testimonials" | "faq" | "cta";
+  type: "hero" | "connection" | "benefits" | "form" | "testimonials" | "faq" | "cta" | "transformation";
   content: any;
 }
 
@@ -266,7 +266,7 @@ export const COLOR_PALETTES = {
       "--primary-foreground": "0 0% 100%",
       "--secondary": "29 44% 87%",
       "--secondary-foreground": "25 30% 31%",
-      "--muted": "29 20% 95% animate-pulse",
+      "--muted": "29 20% 95%",
       "--muted-foreground": "20 19% 43%",
       "--accent": "36 74% 71%",
       "--accent-foreground": "34 53% 25%",
@@ -359,9 +359,10 @@ const DEFAULT_PAGES: CmsPage[] = [
         id: "home-hero",
         type: "hero",
         content: {
-          title: "Encuentra tu Paz Interior",
-          subtitle: "Clase Maestra de Kundalini Yoga",
+          title: "Reduce tu Ansiedad en Solo 30 Minutos",
+          subtitle: "Clase Maestra Gratuita de Kundalini Yoga con Técnicas Respaldadas por la Neurociencia",
           tagline: "Clase Maestra Gratuita",
+          description: "Aprende la técnica exacta que +10,000 profesionales ya usan para calmar su sistema nervioso, recuperar la claridad mental y eliminar la reactividad emocional.",
           buttonText: "Quiero mi clase gratuita",
           buttonLink: "#form-home-hero",
           formId: "b191c71b-a5d6-4767-9d7a-11f879685a4a"
@@ -397,6 +398,7 @@ const DEFAULT_PAGES: CmsPage[] = [
         type: "benefits",
         content: {
           title: "Únete a una Comunidad de Transformación",
+          showCta: false,
           items: [
             { icon: "👥", title: "10,000+", description: "Profesionales Transformados" },
             { icon: "⏱️", title: "30 min", description: "Práctica Diaria" },
@@ -422,11 +424,48 @@ const DEFAULT_PAGES: CmsPage[] = [
         type: "benefits",
         content: {
           title: "Acceso Inmediato y Gratuito",
+          showCta: false,
           items: [
             { icon: "✓", title: "Sin tarjeta de crédito", description: "Acceso 100% gratuito." },
             { icon: "✓", title: "Acceso inmediato", description: "Obtén tus credenciales al instante." },
             { icon: "✓", title: "100% gratuito", description: "Sin cobros ocultos ni sorpresas." }
           ]
+        }
+      },
+      {
+        id: "home-transformation",
+        type: "transformation",
+        content: {
+          title: "¿Reconoces alguna de estas situaciones?",
+          beforeTitle: "Sin herramientas para gestionarlo...",
+          afterTitle: "Con solo 30 minutos al día",
+          before: [
+            "Irritabilidad constante que afecta tus relaciones",
+            "Noches de insomnio o sueño no reparador",
+            "Niebla mental que frena tu productividad",
+            "Fatiga emocional que drena tu energía",
+            "Reactividad ante situaciones cotidianas",
+            "Sensación de no poder 'desconectar'"
+          ],
+          after: [
+            "Calma profunda ante situaciones de estrés",
+            "Descanso reparador y sueño de calidad",
+            "Claridad mental y enfoque sostenido",
+            "Energía vital renovada cada mañana",
+            "Respuestas conscientes, no reacciones impulsivas",
+            "Presencia plena en tu vida y relaciones"
+          ],
+          ctaText: "Quiero esta transformación"
+        }
+      },
+      {
+        id: "home-closing-cta",
+        type: "cta",
+        content: {
+          title: "¿Cuántos días más quieres vivir con esa tensión?",
+          subtitle: "Miles de personas ya encontraron el equilibrio que buscas. Tu clase gratuita de Kundalini Yoga está esperando por ti.",
+          ctaText: "Accede Gratis Ahora",
+          disclaimer: "Sin riesgo · Sin tarjeta · Sin compromisos · Acceso inmediato"
         }
       }
     ]

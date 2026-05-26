@@ -14,6 +14,7 @@ import {
   applyCssVariablesForPalette 
 } from "@/lib/CmsFallbackData";
 import { CmsFormRenderer } from "@/components/CmsFormRenderer";
+import FloatingCTA from "@/components/FloatingCTA";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
@@ -150,11 +151,18 @@ export const DynamicPage = () => {
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} font-${settings.fontFamily} relative flex flex-col`}>
       
+      {/* Floating CTA — appears when hero form scrolls out of view */}
+      <FloatingCTA
+        formAnchor="#form-home-hero"
+        ctaText="Accede Gratis Ahora"
+        subText="🔥 +247 personas ya se registraron esta semana"
+      />
+
       {/* Floating admin quick edit button */}
       {isAdmin && (
         <div className="fixed bottom-6 right-6 z-50">
           <Link to="/admin">
-            <Button className="bg-[#C98A72] text-white hover:bg-[#B57A63] shadow-lg rounded-full px-5 py-6 gap-2 flex items-center font-medium">
+            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg rounded-full px-5 py-6 gap-2 flex items-center font-medium">
               ⚙️ Editar esta página
             </Button>
           </Link>
@@ -163,8 +171,8 @@ export const DynamicPage = () => {
 
       {/* Dynamic Header */}
       <header className={`py-4 px-6 border-b border-border/40 ${palette.cardBackground} sticky top-0 z-40 shadow-sm backdrop-blur-md bg-opacity-90`}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-3 shrink-0">
             <img 
               src={santoshaLogo} 
               alt="Logo" 
@@ -176,15 +184,30 @@ export const DynamicPage = () => {
             </span>
           </Link>
 
-          <a 
-            href={`https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}`} 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <Button size="sm" className={`${palette.primary} font-medium gap-1 rounded-full`}>
-              💬 Contactar WhatsApp
-            </Button>
-          </a>
+          <div className="flex items-center gap-3">
+            {/* Primary: scroll to registration form */}
+            <button
+              id="header-register-btn"
+              onClick={() => {
+                const anchor = document.querySelector("#form-home-hero");
+                if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+                else window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${palette.primary}`}
+            >
+              Clase Gratuita
+            </button>
+
+            {/* Secondary: WhatsApp link */}
+            <a 
+              href={`https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors hidden md:block"
+            >
+              💬 WhatsApp
+            </a>
+          </div>
         </div>
       </header>
 
@@ -253,6 +276,29 @@ export const DynamicPage = () => {
                             buttonClassName={`${palette.primary} rounded-full py-6 font-semibold shadow-sm`}
                           />
                         </div>
+
+                        {/* Urgency + social counter below the form card */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: 0.5 }}
+                          className="mt-4 text-center space-y-2"
+                        >
+                          <p className="text-xs font-medium text-muted-foreground">
+                            <span className="inline-flex items-center gap-1.5">
+                              {/* Mini avatar stack */}
+                              <span className="flex -space-x-1.5">
+                                {["PM", "LF", "CR"].map((init) => (
+                                  <span key={init} className="w-5 h-5 rounded-full bg-primary/20 border border-card text-[8px] font-bold text-primary flex items-center justify-center">{init}</span>
+                                ))}
+                              </span>
+                              <span>+247 personas ya se registraron esta semana</span>
+                            </span>
+                          </p>
+                          <p className="text-[11px] text-muted-foreground/70">
+                            ⏳ Cupos disponibles solo por tiempo limitado
+                          </p>
+                        </motion.div>
                       </motion.div>
                     </div>
                   </section>
@@ -395,9 +441,127 @@ export const DynamicPage = () => {
                         </motion.div>
                       ))}
                     </div>
+
+                    {/* Mid-section CTA after benefits */}
+                    {section.content.showCta !== false && section.content.items?.length >= 3 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                        className="text-center pt-4"
+                      >
+                        <button
+                          onClick={() => {
+                            const anchor = document.querySelector("#form-home-hero");
+                            if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+                            else window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                          className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
+                        >
+                          Quiero estos beneficios ahora
+                        </button>
+                        <p className="text-xs text-muted-foreground mt-3">Sin costo · Sin tarjeta de crédito</p>
+                      </motion.div>
+                    )}
                   </div>
                 </section>
               );
+
+            // 3b. TRANSFORMATION SECTION (before/after emotional contrast)
+            case "transformation": {
+              const beforeItems: string[] = section.content.before || [];
+              const afterItems: string[] = section.content.after || [];
+              return (
+                <section
+                  key={section.id}
+                  className={`py-24 md:py-32 px-6 ${bgSection} border-b border-border/10`}
+                >
+                  <div className="max-w-4xl mx-auto space-y-12">
+                    {section.content.title && (
+                      <h2 className="font-serif text-3xl md:text-4xl font-bold text-center text-foreground leading-tight">
+                        {section.content.title}
+                      </h2>
+                    )}
+
+                    <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                      {/* Before column */}
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-80px" }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        className="bg-muted/60 rounded-[1.5rem] p-8 border border-border/40 space-y-5"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-full bg-muted border border-border/60 flex items-center justify-center text-muted-foreground text-sm font-bold">✕</span>
+                          <h3 className="font-serif text-lg font-semibold text-foreground/70">
+                            {section.content.beforeTitle || "Sin esta práctica..."}
+                          </h3>
+                        </div>
+                        <ul className="space-y-3">
+                          {beforeItems.map((item: string, i: number) => (
+                            <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground font-light">
+                              <span className="mt-0.5 w-4 h-4 rounded-full border border-muted-foreground/30 flex items-center justify-center shrink-0">
+                                <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40" />
+                              </span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+
+                      {/* After column */}
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-80px" }}
+                        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        className="bg-primary/5 rounded-[1.5rem] p-8 border border-primary/20 space-y-5"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="w-8 h-8 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center text-primary text-sm font-bold">✓</span>
+                          <h3 className="font-serif text-lg font-semibold text-foreground">
+                            {section.content.afterTitle || "Con SantoSha"}
+                          </h3>
+                        </div>
+                        <ul className="space-y-3">
+                          {afterItems.map((item: string, i: number) => (
+                            <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 font-light">
+                              <span className="mt-0.5 w-4 h-4 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
+                                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                              </span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    </div>
+
+                    {/* CTA below transformation */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="text-center"
+                    >
+                      <button
+                        onClick={() => {
+                          const anchor = document.querySelector("#form-home-hero");
+                          if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+                          else window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                        className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
+                      >
+                        {section.content.ctaText || "Quiero transformar mi vida"}
+                      </button>
+                      <p className="text-xs text-muted-foreground mt-3">Gratuito · Sin compromisos · Acceso inmediato</p>
+                    </motion.div>
+                  </div>
+                </section>
+              );
+            }
 
             // 4. FORM SECTION
             case "form": {
@@ -473,11 +637,11 @@ export const DynamicPage = () => {
                           >
                             {/* Premium Editorial quotation mark graphic */}
                             <span className="font-serif text-7xl text-primary/10 leading-none select-none absolute top-4 left-6 pointer-events-none group-hover:text-primary/15 transition-colors">
-                              “
+                              &#8220;
                             </span>
 
                             <p className="text-muted-foreground leading-relaxed italic font-light text-sm md:text-base relative z-10 pt-4 pl-4">
-                              "{t.quote}"
+                              &ldquo;{t.quote}&rdquo;
                             </p>
                             
                             <div className="flex items-center gap-4 border-t border-gray-100/50 pt-5 relative z-10">
@@ -494,6 +658,27 @@ export const DynamicPage = () => {
                         );
                       })}
                     </div>
+
+                    {/* Post-testimonials CTA */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5 }}
+                      className="pt-4"
+                    >
+                      <button
+                        onClick={() => {
+                          const anchor = document.querySelector("#form-home-hero");
+                          if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+                          else window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                        className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
+                      >
+                        Quiero mi transformación
+                      </button>
+                      <p className="text-xs text-muted-foreground mt-3">Únete a +10,000 personas que ya cambiaron su vida</p>
+                    </motion.div>
                   </div>
                 </section>
               );
@@ -536,6 +721,68 @@ export const DynamicPage = () => {
                   </div>
                 </section>
               );
+
+            // 7. CLOSING CTA SECTION
+            case "cta": {
+              return (
+                <section
+                  key={section.id}
+                  className={`py-24 md:py-32 px-6 ${bgSection} border-b border-border/10 relative overflow-hidden`}
+                >
+                  {/* Soft radial glow */}
+                  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/6 rounded-full blur-3xl" />
+                  </div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="max-w-2xl mx-auto text-center space-y-8 relative z-10"
+                  >
+                    {/* Rhetorical question */}
+                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground">
+                      {section.content.title || "¿Cuántos días más quieres sentirte así?"}
+                    </h2>
+
+                    <p className="text-lg text-muted-foreground leading-relaxed font-light max-w-xl mx-auto">
+                      {section.content.subtitle || "El cambio que buscas comienza con una sola decisión. Tu clase gratuita de Kundalini Yoga está a un clic de distancia."}
+                    </p>
+
+                    {/* Big CTA */}
+                    <button
+                      id="closing-cta-btn"
+                      onClick={() => {
+                        const anchor = document.querySelector("#form-home-hero");
+                        if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+                        else window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] shadow-md ${palette.primary}`}
+                    >
+                      {section.content.ctaText || "Quiero mi Clase Gratuita Ahora"}
+                    </button>
+
+                    {/* Risk reversal */}
+                    <p className="text-sm text-muted-foreground">
+                      {section.content.disclaimer || "Sin riesgo · Sin tarjeta · Sin compromisos · Acceso inmediato"}
+                    </p>
+
+                    {/* Trust badges row */}
+                    <div className="flex flex-wrap items-center justify-center gap-6 pt-2">
+                      {["100% Gratuita", "Respaldada por Neurociencia", "+10,000 Personas Transformadas"].map((badge) => (
+                        <span key={badge} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <svg className="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                          </svg>
+                          {badge}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                </section>
+              );
+            }
 
             default:
               return null;
