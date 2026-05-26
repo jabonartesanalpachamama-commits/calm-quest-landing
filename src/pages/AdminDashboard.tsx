@@ -285,7 +285,7 @@ export const AdminDashboard = () => {
     try {
       const { GoogleGenerativeAI } = await import("@google/generative-ai");
       const genAI = new GoogleGenerativeAI(agentConfig.apiKey.trim());
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
       const result = await model.generateContent("Responde solo: 'Conexión exitosa'");
       const text = result.response.text();
       setAgentTestResult(`✅ Gemini responde: "${text.slice(0, 60)}"`);
