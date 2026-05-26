@@ -678,7 +678,7 @@ export const DEFAULT_POSTS: CmsPost[] = [
 // ─── LocalStorage versioned cache ───────────────────────────────────────────
 // Bump SCHEMA_VERSION any time DEFAULT_PAGES or DEFAULT_FORMS change structure.
 // On mismatch, the stale page/form cache is wiped and rebuilt from the new defaults.
-const SCHEMA_VERSION = "v4"; // bump this when page sections change
+const SCHEMA_VERSION = "v5"; // bump this when page sections change
 const VERSION_KEY    = "sant_cms_schema_version";
 
 const KEYS = {
