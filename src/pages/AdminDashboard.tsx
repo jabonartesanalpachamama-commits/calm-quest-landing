@@ -1721,8 +1721,9 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                                   <label className="font-semibold block text-[10px] text-muted-foreground">Descripción o Historia</label>
                                   <textarea 
                                     rows={4}
-                                    className="w-full border border-border rounded p-1 mt-0.5" 
-onChange={(e) => {
+                                    className="w-full border border-border rounded p-1 mt-0.5"
+                                    value={section.content.description || ""}
+                                    onChange={(e) => {
                                       const updated = [...editingPage.sections];
                                       updated[index].content.description = e.target.value;
                                       setEditingPage({ ...editingPage, sections: updated });
@@ -1850,6 +1851,35 @@ onChange={(e) => {
                                     <option value="image-left">Imagen Izquierda, Texto Derecha</option>
                                   </select>
                                 </div>
+                                {/* CTA Button fields for connection */}
+                                <div className="bg-[#F0F7EE] border border-[#7EA172]/30 rounded-xl p-2.5 space-y-2">
+                                  <p className="text-[9px] font-bold text-[#5C6E5B] uppercase tracking-wider">🔗 Botón de Acción (Opcional)</p>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Texto del Botón</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.buttonText || ""}
+                                        placeholder="Reservar ahora"
+                                        onChange={(e) => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.buttonText = e.target.value;
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }} />
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">URL de Destino</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs font-mono"
+                                        value={section.content.buttonLink || ""}
+                                        placeholder="https://wa.link/... o #seccion"
+                                        onChange={(e) => {
+                                          const updated = [...editingPage.sections];
+                                          updated[index].content.buttonLink = e.target.value;
+                                          setEditingPage({ ...editingPage, sections: updated });
+                                        }} />
+                                    </div>
+                                  </div>
+                                  <p className="text-[9px] text-muted-foreground">Deja el texto vacío para ocultar el botón.</p>
+                                </div>
                               </div>
                             )}
 
@@ -1956,6 +1986,29 @@ onChange={(e) => {
                                       + Agregar Item
                                     </button>
                                   </div>
+                                  {/* CTA fields for benefits */}
+                                  <div className="bg-[#F0F7EE] border border-[#7EA172]/30 rounded-xl p-2.5 space-y-2">
+                                    <p className="text-[9px] font-bold text-[#5C6E5B] uppercase tracking-wider">🔗 Botón de Acción (CTA)</p>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Texto del Botón</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.ctaText || ""} onChange={e => updateField("ctaText", e.target.value)}
+                                        placeholder="Quiero estos beneficios ahora" />
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">URL de Destino</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs font-mono"
+                                        value={section.content.ctaLink || ""} onChange={e => updateField("ctaLink", e.target.value)}
+                                        placeholder="#form-home-hero · #mi-seccion · https://wa.link/..." />
+                                      <p className="text-[9px] text-muted-foreground mt-0.5">#ancla para bajar a una sección · https:// para URL externa</p>
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Texto Debajo del Botón</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.ctaSubtext || ""} onChange={e => updateField("ctaSubtext", e.target.value)}
+                                        placeholder="Sin costo · Sin tarjeta de crédito" />
+                                    </div>
+                                  </div>
                                 </div>
                               );
                             })()}
@@ -2016,6 +2069,29 @@ onChange={(e) => {
                                     }} className="w-full text-[10px] font-semibold text-[#7EA172] border border-dashed border-[#7EA172]/50 rounded-lg py-1.5 hover:bg-[#F3F8F1] transition-colors">
                                       + Agregar Testimonio
                                     </button>
+                                  </div>
+                                  {/* CTA fields for testimonials */}
+                                  <div className="bg-[#F0F7EE] border border-[#7EA172]/30 rounded-xl p-2.5 space-y-2">
+                                    <p className="text-[9px] font-bold text-[#5C6E5B] uppercase tracking-wider">🔗 Botón de Acción (CTA)</p>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Texto del Botón</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.ctaText || ""} onChange={e => updateField("ctaText", e.target.value)}
+                                        placeholder="Quiero mi transformación" />
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">URL de Destino</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs font-mono"
+                                        value={section.content.ctaLink || ""} onChange={e => updateField("ctaLink", e.target.value)}
+                                        placeholder="#form-home-hero · https://wa.link/..." />
+                                      <p className="text-[9px] text-muted-foreground mt-0.5">#ancla para bajar a una sección · https:// para URL externa</p>
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Texto Debajo del Botón</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.ctaSubtext || ""} onChange={e => updateField("ctaSubtext", e.target.value)}
+                                        placeholder="Únete a +10,000 personas que ya cambiaron su vida" />
+                                    </div>
                                   </div>
                                 </div>
                               );
@@ -2157,6 +2233,23 @@ onChange={(e) => {
                                     <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
                                       value={section.content.ctaText || ""} onChange={e => updateField("ctaText", e.target.value)} />
                                   </div>
+                                  {/* CTA Link + subtext for transformation */}
+                                  <div className="bg-[#F0F7EE] border border-[#7EA172]/30 rounded-xl p-2.5 space-y-2">
+                                    <p className="text-[9px] font-bold text-[#5C6E5B] uppercase tracking-wider">🔗 Destino del Botón</p>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">URL de Destino</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs font-mono"
+                                        value={section.content.ctaLink || ""} onChange={e => updateField("ctaLink", e.target.value)}
+                                        placeholder="#form-home-hero · https://wa.link/..." />
+                                      <p className="text-[9px] text-muted-foreground mt-0.5">#ancla · https:// para URL externa · vacío = scroll al formulario</p>
+                                    </div>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">Texto Debajo del Botón</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
+                                        value={section.content.ctaSubtext || ""} onChange={e => updateField("ctaSubtext", e.target.value)}
+                                        placeholder="Gratuito · Sin compromisos · Acceso inmediato" />
+                                    </div>
+                                  </div>
                                 </div>
                               );
                             })()}
@@ -2189,6 +2282,17 @@ onChange={(e) => {
                                     <label className="font-semibold block text-[10px] text-muted-foreground">Texto de Garantía / Disclaimer</label>
                                     <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs"
                                       value={section.content.disclaimer || ""} onChange={e => updateField("disclaimer", e.target.value)} />
+                                  </div>
+                                  {/* CTA Link for closing CTA section */}
+                                  <div className="bg-[#F0F7EE] border border-[#7EA172]/30 rounded-xl p-2.5 space-y-2">
+                                    <p className="text-[9px] font-bold text-[#5C6E5B] uppercase tracking-wider">🔗 Destino del Botón</p>
+                                    <div>
+                                      <label className="font-semibold block text-[10px] text-muted-foreground">URL de Destino</label>
+                                      <input className="w-full border border-border rounded p-1 mt-0.5 bg-white text-xs font-mono"
+                                        value={section.content.ctaLink || ""} onChange={e => updateField("ctaLink", e.target.value)}
+                                        placeholder="#form-home-hero · https://wa.link/xy0brl · /clase-gratuita" />
+                                      <p className="text-[9px] text-muted-foreground mt-0.5">#ancla para sección · https:// para URL externa · vacío = scroll al formulario</p>
+                                    </div>
                                   </div>
                                 </div>
                               );

@@ -21,6 +21,44 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
+// ─── CtaButton: smart CTA that respects ctaLink field ───────────────────────
+// • "#anchor"   → smooth-scrolls to the element with that id
+// • "https://…" → navigates to the URL (external links open in new tab)
+// • ""           → falls back to scroll to #form-home-hero
+interface CtaButtonProps {
+  text: string;
+  link: string;
+  className?: string;
+  id?: string;
+}
+const CtaButton = ({ text, link, className, id }: CtaButtonProps) => {
+  const handleClick = () => {
+    const target = link.trim();
+    if (!target || target === "#form-home-hero") {
+      const anchor = document.querySelector("#form-home-hero");
+      if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (target.startsWith("#")) {
+      const el = document.querySelector(target);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    // External or absolute URL
+    if (target.startsWith("http")) {
+      window.open(target, "_blank", "noopener noreferrer");
+    } else {
+      window.location.href = target;
+    }
+  };
+  return (
+    <button id={id} onClick={handleClick} className={className}>
+      {text}
+    </button>
+  );
+};
+
 export const DynamicPage = () => {
   const params = useParams<{ slug?: string; "*"?: string }>();
   const rawSlug = params.slug || params["*"];
@@ -423,6 +461,15 @@ export const DynamicPage = () => {
                       <div className="text-muted-foreground leading-relaxed space-y-4 font-light text-md whitespace-pre-line text-justify max-w-2xl">
                         {section.content.description}
                       </div>
+                      {section.content.buttonText && (
+                        <div className="pt-2">
+                          <CtaButton
+                            text={section.content.buttonText}
+                            link={section.content.buttonLink || ""}
+                            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
+                          />
+                        </div>
+                      )}
                     </motion.div>
 
                   </div>
@@ -479,17 +526,12 @@ export const DynamicPage = () => {
                         transition={{ duration: 0.5 }}
                         className="text-center pt-4"
                       >
-                        <button
-                          onClick={() => {
-                            const anchor = document.querySelector("#form-home-hero");
-                            if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-                            else window.scrollTo({ top: 0, behavior: "smooth" });
-                          }}
+                        <CtaButton
+                          text={section.content.ctaText || "Quiero estos beneficios ahora"}
+                          link={section.content.ctaLink || ""}
                           className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
-                        >
-                          Quiero estos beneficios ahora
-                        </button>
-                        <p className="text-xs text-muted-foreground mt-3">Sin costo · Sin tarjeta de crédito</p>
+                        />
+                        <p className="text-xs text-muted-foreground mt-3">{section.content.ctaSubtext || "Sin costo · Sin tarjeta de crédito"}</p>
                       </motion.div>
                     )}
                   </div>
@@ -574,17 +616,12 @@ export const DynamicPage = () => {
                       transition={{ duration: 0.5, delay: 0.2 }}
                       className="text-center"
                     >
-                      <button
-                        onClick={() => {
-                          const anchor = document.querySelector("#form-home-hero");
-                          if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-                          else window.scrollTo({ top: 0, behavior: "smooth" });
-                        }}
+                      <CtaButton
+                        text={section.content.ctaText || "Quiero transformar mi vida"}
+                        link={section.content.ctaLink || ""}
                         className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
-                      >
-                        {section.content.ctaText || "Quiero transformar mi vida"}
-                      </button>
-                      <p className="text-xs text-muted-foreground mt-3">Gratuito · Sin compromisos · Acceso inmediato</p>
+                      />
+                      <p className="text-xs text-muted-foreground mt-3">{section.content.ctaSubtext || "Gratuito · Sin compromisos · Acceso inmediato"}</p>
                     </motion.div>
                   </div>
                 </section>
@@ -695,17 +732,12 @@ export const DynamicPage = () => {
                       transition={{ duration: 0.5 }}
                       className="pt-4"
                     >
-                      <button
-                        onClick={() => {
-                          const anchor = document.querySelector("#form-home-hero");
-                          if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-                          else window.scrollTo({ top: 0, behavior: "smooth" });
-                        }}
+                      <CtaButton
+                        text={section.content.ctaText || "Quiero mi transformación"}
+                        link={section.content.ctaLink || ""}
                         className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm ${palette.primary}`}
-                      >
-                        Quiero mi transformación
-                      </button>
-                      <p className="text-xs text-muted-foreground mt-3">Únete a +10,000 personas que ya cambiaron su vida</p>
+                      />
+                      <p className="text-xs text-muted-foreground mt-3">{section.content.ctaSubtext || "Únete a +10,000 personas que ya cambiaron su vida"}</p>
                     </motion.div>
                   </div>
                 </section>
@@ -779,17 +811,12 @@ export const DynamicPage = () => {
                     </p>
 
                     {/* Big CTA */}
-                    <button
+                    <CtaButton
                       id="closing-cta-btn"
-                      onClick={() => {
-                        const anchor = document.querySelector("#form-home-hero");
-                        if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-                        else window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
+                      text={section.content.ctaText || "Quiero mi Clase Gratuita Ahora"}
+                      link={section.content.ctaLink || ""}
                       className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] shadow-md ${palette.primary}`}
-                    >
-                      {section.content.ctaText || "Quiero mi Clase Gratuita Ahora"}
-                    </button>
+                    />
 
                     {/* Risk reversal */}
                     <p className="text-sm text-muted-foreground">
