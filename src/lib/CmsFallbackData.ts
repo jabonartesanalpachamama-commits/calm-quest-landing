@@ -24,6 +24,7 @@ export interface CmsForm {
   id: string;
   name: string;
   fields: CmsField[];
+  redirectUrl?: string;
 }
 
 export interface CmsSection {
@@ -212,7 +213,8 @@ const DEFAULT_FORMS: CmsForm[] = [
     fields: [
       { id: "name", label: "Nombre Completo", type: "text", placeholder: "Tu nombre completo", required: true },
       { id: "email", label: "Correo Electrónico", type: "email", placeholder: "ejemplo@correo.com", required: true }
-    ]
+    ],
+    redirectUrl: "/clase-gratuita"
   },
   {
     id: "e2a2c82c-b6e7-5878-ae8b-22f980796b5b",
@@ -222,7 +224,8 @@ const DEFAULT_FORMS: CmsForm[] = [
       { id: "whatsapp", label: "Teléfono / WhatsApp", type: "tel", placeholder: "+54 9 11 ...", required: true },
       { id: "age", label: "Edad", type: "number", placeholder: "Tu edad", required: false },
       { id: "message", label: "Motivo de Consulta", type: "textarea", placeholder: "¿En qué podemos ayudarte hoy?", required: true }
-    ]
+    ],
+    redirectUrl: ""
   }
 ];
 

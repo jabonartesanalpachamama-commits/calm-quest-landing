@@ -113,7 +113,8 @@ export const AdminDashboard = () => {
           activeForms = data.map(d => ({
             id: d.id,
             name: d.name,
-            fields: d.fields as any
+            fields: d.fields as any,
+            redirectUrl: d.redirect_url || ""
           }));
         }
       } catch (e) {
@@ -261,7 +262,8 @@ export const AdminDashboard = () => {
       const { error } = await supabase.from("cms_forms").upsert({
         id: isNew ? undefined : updatedForm.id,
         name: updatedForm.name,
-        fields: updatedForm.fields as any
+        fields: updatedForm.fields as any,
+        redirect_url: updatedForm.redirectUrl || ""
       });
 
       if (error) throw error;
@@ -522,7 +524,8 @@ export const AdminDashboard = () => {
                     name: "Nuevo Formulario de Consulta",
                     fields: [
                       { id: "name", label: "Nombre Completo", type: "text", placeholder: "Tu nombre", required: true }
-                    ]
+                    ],
+                    redirectUrl: ""
                   })}
                   className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full font-medium"
                 >
@@ -1483,6 +1486,23 @@ onChange={(e) => {
                   placeholder="Ej. Formulario de Captura General"
                   className="h-10 border-[#EBE7DF] focus:border-[#7EA172] rounded-xl"
                 />
+              </div>
+
+              {/* Redirect URL Option */}
+              <div className="space-y-1.5 bg-[#FAF9F5] border border-[#EBE7DF] p-4 rounded-2xl">
+                <div className="flex justify-between items-center">
+                  <label className="text-xs font-bold block text-primary">Enlace de redirección tras el envío (Opcional)</label>
+                  <span className="text-[10px] text-muted-foreground font-semibold px-2 py-0.5 bg-gray-100 rounded-full">Pro</span>
+                </div>
+                <Input 
+                  value={editingForm.redirectUrl || ""}
+                  onChange={(e) => setEditingForm({ ...editingForm, redirectUrl: e.target.value })}
+                  placeholder="Ej. /clase-gratuita o https://wa.link/..."
+                  className="h-10 border-[#EBE7DF] focus:border-[#7EA172] bg-white rounded-xl"
+                />
+                <p className="text-[10px] text-muted-foreground leading-normal">
+                  Ingresa una dirección (ruta web local como <code>/clase-gratuita</code> o enlace de WhatsApp externo como <code>https://wa.link/...</code>) a la que enviarás a la persona inmediatamente después de dejar sus datos. Si lo dejas vacío, se mostrará un mensaje de agradecimiento en pantalla.
+                </p>
               </div>
 
               {/* Field builder checklist */}

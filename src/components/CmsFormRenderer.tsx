@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,6 +19,20 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleSuccessRedirect = () => {
+    if (form.redirectUrl && form.redirectUrl.trim()) {
+      const url = form.redirectUrl.trim();
+      if (url.startsWith("http://") || url.startsWith("https://")) {
+        window.location.href = url;
+      } else {
+        navigate(url);
+      }
+    } else {
+      setIsSuccess(true);
+    }
+  };
 
   const handleInputChange = (fieldId: string, value: any) => {
     setFormData((prev) => ({
@@ -59,7 +74,7 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
         title: "¡Formulario enviado!",
         description: "Tus datos se registraron correctamente. Nos comunicaremos contigo a la brevedad.",
       });
-      setIsSuccess(true);
+      handleSuccessRedirect();
     } catch (dbError) {
       console.warn("Could not save submission to Supabase, backing up to LocalStorage:", dbError);
 
@@ -79,7 +94,7 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
           title: "¡Formulario enviado!",
           description: "Tus datos se guardaron localmente de forma segura. Nos comunicaremos contigo.",
         });
-        setIsSuccess(true);
+        handleSuccessRedirect();
       } catch (localError) {
         console.error("Local save error:", localError);
         toast({

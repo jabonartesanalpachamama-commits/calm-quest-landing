@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS public.cms_forms (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   fields JSONB NOT NULL DEFAULT '[]'::jsonb,
+  redirect_url TEXT DEFAULT '',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
@@ -82,18 +83,18 @@ INSERT INTO public.cms_settings (key, value) VALUES
 ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
 
 -- Seed Initial Default Forms
-INSERT INTO public.cms_forms (id, name, fields) VALUES
+INSERT INTO public.cms_forms (id, name, fields, redirect_url) VALUES
 ('b191c71b-a5d6-4767-9d7a-11f879685a4a', 'Registro Clase Gratis', '[
   {"id": "name", "label": "Nombre Completo", "type": "text", "placeholder": "Tu nombre completo", "required": true},
   {"id": "email", "label": "Correo Electrónico", "type": "email", "placeholder": "ejemplo@correo.com", "required": true}
-]'::jsonb),
+]'::jsonb, '/clase-gratuita'),
 ('e2a2c82c-b6e7-5878-ae8b-22f980796b5b', 'Consulta de Terapia', '[
   {"id": "name", "label": "Nombre Completo", "type": "text", "placeholder": "Tu nombre", "required": true},
   {"id": "whatsapp", "label": "Teléfono / WhatsApp", "type": "tel", "placeholder": "+54 9 11 ...", "required": true},
   {"id": "age", "label": "Edad", "type": "number", "placeholder": "Tu edad", "required": false},
   {"id": "message", "label": "Motivo de Consulta", "type": "textarea", "placeholder": "¿En qué podemos ayudarte hoy?", "required": true}
-]'::jsonb)
-ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, fields = EXCLUDED.fields;
+]'::jsonb, '')
+ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, fields = EXCLUDED.fields, redirect_url = EXCLUDED.redirect_url;
 
 -- Seed Default Pages
 INSERT INTO public.cms_pages (title, slug, published, sections) VALUES
