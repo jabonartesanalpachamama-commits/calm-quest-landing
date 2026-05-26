@@ -19,8 +19,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 export const DynamicPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const pageSlug = slug || "home";
+  const params = useParams<{ slug?: string; "*"?: string }>();
+  const rawSlug = params.slug || params["*"];
+  const pageSlug = rawSlug && rawSlug !== "" ? rawSlug : "home";
 
   const [page, setPage] = useState<CmsPage | null>(null);
   const [settings, setSettings] = useState<VisualIdentity | null>(null);
