@@ -62,7 +62,8 @@ export const DynamicPage = () => {
             activeForms = data.map(d => ({
               id: d.id,
               name: d.name,
-              fields: d.fields as any
+              fields: d.fields as any,
+              redirectUrl: d.redirect_url || ""
             }));
           }
         } catch (e) {
