@@ -49,6 +49,17 @@ export interface CmsSubmission {
   createdAt: string;
 }
 
+export interface CmsPost {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  imageUrl?: string;
+  published: boolean;
+  publishedAt: string; // ISO string
+}
+
 // 4 Harmonious and therapeutic color palettes
 export const COLOR_PALETTES = {
   menta: {
@@ -391,12 +402,36 @@ const DEFAULT_SUBMISSIONS: CmsSubmission[] = [
   }
 ];
 
+export const DEFAULT_POSTS: CmsPost[] = [
+  {
+    id: "a191c71b-a5d6-4767-9d7a-11f879685a4b",
+    title: "Mindfulness y Respiración: Calma tu Ansiedad en 5 Minutos",
+    slug: "calma-tu-ansiedad-en-5-minutos",
+    excerpt: "Descubre cómo la respiración consciente y sencillas técnicas corporales pueden reiniciar tu sistema nervioso y devolverte la paz en momentos de tensión.",
+    imageUrl: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop",
+    content: `# Mindfulness y Respiración: Calma tu Ansiedad en 5 Minutos\n\nLa ansiedad es una respuesta natural del cuerpo ante el peligro, pero en nuestro mundo moderno, a menudo se activa ante tensiones del día a día, como un correo electrónico urgente, la sobrecarga laboral o pensamientos persistentes sobre el futuro. Cuando esto ocurre, nuestro sistema nervioso entra en modo de "lucha o huida", aumentando el cortisol y acelerando el corazón.\n\nLa buena noticia es que tienes un interruptor biológico integrado para apagar esta alarma: **tu respiración**.\n\nA través de la respiración consciente y técnicas sencillas de Mindfulness, puedes enviar una señal directa a tu cerebro para activar el sistema nervioso parasimpático, el encargado de la relajación y la calma.\n\n---\n\n## La Técnica del Suspiro Terapéutico (Respiración 4-7-8)\n\nEsta técnica, respaldada por la neurociencia moderna, es uno de los tranquilizantes naturales más eficaces para el sistema nervioso. Puedes hacerla en cualquier lugar:\n\n1. **Inhala profundamente por la nariz** durante 4 segundos.\n2. **Sostén el aire** en tus pulmones durante 7 segundos.\n3. **Exhala completamente por la boca**, haciendo un suave sonido de suspiro, durante 8 segundos.\n\nRepite este ciclo 4 veces. Notarás de inmediato cómo tus hombros caen, tu ritmo cardíaco disminuye y tu mente se enfoca en el momento presente.\n\n---\n\n## Mindfulness en la Rutina Diaria\n\nNo necesitas meditar durante horas en una montaña para experimentar los beneficios de la atención plena. El Mindfulness se trata de **presencia**. Aquí tienes tres formas de integrarlo hoy:\n\n* **Al tomar una taza de té o café**: Concéntrate en la calidez de la taza entre tus manos, el aroma que se eleva y los matices del sabor. Si tu mente divaga hacia los pendientes, regrésala suavemente a la taza.\n* **Caminar consciente**: Mientras caminas hacia tu oficina o das un paseo, siente el contacto de tus pies con el suelo. Observa los colores del entorno sin juzgar.\n* **Escucha atenta**: En tu próxima conversación, escucha a la otra persona con el 100% de tu presencia, sin pensar en lo que vas a responder a continuación.\n\nEl bienestar y la calma mental no son metas lejanas, sino pequeñas decisiones conscientes que tomamos momento a momento. ¡Prueba a respirar conscientemente hoy!`,
+    published: true,
+    publishedAt: new Date().toISOString()
+  },
+  {
+    id: "e2a2c82c-b6e7-5878-ae8b-22f980796b5c",
+    title: "Kundalini Yoga: La Ciencia de la Vitalidad Diaria y Claridad Mental",
+    slug: "kundalini-yoga-vitalidad-diaria",
+    excerpt: "Conoce el poder de esta práctica milenaria que combina mantras, mudras y respiración consciente para desbloquear tu energía vital y mejorar tu claridad mental.",
+    imageUrl: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop",
+    content: `# Kundalini Yoga: La Ciencia de la Vitalidad Diaria y Claridad Mental\n\nEn la búsqueda constante de equilibrio, a menudo nos enfocamos únicamente en la salud mental o en la física, olvidando que somos una unidad integrada. **Kundalini Yoga**, conocido históricamente como el yoga de la conciencia, es una tecnología holística diseñada precisamente para armonizar nuestro cuerpo, mente y energía vital.\n\nA diferencia de otros estilos de yoga, Kundalini combina posturas físicas dinámicas (*asanas*) con técnicas respiratorias avanzadas (*pranayamas*), cantos de sonidos sagrados (*mantras*) y gestos con las manos (*mudras*).\n\nEsta combinación produce un estímulo directo en el sistema glandular, fortalece el sistema nervioso y despeja la niebla mental en pocos minutos de práctica.\n\n---\n\n## ¿Por qué se le llama una "Ciencia de la Vitalidad"?\n\nDesde una perspectiva biológica, la práctica regular de Kundalini Yoga estimula la glándula pituitaria y la glándula pineal, regulando la liberación de hormonas del bienestar como la dopamina y la serotonina.\n\nAdemás, los ejercicios dinámicos incrementan la circulación de líquido cefalorraquídeo hacia el cerebro, mejorando la agudeza cognitiva, la memoria y permitiéndote tomar decisiones bajo presión con una calma inquebrantable.\n\n---\n\n## Una Pequeña Práctica para Iniciar tu Día\n\nSi quieres experimentar el efecto vitalizante del Kundalini, te sugiero iniciar tus mañanas con la **Ego Eradicator** (Eliminador del Ego), una respiración diseñada para recargar tus centros de energía y expandir tus pulmones:\n\n1. Siéntate con las piernas cruzadas de manera cómoda y mantén tu columna recta.\n2. Eleva los brazos a un ángulo de 60 grados. Dobla los dedos sobre las palmas de las manos de modo que las yemas toquen la base de los dedos, manteniendo **los pulgares apuntando hacia el cielo**.\n3. Cierra los ojos y enfoca tu atención en el entrecejo (tercer ojo).\n4. Comienza la **Respiración de Fuego**: una respiración rápida, rítmica y continua a través de la nariz (unas 2-3 respiraciones por segundo). Al exhalar, contrae el ombligo hacia la columna; al inhalar, relájalo.\n5. Continúa durante 1 a 3 minutos. Para finalizar, inhala profundo, junta los pulgares arriba de tu cabeza, sostén la respiración unos segundos, exhala y relaja los brazos.\n\nEsta sencilla práctica despejará cualquier somnolencia de tu mente y te dará una claridad e intuición excepcionales para afrontar los desafíos de tu día. Recuerda que la consistencia es la llave que abre la puerta al bienestar duradero.`,
+    published: true,
+    publishedAt: new Date().toISOString()
+  }
+];
+
 // LocalStorage helpers to run fully offline
 const KEYS = {
   SETTINGS: "sant_cms_settings",
   PAGES: "sant_cms_pages",
   FORMS: "sant_cms_forms",
-  SUBMISSIONS: "sant_cms_submissions"
+  SUBMISSIONS: "sant_cms_submissions",
+  POSTS: "sant_cms_posts"
 };
 
 export const loadFromLocalStorage = <T>(key: string, defaultValue: T): T => {
@@ -428,6 +463,9 @@ export const saveLocalForms = (forms: CmsForm[]): void => saveToLocalStorage(KEY
 
 export const getLocalSubmissions = (): CmsSubmission[] => loadFromLocalStorage(KEYS.SUBMISSIONS, DEFAULT_SUBMISSIONS);
 export const saveLocalSubmissions = (subs: CmsSubmission[]): void => saveToLocalStorage(KEYS.SUBMISSIONS, subs);
+
+export const getLocalPosts = (): CmsPost[] => loadFromLocalStorage(KEYS.POSTS, DEFAULT_POSTS);
+export const saveLocalPosts = (posts: CmsPost[]): void => saveToLocalStorage(KEYS.POSTS, posts);
 
 export const applyCssVariablesForPalette = (paletteName: keyof typeof COLOR_PALETTES) => {
   const palette = COLOR_PALETTES[paletteName] || COLOR_PALETTES.menta;

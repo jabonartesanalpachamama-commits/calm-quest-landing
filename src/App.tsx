@@ -14,6 +14,8 @@ import SalesNotification from "./components/SalesNotification";
 import CmsLogin from "./pages/CmsLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import DynamicPage from "./pages/DynamicPage";
+import BlogList from "./pages/BlogList";
+import BlogPostView from "./pages/BlogPostView";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<DynamicPage />} />
           <Route path="/clase-gratuita" element={<TrafficSplitter />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<BlogPostView />} />
 
           {/* Debug/Preview Routes for A/B Testing Variants */}
           <Route path="/clase-gratuita-original" element={<FreeClass />} />
