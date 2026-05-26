@@ -9,6 +9,7 @@ import {
   CmsForm, 
   CmsSubmission, 
   CmsPost,
+  AiAgentConfig,
   COLOR_PALETTES,
   FONT_PAIRS,
   FontFamilyKey,
@@ -22,7 +23,9 @@ import {
   getLocalSubmissions, 
   saveLocalSubmissions,
   getLocalPosts,
-  saveLocalPosts
+  saveLocalPosts,
+  getLocalAgentConfig,
+  saveLocalAgentConfig
 } from "@/lib/CmsFallbackData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -49,7 +52,15 @@ import {
   Heart,
   ChevronRight,
   BookOpen,
-  Calendar
+  Calendar,
+  Bot,
+  MessageSquare,
+  Users,
+  ClipboardList,
+  ChevronDown,
+  ChevronUp,
+  Key,
+  Save
 } from "lucide-react";
 
 export const AdminDashboard = () => {
@@ -64,6 +75,17 @@ export const AdminDashboard = () => {
   const [editingForm, setEditingForm] = useState<CmsForm | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFormFilter, setSelectedFormFilter] = useState("all");
+
+  // ─── AI Agent state ────────────────────────────────────────────────────────
+  const [agentConfig, setAgentConfig] = useState<AiAgentConfig | null>(null);
+  const [agentSaving, setAgentSaving] = useState(false);
+  const [agentTestResult, setAgentTestResult] = useState<string | null>(null);
+
+  // ─── Datos/Pacientes — 3 sources ──────────────────────────────────────────
+  const [registrations, setRegistrations] = useState<Array<{ id: string; name: string; email: string; created_at: string }>>([]);
+  const [chatLeads, setChatLeads] = useState<Array<{ id: string; page_slug: string; name: string; contact: string; conversation: any[]; created_at: string }>>([]);
+  const [dataSubTab, setDataSubTab] = useState<"forms" | "registrations" | "chatbot">("forms");
+  const [expandedConversation, setExpandedConversation] = useState<string | null>(null);
   
   // Blog states
   const [posts, setPosts] = useState<CmsPost[]>([]);
@@ -79,6 +101,7 @@ export const AdminDashboard = () => {
 
   const { toast } = useToast();
   const navigate = useNavigate();
+
 
   // Authentication check
   useEffect(() => {
@@ -179,6 +202,33 @@ export const AdminDashboard = () => {
         console.warn("Db access error, using local posts:", e);
       }
       setPosts(activePosts);
+
+      // 6. Load AI Agent Config
+      let activeCfg = getLocalAgentConfig();
+      try {
+        const { data: cfgRows } = await supabase.from("cms_settings").select("*");
+        const agentRow = cfgRows?.find((r: any) => r.key === "ai_agent_config");
+        if (agentRow?.value) activeCfg = { ...activeCfg, ...(agentRow.value as any) };
+      } catch { /* noop */ }
+      setAgentConfig(activeCfg);
+
+      // 7. Load Registrations (Lovable table)
+      try {
+        const { data: regsData } = await supabase.from("registrations").select("*").order("created_at", { ascending: false });
+        if (regsData) setRegistrations(regsData as any);
+      } catch { /* noop */ }
+
+      // 8. Load Chat Leads
+      try {
+        const { data: chatData } = await (supabase as any).from("chat_leads").select("*").order("created_at", { ascending: false });
+        if (chatData) setChatLeads(chatData);
+      } catch {
+        // Table might not exist yet — also try localStorage
+        try {
+          const local = JSON.parse(localStorage.getItem("sant_chat_leads") || "[]");
+          if (local.length) setChatLeads(local);
+        } catch { /* noop */ }
+      }
     };
 
     loadAllCmsData();
@@ -205,6 +255,43 @@ export const AdminDashboard = () => {
       description: "Has salido del panel de administración.",
     });
     navigate("/admin/login");
+  };
+
+  // --- SAVE AI AGENT CONFIG ---
+  const handleSaveAgent = async () => {
+    if (!agentConfig) return;
+    setAgentSaving(true);
+    saveLocalAgentConfig(agentConfig);
+    try {
+      const { error } = await supabase
+        .from("cms_settings")
+        .upsert({ key: "ai_agent_config", value: agentConfig as any });
+      if (error) throw error;
+      toast({ title: "✅ Agente guardado", description: "La configuración del asistente IA se ha actualizado." });
+    } catch {
+      toast({ title: "💾 Guardado localmente", description: "Sin conexión con la base de datos, guardado en el navegador." });
+    } finally {
+      setAgentSaving(false);
+    }
+  };
+
+  // --- TEST AI AGENT API KEY ---
+  const handleTestAgent = async () => {
+    if (!agentConfig?.apiKey?.trim()) {
+      setAgentTestResult("❌ Ingresa una API Key de Gemini primero.");
+      return;
+    }
+    setAgentTestResult("🔄 Probando conexión con Gemini...");
+    try {
+      const { GoogleGenerativeAI } = await import("@google/generative-ai");
+      const genAI = new GoogleGenerativeAI(agentConfig.apiKey.trim());
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent("Responde solo: 'Conexión exitosa'");
+      const text = result.response.text();
+      setAgentTestResult(`✅ Gemini responde: "${text.slice(0, 60)}"`);
+    } catch (err: any) {
+      setAgentTestResult(`❌ Error: ${err?.message || "API Key inválida o sin permisos"}`);
+    }
   };
 
   // --- SAVE SETTINGS ---
@@ -859,6 +946,12 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                   <Plus className="w-3.5 h-3.5 mr-1.5 inline-block" /> Diseñar Formularios
                 </TabsTrigger>
                 <TabsTrigger 
+                  value="agent" 
+                  className="rounded-full px-5 py-2 data-[state=active]:bg-[#7EA172] data-[state=active]:text-white transition-all text-xs font-semibold"
+                >
+                  <Bot className="w-3.5 h-3.5 mr-1.5 inline-block" /> Agente IA
+                </TabsTrigger>
+                <TabsTrigger 
                   value="submissions" 
                   className="rounded-full px-5 py-2 data-[state=active]:bg-[#7EA172] data-[state=active]:text-white transition-all text-xs font-semibold"
                 >
@@ -1160,117 +1253,474 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
               </div>
             </TabsContent>
 
-            {/* TABS CONTENT: 3. SUBMISSIONS / LEADS LIST */}
+            {/* TABS CONTENT: AGENTE IA */}
+            <TabsContent value="agent" className="space-y-6">
+              {agentConfig && (
+                <div className="max-w-3xl mx-auto space-y-6">
+                  {/* Header */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="font-serif text-xl font-semibold flex items-center gap-2">
+                        <Bot className="w-5 h-5 text-[#7EA172]" /> Asistente IA para tu Web
+                      </h2>
+                      <p className="text-xs text-[#5C6E5B] font-light">
+                        Configura el comportamiento del chatbot que ven los visitantes de tu página.
+                      </p>
+                    </div>
+                    <Button
+                      onClick={handleSaveAgent}
+                      disabled={agentSaving}
+                      className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full gap-2"
+                    >
+                      <Save className="w-4 h-4" />
+                      {agentSaving ? "Guardando..." : "Guardar Cambios"}
+                    </Button>
+                  </div>
+
+                  {/* ON/OFF Toggle */}
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold text-sm">Activar Asistente IA</h3>
+                        <p className="text-xs text-muted-foreground font-light">
+                          Cuando está activo, el botón de chat aparece en todas tus páginas publicadas.
+                        </p>
+                      </div>
+                      <Switch
+                        checked={agentConfig.enabled}
+                        onCheckedChange={(val) => setAgentConfig({ ...agentConfig, enabled: val })}
+                      />
+                    </div>
+                  </Card>
+
+                  {/* Identidad del Bot */}
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm space-y-4">
+                    <h3 className="font-semibold text-sm flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4 text-[#7EA172]" /> Identidad del Asistente
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold">Nombre del Bot</label>
+                        <Input
+                          value={agentConfig.botName}
+                          onChange={(e) => setAgentConfig({ ...agentConfig, botName: e.target.value })}
+                          placeholder="SantoBot"
+                          className="h-10 border-[#EBE7DF] rounded-xl focus:border-[#7EA172]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold">Emoji de Avatar</label>
+                        <Input
+                          value={agentConfig.avatarEmoji}
+                          onChange={(e) => setAgentConfig({ ...agentConfig, avatarEmoji: e.target.value })}
+                          placeholder="🌿"
+                          className="h-10 border-[#EBE7DF] rounded-xl focus:border-[#7EA172]"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold">Mensaje de Bienvenida</label>
+                      <Input
+                        value={agentConfig.welcomeMessage}
+                        onChange={(e) => setAgentConfig({ ...agentConfig, welcomeMessage: e.target.value })}
+                        placeholder="Hola 🌿 ¿En qué puedo ayudarte hoy?"
+                        className="h-10 border-[#EBE7DF] rounded-xl focus:border-[#7EA172]"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold">Mensaje para capturar contacto</label>
+                      <Input
+                        value={agentConfig.captureLeadPrompt}
+                        onChange={(e) => setAgentConfig({ ...agentConfig, captureLeadPrompt: e.target.value })}
+                        placeholder="¿Me puedes dejar tu nombre y WhatsApp?"
+                        className="h-10 border-[#EBE7DF] rounded-xl focus:border-[#7EA172]"
+                      />
+                      <p className="text-[10px] text-muted-foreground">El bot lo usará cuando el visitante muestre interés en los servicios.</p>
+                    </div>
+                  </Card>
+
+                  {/* System Prompt / Instrucciones */}
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-sm flex items-center gap-2">
+                        <Bot className="w-4 h-4 text-[#7EA172]" /> Instrucciones del Agente (System Prompt)
+                      </h3>
+                      <p className="text-xs text-muted-foreground font-light">
+                        Define la personalidad, el tono y el conocimiento de tu asistente. Sé específico sobre tus servicios, horarios y valores.
+                      </p>
+                    </div>
+                    <Textarea
+                      value={agentConfig.systemPrompt}
+                      onChange={(e) => setAgentConfig({ ...agentConfig, systemPrompt: e.target.value })}
+                      rows={8}
+                      placeholder="Eres un asistente virtual de SantoSha..."
+                      className="border-[#EBE7DF] rounded-xl focus:border-[#7EA172] text-sm resize-none"
+                    />
+                    <div className="bg-[#F8F7F4] rounded-2xl p-3 border border-[#EBE7DF] text-[11px] text-[#5C6E5B]">
+                      💡 <strong>Tip:</strong> Incluye: nombre del negocio, qué ofreces, a quién va dirigido, horarios disponibles, precios (si aplica), y cómo quieres que el bot invite a dejar datos de contacto.
+                    </div>
+                  </Card>
+
+                  {/* FAQs */}
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold text-sm flex items-center gap-2">
+                          <ClipboardList className="w-4 h-4 text-[#7EA172]" /> Preguntas y Respuestas Frecuentes
+                        </h3>
+                        <p className="text-xs text-muted-foreground font-light">
+                          Si no hay API Key configurada, el bot responderá estas preguntas exactas cuando las detecte.
+                        </p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setAgentConfig({
+                          ...agentConfig,
+                          faqs: [...agentConfig.faqs, { question: "", answer: "" }]
+                        })}
+                        className="rounded-full border-[#7EA172] text-[#7EA172] hover:bg-[#7EA172]/10 text-xs"
+                      >
+                        <Plus className="w-3.5 h-3.5 mr-1" /> Añadir Pregunta
+                      </Button>
+                    </div>
+                    <div className="space-y-3">
+                      {agentConfig.faqs.map((faq, idx) => (
+                        <div key={idx} className="bg-[#F8F7F4] rounded-2xl p-4 border border-[#EBE7DF] space-y-2">
+                          <div className="flex gap-2">
+                            <div className="flex-1 space-y-2">
+                              <Input
+                                value={faq.question}
+                                onChange={(e) => {
+                                  const updated = [...agentConfig.faqs];
+                                  updated[idx] = { ...updated[idx], question: e.target.value };
+                                  setAgentConfig({ ...agentConfig, faqs: updated });
+                                }}
+                                placeholder="¿Cuánto cuesta la sesión?"
+                                className="h-9 text-xs border-[#EBE7DF] bg-white rounded-xl focus:border-[#7EA172]"
+                              />
+                              <Textarea
+                                value={faq.answer}
+                                onChange={(e) => {
+                                  const updated = [...agentConfig.faqs];
+                                  updated[idx] = { ...updated[idx], answer: e.target.value };
+                                  setAgentConfig({ ...agentConfig, faqs: updated });
+                                }}
+                                placeholder="La primera sesión es gratuita..."
+                                rows={2}
+                                className="text-xs border-[#EBE7DF] bg-white rounded-xl focus:border-[#7EA172] resize-none"
+                              />
+                            </div>
+                            <button
+                              onClick={() => setAgentConfig({ ...agentConfig, faqs: agentConfig.faqs.filter((_, i) => i !== idx) })}
+                              className="p-2 text-[#C98A72] hover:text-[#B57A63] hover:bg-rose-50 rounded-xl transition-colors self-start"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+
+                  {/* API Key */}
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-sm flex items-center gap-2">
+                        <Key className="w-4 h-4 text-[#7EA172]" /> API Key de Gemini (IA en vivo)
+                      </h3>
+                      <p className="text-xs text-muted-foreground font-light">
+                        Sin API Key, el bot responde solo con las FAQs configuradas arriba. Con la clave, usa IA en tiempo real.
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Input
+                        type="password"
+                        value={agentConfig.apiKey}
+                        onChange={(e) => setAgentConfig({ ...agentConfig, apiKey: e.target.value })}
+                        placeholder="AIza..."
+                        className="h-10 border-[#EBE7DF] rounded-xl focus:border-[#7EA172] font-mono text-xs flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        onClick={handleTestAgent}
+                        className="rounded-xl border-[#7EA172] text-[#7EA172] hover:bg-[#7EA172]/10 text-xs whitespace-nowrap"
+                      >
+                        Probar Conexión
+                      </Button>
+                    </div>
+                    {agentTestResult && (
+                      <div className={`text-xs rounded-xl px-4 py-2.5 border ${agentTestResult.startsWith("✅") ? "bg-emerald-50 border-emerald-200 text-emerald-700" : agentTestResult.startsWith("❌") ? "bg-rose-50 border-rose-200 text-rose-700" : "bg-blue-50 border-blue-200 text-blue-700"}`}>
+                        {agentTestResult}
+                      </div>
+                    )}
+                    <div className="text-[10px] text-muted-foreground bg-[#F8F7F4] rounded-xl p-3 border border-[#EBE7DF]">
+                      🔑 Obtén tu API Key gratuita en{" "}
+                      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline text-[#7EA172]">
+                        aistudio.google.com/apikey
+                      </a>
+                      . La clave se guarda de forma segura en tu base de datos.
+                    </div>
+                  </Card>
+
+                  {/* Preview */}
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-6 shadow-sm">
+                    <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                      <Eye className="w-4 h-4 text-[#7EA172]" /> Vista Previa del Botón
+                    </h3>
+                    <div className="relative h-32 bg-[#F8F7F4] rounded-2xl border border-[#EBE7DF] overflow-hidden">
+                      <div
+                        className="absolute bottom-4 right-4 w-12 h-12 rounded-full flex items-center justify-center text-white text-xl shadow-lg"
+                        style={{ background: "linear-gradient(135deg, #2C3E2B 0%, #4a6741 100%)" }}
+                      >
+                        {agentConfig.avatarEmoji}
+                      </div>
+                      <div className="absolute bottom-16 right-4 bg-white shadow rounded-2xl px-3 py-1.5 text-xs text-[#2C3E2B] font-medium border border-[#EBE7DF] whitespace-nowrap">
+                        💬 {agentConfig.welcomeMessage.slice(0, 40)}...
+                      </div>
+                    </div>
+                  </Card>
+
+                  <div className="flex justify-end">
+                    <Button
+                      onClick={handleSaveAgent}
+                      disabled={agentSaving}
+                      className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full px-8 gap-2"
+                    >
+                      <Save className="w-4 h-4" />
+                      {agentSaving ? "Guardando..." : "Guardar Configuración del Agente"}
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </TabsContent>
+
+            {/* TABS CONTENT: SUBMISSIONS / DATOS PACIENTES — 3 fuentes unificadas */}
             <TabsContent value="submissions" className="space-y-4">
               <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                 <div>
-                  <h2 className="font-serif text-xl font-semibold">Pacientes y Consultas Recibidas</h2>
-                  <p className="text-xs text-[#5C6E5B] font-light">Aquí se recopilan las personas que han rellenado tus formularios en cualquier página.</p>
+                  <h2 className="font-serif text-xl font-semibold">Datos y Pacientes</h2>
+                  <p className="text-xs text-[#5C6E5B] font-light">
+                    Todas las fuentes de contacto unificadas: formularios, registros directos y conversaciones del chatbot.
+                  </p>
                 </div>
-                
-                <div className="flex flex-wrap items-center gap-3">
-                  {/* CSV Export Button */}
-                  <Button 
-                    onClick={handleExportCsv} 
-                    className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full text-xs font-medium gap-1.5 shadow-sm"
-                  >
-                    <Download className="w-3.5 h-3.5" /> Exportar a Excel (CSV)
-                  </Button>
+                <div className="flex gap-2">
+                  {dataSubTab === "forms" && (
+                    <Button onClick={handleExportCsv} className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full text-xs font-medium gap-1.5 shadow-sm">
+                      <Download className="w-3.5 h-3.5" /> Exportar CSV
+                    </Button>
+                  )}
+                  {dataSubTab === "registrations" && (
+                    <Button onClick={() => {
+                      const csv = "\uFEFFNombre,Email,Fecha\r\n" + registrations.map(r => `"${r.name}","${r.email}","${new Date(r.created_at).toLocaleString("es-ES")}"`).join("\r\n");
+                      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8;"})); a.download = `Registros_${new Date().toISOString().split("T")[0]}.csv`; a.click();
+                    }} className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full text-xs font-medium gap-1.5 shadow-sm">
+                      <Download className="w-3.5 h-3.5" /> Exportar CSV
+                    </Button>
+                  )}
+                  {dataSubTab === "chatbot" && (
+                    <Button onClick={() => {
+                      const csv = "\uFEFFNombre,Contacto,Página,Fecha\r\n" + chatLeads.map(l => `"${l.name||""}","${l.contact||""}","${l.page_slug||""}","${new Date(l.created_at).toLocaleString("es-ES")}"`).join("\r\n");
+                      const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8;"})); a.download = `LeadsChat_${new Date().toISOString().split("T")[0]}.csv`; a.click();
+                    }} className="bg-[#7EA172] hover:bg-[#6C8E61] text-white rounded-full text-xs font-medium gap-1.5 shadow-sm">
+                      <Download className="w-3.5 h-3.5" /> Exportar CSV
+                    </Button>
+                  )}
                 </div>
               </div>
 
-              {/* Filters Panel */}
-              <Card className="bg-white border-[#EBE7DF] rounded-3xl p-4 shadow-sm">
-                <div className="grid md:grid-cols-3 gap-4">
-                  
-                  {/* Search Bar */}
-                  <div className="relative">
-                    <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                    <Input 
-                      placeholder="Buscar por nombre, correo..." 
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-9 h-10 border-[#EBE7DF] focus:border-[#7EA172] text-sm bg-[#FAF9F6] rounded-xl"
-                    />
-                  </div>
-
-                  {/* Form Filter */}
-                  <div>
-                    <select 
-                      value={selectedFormFilter}
-                      onChange={(e) => setSelectedFormFilter(e.target.value)}
-                      className="w-full h-10 border border-[#EBE7DF] bg-[#FAF9F6] px-3 py-2 text-sm rounded-xl focus:border-[#7EA172] outline-none"
+              {/* Sub-tabs: 3 fuentes */}
+              <div className="flex gap-2 flex-wrap">
+                {(["forms", "registrations", "chatbot"] as const).map((tab) => {
+                  const labels = { forms: "📋 Formularios CMS", registrations: "📩 Registros (Lovable)", chatbot: "🤖 Chat IA" };
+                  const counts = { forms: submissions.length, registrations: registrations.length, chatbot: chatLeads.length };
+                  return (
+                    <button
+                      key={tab}
+                      onClick={() => setDataSubTab(tab)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all border ${dataSubTab === tab ? "bg-[#7EA172] text-white border-[#7EA172]" : "bg-white text-[#5C6E5B] border-[#EBE7DF] hover:border-[#7EA172]/50"}`}
                     >
-                      <option value="all">Todos los Formularios</option>
-                      {forms.map(f => (
-                        <option key={f.id} value={f.id}>{f.name}</option>
-                      ))}
-                    </select>
-                  </div>
+                      {labels[tab]}
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${dataSubTab === tab ? "bg-white/20" : "bg-[#EBE7DF]"}`}>{counts[tab]}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-                  {/* Clean Filter */}
-                  <div className="flex justify-end items-center text-xs text-[#5C6E5B] font-light">
-                    Total: {submissions.length} registros cargados.
-                  </div>
-                </div>
-              </Card>
-
-              {/* Table of Submissions */}
-              <div className="bg-white border border-[#EBE7DF] rounded-3xl overflow-hidden shadow-sm">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm border-collapse">
-                    <thead>
-                      <tr className="bg-[#F8F7F4] text-[#5C6E5B] border-b border-[#EBE7DF] font-serif font-semibold text-xs">
-                        <th className="p-4">Fecha y Hora</th>
-                        <th className="p-4">Procedencia</th>
-                        <th className="p-4">Formulario</th>
-                        <th className="p-4">Datos del Paciente</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#F8F7F4]">
-                      {submissions
-                        .filter(sub => {
-                          const matchesForm = selectedFormFilter === "all" || sub.formId === selectedFormFilter;
-                          const dataString = JSON.stringify(sub.data).toLowerCase();
-                          const matchesSearch = dataString.includes(searchTerm.toLowerCase()) || sub.pageSlug.includes(searchTerm.toLowerCase());
-                          return matchesForm && matchesSearch;
-                        })
-                        .map((sub) => {
-                          const matchingForm = forms.find(f => f.id === sub.formId);
-                          return (
-                            <tr key={sub.id} className="hover:bg-[#FAF9F6]/40 transition-colors">
-                              <td className="p-4 font-mono text-xs whitespace-nowrap text-muted-foreground">
-                                {new Date(sub.createdAt).toLocaleString("es-ES")}
-                              </td>
-                              <td className="p-4 whitespace-nowrap">
-                                <span className="bg-[#FAF8FC] text-[#5C6E5B] border border-[#EBE7DF] px-2 py-0.5 rounded-full text-xs font-light">
-                                  /{sub.pageSlug}
-                                </span>
-                              </td>
-                              <td className="p-4 whitespace-nowrap font-medium text-xs">
-                                {matchingForm?.name || "Registro General"}
-                              </td>
-                              <td className="p-4">
-                                <div className="space-y-1.5 text-xs text-foreground/90 max-w-lg">
+              {/* ── FORMULARIOS CMS ── */}
+              {dataSubTab === "forms" && (
+                <div className="space-y-4">
+                  <Card className="bg-white border-[#EBE7DF] rounded-3xl p-4 shadow-sm">
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                        <Input placeholder="Buscar por nombre, correo..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-9 h-10 border-[#EBE7DF] focus:border-[#7EA172] text-sm bg-[#FAF9F6] rounded-xl" />
+                      </div>
+                      <select value={selectedFormFilter} onChange={(e) => setSelectedFormFilter(e.target.value)} className="w-full h-10 border border-[#EBE7DF] bg-[#FAF9F6] px-3 py-2 text-sm rounded-xl focus:border-[#7EA172] outline-none">
+                        <option value="all">Todos los Formularios</option>
+                        {forms.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                      </select>
+                      <div className="flex justify-end items-center text-xs text-[#5C6E5B] font-light">Total: {submissions.length} registros</div>
+                    </div>
+                  </Card>
+                  <div className="bg-white border border-[#EBE7DF] rounded-3xl overflow-hidden shadow-sm">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-sm border-collapse">
+                        <thead>
+                          <tr className="bg-[#F8F7F4] text-[#5C6E5B] border-b border-[#EBE7DF] font-serif font-semibold text-xs">
+                            <th className="p-4">Fecha y Hora</th><th className="p-4">Procedencia</th><th className="p-4">Formulario</th><th className="p-4">Datos del Paciente</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#F8F7F4]">
+                          {submissions.filter(sub => {
+                            const matchesForm = selectedFormFilter === "all" || sub.formId === selectedFormFilter;
+                            const dataString = JSON.stringify(sub.data).toLowerCase();
+                            const matchesSearch = dataString.includes(searchTerm.toLowerCase()) || sub.pageSlug.includes(searchTerm.toLowerCase());
+                            return matchesForm && matchesSearch;
+                          }).map((sub) => {
+                            const matchingForm = forms.find(f => f.id === sub.formId);
+                            return (
+                              <tr key={sub.id} className="hover:bg-[#FAF9F6]/40 transition-colors">
+                                <td className="p-4 font-mono text-xs whitespace-nowrap text-muted-foreground">{new Date(sub.createdAt).toLocaleString("es-ES")}</td>
+                                <td className="p-4 whitespace-nowrap"><span className="bg-[#FAF8FC] text-[#5C6E5B] border border-[#EBE7DF] px-2 py-0.5 rounded-full text-xs font-light">/{sub.pageSlug}</span></td>
+                                <td className="p-4 whitespace-nowrap font-medium text-xs">{matchingForm?.name || "Registro General"}</td>
+                                <td className="p-4"><div className="space-y-1.5 text-xs text-foreground/90 max-w-lg">
                                   {Object.entries(sub.data).map(([key, value]) => {
                                     const fieldDef = matchingForm?.fields.find(f => f.id === key);
-                                    const labelName = fieldDef ? fieldDef.label : key;
-                                    return (
-                                      <div key={key} className="flex flex-col sm:flex-row sm:gap-2">
-                                        <span className="font-semibold text-muted-foreground min-w-[120px]">{labelName}:</span>
-                                        <span className="whitespace-pre-line leading-relaxed">{String(value)}</span>
-                                      </div>
-                                    );
+                                    return <div key={key} className="flex flex-col sm:flex-row sm:gap-2"><span className="font-semibold text-muted-foreground min-w-[120px]">{fieldDef ? fieldDef.label : key}:</span><span className="whitespace-pre-line leading-relaxed">{String(value)}</span></div>;
                                   })}
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                    </tbody>
-                  </table>
+                                </div></td>
+                              </tr>
+                            );
+                          })}
+                          {submissions.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-muted-foreground text-sm">Aún no hay registros de formularios.</td></tr>}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* ── REGISTROS LOVABLE ── */}
+              {dataSubTab === "registrations" && (
+                <div className="space-y-4">
+                  <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 text-xs text-amber-800 flex items-center gap-2">
+                    <span>📩</span>
+                    <span>Estos registros provienen directamente de la tabla <code className="font-mono bg-amber-100 px-1 rounded">registrations</code> de tu base de datos Supabase original.</span>
+                  </div>
+                  <div className="bg-white border border-[#EBE7DF] rounded-3xl overflow-hidden shadow-sm">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-sm border-collapse">
+                        <thead>
+                          <tr className="bg-[#F8F7F4] text-[#5C6E5B] border-b border-[#EBE7DF] font-serif font-semibold text-xs">
+                            <th className="p-4">Fecha y Hora</th><th className="p-4">Nombre</th><th className="p-4">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#F8F7F4]">
+                          {registrations.filter(r => {
+                            if (!searchTerm) return true;
+                            const q = searchTerm.toLowerCase();
+                            return r.name?.toLowerCase().includes(q) || r.email?.toLowerCase().includes(q);
+                          }).map((reg) => (
+                            <tr key={reg.id} className="hover:bg-[#FAF9F6]/40 transition-colors">
+                              <td className="p-4 font-mono text-xs whitespace-nowrap text-muted-foreground">{new Date(reg.created_at).toLocaleString("es-ES")}</td>
+                              <td className="p-4 font-medium text-sm">{reg.name}</td>
+                              <td className="p-4 text-sm text-[#5C6E5B]">{reg.email}</td>
+                            </tr>
+                          ))}
+                          {registrations.length === 0 && (
+                            <tr><td colSpan={3} className="p-8 text-center text-muted-foreground text-sm">
+                              No hay registros aún, o la tabla aún no está conectada.
+                            </td></tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  {registrations.length > 0 && (
+                    <div className="flex justify-end text-xs text-muted-foreground">
+                      {registrations.length} registro(s) encontrado(s).
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ── LEADS DEL CHAT IA ── */}
+              {dataSubTab === "chatbot" && (
+                <div className="space-y-4">
+                  {chatLeads.length === 0 ? (
+                    <div className="bg-white border border-[#EBE7DF] rounded-3xl p-12 text-center shadow-sm space-y-3">
+                      <div className="text-4xl">🤖</div>
+                      <p className="font-serif text-lg font-semibold">Aún no hay leads del chatbot</p>
+                      <p className="text-xs text-muted-foreground">
+                        Cuando un visitante comparta su nombre o contacto durante una conversación con el asistente IA, aparecerá aquí.
+                      </p>
+                      {chatLeads.length === 0 && (
+                        <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 mt-2 text-left">
+                          ⚠️ <strong>Recuerda crear la tabla en Supabase:</strong> Ejecuta el archivo <code className="font-mono bg-amber-100 px-1 rounded">CHAT_LEADS_MIGRATION.sql</code> en el SQL Editor de tu Supabase Studio para activar el guardado.
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="bg-white border border-[#EBE7DF] rounded-3xl overflow-hidden shadow-sm">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm border-collapse">
+                          <thead>
+                            <tr className="bg-[#F8F7F4] text-[#5C6E5B] border-b border-[#EBE7DF] font-serif font-semibold text-xs">
+                              <th className="p-4">Fecha</th><th className="p-4">Nombre</th><th className="p-4">Contacto</th><th className="p-4">Página</th><th className="p-4">Conversación</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#F8F7F4]">
+                            {chatLeads.filter(l => {
+                              if (!searchTerm) return true;
+                              const q = searchTerm.toLowerCase();
+                              return l.name?.toLowerCase().includes(q) || l.contact?.toLowerCase().includes(q);
+                            }).map((lead) => (
+                              <>
+                                <tr key={lead.id} className="hover:bg-[#FAF9F6]/40 transition-colors">
+                                  <td className="p-4 font-mono text-xs whitespace-nowrap text-muted-foreground">{new Date(lead.created_at).toLocaleString("es-ES")}</td>
+                                  <td className="p-4 font-medium text-sm">{lead.name || <span className="text-muted-foreground/60 italic">Sin nombre</span>}</td>
+                                  <td className="p-4 text-sm">{lead.contact || <span className="text-muted-foreground/60 italic">Sin contacto</span>}</td>
+                                  <td className="p-4"><span className="bg-[#FAF8FC] text-[#5C6E5B] border border-[#EBE7DF] px-2 py-0.5 rounded-full text-xs font-light">/{lead.page_slug}</span></td>
+                                  <td className="p-4">
+                                    <button
+                                      onClick={() => setExpandedConversation(expandedConversation === lead.id ? null : lead.id)}
+                                      className="text-xs text-[#7EA172] hover:underline flex items-center gap-1"
+                                    >
+                                      {expandedConversation === lead.id ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                                      {(lead.conversation || []).length} mensajes
+                                    </button>
+                                  </td>
+                                </tr>
+                                {expandedConversation === lead.id && (
+                                  <tr key={`${lead.id}-conv`}>
+                                    <td colSpan={5} className="px-4 pb-4 pt-0 bg-[#FAF9F6]/50">
+                                      <div className="border border-[#EBE7DF] rounded-2xl p-4 space-y-2 max-h-64 overflow-y-auto">
+                                        {(lead.conversation || []).map((msg: any, i: number) => (
+                                          <div key={i} className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                                            <div className={`max-w-[80%] text-xs rounded-2xl px-3 py-2 ${msg.role === "user" ? "bg-[#2C3E2B] text-white rounded-br-none" : "bg-white border border-[#EBE7DF] text-[#2C3E2B] rounded-bl-none"}`}>
+                                              {msg.content}
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )}
+                              </>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                  {/* Search for chatbot leads */}
+                  <div className="relative">
+                    <Search className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                    <Input placeholder="Buscar por nombre o contacto..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-9 h-10 border-[#EBE7DF] focus:border-[#7EA172] text-sm bg-white rounded-xl" />
+                  </div>
+                </div>
+              )}
             </TabsContent>
 
             {/* TABS CONTENT: 4. VISUAL IDENTITY SETTINGS */}

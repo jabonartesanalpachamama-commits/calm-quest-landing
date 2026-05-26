@@ -17,6 +17,7 @@ import {
 } from "@/lib/CmsFallbackData";
 import { CmsFormRenderer } from "@/components/CmsFormRenderer";
 import FloatingCTA from "@/components/FloatingCTA";
+import AiChatWidget from "@/components/AiChatWidget";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
@@ -857,6 +858,8 @@ export const DynamicPage = () => {
           </div>
         </div>
       </footer>
+      {/* AI Chat Widget */}
+      <AiChatWidget pageSlug={page.slug} />
 
     </div>
   );

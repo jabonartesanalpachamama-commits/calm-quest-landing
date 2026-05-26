@@ -756,6 +756,50 @@ export const saveLocalSubmissions= (s: CmsSubmission[]) => saveToLocalStorage(KE
 export const getLocalPosts       = (): CmsPost[]        => loadFromLocalStorage(KEYS.POSTS,       DEFAULT_POSTS);
 export const saveLocalPosts      = (p: CmsPost[])       => saveToLocalStorage(KEYS.POSTS,       p);
 
+// ─── AI Agent Config ─────────────────────────────────────────────────────────
+
+export interface AiAgentConfig {
+  enabled: boolean;
+  botName: string;
+  avatarEmoji: string;
+  welcomeMessage: string;
+  systemPrompt: string;
+  captureLeadPrompt: string;
+  apiKey: string;
+  faqs: Array<{ question: string; answer: string }>;
+}
+
+const DEFAULT_AGENT_CONFIG: AiAgentConfig = {
+  enabled: true,
+  botName: "SantoBot",
+  avatarEmoji: "🌿",
+  welcomeMessage: "Hola \ud83c\udf3f \u00bfEn qu\u00e9 puedo ayudarte hoy?",
+  systemPrompt: "Eres un asistente virtual c\u00e1lido y empático de SantoSha, un centro de bienestar y yoga. Tu objetivo es ayudar a los visitantes a resolver sus dudas sobre los servicios, y si muestran inter\u00e9s, invitarlos amablemente a dejar su nombre y WhatsApp para que el equipo les contacte. Habla siempre en espa\u00f1ol con un tono profesional pero cercano.",
+  captureLeadPrompt: "Me alegra tu inter\u00e9s \ud83d\ude4f \u00bfMe puedes dejar tu nombre y n\u00famero de WhatsApp para que nuestro equipo te contacte hoy mismo?",
+  apiKey: "",
+  faqs: [
+    { question: "\u00bfCu\u00e1nto cuesta la clase?", answer: "La primera clase es completamente gratuita. Puedes registrarte en el formulario de esta p\u00e1gina." },
+    { question: "\u00bfD\u00f3nde son las clases?", answer: "Tenemos clases presenciales y online. Nuestro equipo te informar\u00e1 de los horarios disponibles al contactarte." },
+    { question: "\u00bfQu\u00e9 necesito para la clase?", answer: "Solo ropa c\u00f3moda y ganas de aprender. Para las clases online, un espacio tranquilo con tapete." }
+  ]
+};
+
+const AGENT_KEY = "sant_cms_agent_config";
+
+export const getLocalAgentConfig = (): AiAgentConfig => {
+  try {
+    const raw = localStorage.getItem(AGENT_KEY);
+    if (raw) return { ...DEFAULT_AGENT_CONFIG, ...JSON.parse(raw) };
+  } catch { /* noop */ }
+  return DEFAULT_AGENT_CONFIG;
+};
+
+export const saveLocalAgentConfig = (config: AiAgentConfig): void => {
+  try {
+    localStorage.setItem(AGENT_KEY, JSON.stringify(config));
+  } catch { /* noop */ }
+};
+
 export const applyCssVariablesForPalette = (paletteName: keyof typeof COLOR_PALETTES) => {
   const palette = COLOR_PALETTES[paletteName] || COLOR_PALETTES.menta;
   const root = document.documentElement;
