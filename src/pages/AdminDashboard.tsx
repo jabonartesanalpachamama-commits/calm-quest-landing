@@ -157,7 +157,8 @@ export const AdminDashboard = () => {
       // 5. Load Posts
       let activePosts = getLocalPosts();
       try {
-        const { data } = await supabase.from("cms_posts").select("*").order("published_at", { ascending: false });
+        const { data, error } = await supabase.from("cms_posts").select("*").order("published_at", { ascending: false });
+        if (error) throw error;
         if (data && data.length > 0) {
           activePosts = data.map(d => ({
             id: d.id,
@@ -171,7 +172,7 @@ export const AdminDashboard = () => {
           }));
         }
       } catch (e) {
-        console.warn("Db access error, using local posts");
+        console.warn("Db access error, using local posts:", e);
       }
       setPosts(activePosts);
     };
@@ -411,6 +412,122 @@ export const AdminDashboard = () => {
         description: "Formulario listo en el navegador.",
       });
       setEditingForm(null);
+    }
+  };
+
+  // --- SAVE BLOG POST ---
+  const handleSavePost = async (updatedPost: CmsPost) => {
+    const isNew = updatedPost.id.startsWith("post-");
+    
+    // Prepare database payload (mapping imageUrl -> image_url)
+    const postPayload: any = {
+      title: updatedPost.title,
+      slug: updatedPost.slug,
+      content: updatedPost.content,
+      excerpt: updatedPost.excerpt || "",
+      image_url: updatedPost.imageUrl || "",
+      published: updatedPost.published,
+      published_at: updatedPost.publishedAt
+    };
+
+    if (!isNew) {
+      postPayload.id = updatedPost.id;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("cms_posts")
+        .upsert(postPayload)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Map response back to CmsPost
+      const savedPost: CmsPost = {
+        id: data.id,
+        title: data.title,
+        slug: data.slug,
+        content: data.content,
+        excerpt: data.excerpt,
+        imageUrl: data.image_url,
+        published: data.published,
+        publishedAt: data.published_at
+      };
+
+      let newPostsList = [];
+      if (isNew) {
+        // Remove temporary post if present, and append the true saved post with Supabase UUID
+        newPostsList = [...posts.filter(p => p.id !== updatedPost.id), savedPost];
+      } else {
+        newPostsList = posts.map(p => p.id === updatedPost.id ? savedPost : p);
+      }
+
+      setPosts(newPostsList);
+      saveLocalPosts(newPostsList);
+
+      toast({
+        title: isNew ? "Artículo publicado" : "Artículo actualizado",
+        description: `Se ha guardado "${savedPost.title}" correctamente.`,
+      });
+      setEditingPost(null);
+    } catch (e) {
+      console.warn("Could not save post to Supabase, saving locally:", e);
+      
+      // Fallback: Save local-only keeping the post's current ID
+      const postToSave = { ...updatedPost };
+      let newPostsList = [];
+      
+      if (posts.some(p => p.id === updatedPost.id)) {
+        newPostsList = posts.map(p => p.id === updatedPost.id ? postToSave : p);
+      } else {
+        newPostsList = [...posts, postToSave];
+      }
+
+      setPosts(newPostsList);
+      saveLocalPosts(newPostsList);
+
+      toast({
+        title: "Guardado en tu navegador",
+        description: "Se guardó localmente. Aplica la migración SQL en Supabase para sincronizar con la nube.",
+      });
+      setEditingPost(null);
+    }
+  };
+
+  // --- DELETE BLOG POST ---
+  const handleDeletePost = async (postId: string) => {
+    const targetPost = posts.find(p => p.id === postId);
+    if (!targetPost) return;
+
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar el artículo "${targetPost.title}"?`)) return;
+
+    const filtered = posts.filter(p => p.id !== postId);
+    setPosts(filtered);
+    saveLocalPosts(filtered);
+
+    // If it's a temporary ID, it's not in the database, so we don't need to call Supabase
+    if (postId.startsWith("post-")) {
+      toast({
+        title: "Artículo eliminado",
+        description: `El artículo "${targetPost.title}" fue removido de tu navegador.`,
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from("cms_posts").delete().eq("id", postId);
+      if (error) throw error;
+      toast({
+        title: "Artículo eliminado",
+        description: `El artículo "${targetPost.title}" fue removido de la base de datos.`,
+      });
+    } catch (e) {
+      console.warn("Removed locally only:", e);
+      toast({
+        title: "Eliminado del navegador",
+        description: "Se eliminó de tu dispositivo. Aplica la migración SQL para sincronizar con la nube.",
+      });
     }
   };
 
