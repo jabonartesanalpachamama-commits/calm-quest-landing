@@ -594,9 +594,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
         type: "hero",
         content: {
           title: "Un espacio seguro para tu mente y tu alma",
-          subtitle: "Acompañamiento psicoterapéutico profesional y técnicas holísticas para ayudarte a encontrar el equilibrio y sanar desde adentro.",
+          subtitle: "YogaTerapia y técnicas holísticas que se convierten en una herramienta para cultivar conciencia corporal, regulación del sistema nervioso, conexión interna, resiliencia emocional y una relación más compasiva con nuestra humanidad.",
           buttonText: "Reserva tu Primera Sesión",
-          buttonLink: "https://wa.link/xy0brl",
+          buttonLink: "#form-form-section-1",
           tagline: "Terapia Presencial y Online • Enfoque Integrativo"
         }
       },
@@ -617,7 +617,7 @@ export const DEFAULT_PAGES: CmsPage[] = [
           title: "¿Cómo puede ayudarte nuestro enfoque?",
           showCta: true,
           ctaText: "Reserva tu primera sesión",
-          ctaLink: "https://wa.link/xy0brl",
+          ctaLink: "#form-form-section-1",
           ctaSubtext: "Primera consulta sin compromiso",
           items: [
             { icon: "🌿", title: "Reducción de la Ansiedad", description: "Aprende técnicas corporales y de respiración para calmar el sistema nervioso en momentos de crisis." },

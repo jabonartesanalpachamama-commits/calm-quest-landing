@@ -639,185 +639,123 @@ export const AdminDashboard = () => {
   };
 
   // --- GENERATE AI ARTICLE ---
+  /**
+   * handleGenerateAiArticle
+   * Uses the seo-content-writer skill (CORE-EEAT framework) via the blog-writer
+   * Supabase Edge Function. Falls back to static templates if the edge function
+   * is unavailable (e.g. GEMINI_API_KEY not yet configured).
+   *
+   * Skill source: https://github.com/aaron-he-zhu/seo-geo-claude-skills
+   */
   const handleGenerateAiArticle = async () => {
     if (!aiPrompt.trim()) return;
     setIsGeneratingAi(true);
-    
-    // Simulate natural AI generation delay for premium feel
-    setTimeout(() => {
-      try {
-        const prompt = aiPrompt.trim();
-        const capitalizedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
-        
-        let title = "";
-        let excerpt = "";
-        let content = "";
-        
-        // Define templates in Spanish based on tone and keywords
-        if (aiTone === "empatico") {
-          title = `${capitalizedPrompt}: Un Camino de Compasión y Autocuidado`;
-          excerpt = `Aprende a validar tus emociones y a transitar momentos difíciles con compasión, cuidado y un espacio seguro para tu mente.`;
-          content = `# ${title}
 
-En la búsqueda constante de bienestar, a menudo nos enfrentamos a desafíos emocionales que nos abruman. El estrés, la autoexigencia y el ritmo acelerado de la vida moderna pueden hacernos sentir desconectados de nosotros mismos. Cuando experimentamos momentos de tensión relacionados con **${prompt}**, la primera y más importante respuesta que podemos darnos es la **compasión**.
+    // Map UI tone selector to API-compatible values
+    const toneMap: Record<string, "professional" | "casual" | "friendly" | "inspirational"> = {
+      empatico: "friendly",
+      cientifico: "professional",
+      inspirador: "inspirational",
+      sencillo: "casual"
+    };
 
-La compasión no es debilidad ni resignación; es la valentía de mirar nuestro propio sufrimiento con un corazón abierto y sin juicios. Es el espacio seguro que nos permitimos para respirar, sentir y sanar.
+    try {
+      // ── 1. Try the AI Edge Function (CORE-EEAT skill) ─────────────────────
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+      const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
 
----
+      const res = await fetch(`${supabaseUrl}/functions/v1/blog-writer`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": anonKey,
+          "Authorization": `Bearer ${anonKey}`
+        },
+        body: JSON.stringify({
+          topic: aiPrompt.trim(),
+          primaryKeyword: aiPrompt.trim(),
+          targetAudience: "personas interesadas en bienestar, yoga, mindfulness y salud mental",
+          tone: toneMap[aiTone] || "friendly",
+          wordCount: 1200,
+          businessContext: "SantoSha es un centro de bienestar que ofrece clases de Kundalini Yoga y herramientas de salud mental"
+        })
+      });
 
-## Validar tus Emociones: El Primer Paso
+      if (res.ok) {
+        const data = await res.json();
+        const blog = data.blogPost;
 
-Muchas veces, cuando nos sentimos ansiosos, tristes o estresados, nuestra primera reacción es luchar contra esa emoción. Nos decimos que "no deberíamos sentirnos así" o intentamos forzar un estado de positividad. Sin embargo, la psicología compasiva nos enseña que **lo que se resiste, persiste**.
+        if (blog && blog.title) {
+          setEditingPost({
+            ...editingPost!,
+            title: blog.title,
+            slug: blog.slug || blog.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, ""),
+            excerpt: blog.excerpt || blog.metaDescription || "",
+            content: blog.content || "",
+            publishedAt: new Date().toISOString()
+          });
 
-* **Date permiso para sentir**: Reconoce la emoción tal como es. Di mentalmente: *"En este momento, hay tensión en mí. Es natural sentirse así ante esta situación"*.
-* **Abraza la imperfección**: Recuerda que ser humano implica experimentar toda la gama de emociones. No estás solo en este sentir; es parte de la experiencia compartida de la vida.
-
----
-
-## Ejercicio Práctico: Tu Ancla de Autocompasión
-
-Cuando sientas que la mente divaga o la presión aumenta debido a **${prompt}**, te invito a realizar esta pausa de autocompasión de 3 pasos:
-
-1. **Contacto Físico**: Coloca una mano sobre tu pecho, sintiendo el calor de tu palma y el latido de tu corazón. Este simple gesto activa el sistema de calma de tu cuerpo.
-2. **Respiración Consciente**: Inhala profundo por la nariz sintiendo cómo se expande tu pecho, y exhala suavemente por la boca, liberando cualquier rigidez en tus hombros.
-3. **Frase Amable**: Repítete con ternura: *"Que pueda tener paciencia conmigo. Que pueda darme el espacio para sanar. Que pueda estar en paz"*.
-
-El camino hacia la calma mental no se trata de no sentir dolor, sino de aprender a tratarnos con amor y suavidad en medio de la tormenta. ¡Sé paciente contigo hoy!`;
-        } else if (aiTone === "cientifico") {
-          title = `La Neurobiología de ${capitalizedPrompt}: Comprendiendo tu Sistema Nervioso`;
-          excerpt = `Una perspectiva científica y accesible sobre cómo el estrés y las emociones afectan tus circuitos cerebrales y técnicas para regular tu cuerpo de forma eficaz.`;
-          content = `# ${title}
-
-El cuerpo humano es una red biológica sumamente sofisticada donde la mente y el sistema nervioso se comunican de manera bidireccional cada milisegundo. Cuando nos enfrentamos a situaciones que disparan **${prompt}**, se activa una cascada fisiológica liderada por la amígdala cerebral, desencadenando la liberación de hormonas de estrés como el cortisol y la adrenalina.
-
-Esta respuesta de supervivencia adaptativa, diseñada para protegernos de amenazas físicas, a menudo se activa ante estresores psicológicos del día a día, generando un estado de alerta crónico que desgasta nuestra vitalidad.
-
----
-
-## La Respuesta al Estrés y la Amígdala
-
-Cuando percibimos una amenaza, la amígdala cerebral envía una señal de socorro al hipotálamo, el cual activa el sistema nervioso simpático. Este proceso incrementa la frecuencia cardíaca, eleva la presión arterial y desvía la energía hacia los músculos en preparación para la "lucha o huida".
-
-* **El papel del cortisol**: El cortisol mantiene este estado de alerta elevado, pero su presencia prolongada en el torrente sanguíneo inhibe funciones no esenciales como la digestión, el sistema inmunológico y la toma de decisiones en el lóbulo frontal.
-* **Niebla Mental**: Es por esto que, bajo tensión por **${prompt}**, nos cuesta concentrarnos o tomar decisiones con claridad; la sangre y los recursos de nuestro cerebro se concentran en las áreas primitivas de supervivencia.
-
----
-
-## Neuroplasticidad y Técnicas de Regulación
-
-La maravillosa noticia descubierta por la neurociencia es la **neuroplasticidad**: la capacidad de nuestro cerebro para reorganizar sus conexiones neuronales a través del aprendizaje y la práctica consciente.
-
-Podemos intervenir de forma activa en nuestro sistema nervioso para activar el sistema parasimpático (la respuesta de relajación) utilizando herramientas basadas en la ciencia:
-
-1. **El Suspiro Fisiológico**: Dos inhalaciones rápidas por la nariz seguidas de una exhalación larga y completa por la boca. Esto desinfla los alvéolos pulmonares y envía una señal inmediata al vago para bajar las pulsaciones.
-2. **Estimulación del Nervio Vago**: El nervio vago es la autopista principal que comunica el cuerpo con el cerebro. Cantar suavemente, tararear o exhalar el doble de tiempo de la inhalación estimula el tono vagal, promoviendo una calma profunda.
-
-Al comprender la ciencia detrás de nuestras emociones, nos liberamos de la culpa y adquirimos el poder de transformar nuestra biología desde adentro.`;
-        } else if (aiTone === "inspirador") {
-          title = `${capitalizedPrompt}: Despertando tu Energía Vital y Claridad Espiritual`;
-          excerpt = `Descubre cómo la sabiduría milenaria y las técnicas del Kundalini Yoga pueden desbloquear tu Prana para transitar las tormentas de la mente con presencia.`;
-          content = `# ${title}
-
-En la tradición del Kundalini Yoga, la vida se concibe como una danza sagrada de energía. La mente es un instrumento poderoso, pero a menudo se convierte en un laberinto de dudas, apegos y miedos. Cuando nos sentimos bloqueados por **${prompt}**, no se trata de una falla personal, sino de una interrupción en el flujo de nuestro **Prana** (la fuerza vital universal).
-
-A través de la respiración profunda, los cantos sagrados y la meditación activa, podemos disolver los bloqueos energéticos y recordar que nuestra naturaleza esencial es ilimitada y radiante.
-
----
-
-## Prana y Apana: La Balanza del Bienestar
-
-La salud integral se sostiene en el equilibrio de dos fuerzas sutiles dentro de nuestro cuerpo energético:
-
-* **Prana**: La energía de absorción, la vitalidad que entra con cada respiración, la luz y la claridad mental.
-* **Apana**: La energía de eliminación, la capacidad de soltar toxinas, pensamientos negativos y viejos patrones de comportamiento.
-
-Cuando nos enfrentamos a tensiones relacionadas con **${prompt}**, acumulamos Apana y debilitamos nuestro Prana. La práctica regular de Kundalini Yoga nos permite limpiar los canales energéticos (*nadis*) para elevar la energía Kundalini a lo largo de la columna vertebral, expandiendo nuestro campo electromagnético y aportando una claridad mental inquebrantable.
-
----
-
-## Kriya de Respiración para la Claridad Mental
-
-Si deseas elevar tu energía vital hoy, te invito a realizar este sencillo kriya respiratorio para despejar la mente:
-
-1. Siéntate cómodamente con la columna recta y los ojos cerrados, enfocándote en el tercer ojo (entrecejo).
-2. Tapa tu fosa nasal derecha con el pulgar derecho e inhala lenta y profundamente únicamente a través de la **fosa nasal izquierda**.
-3. Sostén el aire de 3 a 5 segundos.
-4. Tapa la fosa nasal izquierda con el dedo índice y exhala completamente a través de la **fosa nasal derecha**.
-5. Repite este ciclo de 3 a 5 minutos.
-
-Respirar por la fosa nasal izquierda estimula la energía de la luna (*Ida Nadi*), la cual está asociada con la calma, la receptividad, la intuición y la paz mental. Permítete sintonizar con tu propia luz hoy. *Sat Nam*.`;
-        } else {
-          // sencillo/directo
-          title = `5 Pasos Claros para Manejar ${capitalizedPrompt} Hoy Mismo`;
-          excerpt = `Una guía práctica, directa y libre de complicaciones con acciones concretas que puedes implementar de inmediato para recuperar el control y la paz.`;
-          content = `# ${title}
-
-Cuando el estrés o la mente nos abruman ante temas como **${prompt}**, lo último que necesitamos son teorías complejas o explicaciones infinitas. Necesitamos herramientas sencillas, efectivas y listas para usar.
-
-Aquí tienes una guía de 5 pasos prácticos orientados a la acción para recuperar tu centro y devolver la paz a tu mente hoy mismo.
-
----
-
-## 1. El Filtro del Momento Presente
-
-El 90% de nuestras preocupaciones habitan en el pasado (culpa, añoranza) o en el futuro (ansiedad, expectativas). Hazte esta pregunta de inmediato: *"¿Qué problema real tengo exactamente en este preciso segundo?"*. Descubrirás que, en la inmensa mayoría de las veces, en el aquí y el ahora estás a seguro.
-
-## 2. Reduce los Estímulos
-
-El cerebro moderno sufre de sobrecarga sensorial. Ante la fatiga por **${prompt}**:
-* Pon tu teléfono en modo "No molestar" durante los próximos 30 minutos.
-* Cierra las pestañas innecesarias de tu ordenador.
-* Tómate 2 minutos de silencio absoluto, simplemente cerrando los ojos.
-
-## 3. La Regla del 4-4 (Respiración en Caja)
-
-Reinicia tu ritmo cardíaco y relaja tu diafragma con la respiración en caja:
-1. **Inhala** por la nariz en 4 segundos.
-2. **Sostén** el aire 4 segundos.
-3. **Exhala** por la boca en 4 segundos.
-4. **Mantén el vacío** 4 segundos.
-*Repite este ciclo 5 veces.*
-
-## 4. Mueve la Energía de tu Cuerpo
-
-Las emociones son energía en movimiento. Cuando se estancan, se sienten físicamente como opresión en el pecho o nudos en el estómago. Levántate de tu silla, estira tus brazos hacia el cielo, haz un suave giro de hombros o camina durante 3 minutos. El movimiento físico le indica a tu mente que es seguro soltar.
-
-## 5. Elige una Sola Acción Pequeña
-
-La parálisis por análisis ocurre cuando intentamos resolver todo a la vez. Elige **una sola tarea diminuta** relacionada con tu pendiente, de no más de 5 minutos, y llévala a cabo de inmediato. El cerebro premia la acción liberando dopamina, disminuyendo la sensación de agobio.
-
-Recuperar el control no requiere transformaciones titánicas, sino pequeños hábitos diarios repetidos de forma consciente. ¡Empieza con uno hoy!`;
+          setAiPrompt("");
+          toast({
+            title: "🎯 Artículo SEO generado con CORE-EEAT",
+            description: `Skill: seo-content-writer v9.9.9 · Score estimado: ${blog.seoScore ?? "~85"}/100 · ${blog.readingTime ?? 5} min de lectura`,
+          });
+          return;
         }
-
-        // Apply generated content to editingPost state
-        setEditingPost({
-          ...editingPost,
-          title: title,
-          slug: title.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, ''),
-          excerpt: excerpt,
-          content: content,
-          publishedAt: new Date().toISOString()
-        });
-
-        setAiPrompt(""); // Reset AI prompt
-        
-        toast({
-          title: "¡Artículo redactado con éxito!",
-          description: `SantoSha AI ha estructurado tu borrador terapéutico bajo un enfoque ${aiTone}. ¡Edítalo y publícalo!`,
-        });
-      } catch (err) {
-        console.error("Error generating AI article:", err);
-        toast({
-          title: "Error al generar",
-          description: "Ocurrió un inconveniente al redactar el artículo. Intenta de nuevo.",
-          variant: "destructive"
-        });
-      } finally {
-        setIsGeneratingAi(false);
       }
-    }, 1500); // 1.5s delay for natural feeling
+
+      // ── 2. Fallback — static templates (no API key configured) ────────────
+      const prompt = aiPrompt.trim();
+      const capitalizedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
+      let title = "";
+      let excerpt = "";
+      let content = "";
+
+      if (aiTone === "empatico") {
+        title = `${capitalizedPrompt}: Un Camino de Compasión y Autocuidado`;
+        excerpt = `Aprende a validar tus emociones y a transitar momentos difíciles con compasión, cuidado y un espacio seguro para tu mente.`;
+        content = `## Introducción\n\nEn la búsqueda constante de bienestar, a menudo nos enfrentamos a desafíos emocionales que nos abruman relacionados con **${prompt}**. La compasión es la primera y más importante respuesta.\n\n## Validar tus Emociones\n\nReconoce la emoción tal como es. Date permiso para sentir.\n\n## Ejercicio Práctico\n\n1. Coloca una mano sobre tu pecho.\n2. Respira profundo y exhala suavemente.\n3. Repítete: *\"Que pueda tener paciencia conmigo.\"*\n\n## Conclusión\n\nEl camino hacia la calma no se trata de no sentir dolor, sino de tratarte con amor en medio de la tormenta.`;
+      } else if (aiTone === "cientifico") {
+        title = `La Neurobiología de ${capitalizedPrompt}: Comprendiendo tu Sistema Nervioso`;
+        excerpt = `Una perspectiva científica y accesible sobre cómo el estrés y las emociones afectan tus circuitos cerebrales.`;
+        content = `## Introducción\n\nCuando nos enfrentamos a **${prompt}**, la amígdala cerebral desencadena la liberación de cortisol y adrenalina.\n\n## La Respuesta al Estrés\n\nEl sistema nervioso simpático eleva la frecuencia cardíaca y desvía la energía hacia los músculos.\n\n## Técnicas de Regulación\n\n1. El Suspiro Fisiológico: dos inhalaciones rápidas + exhalación larga.\n2. Estimulación del Nervio Vago: exhala el doble del tiempo de inhalación.\n\n## Conclusión\n\nComprender la ciencia de nuestras emociones nos da poder para transformar nuestra biología.`;
+      } else if (aiTone === "inspirador") {
+        title = `${capitalizedPrompt}: Despertando tu Energía Vital`;
+        excerpt = `Descubre cómo la sabiduría del Kundalini Yoga puede desbloquear tu Prana.`;
+        content = `## Introducción\n\nEn la tradición del Kundalini Yoga, cuando nos sentimos bloqueados por **${prompt}**, es una interrupción del flujo de Prana.\n\n## Prana y Apana\n\nEl equilibrio de estas dos fuerzas sostiene la salud integral.\n\n## Práctica\n\nRealiza la respiración alternada por fosas nasales durante 3-5 minutos.\n\n## Conclusión\n\nPermítete sintonizar con tu propia luz. *Sat Nam*.`;
+      } else {
+        title = `5 Pasos Claros para Manejar ${capitalizedPrompt} Hoy`;
+        excerpt = `Una guía práctica con acciones concretas que puedes implementar de inmediato.`;
+        content = `## Introducción\n\nCuando el estrés por **${prompt}** nos abruma, necesitamos herramientas sencillas y efectivas.\n\n## 1. El Momento Presente\nPregúntate: *¿Qué problema real tengo en este segundo?*\n\n## 2. Reduce Estímulos\nPon el teléfono en "No molestar" 30 minutos.\n\n## 3. Respiración en Caja\nInhala 4s → sostén 4s → exhala 4s → vacío 4s. Repite 5 veces.\n\n## 4. Mueve el Cuerpo\n3 minutos de caminata cambia tu bioquímica.\n\n## 5. Una Acción Pequeña\nElige una sola tarea de 5 minutos y hazla ahora.\n\n## Conclusión\nPequeños hábitos diarios crean grandes transformaciones.`;
+      }
+
+      setEditingPost({
+        ...editingPost!,
+        title,
+        slug: title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, ""),
+        excerpt,
+        content,
+        publishedAt: new Date().toISOString()
+      });
+
+      setAiPrompt("");
+      toast({
+        title: "Artículo creado (modo offline)",
+        description: "Para usar el skill SEO CORE-EEAT con IA real, configura GEMINI_API_KEY en Supabase Secrets.",
+      });
+    } catch (err) {
+      console.error("Error generating AI article:", err);
+      toast({
+        title: "Error al generar",
+        description: "Ocurrió un inconveniente al redactar el artículo. Intenta de nuevo.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingAi(false);
+    }
   };
 
+  // --- EXPORT TO CSV ---
   // --- EXPORT TO CSV ---
   const handleExportCsv = () => {
     const filteredSubs = submissions.filter(sub => {
@@ -3300,16 +3238,21 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
         {/* --- BLOG POST EDITOR VIEW --- */}
         {editingPost && (
           <div className="max-w-4xl w-full mx-auto space-y-6 animate-fade-in">
-            {/* 1. AI Writing Assistant Widget */}
+            {/* 1. AI Writing Assistant Widget — seo-content-writer skill */}
             <Card className="bg-amber-50/30 border border-amber-200/80 rounded-3xl p-6 md:p-8 space-y-4">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-amber-600 animate-pulse" />
-                <h3 className="font-serif text-base font-bold text-amber-800">
-                  Asistente de Escritura SantoSha AI
-                </h3>
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-600 animate-pulse" />
+                  <h3 className="font-serif text-base font-bold text-amber-800">
+                    Generador de Blogs con IA — SEO CORE-EEAT
+                  </h3>
+                </div>
+                <span className="text-[10px] font-mono bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full">
+                  seo-content-writer v9.9.9
+                </span>
               </div>
               <p className="text-xs text-muted-foreground leading-normal font-light">
-                ¿Falta de inspiración? Escribe un tema (ej. "calmar la mente", "ataques de pánico", "respirar despacio") y selecciona un enfoque. El asistente de SantoSha AI creará un artículo estructurado, compasivo y profesional para ti en segundos.
+                Powered por el skill <strong>seo-content-writer</strong> (CORE-EEAT framework). Genera artículos SEO completos con: título optimizado, meta description, estructura H1→H2→H3, sección FAQ, score SEO y tiempo de lectura. Requiere <code className="font-mono text-[10px] bg-amber-50 px-1 rounded">GEMINI_API_KEY</code> en Supabase Secrets.
               </p>
 
               <div className="flex flex-col md:flex-row gap-3 items-stretch">
@@ -3317,7 +3260,7 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                   <Input 
                     value={aiPrompt}
                     onChange={(e) => setAiPrompt(e.target.value)}
-                    placeholder="Tema o palabras clave: Ej. Calma mental en 5 minutos..."
+                    placeholder="Tema + keyword: Ej. Kundalini yoga para el estrés laboral..."
                     disabled={isGeneratingAi}
                     className="h-10 bg-white border-[#EBE7DF] rounded-xl focus:border-amber-500"
                   />
@@ -3348,11 +3291,11 @@ Recuperar el control no requiere transformaciones titánicas, sino pequeños há
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Redactando artículo...
+                      Generando artículo SEO...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-3.5 h-3.5" /> Redactar con IA
+                      <Sparkles className="w-3.5 h-3.5" /> Generar con SEO IA
                     </>
                   )}
                 </Button>

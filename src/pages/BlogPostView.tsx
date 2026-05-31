@@ -13,6 +13,7 @@ import {
   applyCssVariablesForPalette 
 } from "@/lib/CmsFallbackData";
 import { Button } from "@/components/ui/button";
+import Header from "@/components/Header";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 export const BlogPostView = () => {
@@ -272,27 +273,7 @@ export const BlogPostView = () => {
       )}
 
       {/* Header */}
-      <header className={`py-4 px-6 border-b border-border/40 ${palette.cardBackground} sticky top-0 z-40 shadow-sm backdrop-blur-md bg-opacity-90`}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <img 
-              src={santoshaLogo} 
-              alt="Logo" 
-              className="h-10 w-auto rounded-lg border border-border/20"
-              onError={(e) => (e.target as HTMLElement).style.display = "none"}
-            />
-            <span className={`font-serif text-xl font-semibold ${palette.primaryText}`}>
-              {settings.brandName}
-            </span>
-          </Link>
-
-          <Link to="/blog">
-            <Button size="sm" variant="outline" className="font-medium rounded-full border-primary/20 hover:bg-primary/5">
-              📚 Volver al Blog
-            </Button>
-          </Link>
-        </div>
-      </header>
+      <Header palette={palette} brandName={settings.brandName} />
 
       {/* Main Content Area */}
       <main className="flex-grow w-full max-w-3xl mx-auto px-6 py-12 md:py-16 space-y-8 select-text">

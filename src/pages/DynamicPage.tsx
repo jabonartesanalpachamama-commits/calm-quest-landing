@@ -20,7 +20,34 @@ import FloatingCTA from "@/components/FloatingCTA";
 import AiChatWidget from "@/components/AiChatWidget";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Helmet } from "react-helmet";
+import Header from "@/components/Header";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
+
+const sanitizeText = (text: string): string => {
+  return text
+    .replace(/psicoterapia/gi, "terapia")
+    .replace(/psicoterapéutico/gi, "terapéutico")
+    .replace(/psicoterapéutica/gi, "terapéutica")
+    .replace(/psicoterapeuta/gi, "terapeuta");
+};
+
+const sanitizeObject = (obj: any): any => {
+  if (typeof obj === "string") {
+    return sanitizeText(obj);
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(sanitizeObject);
+  }
+  if (obj !== null && typeof obj === "object") {
+    const newObj: any = {};
+    for (const key in obj) {
+      newObj[key] = sanitizeObject(obj[key]);
+    }
+    return newObj;
+  }
+  return obj;
+};
 
 // ─── CtaButton: smart CTA that respects ctaLink field ───────────────────────
 // • "#anchor"   → smooth-scrolls to the element with that id
@@ -35,15 +62,30 @@ interface CtaButtonProps {
 const CtaButton = ({ text, link, className, id }: CtaButtonProps) => {
   const handleClick = () => {
     const target = link.trim();
-    if (!target || target === "#form-home-hero") {
-      const anchor = document.querySelector("#form-home-hero");
-      if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-      else window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!target || target === "#form-home-hero" || target === "#form-form-section-1" || target === "#form-section-1") {
+      const formSection = document.querySelector("section[id^='form-']") || 
+                          document.querySelector("#form-form-section-1") || 
+                          document.querySelector("#form-section-1") || 
+                          document.querySelector("#form-home-hero");
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }
       return;
     }
     if (target.startsWith("#")) {
       const el = document.querySelector(target);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        const formSection = document.querySelector("section[id^='form-']");
+        if (formSection) {
+          formSection.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+      }
       return;
     }
     // External or absolute URL
@@ -60,10 +102,10 @@ const CtaButton = ({ text, link, className, id }: CtaButtonProps) => {
   );
 };
 
-export const DynamicPage = () => {
+export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) => {
   const params = useParams<{ slug?: string; "*"?: string }>();
   const rawSlug = params.slug || params["*"];
-  const pageSlug = rawSlug && rawSlug !== "" ? rawSlug : "home";
+  const pageSlug = overrideSlug || (rawSlug && rawSlug !== "" ? rawSlug : "home");
 
   const [page, setPage] = useState<CmsPage | null>(null);
   const [settings, setSettings] = useState<VisualIdentity | null>(null);
@@ -168,7 +210,8 @@ export const DynamicPage = () => {
         // ────────────────────────────────────────────────────────────────────
 
         if (foundPage) {
-          setPage(foundPage);
+          const sanitized = sanitizeObject(foundPage);
+          setPage(sanitized);
         } else {
           setError("Página no encontrada");
         }
@@ -237,46 +280,7 @@ export const DynamicPage = () => {
       )}
 
       {/* Dynamic Header */}
-      <header className={`py-4 px-6 border-b border-border/40 ${palette.cardBackground} sticky top-0 z-40 shadow-sm backdrop-blur-md bg-opacity-90`}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3 shrink-0">
-            <img 
-              src={santoshaLogo} 
-              alt="Logo" 
-              className="h-10 w-auto rounded-lg border border-border/20"
-              onError={(e) => (e.target as HTMLElement).style.display = "none"}
-            />
-            <span className={`font-serif text-xl font-semibold ${palette.primaryText}`}>
-              {settings.brandName}
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            {/* Primary: scroll to registration form */}
-            <button
-              id="header-register-btn"
-              onClick={() => {
-                const anchor = document.querySelector("#form-home-hero");
-                if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-                else window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${palette.primary}`}
-            >
-              Clase Gratuita
-            </button>
-
-            {/* Secondary: WhatsApp link */}
-            <a 
-              href={`https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs text-muted-foreground hover:text-primary transition-colors hidden md:block"
-            >
-              💬 WhatsApp
-            </a>
-          </div>
-        </div>
-      </header>
+      <Header palette={palette} brandName={settings.brandName} />
 
       {/* Render Dynamic Sections */}
       <main className="flex-grow">
@@ -400,11 +404,11 @@ export const DynamicPage = () => {
                     </p>
                     {section.content.buttonText && (
                       <div className="pt-4">
-                        <a href={section.content.buttonLink || "#"} target="_blank" rel="noopener noreferrer">
-                          <Button size="lg" className={`${palette.primary} text-base px-8 py-6 rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300`}>
-                            {section.content.buttonText}
-                          </Button>
-                        </a>
+                        <CtaButton
+                          text={section.content.buttonText}
+                          link={section.content.buttonLink || ""}
+                          className={`${palette.primary} text-base px-8 py-6 rounded-full font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300`}
+                        />
                       </div>
                     )}
                   </motion.div>
