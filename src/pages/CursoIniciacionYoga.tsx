@@ -29,7 +29,7 @@ const MODULES = [
   {
     num: "02",
     title: "Las Herramientas del Kundalini Yoga",
-    theme: "Cómo funciona la práctica y por qué transforma la experiencia humana.",
+    theme: "Cómo funciona el yoga y por qué transforma la experiencia humana.",
     emoji: "🛠️",
     color: "from-green-50 to-emerald-50",
     borderColor: "border-green-200",
@@ -49,7 +49,7 @@ const MODULES = [
   {
     num: "04",
     title: "La Mente, las Emociones y la Transformación Interna",
-    theme: "La práctica como tecnología para relacionarnos diferente con la mente.",
+    theme: "El yoga como tecnología para relacionarnos diferente con la mente.",
     emoji: "🧠",
     color: "from-blue-50 to-cyan-50",
     borderColor: "border-blue-200",
