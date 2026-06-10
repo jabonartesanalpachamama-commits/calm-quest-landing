@@ -17,8 +17,8 @@ const PROGRAMS = [
   {
     emoji: "🌙",
     title: "Curso de Iniciación al Yoga",
-    subtitle: "Un viaje de despertar, práctica, conciencia y transformación",
-    desc: "Un viaje de un año dividido en 6 módulos, para integrar la práctica, la meditación y la conciencia en tu vida cotidiana.",
+    subtitle: "Habitar el yoga como una práctica del día a día",
+    desc: "Un viaje de un año dividido en 6 módulos, para integrar el yoga, la meditación y la conciencia en tu vida cotidiana.",
     features: ["100% Virtual", "Encuentros bimensuales", "Acompañamiento continuo"],
     href: "/curso-iniciacion-yoga",
     color: "from-amber-50 to-orange-50",

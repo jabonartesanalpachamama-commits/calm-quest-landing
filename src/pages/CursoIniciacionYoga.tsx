@@ -154,7 +154,7 @@ const CursoIniciacionYoga = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
-              Un viaje de despertar, práctica, conciencia y transformación
+              Habitar el yoga como una práctica del día a día
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 pt-2">

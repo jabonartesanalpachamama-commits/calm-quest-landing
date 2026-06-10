@@ -19,7 +19,6 @@ const MODULES = [
   {
     num: "01",
     title: "Seguridad Interna",
-    subtitle: "Del estado de supervivencia a la posibilidad de habitar el cuerpo.",
     theme: "Construir recursos internos antes de profundizar. Comprender el trauma desde una mirada integrativa y empezar a cultivar regulación, orientación y seguridad corporal.",
     goal: '"Mi cuerpo puede empezar a sentirse un lugar un poco más seguro."',
     emoji: "🛡️",
@@ -43,7 +42,7 @@ const MODULES = [
   {
     num: "03",
     title: "Reclamar la Vida",
-    subtitle: "Coherencia, propósito y espiritualidad encarnada.",
+    subtitle: "En conexión con la coherencia, el propósito y la espiritualidad.",
     theme: "Moverse desde la mera supervivencia hacia mayor agencia, autenticidad y conexión con propósito.",
     goal: '"No se trata solo de sobrevivir. Puedo construir una relación diferente conmigo y con la vida."',
     emoji: "🕊️",
@@ -157,15 +156,15 @@ const SantoshaSomatico = () => {
             </div>
 
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
-              YogaTerapia para Trauma, Sistema Nervioso y Reconexión Humana
+              YogaTerapia para gestionar y/o comprender el trauma, regulando el Sistema Nervioso y buscando la aceptación desde una reconexión diferente con la experiencia vivida.
             </p>
 
             <p className="text-sm text-muted-foreground/80 font-light max-w-xl mx-auto leading-relaxed border-l border-primary/20 pl-4 text-left inline-block">
-              Kundalini Yoga, Psicología y conciencia corporal para procesos de integración emocional y transformación humana.
+              Es ideal para procesos de integración emocional profunda, regulación del sistema nervioso, gestión y comprensión de traumas a través de Yogaterapia, Kundalini Yoga, y Conciencia corporal.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 pt-2">
-              {["3 Módulos", "6 a 9 Semanas", "Enfoque Integrativo", "Cupos Limitados"].map((badge) => (
+              {["3 Módulos", "6 Semanas", "Cupos Limitados"].map((badge) => (
                 <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card border border-border/50 px-4 py-2 rounded-full">
                   <svg className="w-3.5 h-3.5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -210,7 +209,7 @@ const SantoshaSomatico = () => {
 
             <div className={`rounded-3xl ${palette.secondary} p-8 space-y-4 text-center`}>
               <p className={`font-serif text-lg font-light italic ${palette.secondaryText}`}>
-                No se trata de "arreglarse".
+                Dejar de moverse o actuar desde la simple supervivencia y encontrar la conexión con la autenticidad.
               </p>
               <p className={`font-serif text-xl font-semibold ${palette.secondaryText}`}>
                 Se trata de desarrollar recursos internos, seguridad, presencia y capacidad de habitar nuevamente el cuerpo, las emociones y la propia vida.
@@ -299,7 +298,7 @@ const SantoshaSomatico = () => {
                 Estructura del Programa
               </h2>
               <p className="text-muted-foreground font-light max-w-xl mx-auto">
-                3 módulos progresivos · De 6 a 9 semanas · 100% Virtual
+                3 módulos progresivos · 6 semanas · 100% Virtual
               </p>
             </motion.div>
 
@@ -334,9 +333,11 @@ const SantoshaSomatico = () => {
                           <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mt-2 leading-snug">
                             {mod.title}
                           </h3>
-                          <p className={`text-sm font-light italic mt-0.5 ${mod.accentColor}`}>
-                            {mod.subtitle}
-                          </p>
+                          {mod.subtitle && (
+                            <p className={`text-sm font-light italic mt-0.5 ${mod.accentColor}`}>
+                              {mod.subtitle}
+                            </p>
+                          )}
                         </div>
 
                         <p className="text-sm text-muted-foreground font-light leading-relaxed">
@@ -392,7 +393,7 @@ const SantoshaSomatico = () => {
             {/* Key info */}
             <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
               {[
-                { icon: "🗓️", label: "Duración", value: "6 a 9 semanas" },
+                { icon: "🗓️", label: "Duración", value: "6 semanas" },
                 { icon: "📱", label: "Modalidad", value: "100% Virtual" },
                 { icon: "👥", label: "Cupos", value: "Limitados" },
               ].map(({ icon, label, value }) => (
