@@ -19,6 +19,7 @@ const MODULES = [
   {
     num: "01",
     title: "Seguridad Interna",
+    subtitle: "Pasar del estado de supervivencia a la capacidad de habitar de manera conciente el cuerpo",
     theme: "Construir recursos internos antes de profundizar. Comprender el trauma desde una mirada integrativa y empezar a cultivar regulación, orientación y seguridad corporal.",
     goal: '"Mi cuerpo puede empezar a sentirse un lugar un poco más seguro."',
     emoji: "🛡️",
@@ -43,7 +44,7 @@ const MODULES = [
     num: "03",
     title: "Reclamar la Vida",
     subtitle: "En conexión con la coherencia, el propósito y la espiritualidad.",
-    theme: "Moverse desde la mera supervivencia hacia mayor agencia, autenticidad y conexión con propósito.",
+    theme: "Dejar de moverse o actuar desde la simple supervivencia y encontrar la conexión con la autenticidad.",
     goal: '"No se trata solo de sobrevivir. Puedo construir una relación diferente conmigo y con la vida."',
     emoji: "🕊️",
     color: "from-teal-50 to-cyan-50",

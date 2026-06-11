@@ -29,7 +29,7 @@ const MODULES = [
   {
     num: "02",
     title: "Las Herramientas del Kundalini Yoga",
-    theme: "Cómo funciona el yoga y por qué transforma la experiencia humana.",
+    theme: "Cómo funciona el yoga y por qué transforma nuestra vida.",
     emoji: "🛠️",
     color: "from-green-50 to-emerald-50",
     borderColor: "border-green-200",
@@ -69,7 +69,7 @@ const MODULES = [
   {
     num: "06",
     title: "Integración, Liderazgo Interior y Camino Espiritual",
-    theme: "Habitar el yoga como experiencia viva.",
+    theme: "Habitar el Yoga como una práctica del día a día.",
     emoji: "🕊️",
     color: "from-teal-50 to-cyan-50",
     borderColor: "border-teal-200",
