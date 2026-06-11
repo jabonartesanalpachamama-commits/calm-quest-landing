@@ -29,7 +29,7 @@ const PROGRAMS = [
     emoji: "🛡️",
     title: "Santosha Somático®",
     subtitle: "Del Sobrevivir al Habitar",
-    desc: "Yogaterapia para Trauma, Sistema Nervioso y Reconexión Humana. Kundalini Yoga, Psicología y conciencia corporal para procesos de integración emocional profunda.",
+    desc: "Es ideal para procesos de integración emocional profunda, regulación del sistema nervioso, gestión y comprensión de traumas a través de Yogaterapia, Kundalini Yoga, y Conciencia corporal.",
     features: ["3 Módulos progresivos", "100% Virtual", "Enfoque clínico & terapéutico"],
     href: "/santosha-somatico",
     color: "from-violet-50 to-purple-50",
