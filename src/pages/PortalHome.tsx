@@ -276,8 +276,8 @@ const PortalHome = () => {
             <div className="flex justify-center">
               <div className="relative">
                 {/* Image Placeholder Block for the Yoga Teacher */}
-                <div className="w-64 h-64 md:w-80 md:h-80 rounded-t-full rounded-b-3xl bg-muted border border-border/50 shadow-md overflow-hidden relative">
-                  <img src={fransuryImage} alt="Fransury González" className="w-full h-full object-cover object-top" />
+                <div className="w-full max-w-sm rounded-3xl bg-muted border border-border/50 shadow-md overflow-hidden relative">
+                  <img src={fransuryImage} alt="Fransury González" className="w-full h-auto object-cover" />
                 </div>
                 <div className={`absolute -bottom-4 -right-4 px-5 py-2 rounded-full text-sm font-semibold shadow-md bg-white text-foreground border border-border/40 flex items-center gap-2`}>
                   Sury González <Leaf className="w-4 h-4 text-primary" />
