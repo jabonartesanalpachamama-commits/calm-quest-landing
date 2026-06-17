@@ -14,6 +14,7 @@ import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
+import fransuryImage from "@/assets/fransury.jpg";
 
 const FORMATION = [
   {
@@ -157,7 +158,8 @@ const QuienSoy = () => {
             >
               <div className="relative">
                 <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden border-4 border-white shadow-xl relative bg-card">
-                  <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2920&auto=format&fit=crop" alt="Fransury González" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/0 transition-colors duration-500 z-10 rounded-[2rem]"></div>
+                  <img src={fransuryImage} alt="Fransury González" className="w-full h-full object-cover" />
                 </div>
                 {/* Floating badge */}
                 <div className={`absolute -bottom-4 -right-4 px-4 py-2 rounded-full text-xs font-semibold shadow-md ${palette.primary}`}>
