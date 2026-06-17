@@ -13,7 +13,7 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
-import fransuryImage from "@/assets/fransury.jpg";
+import fransuryImage from "@/assets/fransury_portal.jpg";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const PROGRAMS = [
@@ -277,7 +277,7 @@ const PortalHome = () => {
               <div className="relative">
                 {/* Image Placeholder Block for the Yoga Teacher */}
                 <div className="w-64 h-64 md:w-80 md:h-80 rounded-t-full rounded-b-3xl bg-muted border border-border/50 shadow-md overflow-hidden relative">
-                  <img src={fransuryImage} alt="Fransury González" className="w-full h-full object-cover object-bottom scale-[1.25] origin-bottom" />
+                  <img src={fransuryImage} alt="Fransury González" className="w-full h-full object-cover object-top" />
                 </div>
                 <div className={`absolute -bottom-4 -right-4 px-5 py-2 rounded-full text-sm font-semibold shadow-md bg-white text-foreground border border-border/40 flex items-center gap-2`}>
                   Sury González <Leaf className="w-4 h-4 text-primary" />
