@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import SalesNotification from "./components/SalesNotification";
+import ScrollToTop from "./components/ScrollToTop";
 
 // CMS Pages
 import CmsLogin from "./pages/CmsLogin";
@@ -28,6 +29,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <SalesNotification />
         <Routes>
           <Route path="/" element={<PortalHome />} />
