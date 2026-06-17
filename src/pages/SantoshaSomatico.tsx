@@ -272,50 +272,51 @@ const SantoshaSomatico = () => {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div className="space-y-5">
-                <p className="text-muted-foreground leading-relaxed font-light">
-                  Este programa parte de una comprensión fundamental:
-                </p>
-                <div className="bg-card border border-border/50 rounded-3xl p-6 space-y-2">
-                  <p className="font-serif text-lg font-semibold text-foreground leading-snug">
-                    El trauma no vive únicamente en la narrativa mental.
-                  </p>
-                  <p className="text-sm text-muted-foreground font-light">
-                    También puede manifestarse en:
-                  </p>
-                </div>
+            <div className="grid lg:grid-cols-2 gap-6 items-stretch">
+              {/* Diagnosis Card */}
+              <div className="bg-card border border-border/50 rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center shadow-sm relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+                <div className="relative z-10 space-y-8">
+                  <div className="space-y-4">
+                    <p className="text-sm font-bold tracking-widest uppercase text-muted-foreground/60">
+                      Comprensión Fundamental
+                    </p>
+                    <h3 className="font-serif text-2xl md:text-3xl font-semibold text-foreground leading-snug">
+                      El trauma no vive únicamente en la narrativa mental.
+                    </h3>
+                    <p className="text-muted-foreground font-light text-base">
+                      También puede manifestarse y alojarse profundamente en:
+                    </p>
+                  </div>
 
-                <div className="space-y-2">
-                  {TRAUMA_MANIFESTATIONS.map(({ icon, label }) => (
-                    <div key={label} className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <span className="text-lg shrink-0">{icon}</span>
-                      <span>{label}</span>
-                    </div>
-                  ))}
+                  <div className="flex flex-wrap gap-3">
+                    {TRAUMA_MANIFESTATIONS.map(({ icon, label }) => (
+                      <span key={label} className="inline-flex items-center gap-2 bg-background border border-border/50 px-4 py-2.5 rounded-2xl text-sm text-foreground hover:border-primary/30 transition-colors shadow-sm">
+                        <span className="text-primary [&>svg]:w-4 [&>svg]:h-4">{icon}</span>
+                        {label}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-5">
-                <div className={`rounded-3xl p-6 space-y-4 border ${palette.cardBackground} border-border/40`}>
-                  <p className="text-sm font-semibold text-foreground">Desde Santosha proponemos:</p>
-                  <p className="text-muted-foreground leading-relaxed font-light text-sm">
-                    Una práctica integrativa donde <strong className="text-foreground">cuerpo y mente se ponen al servicio del alma</strong>, sin negar la complejidad humana ni caer en positivismo espiritual.
-                  </p>
-                </div>
-
-                {/* 5 Pillars preview */}
-                <div className="space-y-2">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Método Santosha® — 5 Pilares</p>
-                  {PILLARS.map((p) => (
-                    <div key={p.num} className="flex items-center gap-3 bg-card border border-border/40 rounded-2xl px-4 py-3">
-                      <span className="text-lg shrink-0">{p.icon}</span>
-                      <div>
-                        <span className="text-sm font-semibold text-foreground">{p.name}</span>
-                        <span className="text-xs text-muted-foreground font-light ml-2">{p.desc}</span>
-                      </div>
-                    </div>
-                  ))}
+              {/* Proposal Card */}
+              <div className={`${palette.secondary} rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-center relative overflow-hidden shadow-sm`}>
+                <div className="space-y-8 relative z-10">
+                  <div className="space-y-4">
+                    <p className={`text-sm font-bold tracking-widest uppercase ${palette.secondaryText} opacity-70`}>
+                      Nuestra Propuesta
+                    </p>
+                    <h3 className={`font-serif text-3xl md:text-4xl font-light italic leading-tight ${palette.secondaryText}`}>
+                      Una práctica integrativa donde cuerpo y mente se ponen al servicio del alma.
+                    </h3>
+                  </div>
+                  
+                  <div className={`pl-6 border-l-2 border-primary/20`}>
+                    <p className={`text-lg md:text-xl font-light leading-relaxed ${palette.secondaryText} opacity-90`}>
+                      Sosteniendo el proceso sin negar la complejidad humana, ni caer en el positivismo espiritual.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
