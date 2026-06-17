@@ -15,7 +15,7 @@ const GuaranteeSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
           className="max-w-2xl mx-auto text-center"
         >
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">

@@ -25,7 +25,7 @@ const FreeClassTime = () => {
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
                 className="flex justify-center mb-8 md:mb-12"
             >
                 <img
@@ -38,7 +38,7 @@ const FreeClassTime = () => {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
                 className="w-full max-w-4xl"
             >
                 <div className="text-center mb-10">
@@ -63,7 +63,7 @@ const FreeClassTime = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
                     className="mt-12 bg-card rounded-2xl p-8 md:p-10 border border-border/60"
                 >
                     <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-semibold text-primary italic mb-8">
@@ -117,7 +117,7 @@ const FreeClassTime = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
                     className="mt-12 bg-card rounded-2xl p-8 md:p-10 border border-border/60"
                 >
                     <h2 className="font-serif text-2xl md:text-3xl font-semibold text-center mb-4">

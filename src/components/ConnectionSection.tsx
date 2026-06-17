@@ -16,7 +16,7 @@ const ConnectionSection = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className="text-left order-2 lg:order-1"
           >
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-8 leading-tight">
@@ -39,7 +39,7 @@ const ConnectionSection = () => {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
                 className="text-xl md:text-2xl text-foreground font-medium mb-8"
               >
                 Nuestra clase gratuita para <span className="text-primary">Crear Equilibrio Emocional</span> te ofrece una solución práctica para calmar tu sistema nervioso y recuperar el control de tus emociones.
@@ -68,7 +68,7 @@ const ConnectionSection = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="relative order-1 lg:order-2"
           >
             <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/10">

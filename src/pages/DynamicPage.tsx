@@ -313,7 +313,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                       <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         className="lg:col-span-7 text-center lg:text-left space-y-6"
                       >
                         {section.content.tagline && (
@@ -338,7 +338,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                       <motion.div 
                         initial={{ opacity: 0, scale: 0.98, y: 15 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.4, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="lg:col-span-5 relative z-10 w-full max-w-md mx-auto"
                       >
                         <div className="bg-card p-8 md:p-10 rounded-[2rem] border border-border/60 shadow-md shadow-foreground/[0.01]">
@@ -353,7 +353,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                         <motion.div
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: 0.5 }}
+                          transition={{ duration: 0.4, delay: 0.5 }}
                           className="mt-4 text-center space-y-2"
                         >
                           <p className="text-xs font-medium text-muted-foreground">
@@ -389,7 +389,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     className="max-w-4xl mx-auto space-y-6 relative z-10"
                   >
                     {section.content.tagline && (
@@ -432,7 +432,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                       initial={{ opacity: 0, x: isImageLeft ? -20 : 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: "-100px" }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className={`order-2 ${isImageLeft ? "md:order-1" : "md:order-2"}`}
                     >
                       {section.content.imageUrl ? (
@@ -458,7 +458,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                       initial={{ opacity: 0, x: isImageLeft ? 20 : -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: "-100px" }}
-                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className={`order-1 ${isImageLeft ? "md:order-2" : "md:order-1"} space-y-6`}
                     >
                       <h2 className="font-serif text-3xl md:text-4xl font-bold leading-tight text-foreground">
@@ -502,7 +502,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                           initial={{ opacity: 0, y: 15 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, margin: "-50px" }}
-                          transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{ duration: 0.4, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                           className="py-8 first:pt-0 last:pb-0 flex flex-col sm:flex-row gap-6 sm:gap-10 items-start group"
                         >
                           <span className="font-serif text-4xl md:text-5xl font-light text-primary/70 select-none sm:w-16">
@@ -566,7 +566,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, margin: "-80px" }}
-                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         className="bg-muted/60 rounded-[1.5rem] p-8 border border-border/40 space-y-5"
                       >
                         <div className="flex items-center gap-3">
@@ -592,7 +592,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, margin: "-80px" }}
-                        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                         className="bg-primary/5 rounded-[1.5rem] p-8 border border-primary/20 space-y-5"
                       >
                         <div className="flex items-center gap-3">
@@ -659,7 +659,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                       initial={{ opacity: 0, y: 15 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="bg-card p-8 md:p-10 rounded-[2rem] border border-border/60 shadow-md shadow-foreground/[0.01]"
                     >
                       {formToEmbed ? (
@@ -703,7 +703,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                             initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                             className="p-8 rounded-[2rem] bg-card border border-border/60 text-left space-y-6 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-primary/20 transition-all duration-300 relative overflow-hidden group"
                           >
                             {/* Premium Editorial quotation mark graphic */}
@@ -765,7 +765,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                       initial={{ opacity: 0, y: 15 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     >
                       <Accordion type="single" collapsible className="w-full space-y-4">
                         {section.content.faqs?.map((faq: any, i: number) => (
@@ -804,7 +804,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     className="max-w-2xl mx-auto text-center space-y-8 relative z-10"
                   >
                     {/* Rhetorical question */}

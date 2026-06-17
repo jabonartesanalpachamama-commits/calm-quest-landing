@@ -47,7 +47,7 @@ export const CmsLogin = () => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className="w-full max-w-md bg-white border border-[#EBE7DF] rounded-3xl p-8 md:p-10 shadow-[0_10px_30px_-10px_rgba(126,161,114,0.15)]"
       >
         <div className="flex flex-col items-center text-center mb-8">
