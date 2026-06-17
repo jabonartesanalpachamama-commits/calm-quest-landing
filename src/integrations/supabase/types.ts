@@ -14,6 +14,185 @@ export type Database = {
   }
   public: {
     Tables: {
+      chat_leads: {
+        Row: {
+          contact: string | null
+          conversation: Json | null
+          created_at: string | null
+          id: string
+          name: string | null
+          page_slug: string | null
+          source: string | null
+        }
+        Insert: {
+          contact?: string | null
+          conversation?: Json | null
+          created_at?: string | null
+          id?: string
+          name?: string | null
+          page_slug?: string | null
+          source?: string | null
+        }
+        Update: {
+          contact?: string | null
+          conversation?: Json | null
+          created_at?: string | null
+          id?: string
+          name?: string | null
+          page_slug?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
+      cms_forms: {
+        Row: {
+          created_at: string | null
+          fields: Json
+          id: string
+          name: string
+          redirect_url: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          fields?: Json
+          id?: string
+          name: string
+          redirect_url?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          fields?: Json
+          id?: string
+          name?: string
+          redirect_url?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cms_pages: {
+        Row: {
+          created_at: string | null
+          id: string
+          published: boolean | null
+          sections: Json
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          published?: boolean | null
+          sections?: Json
+          slug: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          published?: boolean | null
+          sections?: Json
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cms_posts: {
+        Row: {
+          content: string
+          created_at: string | null
+          excerpt: string | null
+          id: string
+          image_url: string | null
+          published: boolean | null
+          published_at: string | null
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          image_url?: string | null
+          published?: boolean | null
+          published_at?: string | null
+          slug: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          image_url?: string | null
+          published?: boolean | null
+          published_at?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cms_settings: {
+        Row: {
+          created_at: string | null
+          key: string
+          updated_at: string | null
+          value: Json
+        }
+        Insert: {
+          created_at?: string | null
+          key: string
+          updated_at?: string | null
+          value: Json
+        }
+        Update: {
+          created_at?: string | null
+          key?: string
+          updated_at?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      cms_submissions: {
+        Row: {
+          created_at: string | null
+          data: Json
+          form_id: string | null
+          id: string
+          page_slug: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          data?: Json
+          form_id?: string | null
+          id?: string
+          page_slug?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          data?: Json
+          form_id?: string | null
+          id?: string
+          page_slug?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cms_submissions_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "cms_forms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       registrations: {
         Row: {
           created_at: string
