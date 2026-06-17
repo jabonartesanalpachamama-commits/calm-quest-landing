@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import instructor from "@/assets/instructor.png";
+import instructor from "@/assets/fransury_portal.jpg";
 
 const ConnectionSection = () => {
   const scrollToTop = () => {
