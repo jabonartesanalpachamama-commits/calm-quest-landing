@@ -235,7 +235,7 @@ const SantoshaSomatico = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <Leaf className="w-12 h-12 text-primary" />
+              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Propósito del Programa
               </h2>
@@ -266,7 +266,7 @@ const SantoshaSomatico = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <Brain className="w-12 h-12 text-primary" />
+              <Brain className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Filosofía del Programa
               </h2>
