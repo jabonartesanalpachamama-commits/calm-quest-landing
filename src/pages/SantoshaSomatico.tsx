@@ -156,7 +156,7 @@ const SantoshaSomatico = () => {
       <FloatingCTA
         formAnchor="#somatico-inscripcion"
         ctaText="Inscribirme al Programa"
-        subText="🛡️ 3 módulos · 100% Virtual · Cupos limitados"
+        subText={<><ShieldCheck className="w-3.5 h-3.5 inline-block mr-1 text-primary" /> 3 módulos · 100% Virtual · Cupos limitados</>}
       />
 
       {/* ── HEADER ── */}
@@ -220,7 +220,7 @@ const SantoshaSomatico = () => {
               }}
               className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              <Leaf className="w-4 h-4 ml-1" />
+              Quiero Inscribirme <Leaf className="w-4 h-4 ml-1" />
             </a>
           </motion.div>
         </section>
