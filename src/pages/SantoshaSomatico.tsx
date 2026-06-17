@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { ShieldCheck, Waves, Feather, Puzzle, Wind, Search, Smile, Leaf, Book, Brain, Heart, Home, MessageCircle, Scale, Users, Sparkles, Info, Calendar, MonitorPlay } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -22,7 +23,7 @@ const MODULES = [
     subtitle: "Pasar del estado de supervivencia a la capacidad de habitar de manera conciente el cuerpo",
     theme: "Construir recursos internos antes de profundizar. Comprender el trauma desde una mirada integrativa y empezar a cultivar regulación, orientación y seguridad corporal.",
     goal: '"Mi cuerpo puede empezar a sentirse un lugar un poco más seguro."',
-    emoji: "🛡️",
+    icon: <ShieldCheck className="w-8 h-8 text-amber-700" />,
     color: "from-amber-50 to-orange-50",
     borderColor: "border-amber-200",
     accentColor: "text-amber-700",
@@ -34,7 +35,7 @@ const MODULES = [
     subtitle: "Escuchar el cuerpo, comprender patrones y recuperar presencia.",
     theme: "Comprender cómo el trauma impacta identidad, vínculos, emociones y energía vital. Aprender a relacionarse con la experiencia interna desde mayor conciencia y compasión.",
     goal: '"Puedo relacionarme con mi historia sin quedar completamente definido(a) por ella."',
-    emoji: "🌊",
+    icon: <Waves className="w-8 h-8 text-violet-700" />,
     color: "from-violet-50 to-purple-50",
     borderColor: "border-violet-200",
     accentColor: "text-violet-700",
@@ -46,7 +47,7 @@ const MODULES = [
     subtitle: "En conexión con la coherencia, el propósito y la espiritualidad.",
     theme: "Dejar de moverse o actuar desde la simple supervivencia y encontrar la conexión con la autenticidad.",
     goal: '"No se trata solo de sobrevivir. Puedo construir una relación diferente conmigo y con la vida."',
-    emoji: "🕊️",
+    icon: <Feather className="w-8 h-8 text-teal-700" />,
     color: "from-teal-50 to-cyan-50",
     borderColor: "border-teal-200",
     accentColor: "text-teal-700",
@@ -55,31 +56,31 @@ const MODULES = [
 ];
 
 const PILLARS = [
-  { num: "1", name: "Comprender", desc: "Psicología + trauma + procesos psíquicos", icon: "🧩" },
-  { num: "2", name: "Regular", desc: "Cuerpo + sistema nervioso + respiración", icon: "🌬️" },
-  { num: "3", name: "Reconocer", desc: "Patrones, emociones, narrativas, partes internas", icon: "🔍" },
-  { num: "4", name: "Integrar", desc: "Kundalini Yoga + meditación + conciencia", icon: "🧘" },
-  { num: "5", name: "Encarnar", desc: "Coherencia, propósito y espiritualidad aplicada", icon: "🌱" },
+  { num: "1", name: "Comprender", desc: "Psicología + trauma + procesos psíquicos", icon: <Puzzle className="w-8 h-8 text-primary" /> },
+  { num: "2", name: "Regular", desc: "Cuerpo + sistema nervioso + respiración", icon: <Wind className="w-8 h-8 text-primary" /> },
+  { num: "3", name: "Reconocer", desc: "Patrones, emociones, narrativas, partes internas", icon: <Search className="w-8 h-8 text-primary" /> },
+  { num: "4", name: "Integrar", desc: "Kundalini Yoga + meditación + conciencia", icon: <Smile className="w-8 h-8 text-primary" /> },
+  { num: "5", name: "Encarnar", desc: "Coherencia, propósito y espiritualidad aplicada", icon: <Leaf className="w-8 h-8 text-primary" /> },
 ];
 
 const FORMAT_ITEMS = [
-  { icon: "📚", text: "Enseñanza teórica" },
-  { icon: "🧠", text: "Psicología + sistema nervioso + trauma" },
-  { icon: "🧘", text: "Práctica de Kundalini Yoga terapéutico" },
-  { icon: "🎧", text: "Meditación guiada" },
-  { icon: "📓", text: "Bitácora de integración" },
-  { icon: "🏠", text: "Recursos para práctica en casa" },
-  { icon: "🔵", text: "Espacio reflexivo / círculo consciente" },
+  { icon: <Book className="w-6 h-6 text-primary" />, text: "Enseñanza teórica" },
+  { icon: <Brain className="w-6 h-6 text-primary" />, text: "Psicología + sistema nervioso + trauma" },
+  { icon: <Smile className="w-6 h-6 text-primary" />, text: "Práctica de Kundalini Yoga terapéutico" },
+  { icon: <Heart className="w-6 h-6 text-primary" />, text: "Meditación guiada" },
+  { icon: <Book className="w-6 h-6 text-primary" />, text: "Bitácora de integración" },
+  { icon: <Home className="w-6 h-6 text-primary" />, text: "Recursos para práctica en casa" },
+  { icon: <MessageCircle className="w-6 h-6 text-primary" />, text: "Espacio reflexivo / círculo consciente" },
 ];
 
 const TRAUMA_MANIFESTATIONS = [
-  { icon: "🫀", label: "el cuerpo" },
-  { icon: "⚡", label: "el sistema nervioso" },
-  { icon: "🔗", label: "los patrones relacionales" },
-  { icon: "🌬️", label: "la respiración" },
-  { icon: "🪞", label: "la identidad" },
-  { icon: "🛡️", label: "la percepción de seguridad" },
-  { icon: "✨", label: "la conexión con el propósito y la espiritualidad" },
+  { icon: <Heart className="w-6 h-6 text-primary" />, label: "el cuerpo" },
+  { icon: <Sparkles className="w-6 h-6 text-primary" />, label: "el sistema nervioso" },
+  { icon: <Users className="w-6 h-6 text-primary" />, label: "los patrones relacionales" },
+  { icon: <Wind className="w-6 h-6 text-primary" />, label: "la respiración" },
+  { icon: <Search className="w-6 h-6 text-primary" />, label: "la identidad" },
+  { icon: <ShieldCheck className="w-6 h-6 text-primary" />, label: "la percepción de seguridad" },
+  { icon: <Sparkles className="w-6 h-6 text-primary" />, label: "la conexión con el propósito y la espiritualidad" },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -140,8 +141,8 @@ const SantoshaSomatico = () => {
             variants={fadeUp}
             className="max-w-4xl mx-auto text-center space-y-8 relative z-10"
           >
-            <span className={`inline-block px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              🛡️ Programa · 3 Módulos · 100% Virtual
+            <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
+              <ShieldCheck className="w-4 h-4" /> Programa · 3 Módulos · 100% Virtual
             </span>
 
             <div className="space-y-3">
@@ -183,7 +184,7 @@ const SantoshaSomatico = () => {
               }}
               className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              Quiero saber más 🌿
+              <Leaf className="w-4 h-4 ml-1" />
             </a>
           </motion.div>
         </section>
@@ -198,7 +199,7 @@ const SantoshaSomatico = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🌿</span>
+              <Leaf className="w-12 h-12 text-primary" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Propósito del Programa
               </h2>
@@ -229,7 +230,7 @@ const SantoshaSomatico = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🧠</span>
+              <Brain className="w-12 h-12 text-primary" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Filosofía del Programa
               </h2>
@@ -318,7 +319,7 @@ const SantoshaSomatico = () => {
                       {/* Emoji + number */}
                       <div className="flex flex-col items-center gap-2 shrink-0">
                         <div className="w-14 h-14 rounded-2xl bg-white/70 border border-white/80 flex items-center justify-center text-3xl shadow-sm">
-                          {mod.emoji}
+                          {mod.icon}
                         </div>
                         <span className={`text-xs font-bold tracking-wider uppercase ${mod.accentColor}`}>
                           Módulo {mod.num}
@@ -370,7 +371,7 @@ const SantoshaSomatico = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">📋</span>
+              <Info className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Qué incluye cada módulo?
               </h2>
@@ -394,12 +395,12 @@ const SantoshaSomatico = () => {
             {/* Key info */}
             <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
               {[
-                { icon: "🗓️", label: "Duración", value: "6 semanas" },
-                { icon: "📱", label: "Modalidad", value: "100% Virtual" },
-                { icon: "👥", label: "Cupos", value: "Limitados" },
+                { icon: <Calendar className="w-8 h-8 text-primary mx-auto" />, label: "Duración", value: "6 semanas" },
+                { icon: <MonitorPlay className="w-8 h-8 text-primary mx-auto" />, label: "Modalidad", value: "100% Virtual" },
+                { icon: <Users className="w-8 h-8 text-primary mx-auto" />, label: "Cupos", value: "Limitados" },
               ].map(({ icon, label, value }) => (
-                <div key={label} className="bg-card border border-border/50 rounded-2xl p-5 text-center space-y-1">
-                  <span className="text-2xl">{icon}</span>
+                <div key={label} className="bg-card border border-border/50 rounded-2xl p-5 text-center space-y-2">
+                  {icon}
                   <p className="text-xs text-muted-foreground font-light">{label}</p>
                   <p className="text-sm font-semibold text-foreground">{value}</p>
                 </div>
@@ -418,7 +419,7 @@ const SantoshaSomatico = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">⚙️</span>
+              <ShieldCheck className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Método Santosha® — 5 Pilares
               </h2>
@@ -437,7 +438,7 @@ const SantoshaSomatico = () => {
                   variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, delay: idx * 0.08 } } }}
                   className="bg-card border border-border/50 rounded-3xl p-6 text-center space-y-3 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
                 >
-                  <span className="text-3xl block">{p.icon}</span>
+                  <span className="block mb-2 flex justify-center">{p.icon}</span>
                   <div>
                     <p className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60 mb-1">
                       Pilar {p.num}
@@ -461,7 +462,7 @@ const SantoshaSomatico = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🧭</span>
+              <Search className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Para quién es este programa?
               </h2>
@@ -470,28 +471,28 @@ const SantoshaSomatico = () => {
             <div className="grid md:grid-cols-2 gap-5">
               {[
                 {
-                  icon: "🌱",
+                  icon: <Leaf className="w-8 h-8 text-primary" />,
                   title: "Personas en proceso de sanación",
                   desc: "Que desean recursos concretos para comprender y relacionarse de otra manera con experiencias difíciles o traumáticas.",
                 },
                 {
-                  icon: "💆",
+                  icon: <Search className="w-8 h-8 text-primary" />,
                   title: "Quienes sienten desconexión de sí mismos",
                   desc: "Que experimentan ansiedad, vacío, bloqueo emocional o una sensación de no habitar del todo su propia vida.",
                 },
                 {
-                  icon: "🧘",
+                  icon: <Smile className="w-8 h-8 text-primary" />,
                   title: "Practicantes de yoga o meditación",
                   desc: "Que quieren integrar una perspectiva más profunda de psicología transpersonal y trabajo somático en su práctica.",
                 },
                 {
-                  icon: "🌀",
+                  icon: <Brain className="w-8 h-8 text-primary" />,
                   title: "Profesionales del acompañamiento",
                   desc: "Psicólogos, terapeutas, instructores o coaches que desean ampliar su comprensión del trauma y el trabajo somático.",
                 },
               ].map(({ icon, title, desc }) => (
                 <div key={title} className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300">
-                  <span className="text-3xl shrink-0">{icon}</span>
+                  <span className="shrink-0">{icon}</span>
                   <div className="space-y-1">
                     <h3 className="font-semibold text-foreground">{title}</h3>
                     <p className="text-sm text-muted-foreground font-light leading-relaxed">{desc}</p>
@@ -512,7 +513,7 @@ const SantoshaSomatico = () => {
             className="max-w-3xl mx-auto"
           >
             <div className="bg-card border border-border/50 rounded-3xl p-8 space-y-3 text-center">
-              <span className="text-2xl">⚖️</span>
+              <Scale className="w-10 h-10 text-primary mx-auto mb-2" />
               <h3 className="font-serif text-lg font-semibold text-foreground">Declaración Ética</h3>
               <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-xl mx-auto">
                 Este programa <strong className="text-foreground">no reemplaza</strong> el acompañamiento médico, psiquiatría ni tratamiento clínico especializado. Está diseñado como un espacio complementario de educación, conciencia corporal y práctica integrativa.
@@ -531,7 +532,7 @@ const SantoshaSomatico = () => {
             className="max-w-3xl mx-auto text-center space-y-8"
           >
             <div className="space-y-3">
-              <span className="text-5xl">🛡️</span>
+              <ShieldCheck className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Comienza tu proceso de integración
               </h2>
@@ -547,7 +548,7 @@ const SantoshaSomatico = () => {
                 rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
-                💬 Inscribirme por WhatsApp
+                <MessageCircle className="w-5 h-5" /> Inscribirme por WhatsApp
               </a>
 
               <p className="text-xs text-muted-foreground">

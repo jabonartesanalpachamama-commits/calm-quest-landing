@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { Search, Heart, Wind, User, Zap, Droplets, Loader2, Leaf, Sun, ChevronRight, Brain, Sparkles, Sprout, HandHeart, Moon, ShieldCheck, HeartHandshake, Settings, Flower2 } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -14,26 +15,26 @@ import Header from "@/components/Header";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const BELIEFS = [
-  { icon: "🔦", text: "El poder del autoconocimiento" },
-  { icon: "🫀", text: "La capacidad del cuerpo para recordar" },
-  { icon: "🌬️", text: "La respiración como medicina" },
-  { icon: "🧘", text: "La meditación como regreso al centro" },
-  { icon: "⚡", text: "El Kundalini Yoga como tecnología de conciencia capaz de despertar aquello que ya vive dentro de nosotros" },
+  { icon: <Search className="w-6 h-6 text-primary" />, text: "El poder del autoconocimiento" },
+  { icon: <Heart className="w-6 h-6 text-primary" />, text: "La capacidad del cuerpo para recordar" },
+  { icon: <Wind className="w-6 h-6 text-primary" />, text: "La respiración como medicina" },
+  { icon: <User className="w-6 h-6 text-primary" />, text: "La meditación como regreso al centro" },
+  { icon: <Zap className="w-6 h-6 text-primary" />, text: "El Kundalini Yoga como tecnología de conciencia capaz de despertar aquello que ya vive dentro de nosotros" },
 ];
 
 const NIYAMA_CARDS = [
   {
-    emoji: "🌊",
+    icon: <Droplets className="w-8 h-8 text-primary mx-auto mb-2" />,
     title: "La calma en el éxito y en el fracaso",
     desc: "Ecuanimidad ante los extremos de la experiencia.",
   },
   {
-    emoji: "🌀",
+    icon: <Loader2 className="w-8 h-8 text-primary mx-auto mb-2" />,
     title: "En la expansión y en la incertidumbre",
     desc: "Presencia que no depende de las circunstancias.",
   },
   {
-    emoji: "🌿",
+    icon: <Leaf className="w-8 h-8 text-primary mx-auto mb-2" />,
     title: "En lo que celebramos y en lo que nos desafía",
     desc: "Contentamiento consciente, no resignación.",
   },
@@ -113,7 +114,7 @@ const Filosofia = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🪷</span>
+              <Flower2 className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Qué es Santosha?
               </h2>
@@ -130,12 +131,12 @@ const Filosofia = () => {
 
             {/* Three expressions */}
             <div className="grid sm:grid-cols-3 gap-4">
-              {NIYAMA_CARDS.map(({ emoji, title, desc }) => (
+              {NIYAMA_CARDS.map(({ icon, title, desc }) => (
                 <div
                   key={title}
                   className="bg-card border border-border/50 rounded-3xl p-6 text-center space-y-3 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
                 >
-                  <span className="text-3xl block">{emoji}</span>
+                  {icon}
                   <p className="font-serif text-sm font-semibold text-foreground leading-snug">{title}</p>
                   <p className="text-xs text-muted-foreground font-light leading-relaxed">{desc}</p>
                 </div>
@@ -161,7 +162,7 @@ const Filosofia = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🌅</span>
+              <Sun className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 La invitación
               </h2>
@@ -175,7 +176,7 @@ const Filosofia = () => {
 
             <div className="grid md:grid-cols-2 gap-6 items-center">
               <div className={`rounded-3xl p-8 text-center border border-border/30 ${palette.cardBackground} space-y-2`}>
-                <span className="text-4xl">⚡</span>
+                <Zap className="w-10 h-10 text-primary mx-auto mb-2" />
                 <p className="font-serif text-lg font-semibold text-foreground">Sobrevivir</p>
                 <p className="text-sm text-muted-foreground font-light">Reaccionar · Controlar · Exigirse · Desconectarse</p>
               </div>
@@ -186,7 +187,7 @@ const Filosofia = () => {
             </div>
 
             <div className={`rounded-3xl p-8 text-center space-y-3 ${palette.secondary}`}>
-              <span className="text-4xl">🌿</span>
+              <Leaf className="w-10 h-10 text-primary mx-auto mb-2" />
               <p className={`font-serif text-2xl font-bold ${palette.secondaryText}`}>Habitar</p>
               <p className={`text-sm font-light ${palette.secondaryText} opacity-80`}>
                 Presencia · Ecuanimidad · Conexión · Contentamiento consciente
@@ -205,7 +206,7 @@ const Filosofia = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">⚙️</span>
+              <Settings className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Método Santosha®
               </h2>
@@ -230,23 +231,23 @@ const Filosofia = () => {
               <div className="space-y-4">
                 {[
                   {
-                    icon: "🧠",
+                    icon: <Brain className="w-8 h-8 text-primary" />,
                     title: "Psicología Transpersonal",
                     desc: "Comprensión de la experiencia humana más allá de lo racional: heridas, vínculos, sentido, evolución.",
                   },
                   {
-                    icon: "⚡",
+                    icon: <Zap className="w-8 h-8 text-primary" />,
                     title: "Kundalini Yoga como tecnología",
                     desc: "No solo práctica física. Tecnología de conciencia para expandir presencia y cultivar regulación interna.",
                   },
                   {
-                    icon: "🌿",
+                    icon: <Leaf className="w-8 h-8 text-primary" />,
                     title: "Integración, no evasión",
                     desc: "Sin positivismo espiritual ni respuestas absolutas. Transformar la vida significa habitar la humanidad con mayor conciencia.",
                   },
                 ].map(({ icon, title, desc }) => (
                   <div key={title} className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-5 hover:border-primary/30 transition-all duration-300">
-                    <span className="text-2xl shrink-0">{icon}</span>
+                    <div className="shrink-0">{icon}</div>
                     <div className="space-y-1">
                       <p className="font-semibold text-foreground text-sm">{title}</p>
                       <p className="text-xs text-muted-foreground font-light leading-relaxed">{desc}</p>
@@ -268,7 +269,7 @@ const Filosofia = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">✦</span>
+              <Sparkles className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Una espiritualidad viva
               </h2>
@@ -285,12 +286,12 @@ const Filosofia = () => {
 
             <div className="space-y-3">
               {[
-                { label: "Con raíces.", icon: "🌱" },
-                { label: "Con cuerpo.", icon: "🫀" },
-                { label: "Con conciencia.", icon: "✨" },
+                { label: "Con raíces.", icon: <Sprout className="w-6 h-6 text-primary" /> },
+                { label: "Con cuerpo.", icon: <Heart className="w-6 h-6 text-primary" /> },
+                { label: "Con conciencia.", icon: <Sparkles className="w-6 h-6 text-primary" /> },
               ].map(({ label, icon }) => (
                 <div key={label} className={`flex items-center gap-4 px-6 py-4 rounded-2xl border ${palette.cardBackground} border-border/40`}>
-                  <span className="text-2xl shrink-0">{icon}</span>
+                  <div className="shrink-0">{icon}</div>
                   <p className="font-serif text-base font-semibold text-foreground">{label}</p>
                 </div>
               ))}
@@ -317,7 +318,7 @@ const Filosofia = () => {
             className="max-w-3xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">💙</span>
+              <HeartHandshake className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Creemos en
               </h2>
@@ -333,7 +334,7 @@ const Filosofia = () => {
                   variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0, transition: { duration: 0.4, delay: idx * 0.08 } } }}
                   className="flex items-start gap-4 bg-card border border-border/40 rounded-2xl px-6 py-5 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
                 >
-                  <span className="text-2xl shrink-0 mt-0.5">{icon}</span>
+                  <div className="shrink-0 mt-0.5">{icon}</div>
                   <p className="text-sm text-muted-foreground font-light leading-relaxed">{text}</p>
                 </motion.div>
               ))}
@@ -351,7 +352,7 @@ const Filosofia = () => {
             className="max-w-3xl mx-auto text-center space-y-8"
           >
             <div className="space-y-3">
-              <span className="text-4xl">🌙</span>
+              <Moon className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Desde esta filosofía nacen los programas
               </h2>
@@ -363,30 +364,30 @@ const Filosofia = () => {
             <div className="grid sm:grid-cols-3 gap-4 text-left">
               {[
                 {
-                  emoji: "🙋",
+                  icon: <User className="w-8 h-8 text-primary mb-3" />,
                   title: "Quién es Sury",
                   desc: "Conoce el camino detrás del método",
                   href: "/quien-soy",
                 },
                 {
-                  emoji: "🌙",
+                  icon: <Moon className="w-8 h-8 text-primary mb-3" />,
                   title: "Curso de Iniciación al Yoga",
                   desc: "6 módulos · Bimensual · Virtual",
                   href: "/curso-iniciacion-yoga",
                 },
                 {
-                  emoji: "🛡️",
+                  icon: <ShieldCheck className="w-8 h-8 text-primary mb-3" />,
                   title: "Santosha Somático®",
                   desc: "Del Sobrevivir al Habitar · 3 módulos",
                   href: "/santosha-somatico",
                 },
-              ].map(({ emoji, title, desc, href }) => (
+              ].map(({ icon, title, desc, href }) => (
                 <Link
                   key={title}
                   to={href}
                   className="flex flex-col gap-3 bg-card border border-border/50 rounded-2xl p-6 hover:border-primary/40 hover:shadow-sm transition-all duration-300 group"
                 >
-                  <span className="text-3xl">{emoji}</span>
+                  {icon}
                   <div>
                     <p className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">{title}</p>
                     <p className="text-xs text-muted-foreground font-light mt-0.5">{desc}</p>

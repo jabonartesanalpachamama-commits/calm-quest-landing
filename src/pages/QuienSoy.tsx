@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { Leaf, HandHeart, Plane, Flower2, HeartHandshake, Sun, GraduationCap, Globe2, Moon, ShieldCheck, MessageCircle } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -131,7 +132,7 @@ const QuienSoy = () => {
       <FloatingCTA
         formAnchor="#quien-soy-contacto"
         ctaText="Trabajar con Sury"
-        subText="🌿 Acompañamiento consciente · Transformación real"
+        subText="Acompañamiento consciente · Transformación real"
       />
 
       {/* ── HEADER ── */}
@@ -155,8 +156,8 @@ const QuienSoy = () => {
               className="flex justify-center md:justify-end order-2 md:order-1"
             >
               <div className="relative">
-                <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3rem] bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border/50 shadow-md flex items-center justify-center text-8xl">
-                  🙏
+                <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden border-4 border-white shadow-xl relative bg-card">
+                  <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2920&auto=format&fit=crop" alt="Fransury González" className="w-full h-full object-cover" />
                 </div>
                 {/* Floating badge */}
                 <div className={`absolute -bottom-4 -right-4 px-4 py-2 rounded-full text-xs font-semibold shadow-md ${palette.primary}`}>
@@ -234,7 +235,7 @@ const QuienSoy = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🌿</span>
+              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Mi Historia
               </h2>
@@ -280,7 +281,7 @@ const QuienSoy = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">✈️</span>
+              <Plane className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Un camino que cruza fronteras
               </h2>
@@ -312,7 +313,7 @@ const QuienSoy = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🙏</span>
+              <HandHeart className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Con profunda gratitud
               </h2>
@@ -321,7 +322,7 @@ const QuienSoy = () => {
             <div className="space-y-5">
               <div className="bg-card border border-border/50 rounded-3xl p-7 space-y-3">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl shrink-0">🌸</span>
+                  <Flower2 className="w-8 h-8 text-primary shrink-0" />
                   <div className="space-y-2">
                     <p className="font-semibold text-foreground">Maria Elena Badillo</p>
                     <p className="text-sm text-muted-foreground font-light leading-relaxed">
@@ -333,7 +334,7 @@ const QuienSoy = () => {
 
               <div className="bg-card border border-border/50 rounded-3xl p-7 space-y-3">
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl shrink-0">💙</span>
+                  <HeartHandshake className="w-8 h-8 text-primary shrink-0" />
                   <div className="space-y-2">
                     <p className="font-semibold text-foreground">Mi terapeuta y guías del camino</p>
                     <p className="text-sm text-muted-foreground font-light leading-relaxed">
@@ -356,7 +357,7 @@ const QuienSoy = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🌅</span>
+              <Sun className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Hoy, desde Santosha
               </h2>
@@ -387,7 +388,7 @@ const QuienSoy = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🎓</span>
+              <GraduationCap className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Formación Académica
               </h2>
@@ -429,7 +430,7 @@ const QuienSoy = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🌍</span>
+              <Globe2 className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Cursos y Participaciones
               </h2>
@@ -477,7 +478,7 @@ const QuienSoy = () => {
             className="max-w-3xl mx-auto text-center space-y-8"
           >
             <div className="space-y-3">
-              <span className="text-5xl">🌿</span>
+              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Quieres caminar conmigo?
               </h2>
@@ -490,24 +491,24 @@ const QuienSoy = () => {
             <div className="grid sm:grid-cols-2 gap-4 text-left">
               {[
                 {
-                  emoji: "🌙",
+                  icon: <Moon className="w-6 h-6 text-primary shrink-0" />,
                   title: "Curso de Iniciación al Yoga",
                   desc: "6 módulos · Encuentros bimensuales · 100% Virtual",
                   href: "/curso-iniciacion-yoga",
                 },
                 {
-                  emoji: "🛡️",
+                  icon: <ShieldCheck className="w-6 h-6 text-primary shrink-0" />,
                   title: "Santosha Somático®",
                   desc: "Del Sobrevivir al Habitar · 3 módulos · Virtual",
                   href: "/santosha-somatico",
                 },
-              ].map(({ emoji, title, desc, href }) => (
+              ].map(({ icon, title, desc, href }) => (
                 <Link
                   key={title}
                   to={href}
                   className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-5 hover:border-primary/40 hover:shadow-sm transition-all duration-300 group"
                 >
-                  <span className="text-2xl shrink-0">{emoji}</span>
+                  {icon}
                   <div>
                     <p className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">{title}</p>
                     <p className="text-xs text-muted-foreground font-light mt-0.5">{desc}</p>
@@ -522,7 +523,7 @@ const QuienSoy = () => {
               rel="noopener noreferrer"
               className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              💬 Escribirme por WhatsApp
+              <MessageCircle className="w-5 h-5" /> Escribirme por WhatsApp
             </a>
 
             <p className="text-xs text-muted-foreground">

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 import { useState, useEffect } from "react";
-import { Timer } from "lucide-react";
+import { Timer, Lightbulb, MessageCircle, Star, User, Leaf, HeartHandshake } from "lucide-react";
 
 const FreeClassTime = () => {
     const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
@@ -75,7 +75,7 @@ const FreeClassTime = () => {
                         {/* Ong Namo Guru dev namo */}
                         <div className="flex gap-4">
                             <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
-                                <span className="text-primary text-xl">💡</span>
+                                <Lightbulb className="w-6 h-6 text-primary" />
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg md:text-xl mb-2">Ong Namo Guru dev namo</h3>
@@ -88,7 +88,7 @@ const FreeClassTime = () => {
                         {/* Sat nam */}
                         <div className="flex gap-4">
                             <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
-                                <span className="text-primary text-xl">💭</span>
+                                <MessageCircle className="w-6 h-6 text-primary" />
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg md:text-xl mb-2">Sat nam</h3>
@@ -101,7 +101,7 @@ const FreeClassTime = () => {
                         {/* AR */}
                         <div className="flex gap-4">
                             <div className="flex-shrink-0 w-12 h-12 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center">
-                                <span className="text-primary text-xl">⭐</span>
+                                <Star className="w-6 h-6 text-primary" />
                             </div>
                             <div>
                                 <h3 className="font-semibold text-lg md:text-xl mb-2">AR</h3>
@@ -139,21 +139,21 @@ const FreeClassTime = () => {
                     <div className="grid md:grid-cols-3 gap-8 mb-10">
                         <div className="text-center">
                             <div className="w-14 h-14 border border-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-2xl">🧘</span>
+                                <User className="w-6 h-6 text-primary" />
                             </div>
                             <h3 className="font-semibold mb-2">Práctica Diaria</h3>
                             <p className="text-sm text-muted-foreground">Acceso a meditaciones y kriyas exclusivos</p>
                         </div>
                         <div className="text-center">
                             <div className="w-14 h-14 border border-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-2xl">🌿</span>
+                                <Leaf className="w-6 h-6 text-primary" />
                             </div>
                             <h3 className="font-semibold mb-2">Transformación</h3>
                             <p className="text-sm text-muted-foreground">Reduce el estrés y mejora tu claridad mental</p>
                         </div>
                         <div className="text-center">
                             <div className="w-14 h-14 border border-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-2xl">🤝</span>
+                                <HeartHandshake className="w-6 h-6 text-primary" />
                             </div>
                             <h3 className="font-semibold mb-2">Comunidad</h3>
                             <p className="text-sm text-muted-foreground">Conecta con otros practicantes</p>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { User, Leaf, Search, ShieldCheck, Droplets, Sparkles, Zap, Sun, HeartHandshake, Settings, Compass, MessageCircle, Map, Smartphone, Clock, Calendar, Users, Moon } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -16,7 +17,7 @@ import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const SERVICES = [
   {
-    emoji: "🧘",
+    icon: <User className="w-6 h-6 text-amber-700" />,
     title: "Clases Privadas de Kundalini Yoga y Meditación",
     desc: "Diseñadas según tu proceso personal, intención terapéutica o camino espiritual.",
     tags: ["1 a 1", "Personalizada", "Virtual"],
@@ -25,7 +26,7 @@ const SERVICES = [
     accentColor: "text-amber-700",
   },
   {
-    emoji: "🌿",
+    icon: <Leaf className="w-6 h-6 text-teal-700" />,
     title: "Procesos de Acompañamiento Integrativo",
     desc: "Programas de varias sesiones orientados a profundizar en objetivos específicos de regulación, autoconocimiento, integración emocional o transformación humana.",
     tags: ["Multi-sesión", "Integrativo", "Virtual"],
@@ -37,33 +38,33 @@ const SERVICES = [
 
 const FOR_WHOM = [
   {
-    icon: "🔦",
+    icon: <Search className="w-6 h-6 text-primary" />,
     text: "Profundizar en su camino de autoconocimiento",
   },
   {
-    icon: "🛡️",
+    icon: <ShieldCheck className="w-6 h-6 text-primary" />,
     text: "Fortalecer recursos internos y conciencia corporal",
   },
   {
-    icon: "🌊",
+    icon: <Droplets className="w-6 h-6 text-primary" />,
     text: "Integrar procesos emocionales o momentos de transición vital",
   },
   {
-    icon: "✨",
+    icon: <Sparkles className="w-6 h-6 text-primary" />,
     text: "Desarrollar una práctica espiritual más consciente",
   },
   {
-    icon: "🌿",
+    icon: <Leaf className="w-6 h-6 text-primary" />,
     text: "Pasar del modo supervivencia a una relación más coherente, presente y compasiva con su vida",
   },
 ];
 
 const WHAT_CULTIVATES = [
-  { icon: "🔍", label: "Claridad" },
-  { icon: "⚡", label: "Regulación interna" },
-  { icon: "🪞", label: "Autoconocimiento" },
-  { icon: "✨", label: "Conexión espiritual" },
-  { icon: "🌿", label: "Coherencia con tu esencia" },
+  { icon: <Search className="w-4 h-4 text-primary" />, label: "Claridad" },
+  { icon: <Zap className="w-4 h-4 text-primary" />, label: "Regulación interna" },
+  { icon: <Sun className="w-4 h-4 text-primary" />, label: "Autoconocimiento" },
+  { icon: <Sparkles className="w-4 h-4 text-primary" />, label: "Conexión espiritual" },
+  { icon: <Leaf className="w-4 h-4 text-primary" />, label: "Coherencia con tu esencia" },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -102,7 +103,7 @@ const AcompanamientoIndividual = () => {
       <FloatingCTA
         formAnchor="#individual-contacto"
         ctaText="Quiero mi sesión 1:1"
-        subText="🌿 Proceso personalizado · 100% Virtual"
+        subText={<><Leaf className="w-3.5 h-3.5 inline-block mr-1 text-primary" /> Proceso personalizado · 100% Virtual</>}
       />
 
       {/* ── HEADER ── */}
@@ -123,8 +124,8 @@ const AcompanamientoIndividual = () => {
             variants={fadeUp}
             className="max-w-3xl mx-auto text-center space-y-8 relative z-10"
           >
-            <span className={`inline-block px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              🌿 Sesiones 1 a 1 · 100% Virtual
+            <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
+              <Leaf className="w-4 h-4 text-primary" /> Sesiones 1 a 1 · 100% Virtual
             </span>
 
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
@@ -154,7 +155,7 @@ const AcompanamientoIndividual = () => {
               }}
               className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              Quiero saber más 🌿
+              Quiero saber más <Leaf className="w-4 h-4 text-primary-foreground ml-1" />
             </a>
           </motion.div>
         </section>
@@ -169,7 +170,7 @@ const AcompanamientoIndividual = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">💙</span>
+              <HeartHandshake className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Deseas un proceso personalizado?
               </h2>
@@ -200,7 +201,7 @@ const AcompanamientoIndividual = () => {
               variants={fadeUp}
               className="text-center space-y-3"
             >
-              <span className="text-4xl">🛠️</span>
+              <Settings className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Qué ofrecemos?
               </h2>
@@ -223,7 +224,7 @@ const AcompanamientoIndividual = () => {
                     {/* Icon + title */}
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-white/70 border border-white/80 flex items-center justify-center text-2xl shadow-sm shrink-0">
-                        {svc.emoji}
+                        {svc.icon}
                       </div>
                       <h3 className="font-serif text-lg font-semibold text-foreground leading-snug pt-1">
                         {svc.title}
@@ -260,7 +261,7 @@ const AcompanamientoIndividual = () => {
             className="max-w-3xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🧭</span>
+              <Compass className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Para quién es este espacio?
               </h2>
@@ -279,7 +280,7 @@ const AcompanamientoIndividual = () => {
                   variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0, transition: { duration: 0.45, delay: idx * 0.08 } } }}
                   className="flex items-start gap-4 bg-card border border-border/40 rounded-2xl px-6 py-5 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
                 >
-                  <span className="text-2xl shrink-0 mt-0.5">{icon}</span>
+                  <div className="shrink-0 mt-0.5">{icon}</div>
                   <p className="text-sm text-muted-foreground font-light leading-relaxed">{text}</p>
                 </motion.div>
               ))}
@@ -297,7 +298,7 @@ const AcompanamientoIndividual = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">✦</span>
+              <Sparkles className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Cómo funciona?
               </h2>
@@ -310,19 +311,19 @@ const AcompanamientoIndividual = () => {
               {[
                 {
                   step: "1",
-                  icon: "💬",
+                  icon: <MessageCircle className="w-8 h-8 text-primary mx-auto mb-2" />,
                   title: "Conversación inicial",
                   desc: "Nos conocemos, comprendes el espacio y evaluamos juntos qué proceso se adapta mejor a tu momento.",
                 },
                 {
                   step: "2",
-                  icon: "🗺️",
+                  icon: <Map className="w-8 h-8 text-primary mx-auto mb-2" />,
                   title: "Diseño personalizado",
                   desc: "Adaptamos el formato, la frecuencia y la intención de cada sesión a tu historia y objetivos.",
                 },
                 {
                   step: "3",
-                  icon: "🌿",
+                  icon: <Leaf className="w-8 h-8 text-primary mx-auto mb-2" />,
                   title: "Acompañamiento continuo",
                   desc: "Sesiones 1:1 con seguimiento, recursos entre encuentros y ajustes según tu proceso.",
                 },
@@ -332,7 +333,7 @@ const AcompanamientoIndividual = () => {
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${palette.primary}`}>
                       {step}
                     </div>
-                    <span className="text-3xl">{icon}</span>
+                    {icon}
                   </div>
                   <div className="space-y-2">
                     <p className="font-serif text-base font-semibold text-foreground">{title}</p>
@@ -345,13 +346,13 @@ const AcompanamientoIndividual = () => {
             {/* Key info row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { icon: "📱", label: "Modalidad", value: "100% Virtual" },
-                { icon: "🕐", label: "Duración", value: "Por sesión acordada" },
-                { icon: "🗓️", label: "Frecuencia", value: "Adaptable a ti" },
-                { icon: "👥", label: "Formato", value: "1 a 1 exclusivo" },
+                { icon: <Smartphone className="w-6 h-6 text-primary mx-auto mb-1" />, label: "Modalidad", value: "100% Virtual" },
+                { icon: <Clock className="w-6 h-6 text-primary mx-auto mb-1" />, label: "Duración", value: "Por sesión acordada" },
+                { icon: <Calendar className="w-6 h-6 text-primary mx-auto mb-1" />, label: "Frecuencia", value: "Adaptable a ti" },
+                { icon: <Users className="w-6 h-6 text-primary mx-auto mb-1" />, label: "Formato", value: "1 a 1 exclusivo" },
               ].map(({ icon, label, value }) => (
                 <div key={label} className="bg-card border border-border/50 rounded-2xl p-4 text-center space-y-1">
-                  <span className="text-xl">{icon}</span>
+                  {icon}
                   <p className="text-[10px] text-muted-foreground font-light">{label}</p>
                   <p className="text-xs font-semibold text-foreground">{value}</p>
                 </div>
@@ -370,7 +371,7 @@ const AcompanamientoIndividual = () => {
             className="max-w-3xl mx-auto text-center space-y-8"
           >
             <div className="space-y-3">
-              <span className="text-5xl">🌿</span>
+              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Reserva tu sesión
               </h2>
@@ -385,7 +386,7 @@ const AcompanamientoIndividual = () => {
               rel="noopener noreferrer"
               className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              💬 Escribirme por WhatsApp
+              <MessageCircle className="w-5 h-5" /> Escribirme por WhatsApp
             </a>
 
             <p className="text-xs text-muted-foreground">
@@ -413,13 +414,13 @@ const AcompanamientoIndividual = () => {
                   to="/curso-iniciacion-yoga"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors bg-card border border-border/40 px-5 py-3 rounded-full hover:border-primary/30"
                 >
-                  🌙 Curso de Iniciación al Yoga
+                  <Moon className="w-4 h-4" /> Curso de Iniciación al Yoga
                 </Link>
                 <Link
                   to="/santosha-somatico"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors bg-card border border-border/40 px-5 py-3 rounded-full hover:border-primary/30"
                 >
-                  🛡️ Santosha Somático®
+                  <ShieldCheck className="w-4 h-4" /> Santosha Somático®
                 </Link>
               </div>
             </div>
@@ -443,7 +444,7 @@ const AcompanamientoIndividual = () => {
             <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</Link>
             <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
             <Link to="/santosha-somatico" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Santosha Somático®</Link>
-            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">🔑 Admin</Link>
+            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors flex items-center gap-1"><Settings className="w-3 h-3" /> Admin</Link>
           </div>
         </div>
       </footer>

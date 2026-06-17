@@ -1,11 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Flame } from "lucide-react";
 
 interface FloatingCTAProps {
   formAnchor?: string; // e.g. "#form-home-hero"
-  ctaText?: string;
-  subText?: string;
+  ctaText?: React.ReactNode;
+  subText?: React.ReactNode;
 }
 
 /**
@@ -16,7 +17,7 @@ interface FloatingCTAProps {
 const FloatingCTA = ({
   formAnchor = "#form-home-hero",
   ctaText = "Accede a tu Clase Gratuita",
-  subText = "🔥 +247 personas se registraron esta semana",
+  subText = <><Flame className="w-3.5 h-3.5 inline-block mr-1 text-orange-500" /> +247 personas se registraron esta semana</>,
 }: FloatingCTAProps) => {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);

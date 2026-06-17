@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Leaf, Settings, Sparkles, Clock, User, Lock, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   CmsPage, 
@@ -241,7 +242,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
   if (error || !page || !settings) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4 text-center">
-        <span className="text-5xl mb-6">🍃</span>
+        <Leaf className="w-12 h-12 mb-6 text-muted-foreground" />
         <h1 className="font-serif text-3xl font-semibold mb-3">Página no encontrada</h1>
         <p className="text-muted-foreground max-w-md mb-8 font-light">
           Lo sentimos, la página que buscas no existe o no se encuentra publicada actualmente en nuestro espacio de calma.
@@ -273,7 +274,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
         <div className="fixed bottom-6 right-6 z-50">
           <Link to="/admin">
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg rounded-full px-5 py-6 gap-2 flex items-center font-medium">
-              ⚙️ Editar esta página
+              <Settings className="w-4 h-4" /> Editar esta página
             </Button>
           </Link>
         </div>
@@ -316,8 +317,8 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                         className="lg:col-span-7 text-center lg:text-left space-y-6"
                       >
                         {section.content.tagline && (
-                          <span className={`inline-block px-5 py-2 text-xs font-semibold tracking-wider uppercase text-primary border border-primary/20 rounded-full ${palette.secondaryText} ${palette.secondary}`}>
-                            ✨ {section.content.tagline}
+                          <span className={`inline-flex items-center px-5 py-2 text-xs font-semibold tracking-wider uppercase text-primary border border-primary/20 rounded-full ${palette.secondaryText} ${palette.secondary}`}>
+                            <Sparkles className="w-3.5 h-3.5 mr-1" /> {section.content.tagline}
                           </span>
                         )}
                         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
@@ -367,7 +368,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                             </span>
                           </p>
                           <p className="text-[11px] text-muted-foreground/70">
-                            ⏳ Cupos disponibles solo por tiempo limitado
+                            <Clock className="w-3.5 h-3.5 inline mr-1" /> Cupos disponibles solo por tiempo limitado
                           </p>
                         </motion.div>
                       </motion.div>
@@ -436,7 +437,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                     >
                       {section.content.imageUrl ? (
                         <div className="p-2 bg-card border border-border/60 rounded-[2.5rem] shadow-md hover:scale-[1.01] transition-transform duration-500 relative">
-                          <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs">🌿</div>
+                          <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-xs"><Leaf className="w-4 h-4 text-primary" /></div>
                           <div className="rounded-[2.2rem] overflow-hidden aspect-[4/3] md:aspect-square bg-muted">
                             <img 
                               src={section.content.imageUrl} 
@@ -447,7 +448,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                         </div>
                       ) : (
                         <div className="aspect-[4/3] rounded-[2.5rem] bg-muted border border-border/30 flex items-center justify-center text-4xl shadow-inner">
-                          🧘
+                          <User className="w-12 h-12 text-muted-foreground" />
                         </div>
                       )}
                     </motion.div>
@@ -510,7 +511,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
                           <div className="flex-1 space-y-2">
                             <h3 className="font-serif text-xl font-bold text-foreground flex items-center gap-3">
                               <span className="text-primary text-sm bg-primary/5 border border-primary/10 w-9 h-9 rounded-xl flex items-center justify-center">
-                                {item.icon && !["✨", "🌿"].includes(item.icon) ? item.icon : "🍃"}
+                                {item.icon && !["✨", "🌿"].includes(item.icon) ? item.icon : <Leaf className="w-4 h-4" />}
                               </span>
                               {item.title}
                             </h3>
@@ -856,8 +857,8 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
           <p className="font-serif font-semibold text-foreground">{settings.brandName}</p>
           <p className="font-light">{settings.footerText}</p>
           <div className="pt-4 flex justify-center gap-6">
-            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">
-              🔑 Acceso Administrador
+            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors inline-flex items-center">
+              <Lock className="w-3.5 h-3.5 mr-1" /> Acceso Administrador
             </Link>
           </div>
         </div>

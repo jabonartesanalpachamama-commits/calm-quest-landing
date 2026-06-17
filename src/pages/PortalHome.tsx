@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { Moon, ShieldCheck, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -15,7 +16,7 @@ import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const PROGRAMS = [
   {
-    emoji: "🌙",
+    icon: <Moon className="w-6 h-6 text-amber-700" />,
     title: "Curso de Iniciación al Yoga",
     subtitle: "Habitar el yoga como una práctica del día a día",
     desc: "Un viaje de un año dividido en 6 módulos, para integrar el yoga, la meditación y la conciencia en tu vida cotidiana.",
@@ -26,7 +27,7 @@ const PROGRAMS = [
     accentColor: "text-amber-700",
   },
   {
-    emoji: "🛡️",
+    icon: <ShieldCheck className="w-6 h-6 text-violet-700" />,
     title: "Santosha Somático®",
     subtitle: "Del Sobrevivir al Habitar",
     desc: "Es ideal para procesos de integración emocional profunda, regulación del sistema nervioso, gestión y comprensión de traumas a través de Yogaterapia, Kundalini Yoga, y Conciencia corporal.",
@@ -37,7 +38,7 @@ const PROGRAMS = [
     accentColor: "text-violet-700",
   },
   {
-    emoji: "🌸",
+    icon: <Flower2 className="w-6 h-6 text-rose-700" />,
     title: "Sabiduría Cíclica, Esencia Femenina",
     subtitle: "Reconecta con tu naturaleza. Habita tu poder. Recuerda tu ritmo.",
     desc: "Experiencia grupal de reconexión profunda para mujeres que desean comprender su naturaleza cíclica, transformar su relación con la menstruación e intuición.",
@@ -48,7 +49,7 @@ const PROGRAMS = [
     accentColor: "text-rose-700",
   },
   {
-    emoji: "🌿",
+    icon: <Leaf className="w-6 h-6 text-teal-700" />,
     title: "Acompañamiento Individual 1:1",
     subtitle: "YogaTerapia, Kundalini Yoga y Meditación",
     desc: "Clases privadas y programas adaptados a tu momento vital, tu historia y tu camino personal. Es un espacio diseñado para cultivar claridad y regulación interna.",
@@ -62,12 +63,12 @@ const PROGRAMS = [
 
 const PHILOSOPHY_PILLARS = [
   {
-    icon: "🪞",
+    icon: <Info className="w-8 h-8 text-primary" />,
     title: "¿Qué es Santosha?",
     text: "Santosha es un Niyama sánscrito que habla de contentamiento. Para mí, va más allá de conformarse: es cultivar una presencia profunda, calma consciente y equilibrio tanto en la expansión como en la incertidumbre.",
   },
   {
-    icon: "🌿",
+    icon: <Leaf className="w-8 h-8 text-primary" />,
     title: "Salir del Modo Supervivencia",
     text: "Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Santosha propone restaurar el sistema nervioso para volver a habitar el presente.",
   },
@@ -141,8 +142,8 @@ const PortalHome = () => {
             variants={fadeUp}
             className="max-w-4xl mx-auto space-y-8 relative z-10"
           >
-            <span className={`inline-block px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              🌿 Conciencia · Calma · Transformación humana
+            <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
+              <Leaf className="w-4 h-4" /> Conciencia · Calma · Transformación humana
             </span>
 
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
@@ -169,7 +170,7 @@ const PortalHome = () => {
                 to="/clase-gratuita"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
               >
-                Acceder a Clase Gratuita 🎁
+                <Gift className="w-5 h-5" /> Acceder a Clase Gratuita
               </Link>
             </div>
           </motion.div>
@@ -193,7 +194,7 @@ const PortalHome = () => {
               to="/clase-gratuita"
               className={`shrink-0 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              Comenzar Clase Maestra 🧘
+              <PlayCircle className="w-5 h-5" /> Comenzar Clase Maestra
             </Link>
           </div>
         </section>
@@ -226,8 +227,8 @@ const PortalHome = () => {
                   <div className="p-7 space-y-5">
                     {/* Header: emoji + title */}
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-white/80 border border-white flex items-center justify-center text-2xl shadow-sm shrink-0">
-                        {prog.emoji}
+                      <div className="w-12 h-12 rounded-2xl bg-white/80 border border-white flex items-center justify-center shadow-sm shrink-0">
+                        {prog.icon}
                       </div>
                       <div className="space-y-0.5">
                         <h3 className="font-serif text-lg font-bold text-foreground leading-snug">
@@ -272,11 +273,16 @@ const PortalHome = () => {
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3rem] bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border/50 shadow-md flex items-center justify-center text-7xl">
-                  🙏
+                {/* Image Placeholder Block for the Yoga Teacher */}
+                <div className="w-64 h-64 md:w-80 md:h-80 rounded-t-full rounded-b-3xl bg-muted border border-border/50 shadow-md overflow-hidden relative">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground/50">
+                    <Leaf className="w-12 h-12 mb-2" />
+                    <span className="text-xs uppercase tracking-widest font-semibold">[Fotografía Profesora]</span>
+                  </div>
+                  {/* <img src="/placeholder-teacher.jpg" alt="Sury González" className="w-full h-full object-cover" /> */}
                 </div>
-                <div className={`absolute -bottom-4 -right-4 px-4 py-2 rounded-full text-xs font-semibold shadow-md bg-white text-foreground border border-border/40`}>
-                  Sury González 🌿
+                <div className={`absolute -bottom-4 -right-4 px-5 py-2 rounded-full text-sm font-semibold shadow-md bg-white text-foreground border border-border/40 flex items-center gap-2`}>
+                  Sury González <Leaf className="w-4 h-4 text-primary" />
                 </div>
               </div>
             </div>
@@ -327,7 +333,7 @@ const PortalHome = () => {
             <div className="grid md:grid-cols-2 gap-8">
               {PHILOSOPHY_PILLARS.map((pillar) => (
                 <div key={pillar.title} className="bg-card border border-border/50 rounded-3xl p-8 space-y-4 hover:border-primary/20 transition-all duration-300">
-                  <span className="text-4xl block">{pillar.icon}</span>
+                  <span className="block mb-2">{pillar.icon}</span>
                   <h3 className="font-serif text-lg font-semibold text-foreground">{pillar.title}</h3>
                   <p className="text-sm text-muted-foreground font-light leading-relaxed">{pillar.text}</p>
                 </div>
@@ -403,7 +409,7 @@ const PortalHome = () => {
                 to="/clase-gratuita"
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
-                🎁 Acceder a la Clase Gratis
+                <Gift className="w-5 h-5" /> Acceder a la Clase Gratis
               </Link>
               <a
                 href="https://wa.link/1yymd8"
@@ -411,7 +417,7 @@ const PortalHome = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold bg-white text-foreground border border-border/40 hover:bg-neutral-50 transition-all duration-300 shadow-sm"
               >
-                💬 Escribir por WhatsApp
+                <MessageCircle className="w-5 h-5" /> Escribir por WhatsApp
               </a>
             </div>
 

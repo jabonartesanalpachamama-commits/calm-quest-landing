@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, MessageCircle, Minimize2, Bot } from "lucide-react";
+import { X, Send, MessageCircle, Minimize2, Bot, CheckCircle, Leaf } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AiAgentConfig, getLocalAgentConfig } from "@/lib/CmsFallbackData";
 import { createGeminiChat, extractLeadFromText, ChatMessage } from "@/lib/geminiChat";
@@ -305,7 +305,7 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
                     className="overflow-hidden"
                   >
                     <div className="px-4 py-2 bg-emerald-50 border-t border-emerald-100 text-[11px] text-emerald-700 flex items-center gap-1.5">
-                      <span>✅</span>
+                      <CheckCircle className="w-4 h-4" />
                       <span>¡Gracias, {capturedLead.name}! Guardando tu información...</span>
                     </div>
                   </motion.div>
@@ -318,7 +318,7 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
                     className="overflow-hidden"
                   >
                     <div className="px-4 py-2 bg-emerald-50 border-t border-emerald-100 text-[11px] text-emerald-700 flex items-center gap-1.5">
-                      <span>🌿</span>
+                      <Leaf className="w-4 h-4" />
                       <span>Tus datos se han guardado. El equipo te contactará pronto.</span>
                     </div>
                   </motion.div>
@@ -410,9 +410,9 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 10 }}
             transition={{ delay: 3, duration: 0.4 }}
-            className="fixed bottom-[5.5rem] right-[5rem] z-50 bg-white shadow-lg rounded-2xl px-4 py-2 text-xs text-[#2C3E2B] font-medium border border-[#EBE7DF] whitespace-nowrap"
+            className="fixed bottom-[5.5rem] right-[5rem] z-50 bg-white shadow-lg rounded-2xl px-4 py-2 text-xs text-[#2C3E2B] font-medium border border-[#EBE7DF] whitespace-nowrap flex items-center gap-1"
           >
-            💬 ¿Tienes dudas? ¡Pregúntame!
+            <MessageCircle className="w-4 h-4" /> ¿Tienes dudas? ¡Pregúntame!
             <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0"
               style={{ borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "6px solid white" }}
             />

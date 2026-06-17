@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { Sun, Wrench, Zap, Brain, Leaf, Feather, FileText, Headphones, Flame, Book, Users, Sparkles, HandHeart, Search, Smile, Wind, MessageCircle, Home, BookOpen, Calendar, MonitorPlay, Moon } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -20,7 +21,7 @@ const MODULES = [
     num: "01",
     title: "Fundamentos y Despertar de la Conciencia",
     theme: "¿Qué es Kundalini Yoga y por qué emerge con fuerza en esta era?",
-    emoji: "🌅",
+    icon: <Sun className="w-8 h-8 text-amber-700" />,
     color: "from-amber-50 to-orange-50",
     borderColor: "border-amber-200",
     accentColor: "text-amber-700",
@@ -30,7 +31,7 @@ const MODULES = [
     num: "02",
     title: "Las Herramientas del Kundalini Yoga",
     theme: "Cómo funciona el yoga y por qué transforma nuestra vida.",
-    emoji: "🛠️",
+    icon: <Wrench className="w-8 h-8 text-green-700" />,
     color: "from-green-50 to-emerald-50",
     borderColor: "border-green-200",
     accentColor: "text-green-700",
@@ -40,7 +41,7 @@ const MODULES = [
     num: "03",
     title: "Anatomía Yóguica y Desarrollo Humano",
     theme: "Comprender la arquitectura energética del ser humano.",
-    emoji: "⚡",
+    icon: <Zap className="w-8 h-8 text-violet-700" />,
     color: "from-violet-50 to-purple-50",
     borderColor: "border-violet-200",
     accentColor: "text-violet-700",
@@ -50,7 +51,7 @@ const MODULES = [
     num: "04",
     title: "La Mente, las Emociones y la Transformación Interna",
     theme: "El yoga como tecnología para relacionarnos diferente con la mente.",
-    emoji: "🧠",
+    icon: <Brain className="w-8 h-8 text-blue-700" />,
     color: "from-blue-50 to-cyan-50",
     borderColor: "border-blue-200",
     accentColor: "text-blue-700",
@@ -60,7 +61,7 @@ const MODULES = [
     num: "05",
     title: "Relaciones, Propósito y Estilo de Vida Consciente",
     theme: "Llevar el yoga fuera del mat.",
-    emoji: "🌿",
+    icon: <Leaf className="w-8 h-8 text-rose-700" />,
     color: "from-rose-50 to-pink-50",
     borderColor: "border-rose-200",
     accentColor: "text-rose-700",
@@ -70,7 +71,7 @@ const MODULES = [
     num: "06",
     title: "Integración, Liderazgo Interior y Camino Espiritual",
     theme: "Habitar el Yoga como una práctica del día a día.",
-    emoji: "🕊️",
+    icon: <Feather className="w-8 h-8 text-teal-700" />,
     color: "from-teal-50 to-cyan-50",
     borderColor: "border-teal-200",
     accentColor: "text-teal-700",
@@ -79,11 +80,11 @@ const MODULES = [
 ];
 
 const BETWEEN_MODULES = [
-  { icon: "📄", label: "PDF de apoyo temático" },
-  { icon: "🎧", label: "Audio de meditación o pranayama" },
-  { icon: "🔥", label: "Práctica de 21 o 40 días" },
-  { icon: "📓", label: "Bitácora de integración personal" },
-  { icon: "🤝", label: "Grupo de acompañamiento (opcional)" },
+  { icon: <FileText className="w-8 h-8 text-primary" />, label: "PDF de apoyo temático" },
+  { icon: <Headphones className="w-8 h-8 text-primary" />, label: "Audio de meditación o pranayama" },
+  { icon: <Flame className="w-8 h-8 text-primary" />, label: "Práctica de 21 o 40 días" },
+  { icon: <Book className="w-8 h-8 text-primary" />, label: "Bitácora de integración personal" },
+  { icon: <Users className="w-8 h-8 text-primary" />, label: "Grupo de acompañamiento (opcional)" },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -144,8 +145,8 @@ const CursoIniciacionYoga = () => {
             variants={fadeUp}
             className="max-w-4xl mx-auto text-center space-y-8 relative z-10"
           >
-            <span className={`inline-block px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              ✨ Curso de Iniciación · 6 Módulos Bimensuales
+            <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
+              <Sparkles className="w-4 h-4" /> Curso de Iniciación · 6 Módulos Bimensuales
             </span>
 
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
@@ -176,7 +177,7 @@ const CursoIniciacionYoga = () => {
               }}
               className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
-              Quiero Inscribirme 🌙
+              Quiero Inscribirme <Moon className="w-4 h-4 ml-1" />
             </a>
           </motion.div>
         </section>
@@ -191,7 +192,7 @@ const CursoIniciacionYoga = () => {
             className="max-w-3xl mx-auto space-y-8"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🙏</span>
+              <HandHeart className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Introducción del Curso
               </h2>
@@ -225,15 +226,15 @@ const CursoIniciacionYoga = () => {
               <h3 className="font-serif text-xl font-semibold text-foreground">Cada encuentro incluirá:</h3>
               <div className="grid sm:grid-cols-2 gap-3">
                 {[
-                  { icon: "📚", text: "Enseñanza teórica" },
-                  { icon: "🧘", text: "Experiencia práctica de Kundalini Yoga" },
-                  { icon: "🌬️", text: "Respiración, kriyas, mantra y meditación" },
-                  { icon: "💭", text: "Espacios de reflexión e integración" },
-                  { icon: "🏠", text: "Práctica sugerida entre módulos" },
-                  { icon: "📖", text: "Material de apoyo y profundización" },
+                  { icon: <Book className="w-6 h-6 text-primary" />, text: "Enseñanza teórica" },
+                  { icon: <Smile className="w-6 h-6 text-primary" />, text: "Experiencia práctica de Kundalini Yoga" },
+                  { icon: <Wind className="w-6 h-6 text-primary" />, text: "Respiración, kriyas, mantra y meditación" },
+                  { icon: <MessageCircle className="w-6 h-6 text-primary" />, text: "Espacios de reflexión e integración" },
+                  { icon: <Home className="w-6 h-6 text-primary" />, text: "Práctica sugerida entre módulos" },
+                  { icon: <BookOpen className="w-6 h-6 text-primary" />, text: "Material de apoyo y profundización" },
                 ].map(({ icon, text }) => (
                   <div key={text} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span className="text-xl shrink-0">{icon}</span>
+                    <span className="shrink-0">{icon}</span>
                     <span>{text}</span>
                   </div>
                 ))}
@@ -294,7 +295,7 @@ const CursoIniciacionYoga = () => {
                     <div className="p-6 flex items-center gap-5">
                       {/* Emoji badge */}
                       <div className="w-12 h-12 rounded-2xl bg-white/70 border border-white/80 flex items-center justify-center text-2xl shadow-sm shrink-0">
-                        {mod.emoji}
+                        {mod.icon}
                       </div>
 
                       {/* Text */}
@@ -332,7 +333,7 @@ const CursoIniciacionYoga = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">✨</span>
+              <Sparkles className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Recursos Entre Módulos
               </h2>
@@ -347,7 +348,7 @@ const CursoIniciacionYoga = () => {
                   key={label}
                   className="flex items-center gap-4 bg-card border border-border/50 rounded-2xl p-5 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
                 >
-                  <span className="text-3xl shrink-0">{icon}</span>
+                  <span className="shrink-0">{icon}</span>
                   <span className="text-sm text-muted-foreground font-light">{label}</span>
                 </div>
               ))}
@@ -374,7 +375,7 @@ const CursoIniciacionYoga = () => {
             className="max-w-4xl mx-auto space-y-10"
           >
             <div className="text-center space-y-3">
-              <span className="text-4xl">🧭</span>
+              <Search className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 ¿Para quién es este curso?
               </h2>
@@ -383,28 +384,28 @@ const CursoIniciacionYoga = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
-                  icon: "🌱",
+                  icon: <Leaf className="w-8 h-8 text-primary" />,
                   title: "Principiantes en el camino",
                   desc: "Si eres nuevo en el yoga y quieres comenzar desde los fundamentos con una guía progresiva y profunda.",
                 },
                 {
-                  icon: "🔥",
+                  icon: <Flame className="w-8 h-8 text-primary" />,
                   title: "Practicantes que desean profundizar",
                   desc: "Si ya tienes experiencia y buscas comprender más a fondo la filosofía, la anatomía yóguica y las herramientas del Kundalini Yoga.",
                 },
                 {
-                  icon: "💆",
+                  icon: <Smile className="w-8 h-8 text-primary" />,
                   title: "Personas en búsqueda de bienestar",
                   desc: "Si atraviesas estrés, ansiedad, desconexión o una búsqueda de sentido y quieres herramientas reales de transformación.",
                 },
                 {
-                  icon: "🌀",
+                  icon: <Wind className="w-8 h-8 text-primary" />,
                   title: "Buscadores espirituales",
                   desc: "Si sientes el llamado a explorar el desarrollo espiritual con disciplina, apertura y desde una tradición probada.",
                 },
               ].map(({ icon, title, desc }) => (
                 <div key={title} className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300">
-                  <span className="text-3xl shrink-0">{icon}</span>
+                  <span className="shrink-0">{icon}</span>
                   <div className="space-y-1">
                     <h3 className="font-semibold text-foreground">{title}</h3>
                     <p className="text-sm text-muted-foreground font-light leading-relaxed">{desc}</p>
@@ -425,7 +426,7 @@ const CursoIniciacionYoga = () => {
             className="max-w-3xl mx-auto text-center space-y-8"
           >
             <div className="space-y-3">
-              <span className="text-5xl">🌙</span>
+              <Moon className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
                 Comienza tu viaje anual de transformación
               </h2>
@@ -437,12 +438,12 @@ const CursoIniciacionYoga = () => {
             {/* Key info cards */}
             <div className="grid sm:grid-cols-3 gap-4">
               {[
-                { icon: "📅", label: "Modalidad", value: "100% Virtual" },
-                { icon: "🗓️", label: "Duración", value: "1 año · Bimensual" },
-                { icon: "👥", label: "Grupo", value: "Cupos limitados" },
+                { icon: <MonitorPlay className="w-8 h-8 text-primary mx-auto" />, label: "Modalidad", value: "100% Virtual" },
+                { icon: <Calendar className="w-8 h-8 text-primary mx-auto" />, label: "Duración", value: "1 año · Bimensual" },
+                { icon: <Users className="w-8 h-8 text-primary mx-auto" />, label: "Grupo", value: "Cupos limitados" },
               ].map(({ icon, label, value }) => (
-                <div key={label} className="bg-card border border-border/50 rounded-2xl p-5 text-center space-y-1">
-                  <span className="text-2xl">{icon}</span>
+                <div key={label} className="bg-card border border-border/50 rounded-2xl p-5 text-center space-y-2">
+                  {icon}
                   <p className="text-xs text-muted-foreground font-light">{label}</p>
                   <p className="text-sm font-semibold text-foreground">{value}</p>
                 </div>
@@ -456,7 +457,7 @@ const CursoIniciacionYoga = () => {
                 rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
-                💬 Inscribirme por WhatsApp
+                <MessageCircle className="w-5 h-5" /> Inscribirme por WhatsApp
               </a>
 
               <p className="text-xs text-muted-foreground">

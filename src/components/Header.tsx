@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Gift, Menu, X } from "lucide-react";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 interface HeaderProps {
@@ -9,6 +11,9 @@ interface HeaderProps {
 const Header = ({ palette, brandName }: HeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleProgramasClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -21,6 +26,11 @@ const Header = ({ palette, brandName }: HeaderProps) => {
         document.querySelector("#programas")?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 300);
     }
+    setIsMenuOpen(false);
+  };
+
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -49,13 +59,45 @@ const Header = ({ palette, brandName }: HeaderProps) => {
           </a>
           <Link to="/blog" className="hover:text-primary transition-colors">Blog</Link>
         </nav>
-        <Link
-          to="/clase-gratuita"
-          className={`inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${palette.primary}`}
-        >
-          🎁 Clase Gratis
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/clase-gratuita"
+            className={`hidden md:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${palette.primary}`}
+          >
+            <Gift className="w-4 h-4" /> Clase Gratis
+          </Link>
+          <button 
+            className="md:hidden p-2 text-foreground/80 hover:text-foreground"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-background border-b border-border/40 shadow-lg py-4 px-6 flex flex-col gap-4">
+          <Link to="/quien-soy" onClick={handleLinkClick} className="text-foreground hover:text-primary font-medium py-2 border-b border-border/10">Quién Soy</Link>
+          <Link to="/filosofia" onClick={handleLinkClick} className="text-foreground hover:text-primary font-medium py-2 border-b border-border/10">Filosofía</Link>
+          <a
+            href="/#programas"
+            onClick={handleProgramasClick}
+            className="text-foreground hover:text-primary font-medium py-2 border-b border-border/10"
+          >
+            Programas
+          </a>
+          <Link to="/blog" onClick={handleLinkClick} className="text-foreground hover:text-primary font-medium py-2 border-b border-border/10">Blog</Link>
+          <Link
+            to="/clase-gratuita"
+            onClick={handleLinkClick}
+            className={`inline-flex items-center justify-center gap-1.5 px-5 py-3 mt-2 rounded-full text-sm font-semibold tracking-wide uppercase ${palette.primary}`}
+          >
+            <Gift className="w-4 h-4" /> Clase Gratis
+          </Link>
+        </div>
+      )}
     </header>
   );
 };

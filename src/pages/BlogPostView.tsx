@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, Clock, Edit } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Edit, BookOpen, Leaf, MessageCircle, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   CmsPost, 
@@ -242,7 +242,7 @@ export const BlogPostView = () => {
   if (error || !post || !settings) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4 text-center">
-        <span className="text-5xl mb-6">📚</span>
+        <BookOpen className="w-12 h-12 mb-6 text-muted-foreground" />
         <h1 className="font-serif text-3xl font-semibold mb-3">Lectura no disponible</h1>
         <p className="text-muted-foreground max-w-md mb-8">
           {error || "El artículo que buscas no existe o está programado para publicarse más adelante."}
@@ -266,7 +266,7 @@ export const BlogPostView = () => {
         <div className="fixed bottom-6 right-6 z-50">
           <Link to="/admin" state={{ tab: "blog", editPostId: post.id }}>
             <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg rounded-full px-5 py-6 gap-2 flex items-center font-medium">
-              <Edit className="w-4 h-4" /> ⚙️ Editar Artículo
+              <Edit className="w-4 h-4" /> Editar Artículo
             </Button>
           </Link>
         </div>
@@ -324,7 +324,7 @@ export const BlogPostView = () => {
         {/* Mindful Call to Action Block */}
         <div className={`p-8 md:p-10 rounded-3xl ${palette.cardBackground} border border-primary/20 text-center space-y-6 shadow-sm relative overflow-hidden`}>
           <div className="absolute inset-0 bg-primary/5 pointer-events-none" />
-          <span className="text-3xl block">🌿</span>
+          <Leaf className="w-8 h-8 text-primary mx-auto mb-4" />
           <h3 className="font-serif text-2xl font-semibold">¿Sientes que es momento de iniciar tu camino?</h3>
           <p className="text-sm md:text-base text-muted-foreground font-light max-w-xl mx-auto leading-relaxed">
             Te ofrecemos un espacio seguro, libre de juicios y compasivo para trabajar en tus emociones y recuperar la armonía. Agenda hoy tu primera consulta de terapia o clase de yoga con nosotros.
@@ -336,7 +336,7 @@ export const BlogPostView = () => {
               rel="noopener noreferrer"
             >
               <Button className={`${palette.primary} rounded-full font-medium px-8 py-5 text-sm`}>
-                💬 Solicitar Información vía WhatsApp
+                <MessageCircle className="w-4 h-4 mr-2" /> Solicitar Información vía WhatsApp
               </Button>
             </a>
           </div>
