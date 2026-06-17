@@ -13,6 +13,7 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
+import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const LEARNING_POINTS = [
@@ -36,6 +37,41 @@ const LEARNING_POINTS = [
     icon: <Flower2 className="w-5 h-5 text-primary" />,
     text: "Habitar tu ciclo como una fuente de poder, creatividad, intuición y sabiduría femenina.",
   },
+];
+
+const CICLICA_TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Lucía F.",
+    role: "Creativa",
+    age: 31,
+    initials: "LF",
+    quote: "Entender mi ciclicidad ha sido un antes y un después. Dejé de pelear con mis bajones de energía y empecé a usarlos a mi favor. Este espacio es medicina pura.",
+    timeframe: "Participante"
+  },
+  {
+    name: "Mariana R.",
+    role: "Terapeuta",
+    age: 38,
+    initials: "MR",
+    quote: "Las prácticas me ayudaron a reconectar con mi cuerpo femenino desde un lugar de profunda aceptación. El círculo de mujeres que se forma es invaluable y sostenedor.",
+    timeframe: "Participante"
+  },
+  {
+    name: "Ana P.",
+    role: "Contadora",
+    age: 27,
+    initials: "AP",
+    quote: "Crecí desconectada de mis propios ritmos. Este programa me enseñó a honrar mis fases y a entender que la productividad lineal no es el único camino.",
+    timeframe: "Participante"
+  },
+  {
+    name: "Camila N.",
+    role: "Artista",
+    age: 35,
+    initials: "CN",
+    quote: "Una experiencia transformadora. La combinación de saberes ancestrales con herramientas prácticas me devolvió el poder sobre mi propia energía vital.",
+    timeframe: "Participante"
+  }
 ];
 
 const SabiduriaCiclica = () => {
@@ -262,6 +298,13 @@ const SabiduriaCiclica = () => {
             </p>
           </motion.div>
         </section>
+
+        {/* ── TESTIMONIOS ── */}
+        <TestimonialsSection 
+          testimonials={CICLICA_TESTIMONIALS} 
+          title={<>Historias de <span className="text-primary">Sabiduría Femenina</span></>}
+          subtitle="Mujeres que han abrazado su ciclicidad y reconectado con su ritmo natural."
+        />
 
         {/* ── CTA FINAL / CONTACTO ── */}
         <section id="ciclica-contacto" className={`py-24 md:py-32 px-6 ${palette.background} border-b border-border/10`}>

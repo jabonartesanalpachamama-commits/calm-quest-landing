@@ -3,7 +3,16 @@ import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 
-const testimonials = [
+export interface Testimonial {
+  name: string;
+  role: string;
+  age?: number;
+  initials: string;
+  quote: string;
+  timeframe?: string;
+}
+
+const defaultTestimonials: Testimonial[] = [
   {
     name: "Patricia Mendoza",
     role: "Directora de Marketing",
@@ -38,7 +47,12 @@ const testimonials = [
   }
 ];
 
-const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimonials[0]; index: number }) => (
+interface TestimonialCardProps {
+  testimonial: Testimonial;
+  index: number;
+}
+
+const TestimonialCard = ({ testimonial, index }: TestimonialCardProps) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -78,7 +92,17 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimoni
   </motion.div>
 );
 
-const TestimonialsSection = () => {
+interface TestimonialsSectionProps {
+  testimonials?: Testimonial[];
+  title?: React.ReactNode;
+  subtitle?: string;
+}
+
+const TestimonialsSection = ({ 
+  testimonials = defaultTestimonials,
+  title = <>Historias de <span className="text-primary">Transformación Real</span></>,
+  subtitle = "Profesionales como tú que han recuperado el equilibrio emocional y transformado su bienestar."
+}: TestimonialsSectionProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -116,10 +140,10 @@ const TestimonialsSection = () => {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold mb-6">
-            Historias de <span className="text-primary">Transformación Real</span>
+            {title}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            Profesionales como tú que han recuperado el equilibrio emocional y transformado su bienestar.
+            {subtitle}
           </p>
         </motion.div>
 

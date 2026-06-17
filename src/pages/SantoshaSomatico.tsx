@@ -13,6 +13,7 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
+import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 // ─── Module data ──────────────────────────────────────────────────────────────
@@ -48,11 +49,46 @@ const MODULES = [
     theme: "Dejar de moverse o actuar desde la simple supervivencia y encontrar la conexión con la autenticidad.",
     goal: '"No se trata solo de sobrevivir. Puedo construir una relación diferente conmigo y con la vida."',
     icon: <Feather className="w-8 h-8 text-teal-700" />,
-    color: "from-teal-50 to-cyan-50",
-    borderColor: "border-teal-200",
-    accentColor: "text-teal-700",
-    badgeColor: "bg-teal-100 text-teal-800",
+    color: "from-blue-50 to-indigo-50",
+    borderColor: "border-blue-200",
+    accentColor: "text-blue-700",
+    badgeColor: "bg-blue-100 text-blue-800",
   },
+];
+
+const SOMATICO_TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Valeria C.",
+    role: "Arquitecta",
+    age: 39,
+    initials: "VC",
+    quote: "Llevaba años acumulando tensión en el cuello y hombros. El enfoque somático me enseñó a soltar patrones que ni siquiera sabía que tenía. Mi cuerpo se siente liviano otra vez.",
+    timeframe: "Participante"
+  },
+  {
+    name: "Andrés M.",
+    role: "Docente",
+    age: 45,
+    initials: "AM",
+    quote: "Fue una revelación entender cómo mis emociones se alojaban en mi postura. Las clases son un espacio seguro para reconectar y escuchar a mi propio cuerpo sin juicios.",
+    timeframe: "Participante"
+  },
+  {
+    name: "Carolina B.",
+    role: "Madre",
+    age: 33,
+    initials: "CB",
+    quote: "Aprender a 'sentir' en lugar de 'hacer' cambió mi perspectiva. Las micro-prácticas somáticas son perfectas para cuando me siento abrumada.",
+    timeframe: "Participante"
+  },
+  {
+    name: "Héctor V.",
+    role: "Ingeniero",
+    age: 50,
+    initials: "HV",
+    quote: "El dolor lumbar crónico me tenía desesperado. Al trabajar con la fascia y el movimiento consciente, he logrado reducir las molestias en un 80%. Es pura consciencia.",
+    timeframe: "Participante"
+  }
 ];
 
 const PILLARS = [
@@ -521,6 +557,13 @@ const SantoshaSomatico = () => {
             </div>
           </motion.div>
         </section>
+
+        {/* ── TESTIMONIOS ── */}
+        <TestimonialsSection 
+          testimonials={SOMATICO_TESTIMONIALS} 
+          title={<>Historias de <span className="text-primary">Conexión Somática</span></>}
+          subtitle="Voces de quienes han redescubierto la sabiduría de su propio cuerpo."
+        />
 
         {/* ── CTA / INSCRIPCIÓN ── */}
         <section id="somatico-inscripcion" className={`py-24 md:py-32 px-6 ${palette.background} border-b border-border/10`}>

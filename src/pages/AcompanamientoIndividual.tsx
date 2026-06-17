@@ -12,6 +12,7 @@ import {
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
+import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
@@ -34,6 +35,41 @@ const SERVICES = [
     borderColor: "border-teal-200",
     accentColor: "text-teal-700",
   },
+];
+
+const INDIVIDUAL_TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Javier S.",
+    role: "Ejecutivo",
+    age: 42,
+    initials: "JS",
+    quote: "El acompañamiento 1:1 de Fransury me permitió trabajar bloqueos muy específicos que en clases grupales no lograba destrabar. Su intuición y precisión son excepcionales.",
+    timeframe: "Cliente"
+  },
+  {
+    name: "Paula D.",
+    role: "Abogada",
+    age: 36,
+    initials: "PD",
+    quote: "Sentía un estancamiento profundo en mi vida. Las sesiones individuales me dieron claridad, enfoque y, sobre todo, herramientas prácticas para recuperar la confianza en mí misma.",
+    timeframe: "Cliente"
+  },
+  {
+    name: "Roberto G.",
+    role: "Médico",
+    age: 48,
+    initials: "RG",
+    quote: "Aprecio enormemente la base fisiológica de su enfoque. El trabajo somático individualizado me ayudó a sanar una vieja lesión integrando cuerpo y emoción de forma magistral.",
+    timeframe: "Cliente"
+  },
+  {
+    name: "Silvia M.",
+    role: "Emprendedora",
+    age: 31,
+    initials: "SM",
+    quote: "Cada sesión es un viaje hacia adentro. En solo tres meses de acompañamiento he logrado más paz mental y resolución emocional que en años de otros procesos.",
+    timeframe: "Cliente"
+  }
 ];
 
 const FOR_WHOM = [
@@ -360,6 +396,13 @@ const AcompanamientoIndividual = () => {
             </div>
           </motion.div>
         </section>
+
+        {/* ── TESTIMONIOS ── */}
+        <TestimonialsSection 
+          testimonials={INDIVIDUAL_TESTIMONIALS} 
+          title={<>Historias de <span className="text-primary">Acompañamiento</span></>}
+          subtitle="Personas que han transformado sus vidas a través del trabajo 1 a 1."
+        />
 
         {/* ── CTA ── */}
         <section id="individual-contacto" className={`py-24 md:py-32 px-6 ${palette.cardBackground} border-b border-border/10`}>

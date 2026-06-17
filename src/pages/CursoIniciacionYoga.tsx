@@ -13,6 +13,7 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
+import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 // ─── Module data ──────────────────────────────────────────────────────────────
@@ -85,6 +86,41 @@ const BETWEEN_MODULES = [
   { icon: <Flame className="w-8 h-8 text-primary" />, label: "Práctica de 21 o 40 días" },
   { icon: <Book className="w-8 h-8 text-primary" />, label: "Bitácora de integración personal" },
   { icon: <Users className="w-8 h-8 text-primary" />, label: "Grupo de acompañamiento (opcional)" },
+];
+
+const CURSO_TESTIMONIALS: Testimonial[] = [
+  {
+    name: "Elena G.",
+    role: "Estudiante",
+    age: 34,
+    initials: "EG",
+    quote: "Nunca había practicado yoga y este curso fue el inicio perfecto. La progresión de los módulos me permitió integrar la filosofía de forma natural en mi vida diaria.",
+    timeframe: "Módulo 4"
+  },
+  {
+    name: "Martín R.",
+    role: "Diseñador",
+    age: 41,
+    initials: "MR",
+    quote: "Buscaba algo más que posturas físicas, buscaba entender el 'por qué'. Este curso me dio las herramientas teóricas y prácticas para conectar con mi respiración y mi centro.",
+    timeframe: "Graduado"
+  },
+  {
+    name: "Sofía T.",
+    role: "Psicóloga",
+    age: 29,
+    initials: "ST",
+    quote: "La estructura bimensual me dio el tiempo exacto para asimilar cada concepto. Mi nivel de estrés ha bajado notablemente y me siento mucho más enfocada.",
+    timeframe: "Graduada"
+  },
+  {
+    name: "Diego L.",
+    role: "Emprendedor",
+    age: 37,
+    initials: "DL",
+    quote: "Pensé que no tendría tiempo, pero los recursos entre módulos fueron clave. Hoy la práctica es mi ancla diaria indispensable.",
+    timeframe: "Módulo 6"
+  }
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -415,6 +451,13 @@ const CursoIniciacionYoga = () => {
             </div>
           </motion.div>
         </section>
+
+        {/* ── TESTIMONIOS ── */}
+        <TestimonialsSection 
+          testimonials={CURSO_TESTIMONIALS} 
+          title={<>Historias de <span className="text-primary">Iniciación</span></>}
+          subtitle="Personas que ya han transformado su relación con el cuerpo y la mente."
+        />
 
         {/* ── CTA / INSCRIPCIÓN ── */}
         <section id="curso-inscripcion" className={`py-24 md:py-32 px-6 ${palette.cardBackground} border-b border-border/10`}>
