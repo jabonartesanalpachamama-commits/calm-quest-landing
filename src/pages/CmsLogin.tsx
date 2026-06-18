@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
 
-type Mode = "signin" | "signup";
+const PLAYFAIR = { fontFamily: "'Playfair Display', Georgia, serif" } as const;
+const LORA = { fontFamily: "'Lora', Georgia, serif" } as const;
 
 export const CmsLogin = () => {
-  const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,68 +32,45 @@ export const CmsLogin = () => {
     check();
   }, [navigate]);
 
-  const finishLogin = async () => {
-    // Ensure the user has a session
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      toast({
-        title: "Confirma tu correo",
-        description: "Revisa tu bandeja de entrada para confirmar la cuenta antes de ingresar.",
-      });
-      return;
-    }
-
-    // Bootstrap: the first registered user becomes the administrator
-    await supabase.rpc("bootstrap_admin");
-
-    const { data: roleRow } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", user.id)
-      .eq("role", "admin")
-      .maybeSingle();
-
-    if (!roleRow) {
-      await supabase.auth.signOut();
-      toast({
-        title: "Acceso no autorizado",
-        description: "Tu cuenta no tiene permisos de administrador. Contacta al equipo de SantoSha.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    toast({
-      title: "¡Bienvenido, equipo de SantoSha!",
-      description: "Has ingresado correctamente al panel de administración.",
-    });
-    navigate("/admin");
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password) return;
     setIsSubmitting(true);
 
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/admin/login` },
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      if (error) throw error;
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("No se pudo iniciar la sesión. Inténtalo de nuevo.");
+
+      const { data: roleRow } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+
+      if (!roleRow) {
+        await supabase.auth.signOut();
+        toast({
+          title: "Acceso no autorizado",
+          description: "Tu cuenta no tiene permisos de administrador. Contacta al equipo de SantoSha.",
+          variant: "destructive",
         });
-        if (error) throw error;
-        await finishLogin();
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password,
-        });
-        if (error) throw error;
-        await finishLogin();
+        return;
       }
+
+      toast({
+        title: "¡Bienvenido, equipo de SantoSha!",
+        description: "Has ingresado correctamente al panel de administración.",
+      });
+      navigate("/admin");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "No se pudo completar la operación.";
+      const message = err instanceof Error ? err.message : "No se pudo iniciar sesión.";
       toast({
         title: "Acceso denegado",
         description: message,
@@ -106,97 +82,124 @@ export const CmsLogin = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#F7F4EF] flex items-center justify-center px-4 py-12">
+    <main className="min-h-screen flex items-center justify-center bg-[#2E1020] p-4 md:p-6">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="w-full max-w-md bg-white border border-[#EBE7DF] rounded-3xl p-8 md:p-10 shadow-[0_10px_30px_-10px_rgba(126,161,114,0.15)]"
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="flex w-full max-w-5xl md:h-[640px] bg-white rounded-3xl overflow-hidden shadow-[0_35px_60px_-15px_rgba(0,0,0,0.6)]"
       >
-        <div className="flex flex-col items-center text-center mb-8">
-          <img
-            src={santoshaLogo}
-            alt="SantoSha Logo"
-            className="h-20 w-auto mb-6 rounded-2xl border border-[#7EA172]/10"
-            onError={(e) => {
-              (e.target as HTMLElement).style.display = "none";
-            }}
-          />
-          <h1 className="font-serif text-3xl font-semibold text-[#2C3E2B] mb-2">
-            CMS SantoSha
-          </h1>
-          <p className="text-[#5C6E5B] text-sm max-w-xs leading-relaxed">
-            {mode === "signin"
-              ? "Panel de control para gestionar páginas, textos, formularios y ver los pacientes registrados."
-              : "Crea tu cuenta de administrador. La primera cuenta registrada obtiene acceso completo."}
-          </p>
+        {/* Brand Visual Panel */}
+        <div className="hidden md:flex w-1/2 bg-[#2E1020] flex-col justify-between p-16 relative overflow-hidden">
+          <div className="absolute top-[-10%] left-[-10%] w-64 h-64 rounded-full bg-[#A64179] opacity-10 blur-3xl" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-80 h-80 rounded-full bg-[#E9C9DA] opacity-5 blur-3xl" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="relative z-10"
+          >
+            <h1 style={PLAYFAIR} className="text-5xl text-white font-medium tracking-tight">
+              Santo<span className="italic text-[#A64179]">Sha</span>
+            </h1>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative z-10"
+          >
+            <div className="w-12 h-1 bg-[#A64179] mb-6" />
+            <p style={LORA} className="text-[#E9C9DA] text-xl leading-relaxed max-w-xs font-light">
+              Administración unificada para tu santuario de bienestar.
+            </p>
+          </motion.div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-[#2C3E2B]">
-              Correo electrónico
-            </label>
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              placeholder="tucorreo@santosha.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="h-12 bg-[#FBFBFA] border-[#EBE7DF] focus:border-[#7EA172] text-[#2C3E2B] transition-colors focus-visible:ring-1 focus-visible:ring-[#7EA172]"
-              autoFocus
-            />
+        {/* Login Form Panel */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center p-8 sm:p-12 md:p-16 bg-[#FCF7F9]">
+          <div className="max-w-sm w-full mx-auto">
+            <header className="mb-10 text-center md:text-left">
+              <h2 style={PLAYFAIR} className="text-3xl text-[#2E1020] font-bold mb-2">
+                Panel de administración
+              </h2>
+              <p style={LORA} className="text-[#2E1020]/60 text-sm">
+                Acceso seguro al panel de SantoSha.
+              </p>
+            </header>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label
+                  htmlFor="email"
+                  style={LORA}
+                  className="block text-xs uppercase tracking-widest font-bold text-[#2E1020]/80"
+                >
+                  Correo electrónico
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="admin@santosha.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={LORA}
+                  className="h-auto w-full px-4 py-4 rounded-xl border-[#E9C9DA] bg-white text-[#2E1020] placeholder:text-[#2E1020]/30 transition-all focus-visible:ring-2 focus-visible:ring-[#A64179] focus-visible:border-transparent"
+                  autoFocus
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="password"
+                  style={LORA}
+                  className="block text-xs uppercase tracking-widest font-bold text-[#2E1020]/80"
+                >
+                  Contraseña
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={LORA}
+                  className="h-auto w-full px-4 py-4 rounded-xl border-[#E9C9DA] bg-white text-[#2E1020] placeholder:text-[#2E1020]/30 transition-all focus-visible:ring-2 focus-visible:ring-[#A64179] focus-visible:border-transparent"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                style={LORA}
+                className="w-full h-auto bg-[#A64179] hover:bg-[#8e3767] text-white font-bold py-4 rounded-xl transition-all shadow-xl shadow-[#A64179]/30 active:scale-[0.98] mt-2"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="w-5 h-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Ingresando...
+                  </span>
+                ) : (
+                  "Iniciar sesión"
+                )}
+              </Button>
+            </form>
+
+            <div className="mt-10 pt-6 border-t border-[#E9C9DA]/60 text-center">
+              <p style={LORA} className="text-[#2E1020]/40 text-xs leading-relaxed">
+                Las cuentas se crean únicamente desde el panel interno.
+                <br />
+                ¿Problemas para ingresar? Contacta al desarrollador.
+              </p>
+            </div>
           </div>
-
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-[#2C3E2B]">
-              Contraseña
-            </label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-12 bg-[#FBFBFA] border-[#EBE7DF] focus:border-[#7EA172] text-[#2C3E2B] transition-colors focus-visible:ring-1 focus-visible:ring-[#7EA172]"
-            />
-          </div>
-
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full h-12 bg-[#7EA172] hover:bg-[#6C8E61] text-white font-medium text-md transition-all duration-300 rounded-xl"
-          >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-                Procesando...
-              </span>
-            ) : (
-              mode === "signin" ? "Ingresar al Panel" : "Crear cuenta de administrador"
-            )}
-          </Button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <button
-            type="button"
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="text-sm text-[#7EA172] hover:text-[#6C8E61] font-medium transition-colors"
-          >
-            {mode === "signin"
-              ? "¿Primera vez? Crea tu cuenta de administrador"
-              : "¿Ya tienes cuenta? Inicia sesión"}
-          </button>
-        </div>
-
-        <div className="mt-6 pt-6 border-t border-[#EBE7DF]/60 text-center text-xs text-[#5C6E5B]">
-          ¿Tienes problemas para ingresar? Por favor contacta al desarrollador.
         </div>
       </motion.div>
     </main>
