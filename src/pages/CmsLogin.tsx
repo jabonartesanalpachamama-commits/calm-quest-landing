@@ -1,45 +1,108 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
+type Mode = "signin" | "signup";
+
 export const CmsLogin = () => {
-  const [accessCode, setAccessCode] = useState("");
+  const [mode, setMode] = useState<Mode>("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  // If already signed in as admin, go straight to the panel
+  useEffect(() => {
+    const check = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: roles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      if (roles) navigate("/admin");
+    };
+    check();
+  }, [navigate]);
+
+  const finishLogin = async () => {
+    // Ensure the user has a session
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast({
+        title: "Confirma tu correo",
+        description: "Revisa tu bandeja de entrada para confirmar la cuenta antes de ingresar.",
+      });
+      return;
+    }
+
+    // Bootstrap: the first registered user becomes the administrator
+    await supabase.rpc("bootstrap_admin");
+
+    const { data: roleRow } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (!roleRow) {
+      await supabase.auth.signOut();
+      toast({
+        title: "Acceso no autorizado",
+        description: "Tu cuenta no tiene permisos de administrador. Contacta al equipo de SantoSha.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "¡Bienvenido, equipo de SantoSha!",
+      description: "Has ingresado correctamente al panel de administración.",
+    });
+    navigate("/admin");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim() || !password) return;
     setIsSubmitting(true);
 
-    // Simple, secure, zero-friction access code for the psychology team
-    // Default: santosha2026, or configurable
-    const correctCode = "santosha2026";
-
-    setTimeout(() => {
-      if (accessCode.trim() === correctCode) {
-        localStorage.setItem("sant_cms_logged_in", "true");
-        localStorage.setItem("sant_cms_session_time", new Date().toISOString());
-        
-        toast({
-          title: "¡Bienvenido, equipo de SantoSha!",
-          description: "Has ingresado correctamente al panel de administración.",
+    try {
+      if (mode === "signup") {
+        const { error } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: { emailRedirectTo: `${window.location.origin}/admin/login` },
         });
-        
-        navigate("/admin");
+        if (error) throw error;
+        await finishLogin();
       } else {
-        toast({
-          title: "Acceso denegado",
-          description: "La clave de administrador ingresada es incorrecta.",
-          variant: "destructive",
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
         });
+        if (error) throw error;
+        await finishLogin();
       }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "No se pudo completar la operación.";
+      toast({
+        title: "Acceso denegado",
+        description: message,
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 800);
+    }
   };
 
   return (
@@ -56,7 +119,6 @@ export const CmsLogin = () => {
             alt="SantoSha Logo"
             className="h-20 w-auto mb-6 rounded-2xl border border-[#7EA172]/10"
             onError={(e) => {
-              // Fallback if logo not found
               (e.target as HTMLElement).style.display = "none";
             }}
           />
@@ -64,23 +126,41 @@ export const CmsLogin = () => {
             CMS SantoSha
           </h1>
           <p className="text-[#5C6E5B] text-sm max-w-xs leading-relaxed">
-            Panel de control para gestionar páginas, textos, formularios y ver los pacientes registrados.
+            {mode === "signin"
+              ? "Panel de control para gestionar páginas, textos, formularios y ver los pacientes registrados."
+              : "Crea tu cuenta de administrador. La primera cuenta registrada obtiene acceso completo."}
           </p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label htmlFor="code" className="block text-sm font-medium text-[#2C3E2B]">
-              Clave de Acceso Administrador
+            <label htmlFor="email" className="block text-sm font-medium text-[#2C3E2B]">
+              Correo electrónico
             </label>
             <Input
-              id="code"
-              type="password"
-              placeholder="Ingresa la clave del equipo"
-              value={accessCode}
-              onChange={(e) => setAccessCode(e.target.value)}
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder="tucorreo@santosha.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="h-12 bg-[#FBFBFA] border-[#EBE7DF] focus:border-[#7EA172] text-[#2C3E2B] transition-colors focus-visible:ring-1 focus-visible:ring-[#7EA172]"
               autoFocus
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-sm font-medium text-[#2C3E2B]">
+              Contraseña
+            </label>
+            <Input
+              id="password"
+              type="password"
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="h-12 bg-[#FBFBFA] border-[#EBE7DF] focus:border-[#7EA172] text-[#2C3E2B] transition-colors focus-visible:ring-1 focus-visible:ring-[#7EA172]"
             />
           </div>
 
@@ -95,15 +175,27 @@ export const CmsLogin = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
-                Verificando...
+                Procesando...
               </span>
             ) : (
-              "Ingresar al Panel"
+              mode === "signin" ? "Ingresar al Panel" : "Crear cuenta de administrador"
             )}
           </Button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-[#EBE7DF]/60 text-center text-xs text-[#5C6E5B]">
+        <div className="mt-6 text-center">
+          <button
+            type="button"
+            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+            className="text-sm text-[#7EA172] hover:text-[#6C8E61] font-medium transition-colors"
+          >
+            {mode === "signin"
+              ? "¿Primera vez? Crea tu cuenta de administrador"
+              : "¿Ya tienes cuenta? Inicia sesión"}
+          </button>
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-[#EBE7DF]/60 text-center text-xs text-[#5C6E5B]">
           ¿Tienes problemas para ingresar? Por favor contacta al desarrollador.
         </div>
       </motion.div>
