@@ -102,7 +102,8 @@ Deno.serve(async (req: Request) => {
     if (action === "create") {
       const email = payload.email?.trim();
       const password = payload.password;
-      const role: Role = payload.role === "user" ? "user" : "admin";
+      // The bootstrap path may only ever create an admin.
+      const role: Role = isBootstrap ? "admin" : payload.role === "user" ? "user" : "admin";
 
       if (!email || !password || password.length < 8) {
         return json(
