@@ -13,7 +13,7 @@ import { Lightbulb, MessageCircle, Star, User, Leaf, HeartHandshake } from "luci
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 const FreeClass = () => {
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -32,9 +32,7 @@ const FreeClass = () => {
     loadSettings();
   }, []);
 
-  const palette = settings
-    ? COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta
-    : COLOR_PALETTES.menta;
+  const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
   return (
     <main className={`min-h-screen ${palette.background} ${palette.foreground} flex flex-col items-center px-4 py-8 md:py-12">

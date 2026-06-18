@@ -66,7 +66,7 @@ import { AdminUsersPanel } from "@/components/AdminUsersPanel";
 
 
 export const AdminDashboard = () => {
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const [pages, setPages] = useState<CmsPage[]>([]);
   const [forms, setForms] = useState<CmsForm[]>([]);
   const [submissions, setSubmissions] = useState<CmsSubmission[]>([]);

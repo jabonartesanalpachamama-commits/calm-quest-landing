@@ -19,7 +19,7 @@ import santoshaLogo from "@/assets/santosha-logo.jpg";
 
 export const BlogList = () => {
   const [posts, setPosts] = useState<CmsPost[]>([]);
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -113,7 +113,7 @@ export const BlogList = () => {
     );
   }
 
-  const palette = settings ? (COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta) : COLOR_PALETTES.menta;
+  const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
   return (
     <div className={`min-h-screen flex flex-col ${palette.background} ${palette.foreground} font-${settings?.fontFamily || "serif"}`}>

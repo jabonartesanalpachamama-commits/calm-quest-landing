@@ -109,7 +109,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
   const pageSlug = overrideSlug || (rawSlug && rawSlug !== "" ? rawSlug : "home");
 
   const [page, setPage] = useState<CmsPage | null>(null);
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const [forms, setForms] = useState<CmsForm[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -237,7 +237,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
     );
   }
 
-  const tempPalette = settings ? (COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta) : COLOR_PALETTES.menta;
+  const tempPalette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
   if (error || !page || !settings) {
     return (

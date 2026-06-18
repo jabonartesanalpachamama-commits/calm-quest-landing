@@ -13,7 +13,7 @@ import santoshaLogo from "@/assets/santosha-logo.jpg";
 import { Timer, Lightbulb, MessageCircle, Star, User, Leaf, HeartHandshake } from "lucide-react";
 
 const FreeClassTime = () => {
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -32,9 +32,7 @@ const FreeClassTime = () => {
     loadSettings();
   }, []);
 
-  const palette = settings
-    ? COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta
-    : COLOR_PALETTES.menta;
+  const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
     const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
 

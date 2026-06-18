@@ -125,7 +125,7 @@ const CURSO_TESTIMONIALS: Testimonial[] = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const CursoIniciacionYoga = () => {
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -144,9 +144,7 @@ const CursoIniciacionYoga = () => {
     loadSettings();
   }, []);
 
-  const palette = settings
-    ? COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta
-    : COLOR_PALETTES.menta;
+  const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },

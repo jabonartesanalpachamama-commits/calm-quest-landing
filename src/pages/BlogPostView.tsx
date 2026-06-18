@@ -19,7 +19,7 @@ import santoshaLogo from "@/assets/santosha-logo.jpg";
 export const BlogPostView = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<CmsPost | null>(null);
-  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
