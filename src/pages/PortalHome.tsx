@@ -104,7 +104,7 @@ const PortalHome = () => {
         const { data } = await supabase.from("cms_settings").select("*");
         if (data && data.length > 0) {
           const parsed = data.find((i) => i.key === "visual_identity")?.value;
-          if (parsed) activeSettings = parsed as VisualIdentity;
+          if (parsed) activeSettings = parsed as unknown as VisualIdentity;
         }
       } catch { /* fallback */ }
       applyCssVariablesForPalette(activeSettings.palette);
@@ -120,7 +120,7 @@ const PortalHome = () => {
 
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
   };
 
   return (
