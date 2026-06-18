@@ -103,13 +103,33 @@ export const AdminDashboard = () => {
   const navigate = useNavigate();
 
 
-  // Authentication check
+  // Authentication check: require a signed-in user with the admin role
   useEffect(() => {
-    const loggedIn = localStorage.getItem("sant_cms_logged_in") === "true";
-    if (!loggedIn) {
-      navigate("/admin/login");
-    }
+    const verify = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate("/admin/login");
+        return;
+      }
+      const { data: roleRow } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      if (!roleRow) {
+        await supabase.auth.signOut();
+        navigate("/admin/login");
+      }
+    };
+    verify();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) navigate("/admin/login");
+    });
+    return () => subscription.unsubscribe();
   }, [navigate]);
+
 
   // Load all data
   useEffect(() => {
@@ -248,7 +268,8 @@ export const AdminDashboard = () => {
     }
   }, [location.state, posts]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     localStorage.removeItem("sant_cms_logged_in");
     toast({
       title: "Sesión cerrada",
