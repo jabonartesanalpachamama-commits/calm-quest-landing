@@ -30,7 +30,6 @@ Deno.serve(async (req: Request) => {
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
-    const BOOTSTRAP_SECRET = Deno.env.get("BOOTSTRAP_SECRET");
 
     const service = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 
@@ -39,9 +38,9 @@ Deno.serve(async (req: Request) => {
 
     // ---- Authorization -------------------------------------------------
     // Normal path: caller must be a signed-in admin.
-    // Bootstrap path: a matching x-bootstrap-secret header allows creating
-    // the very first admin (used once to seed the system; never exposed to
-    // the client / login page).
+    // Bootstrap path: when NO admin exists yet, a single "create admin"
+    // request is allowed to seed the system. This auto-closes the moment the
+    // first admin is created, so it is never reachable again.
     let authorized = false;
 
     const authHeader = req.headers.get("Authorization");
@@ -61,11 +60,16 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    const bootstrapHeader = req.headers.get("x-bootstrap-secret");
     let isBootstrap = false;
-    if (!authorized && BOOTSTRAP_SECRET && bootstrapHeader && bootstrapHeader === BOOTSTRAP_SECRET) {
-      authorized = true;
-      isBootstrap = true;
+    if (!authorized && action === "create") {
+      const { count } = await service
+        .from("user_roles")
+        .select("*", { count: "exact", head: true })
+        .eq("role", "admin");
+      if ((count ?? 0) === 0) {
+        authorized = true;
+        isBootstrap = true;
+      }
     }
 
     if (!authorized) {
