@@ -1901,6 +1901,11 @@ export const AdminDashboard = () => {
                 </div>
               </Card>
             </TabsContent>
+
+            {/* TABS CONTENT: USERS */}
+            <TabsContent value="users" className="space-y-4">
+              <AdminUsersPanel />
+            </TabsContent>
           </Tabs>
         )}
 
