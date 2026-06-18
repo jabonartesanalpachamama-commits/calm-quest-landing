@@ -765,7 +765,6 @@ export interface AiAgentConfig {
   welcomeMessage: string;
   systemPrompt: string;
   captureLeadPrompt: string;
-  apiKey: string;
   faqs: Array<{ question: string; answer: string }>;
 }
 
@@ -776,7 +775,6 @@ const DEFAULT_AGENT_CONFIG: AiAgentConfig = {
   welcomeMessage: "Hola \ud83c\udf3f \u00bfEn qu\u00e9 puedo ayudarte hoy?",
   systemPrompt: "Eres un asistente virtual c\u00e1lido y empático de SantoSha, un centro de bienestar y yoga. Tu objetivo es ayudar a los visitantes a resolver sus dudas sobre los servicios, y si muestran inter\u00e9s, invitarlos amablemente a dejar su nombre y WhatsApp para que el equipo les contacte. Habla siempre en espa\u00f1ol con un tono profesional pero cercano.",
   captureLeadPrompt: "Me alegra tu inter\u00e9s \ud83d\ude4f \u00bfMe puedes dejar tu nombre y n\u00famero de WhatsApp para que nuestro equipo te contacte hoy mismo?",
-  apiKey: "",
   faqs: [
     { question: "\u00bfCu\u00e1nto cuesta la clase?", answer: "La primera clase es completamente gratuita. Puedes registrarte en el formulario de esta p\u00e1gina." },
     { question: "\u00bfD\u00f3nde son las clases?", answer: "Tenemos clases presenciales y online. Nuestro equipo te informar\u00e1 de los horarios disponibles al contactarte." },
