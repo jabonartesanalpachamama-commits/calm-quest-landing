@@ -1,10 +1,41 @@
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  VisualIdentity,
+  COLOR_PALETTES,
+  getLocalSettings,
+  applyCssVariablesForPalette,
+  applyFontPair,
+} from "@/lib/CmsFallbackData";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
-import { useState, useEffect } from "react";
 import { Timer, Lightbulb, MessageCircle, Star, User, Leaf, HeartHandshake } from "lucide-react";
 
 const FreeClassTime = () => {
+  const [settings, setSettings] = useState<VisualIdentity | null>(null);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      let activeSettings = getLocalSettings();
+      try {
+        const { data } = await supabase.from("cms_settings").select("*");
+        if (data && data.length > 0) {
+          const parsed = data.find((item) => item.key === "visual_identity")?.value;
+          if (parsed) activeSettings = parsed as VisualIdentity;
+        }
+      } catch { /* use local fallback */ }
+      applyCssVariablesForPalette(activeSettings.palette);
+      applyFontPair(activeSettings.fontFamily);
+      setSettings(activeSettings);
+    };
+    loadSettings();
+  }, []);
+
+  const palette = settings
+    ? COLOR_PALETTES[settings.palette] || COLOR_PALETTES.menta
+    : COLOR_PALETTES.menta;
+
     const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
 
     useEffect(() => {
@@ -21,12 +52,12 @@ const FreeClassTime = () => {
     };
 
     return (
-        <main className="min-h-screen bg-background flex flex-col items-center px-4 py-8 md:py-12">
+        <main className={`min-h-screen ${palette.background} ${palette.foreground} flex flex-col items-center px-4 py-8 md:py-12">
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="flex justify-center mb-8 md:mb-12"
+                className={`flex justify-center mb-8 md:mb-12"
             >
                 <img
                     src={santoshaLogo}
