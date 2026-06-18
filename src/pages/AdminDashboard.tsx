@@ -940,6 +940,12 @@ export const AdminDashboard = () => {
                 >
                   <Settings className="w-3.5 h-3.5 mr-1.5 inline-block" /> Estilo Visual
                 </TabsTrigger>
+                <TabsTrigger 
+                  value="users" 
+                  className="rounded-full px-5 py-2 data-[state=active]:bg-[#7EA172] data-[state=active]:text-white transition-all text-xs font-semibold"
+                >
+                  <Users className="w-3.5 h-3.5 mr-1.5 inline-block" /> Usuarios
+                </TabsTrigger>
               </TabsList>
             </div>
 
