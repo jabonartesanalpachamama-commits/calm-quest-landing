@@ -62,6 +62,8 @@ import {
   Key,
   Save
 } from "lucide-react";
+import { AdminUsersPanel } from "@/components/AdminUsersPanel";
+
 
 export const AdminDashboard = () => {
   const [settings, setSettings] = useState<VisualIdentity | null>(null);
