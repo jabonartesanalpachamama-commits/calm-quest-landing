@@ -39,7 +39,7 @@ export const BlogPostView = () => {
           const { data, error: sErr } = await supabase.from("cms_settings").select("*");
           if (!sErr && data && data.length > 0) {
             const parsed = data.find(item => item.key === "visual_identity")?.value;
-            if (parsed) activeSettings = parsed as VisualIdentity;
+            if (parsed) activeSettings = parsed as unknown as VisualIdentity;
           }
         } catch (e) {
           console.warn("Using offline fallback for CMS settings");
