@@ -294,16 +294,8 @@ const PortalHome = () => {
                 Hola, soy <strong className="text-foreground font-medium">Fransury González (Sury)</strong>. Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
               </p>
               <p className="text-muted-foreground leading-relaxed font-light text-base">
-                Mi propósito es unir la psicología clínica moderna, la regulación del sistema nervioso y la sabiduría espiritual ancestral para ayudarte a sanar experiencias difíciles y habitar tu vida en plenitud.
+                Mi propósito es acompañarte a sanar experiencias difíciles, a transformar el significado de estás y habitar una vida en mayor plenitud, lo haremos a través de la integración del yoga, como medicina ancestral y comprendiendo algunos factores psicológicos, para que puedas aprender cómo regular tu sistema nervioso.
               </p>
-              <div className="pt-2">
-                <Link
-                  to="/quien-soy"
-                  className="inline-flex items-center gap-2 text-sm font-semibold hover:underline text-primary"
-                >
-                  Conocer mi historia y formación completa →
-                </Link>
-              </div>
             </div>
           </div>
         </section>

@@ -592,32 +592,6 @@ const SantoshaSomatico = () => {
               >
                 <MessageCircle className="w-5 h-5" /> Inscribirme por WhatsApp
               </a>
-
-              <p className="text-xs text-muted-foreground">
-                Sin compromiso · Te respondemos con todos los detalles del programa
-              </p>
-
-              {/* Trust badges */}
-              <div className="flex flex-wrap justify-center gap-5 pt-2">
-                {["Cupos limitados", "Enfoque integrativo", "100% Virtual", "Acompañamiento real"].map((badge) => (
-                  <span key={badge} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <svg className="w-3.5 h-3.5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                    {badge}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Cierre poético */}
-            <div className={`mt-6 py-6 px-6 rounded-3xl ${palette.secondary} space-y-1`}>
-              <p className={`font-serif text-base font-light italic ${palette.secondaryText}`}>
-                El trauma puede ser el comienzo de una historia diferente.
-              </p>
-              <p className={`font-serif text-base font-semibold ${palette.secondaryText}`}>
-                No el final de la que ya viviste.
-              </p>
             </div>
           </motion.div>
         </section>

@@ -213,45 +213,17 @@ const Filosofia = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div className="space-y-5 text-muted-foreground leading-relaxed font-light text-base">
+            <div className="max-w-2xl mx-auto items-start">
+              <div className="space-y-5 text-muted-foreground leading-relaxed font-light text-base text-center">
                 <p>
-                  El enfoque de Santosha integra la <strong className="text-foreground font-medium">psicología transpersonal</strong>, el <strong className="text-foreground font-medium">Kundalini Yoga</strong>, la meditación y la espiritualidad consciente como caminos de autoconocimiento, integración y transformación humana.
+                  El enfoque de Santosha integra el Kundalini Yoga, yogaterapia, la meditación, la psicología transpersonal,y la espiritualidad consciente como caminos de autoconocimiento, integración y transformación humana.
                 </p>
                 <p>
                   Muchos procesos de transformación no ocurren únicamente desde la comprensión racional. La experiencia humana también se mueve en el cuerpo, en el sistema nervioso, en los símbolos, en los arquetipos colectivos, en la conciencia y en la dimensión relacional y espiritual del ser.
                 </p>
                 <p>
-                  Desde allí nace este enfoque: un espacio donde <strong className="text-foreground font-medium">psicología y espiritualidad no compiten, dialogan</strong>.
+                  Desde allí nace este enfoque: un espacio donde la espiritualidad es tan simple como estar en sintonía con tu vida con el regalo que trae en cada momento.
                 </p>
-              </div>
-
-              <div className="space-y-4">
-                {[
-                  {
-                    icon: <Brain className="w-8 h-8 text-primary" />,
-                    title: "Psicología Transpersonal",
-                    desc: "Comprensión de la experiencia humana más allá de lo racional: heridas, vínculos, sentido, evolución.",
-                  },
-                  {
-                    icon: <Zap className="w-8 h-8 text-primary" />,
-                    title: "Kundalini Yoga como tecnología",
-                    desc: "No solo práctica física. Tecnología de conciencia para expandir presencia y cultivar regulación interna.",
-                  },
-                  {
-                    icon: <Leaf className="w-8 h-8 text-primary" />,
-                    title: "Integración, no evasión",
-                    desc: "Sin positivismo espiritual ni respuestas absolutas. Transformar la vida significa habitar la humanidad con mayor conciencia.",
-                  },
-                ].map(({ icon, title, desc }) => (
-                  <div key={title} className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-5 hover:border-primary/30 transition-all duration-300">
-                    <div className="shrink-0">{icon}</div>
-                    <div className="space-y-1">
-                      <p className="font-semibold text-foreground text-sm">{title}</p>
-                      <p className="text-xs text-muted-foreground font-light leading-relaxed">{desc}</p>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </motion.div>
