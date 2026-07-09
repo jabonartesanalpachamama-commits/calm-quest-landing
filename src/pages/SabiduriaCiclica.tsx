@@ -115,54 +115,49 @@ const SabiduriaCiclica = () => {
 
       <main className="flex-grow">
 
-        {/* ── HERO ── */}
-        <section className={`py-24 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
+        {/* ── HERO BANNER ── */}
+        <section className="w-full relative bg-[#F7F4F0]">
+          <h1 className="sr-only">Sabiduría Cíclica, Esencia Femenina</h1>
+          <img 
+            src="/sabiduria-ciclica-banner.jpg" 
+            alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
+            className="w-full h-auto block"
+          />
+        </section>
+
+        {/* ── HERO CTA ── */}
+        <section className={`py-12 md:py-16 px-6 text-center relative overflow-hidden ${palette.background} border-b border-border/10`}>
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-            <div className="absolute top-1/3 -left-32 w-[500px] h-[500px] bg-rose-200/20 rounded-full blur-3xl" />
+            <div className="absolute top-0 -left-32 w-[500px] h-[500px] bg-rose-200/20 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-amber-200/20 rounded-full blur-3xl" />
           </div>
-
+          
           <motion.div
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="max-w-5xl mx-auto text-center space-y-8 relative z-10"
+            className="relative z-10 space-y-6 max-w-2xl mx-auto"
           >
-            <motion.div 
-              className="w-full mx-auto rounded-3xl overflow-hidden shadow-2xl mb-12 ring-1 ring-border/20"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-            >
-              <img 
-                src="/sabiduria-ciclica-banner.jpg" 
-                alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
-                className="w-full h-auto object-cover" 
-              />
-            </motion.div>
-
             <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
               <Flower2 className="w-4 h-4 text-primary" /> Programa Grupal · Virtual
             </span>
 
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
-              Sabiduría Cíclica,<br />
-              <span className={palette.primaryText}>Esencia Femenina</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-xl mx-auto">
+            <p className="text-xl md:text-2xl text-foreground leading-relaxed font-light">
               Reconecta con tu naturaleza. Habita tu poder. Recuerda tu ritmo.
             </p>
-
-            <a
-              href="#ciclica-contacto"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#ciclica-contacto")?.scrollIntoView({ behavior: "smooth", block: "center" });
-              }}
-              className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
-            >
-              Reservar información <Leaf className="w-4 h-4 text-primary-foreground ml-1" />
-            </a>
+            
+            <div className="pt-2">
+              <a
+                href="#ciclica-contacto"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector("#ciclica-contacto")?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}
+                className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
+              >
+                Reservar información <Leaf className="w-4 h-4 text-primary-foreground ml-1" />
+              </a>
+            </div>
           </motion.div>
         </section>
 
