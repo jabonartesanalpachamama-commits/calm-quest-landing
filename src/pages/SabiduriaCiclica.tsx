@@ -126,8 +126,20 @@ const SabiduriaCiclica = () => {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="max-w-3xl mx-auto text-center space-y-8 relative z-10"
+            className="max-w-5xl mx-auto text-center space-y-8 relative z-10"
           >
+            <motion.div 
+              className="w-full mx-auto rounded-3xl overflow-hidden shadow-2xl mb-12 ring-1 ring-border/20"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="/sabiduria-ciclica-banner.jpg" 
+                alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
+                className="w-full h-auto object-cover" 
+              />
+            </motion.div>
+
             <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
               <Flower2 className="w-4 h-4 text-primary" /> Programa Grupal · Virtual
             </span>
