@@ -116,27 +116,35 @@ const SabiduriaCiclica = () => {
       <main className="flex-grow">
 
         {/* ── HERO BANNER ── */}
-        <section className="w-full relative bg-[#F7F4F0]">
-          <h1 className="sr-only">Sabiduría Cíclica, Esencia Femenina</h1>
-          <img 
-            src="/sabiduria-ciclica-banner.jpg" 
-            alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
-            className="w-full h-auto block"
-          />
-        </section>
-
-        {/* ── HERO CTA ── */}
-        <section className={`py-12 md:py-16 px-6 text-center relative overflow-hidden ${palette.background} border-b border-border/10`}>
+        <section className={`pt-12 md:pt-20 px-4 md:px-6 relative overflow-hidden ${palette.background}`}>
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
             <div className="absolute top-0 -left-32 w-[500px] h-[500px] bg-rose-200/20 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-amber-200/20 rounded-full blur-3xl" />
           </div>
-          
+
+          <div className="max-w-[1024px] mx-auto relative z-10">
+            <h1 className="sr-only">Sabiduría Cíclica, Esencia Femenina</h1>
+            <motion.div 
+              className="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl ring-1 ring-border/20"
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="/sabiduria-ciclica-banner.jpg" 
+                alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
+                className="w-full h-auto block"
+              />
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── HERO CTA ── */}
+        <section className={`py-10 md:py-14 px-6 text-center relative z-10 ${palette.background} border-b border-border/10`}>
           <motion.div
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="relative z-10 space-y-6 max-w-2xl mx-auto"
+            className="space-y-6 max-w-2xl mx-auto"
           >
             <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
               <Flower2 className="w-4 h-4 text-primary" /> Programa Grupal · Virtual
