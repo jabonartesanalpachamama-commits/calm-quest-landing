@@ -122,7 +122,7 @@ const SabiduriaCiclica = () => {
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-amber-200/20 rounded-full blur-3xl" />
           </div>
 
-          <div className="max-w-[1024px] mx-auto relative z-10">
+          <div className="max-w-[1672px] mx-auto relative z-10">
             <h1 className="sr-only">Sabiduría Cíclica, Esencia Femenina</h1>
             <motion.div 
               className="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl ring-1 ring-border/20"
