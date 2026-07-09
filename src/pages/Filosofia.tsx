@@ -88,11 +88,11 @@ const Filosofia = () => {
             variants={fadeUp}
             className="max-w-3xl mx-auto text-center space-y-8 relative z-10"
           >
-            <div className="flex justify-center mb-2">
+            <div className="flex justify-center mb-6">
               <img 
                 src={santoshaLogo} 
                 alt="Logo Santosha" 
-                className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full shadow-sm ring-1 ring-border/20" 
+                className="w-32 md:w-40 h-auto object-contain mix-blend-multiply" 
               />
             </div>
 
