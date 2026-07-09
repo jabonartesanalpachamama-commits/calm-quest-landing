@@ -228,36 +228,54 @@ const SabiduriaCiclica = () => {
 
         {/* ── QUÉ APRENDERÁS ── */}
         <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-10"
-          >
-            <div className="text-center space-y-3">
-              <Sparkles className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                En este viaje aprenderás a:
-              </h2>
-            </div>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Columna Izquierda: Imagen del Programa */}
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
+                className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
+              >
+                <div className="aspect-[9/16] md:aspect-auto md:h-[700px] rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10">
+                   <img src="/sabiduria-ciclica-flyer.png" alt="Programa Sabiduría Cíclica" className="w-full h-full object-cover" />
+                </div>
+              </motion.div>
 
-            <div className="space-y-3">
-              {LEARNING_POINTS.map(({ icon, text }, idx) => (
-                <motion.div
-                  key={text}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-40px" }}
-                  variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0, transition: { duration: 0.45, delay: idx * 0.08 } } }}
-                  className="flex items-start gap-4 bg-card border border-border/40 rounded-2xl px-6 py-5 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-                >
-                  <div className={`shrink-0 leading-none mt-0.5`}>{icon}</div>
-                  <p className="text-sm text-muted-foreground font-light leading-relaxed">{text}</p>
-                </motion.div>
-              ))}
+              {/* Columna Derecha: Bloques Nuevos */}
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={fadeUp}
+                className="space-y-10"
+              >
+                <div className="space-y-3">
+                  <Sparkles className="w-10 h-10 text-primary mb-2" />
+                  <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground leading-tight">
+                    En este viaje aprenderás a:
+                  </h2>
+                </div>
+
+                <div className="space-y-4">
+                  {LEARNING_POINTS.map(({ icon, text }, idx) => (
+                    <motion.div
+                      key={text}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true, margin: "-40px" }}
+                      variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.45, delay: idx * 0.08 } } }}
+                      className="flex items-start gap-4 bg-background/50 backdrop-blur-sm border border-border/40 rounded-2xl px-6 py-6 hover:border-primary/40 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 group"
+                    >
+                      <div className={`shrink-0 leading-none mt-0.5 group-hover:scale-110 transition-transform duration-300`}>{icon}</div>
+                      <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">{text}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </section>
 
         {/* ── MENSAJE MAGNÉTICO ── */}
