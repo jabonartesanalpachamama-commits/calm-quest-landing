@@ -309,25 +309,45 @@ const SabiduriaCiclica = () => {
 
         {/* ── NOTA DE CIERRE ── */}
         <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-2xl mx-auto text-center space-y-6"
-          >
-            <p className="text-muted-foreground text-lg leading-relaxed font-light">
-              Este no es solo un curso sobre menstruación. Es una invitación a recordar una parte de ti que quizás ha permanecido silenciada por años.
-            </p>
-            <div className="space-y-1 font-serif text-xl font-medium text-foreground">
-              <p>Tu cuerpo tiene memoria.</p>
-              <p>Tu ciclo tiene mensajes.</p>
-              <p>Tu esencia conoce el camino.</p>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Columna Izquierda: Texto */}
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
+                className="space-y-8 bg-background/50 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-border/40 shadow-sm"
+              >
+                <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-light">
+                  Este no es solo un curso sobre menstruación. Es una invitación a recordar una parte de ti que quizás ha permanecido silenciada por años.
+                </p>
+                <div className="space-y-3 font-serif text-2xl md:text-3xl font-medium text-foreground">
+                  <p>Tu cuerpo tiene memoria.</p>
+                  <p>Tu ciclo tiene mensajes.</p>
+                  <p>Tu esencia conoce el camino.</p>
+                </div>
+                <div className="pt-4 border-t border-border/20">
+                  <p className={`font-serif text-2xl md:text-3xl font-bold ${palette.primaryText}`}>
+                    ¿Estás lista para volver a escucharte?
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Columna Derecha: Imagen */}
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={{ hidden: { opacity: 0, x: 20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
+                className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
+              >
+                <div className="aspect-[9/16] md:aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10">
+                   <img src="/sabiduria-cierre.jpg" alt="Sabiduría Cíclica" className="w-full h-full object-cover" />
+                </div>
+              </motion.div>
             </div>
-            <p className={`font-serif text-2xl font-bold mt-4 ${palette.primaryText}`}>
-              ¿Estás lista para volver a escucharte?
-            </p>
-          </motion.div>
+          </div>
         </section>
 
         {/* ── TESTIMONIOS ── */}
