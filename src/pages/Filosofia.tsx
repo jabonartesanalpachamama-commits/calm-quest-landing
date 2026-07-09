@@ -90,9 +90,9 @@ const Filosofia = () => {
           >
             <div className="flex justify-center mb-6">
               <img 
-                src={santoshaLogo} 
+                src="/santosha-logo-transparent.png" 
                 alt="Logo Santosha" 
-                className="w-32 md:w-40 h-auto object-contain mix-blend-multiply" 
+                className="w-20 md:w-28 h-auto object-contain" 
               />
             </div>
 
