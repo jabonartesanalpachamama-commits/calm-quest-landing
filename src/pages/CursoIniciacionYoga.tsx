@@ -466,32 +466,7 @@ const CursoIniciacionYoga = () => {
             variants={fadeUp}
             className="max-w-3xl mx-auto text-center space-y-8"
           >
-            <div className="space-y-3">
-              <Moon className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Comienza tu viaje anual de transformación
-              </h2>
-              <p className="text-muted-foreground leading-relaxed font-light text-lg max-w-xl mx-auto">
-                6 módulos. 1 año. Una práctica que transforma. Inscríbete ahora y reserva tu lugar.
-              </p>
-            </div>
-
-            {/* Key info cards */}
-            <div className="grid sm:grid-cols-3 gap-4">
-              {[
-                { icon: <MonitorPlay className="w-8 h-8 text-primary mx-auto" />, label: "Modalidad", value: "100% Virtual" },
-                { icon: <Calendar className="w-8 h-8 text-primary mx-auto" />, label: "Duración", value: "1 año · Bimensual" },
-                { icon: <Users className="w-8 h-8 text-primary mx-auto" />, label: "Grupo", value: "Cupos limitados" },
-              ].map(({ icon, label, value }) => (
-                <div key={label} className="bg-card border border-border/50 rounded-2xl p-5 text-center space-y-2">
-                  {icon}
-                  <p className="text-xs text-muted-foreground font-light">{label}</p>
-                  <p className="text-sm font-semibold text-foreground">{value}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-4">
+            <div className="flex justify-center">
               <a
                 href="https://wa.link/1yymd8"
                 target="_blank"
@@ -500,22 +475,6 @@ const CursoIniciacionYoga = () => {
               >
                 <MessageCircle className="w-5 h-5" /> Inscribirme por WhatsApp
               </a>
-
-              <p className="text-xs text-muted-foreground">
-                Sin compromiso · Te respondemos con todos los detalles
-              </p>
-
-              {/* Trust badges */}
-              <div className="flex flex-wrap justify-center gap-5 pt-2">
-                {["Plazas limitadas", "Instructor certificado", "Práctica progresiva"].map((badge) => (
-                  <span key={badge} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <svg className="w-3.5 h-3.5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                    {badge}
-                  </span>
-                ))}
-              </div>
             </div>
           </motion.div>
         </section>
