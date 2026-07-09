@@ -304,49 +304,7 @@ const QuienSoy = () => {
           </motion.div>
         </section>
 
-        {/* ── GRATITUD ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-8"
-          >
-            <div className="text-center space-y-3">
-              <HandHeart className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Con profunda gratitud
-              </h2>
-            </div>
 
-            <div className="space-y-5">
-              <div className="bg-card border border-border/50 rounded-3xl p-7 space-y-3">
-                <div className="flex items-start gap-4">
-                  <Flower2 className="w-8 h-8 text-primary shrink-0" />
-                  <div className="space-y-2">
-                    <p className="font-semibold text-foreground">Maria Elena Badillo</p>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                      Reconozco con profunda gratitud la guía de mi maestra, mentora, amiga y hermana de alma, quien ha sido una inspiración esencial para recordar que nuestros dones y talentos pueden ponerse verdaderamente al servicio de una nueva humanidad.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card border border-border/50 rounded-3xl p-7 space-y-3">
-                <div className="flex items-start gap-4">
-                  <HeartHandshake className="w-8 h-8 text-primary shrink-0" />
-                  <div className="space-y-2">
-                    <p className="font-semibold text-foreground">Mi terapeuta y guías del camino</p>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                      También a mi terapeuta, que por más de 10 años me ha acompañado, y los diferentes guías y exponentes con los que he tenido la posibilidad de compartir y ser parte de las formaciones que imparten.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
 
         {/* ── HOY — SANTOSHA ── */}
         <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
