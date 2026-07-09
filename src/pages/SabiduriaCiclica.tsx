@@ -130,7 +130,7 @@ const SabiduriaCiclica = () => {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="/sabiduria-ciclica-banner.jpg" 
+                src="/sabiduria-ciclica-banner.png" 
                 alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
                 className="w-full h-auto block"
               />
