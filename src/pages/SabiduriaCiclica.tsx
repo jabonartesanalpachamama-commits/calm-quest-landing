@@ -342,8 +342,8 @@ const SabiduriaCiclica = () => {
                 variants={{ hidden: { opacity: 0, x: 20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
                 className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
               >
-                <div className="aspect-[9/16] md:aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10">
-                   <img src="/sabiduria-cierre.jpg" alt="Sabiduría Cíclica" className="w-full h-full object-cover" />
+                <div className="rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10 flex">
+                   <img src="/sabiduria-cierre.jpg" alt="Sabiduría Cíclica" className="w-full h-auto object-contain" />
                 </div>
               </motion.div>
             </div>
