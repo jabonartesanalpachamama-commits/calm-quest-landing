@@ -15,6 +15,7 @@ import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
+import bannerImage from "@/assets/banner-acompanamiento.jpeg";
 
 const SERVICES = [
   {
@@ -146,52 +147,70 @@ const AcompanamientoIndividual = () => {
       <main className="flex-grow">
 
         {/* ── HERO ── */}
-        <section className={`py-24 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
+        <section className={`py-20 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
             <div className="absolute top-1/3 -left-32 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-3xl" />
           </div>
 
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="max-w-3xl mx-auto text-center space-y-8 relative z-10"
-          >
-            <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              <Leaf className="w-4 h-4 text-primary" /> Sesiones 1 a 1 · 100% Virtual
-            </span>
-
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
-              Acompañamiento<br />
-              <span className={palette.primaryText}>Individual</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-xl mx-auto">
-              YogaTerapia, Kundalini Yoga y Meditación 1:1
-            </p>
-
-            {/* What it cultivates */}
-            <div className="flex flex-wrap justify-center gap-3 pt-2">
-              {WHAT_CULTIVATES.map(({ icon, label }) => (
-                <span key={label} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card border border-border/50 px-4 py-2 rounded-full">
-                  <span>{icon}</span>
-                  {label}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href="#individual-contacto"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#individual-contacto")?.scrollIntoView({ behavior: "smooth", block: "center" });
-              }}
-              className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
+          <div className="max-w-7xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={fadeUp}
+              className="space-y-8 text-center md:text-left"
             >
-              Quiero saber más <Leaf className="w-4 h-4 text-primary-foreground ml-1" />
-            </a>
-          </motion.div>
+              <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
+                <Leaf className="w-4 h-4 text-primary" /> Sesiones 1 a 1 · 100% Virtual
+              </span>
+
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
+                Acompañamiento<br />
+                <span className={palette.primaryText}>Individual</span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
+                YogaTerapia, Kundalini Yoga y Meditación 1:1
+              </p>
+
+              {/* What it cultivates */}
+              <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
+                {WHAT_CULTIVATES.map(({ icon, label }) => (
+                  <span key={label} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card border border-border/50 px-4 py-2 rounded-full">
+                    <span>{icon}</span>
+                    {label}
+                  </span>
+                ))}
+              </div>
+
+              <div className="pt-4">
+                <a
+                  href="#individual-contacto"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.querySelector("#individual-contacto")?.scrollIntoView({ behavior: "smooth", block: "center" });
+                  }}
+                  className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
+                >
+                  Quiero saber más <Leaf className="w-4 h-4 text-primary-foreground ml-1" />
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative"
+            >
+              <div className={`absolute inset-0 rounded-3xl transform translate-x-4 translate-y-4 ${palette.secondary} opacity-50`}></div>
+              <img
+                src={bannerImage}
+                alt="Acompañamiento Individual Yoga"
+                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover aspect-[4/3] md:aspect-auto md:h-[600px]"
+              />
+            </motion.div>
+          </div>
         </section>
 
         {/* ── QUÉ ES ── */}
