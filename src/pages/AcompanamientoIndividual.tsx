@@ -147,17 +147,17 @@ const AcompanamientoIndividual = () => {
       <main className="flex-grow">
 
         {/* ── HERO ── */}
-        <section className="relative py-32 md:py-48 px-6 overflow-hidden border-b border-border/10 flex items-center justify-center min-h-[80vh]">
+        <section className="relative py-32 md:py-48 px-6 overflow-hidden border-b border-border/10 flex items-center justify-center min-h-[95vh]">
           {/* Background Image & Overlay */}
           <div className="absolute inset-0 z-0">
             <img 
               src={bannerImage} 
               alt="Acompañamiento Individual Background" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[center_65%]"
             />
             {/* Gradient Overlay to ensure text readability */}
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/50" />
           </div>
 
           <motion.div
