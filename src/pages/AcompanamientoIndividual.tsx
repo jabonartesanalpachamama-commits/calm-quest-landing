@@ -147,70 +147,61 @@ const AcompanamientoIndividual = () => {
       <main className="flex-grow">
 
         {/* ── HERO ── */}
-        <section className={`py-20 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-            <div className="absolute top-1/3 -left-32 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-3xl" />
+        <section className="relative py-32 md:py-48 px-6 overflow-hidden border-b border-border/10 flex items-center justify-center min-h-[80vh]">
+          {/* Background Image & Overlay */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={bannerImage} 
+              alt="Acompañamiento Individual Background" 
+              className="w-full h-full object-cover"
+            />
+            {/* Gradient Overlay to ensure text readability */}
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
           </div>
 
-          <div className="max-w-7xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <motion.div
-              initial="hidden"
-              animate="show"
-              variants={fadeUp}
-              className="space-y-8 text-center md:text-left"
-            >
-              <span className={`inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-                <Leaf className="w-4 h-4 text-primary" /> Sesiones 1 a 1 · 100% Virtual
-              </span>
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={fadeUp}
+            className="max-w-4xl mx-auto text-center space-y-8 relative z-10"
+          >
+            <span className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 shadow-sm">
+              <Leaf className="w-4 h-4" /> Sesiones 1 a 1 · 100% Virtual
+            </span>
 
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
-                Acompañamiento<br />
-                <span className={palette.primaryText}>Individual</span>
-              </h1>
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white drop-shadow-md">
+              Acompañamiento<br />
+              <span className="text-white/90 font-light italic">Individual</span>
+            </h1>
 
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
-                YogaTerapia, Kundalini Yoga y Meditación 1:1
-              </p>
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed font-light max-w-2xl mx-auto drop-shadow">
+              YogaTerapia, Kundalini Yoga y Meditación 1:1
+            </p>
 
-              {/* What it cultivates */}
-              <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
-                {WHAT_CULTIVATES.map(({ icon, label }) => (
-                  <span key={label} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card border border-border/50 px-4 py-2 rounded-full">
-                    <span>{icon}</span>
-                    {label}
-                  </span>
-                ))}
-              </div>
+            {/* What it cultivates */}
+            <div className="flex flex-wrap justify-center gap-3 pt-4">
+              {WHAT_CULTIVATES.map(({ icon, label }) => (
+                <span key={label} className="flex items-center gap-1.5 text-sm text-white bg-black/20 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full shadow-sm">
+                  <span className="text-white/80">{icon}</span>
+                  {label}
+                </span>
+              ))}
+            </div>
 
-              <div className="pt-4">
-                <a
-                  href="#individual-contacto"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector("#individual-contacto")?.scrollIntoView({ behavior: "smooth", block: "center" });
-                  }}
-                  className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
-                >
-                  Quiero saber más <Leaf className="w-4 h-4 text-primary-foreground ml-1" />
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative"
-            >
-              <div className={`absolute inset-0 rounded-3xl transform translate-x-4 translate-y-4 ${palette.secondary} opacity-50`}></div>
-              <img
-                src={bannerImage}
-                alt="Acompañamiento Individual Yoga"
-                className="relative rounded-3xl shadow-2xl w-full h-auto object-cover aspect-[4/3] md:aspect-auto md:h-[600px]"
-              />
-            </motion.div>
-          </div>
+            <div className="pt-8">
+              <a
+                href="#individual-contacto"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector("#individual-contacto")?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-white text-gray-900 hover:bg-gray-50"
+              >
+                Quiero saber más <Leaf className="w-4 h-4 ml-1 text-gray-700" />
+              </a>
+            </div>
+          </motion.div>
         </section>
 
         {/* ── QUÉ ES ── */}
