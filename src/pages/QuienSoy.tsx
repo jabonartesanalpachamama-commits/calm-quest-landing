@@ -13,8 +13,8 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
-import fransuryImage from "@/assets/fransury_quiensoy.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
+import fransuryImage from "@/assets/fransury_quiensoy.webp";
 
 const FORMATION = [
   {
@@ -142,7 +142,7 @@ const QuienSoy = () => {
         {/* ── HERO / PRESENTACIÓN ── */}
         <section className={`py-24 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-            <div className="absolute inset-0 bg-[url('/src/assets/santosha-logo.jpg')] bg-center bg-no-repeat bg-contain opacity-5"></div>
+            <div className="absolute inset-0 bg-[url('/src/assets/santosha-logo.webp')] bg-center bg-no-repeat bg-contain opacity-5"></div>
             <div className="absolute top-0 -right-32 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 -left-32 w-[400px] h-[400px] bg-accent/10 rounded-full blur-3xl" />
           </div>

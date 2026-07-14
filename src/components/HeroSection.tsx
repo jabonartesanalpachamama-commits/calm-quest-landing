@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import RegistrationForm from "./RegistrationForm";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 const HeroSection = () => {
   return (

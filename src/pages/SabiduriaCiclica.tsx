@@ -14,7 +14,7 @@ import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 const LEARNING_POINTS = [
   {
@@ -130,7 +130,7 @@ const SabiduriaCiclica = () => {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="/sabiduria-ciclica-banner.png" 
+                src="/sabiduria-ciclica-banner.webp" 
                 alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
                 className="w-full h-auto block"
               />
@@ -239,7 +239,7 @@ const SabiduriaCiclica = () => {
                 className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
               >
                 <div className="rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10 flex">
-                   <img src="/sabiduria-ciclica-flyer.png" alt="Programa Sabiduría Cíclica" className="w-full h-auto object-contain" />
+                   <img src="/sabiduria-ciclica-flyer.webp" alt="Programa Sabiduría Cíclica" className="w-full h-auto object-contain" />
                 </div>
               </motion.div>
 
@@ -343,7 +343,7 @@ const SabiduriaCiclica = () => {
                 className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
               >
                 <div className="rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10 flex">
-                   <img src="/sabiduria-cierre.jpg" alt="Sabiduría Cíclica" className="w-full h-auto object-contain" />
+                   <img src="/sabiduria-cierre.webp" alt="Sabiduría Cíclica" className="w-full h-auto object-contain" />
                 </div>
               </motion.div>
             </div>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import sLogo from "@/assets/santosha-logo.jpg";
-import instructorImage from "@/assets/instructor.png";
+import sLogo from "@/assets/santosha-logo.webp";
+import instructorImage from "@/assets/instructor.webp";
 
 export type FontFamilyKey =
   | "cormorant-lora"       // Classic editorial serif (current default)

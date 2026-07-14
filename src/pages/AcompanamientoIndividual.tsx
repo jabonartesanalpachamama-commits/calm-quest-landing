@@ -14,9 +14,9 @@ import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
-import bannerImage from "@/assets/banner-acompanamiento.png";
-import paraQuienImage from "@/assets/para-quien-image.jpeg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
+import bannerImage from "@/assets/banner-acompanamiento.webp";
+import paraQuienImage from "@/assets/para-quien-image.webp";
 
 const SERVICES = [
   {

@@ -14,7 +14,7 @@ import {
 } from "@/lib/CmsFallbackData";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 export const BlogPostView = () => {
   const { slug } = useParams<{ slug: string }>();

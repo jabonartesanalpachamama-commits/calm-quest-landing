@@ -9,7 +9,7 @@ import {
 } from "@/lib/CmsFallbackData";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 import { Timer, Lightbulb, MessageCircle, Star, User, Leaf, HeartHandshake } from "lucide-react";
 
 const FreeClassTime = () => {

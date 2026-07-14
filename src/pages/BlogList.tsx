@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 export const BlogList = () => {
   const [posts, setPosts] = useState<CmsPost[]>([]);

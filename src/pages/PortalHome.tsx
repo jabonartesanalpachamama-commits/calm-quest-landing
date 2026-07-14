@@ -13,8 +13,8 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
-import fransuryImage from "@/assets/fransury_portal.jpg";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import fransuryImage from "@/assets/fransury_portal.webp";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 const PROGRAMS = [
   {

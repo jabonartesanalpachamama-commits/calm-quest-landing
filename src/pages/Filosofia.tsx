@@ -12,7 +12,7 @@ import {
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 const BELIEFS = [
   { icon: <Search className="w-6 h-6 text-primary" />, text: "El poder del autoconocimiento" },
@@ -90,7 +90,7 @@ const Filosofia = () => {
           >
             <div className="flex justify-center mb-6">
               <img 
-                src="/santosha-logo-transparent.png" 
+                src="/santosha-logo-transparent.webp" 
                 alt="Logo Santosha" 
                 className="w-20 md:w-28 h-auto object-contain" 
               />

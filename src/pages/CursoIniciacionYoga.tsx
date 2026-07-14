@@ -14,7 +14,7 @@ import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
-import santoshaLogo from "@/assets/santosha-logo.jpg";
+import santoshaLogo from "@/assets/santosha-logo.webp";
 
 // ─── Module data ──────────────────────────────────────────────────────────────
 const MODULES = [
