@@ -15,7 +15,7 @@ import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import FloatingCTA from "@/components/FloatingCTA";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
-import bannerImage from "@/assets/banner-acompanamiento.jpeg";
+import bannerImage from "@/assets/banner-acompanamiento.png";
 
 const SERVICES = [
   {
@@ -153,7 +153,7 @@ const AcompanamientoIndividual = () => {
             <img 
               src={bannerImage} 
               alt="Acompañamiento Individual Background" 
-              className="w-full h-full object-cover object-[center_15%]"
+              className="w-full h-full object-cover object-center"
             />
             {/* Gradient Overlay to ensure text readability */}
             <div className="absolute inset-0 bg-black/40" />
