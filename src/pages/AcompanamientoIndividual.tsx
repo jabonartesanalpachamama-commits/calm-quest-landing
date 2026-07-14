@@ -164,7 +164,7 @@ const AcompanamientoIndividual = () => {
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="w-full max-w-2xl md:ml-auto md:mr-8 lg:mr-16 text-center md:text-right space-y-8 relative z-10"
+            className="w-full max-w-2xl md:mr-auto md:ml-8 lg:ml-16 text-center md:text-left space-y-8 relative z-10"
           >
             <span className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 shadow-sm">
               <Leaf className="w-4 h-4" /> Sesiones 1 a 1 · 100% Virtual
@@ -180,7 +180,7 @@ const AcompanamientoIndividual = () => {
             </p>
 
             {/* What it cultivates */}
-            <div className="flex flex-wrap justify-center md:justify-end gap-3 pt-4">
+            <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-4">
               {WHAT_CULTIVATES.map(({ icon, label }) => (
                 <span key={label} className="flex items-center gap-1.5 text-sm text-white bg-black/20 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full shadow-sm">
                   <span className="text-white/80">{icon}</span>
