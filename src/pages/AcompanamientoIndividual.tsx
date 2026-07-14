@@ -16,6 +16,7 @@ import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSecti
 import FloatingCTA from "@/components/FloatingCTA";
 import santoshaLogo from "@/assets/santosha-logo.jpg";
 import bannerImage from "@/assets/banner-acompanamiento.png";
+import paraQuienImage from "@/assets/para-quien-image.jpeg";
 
 const SERVICES = [
   {
@@ -296,40 +297,59 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* ── PARA QUIÉN ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-10"
-          >
-            <div className="text-center space-y-3">
-              <Compass className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                ¿Para quién es este espacio?
-              </h2>
-              <p className="text-muted-foreground font-light">
-                Para personas que desean:
-              </p>
-            </div>
+        <section className={`py-20 md:py-32 px-6 ${palette.background} border-b border-border/10`}>
+          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="relative order-2 md:order-1"
+            >
+              <div className={`absolute inset-0 rounded-3xl transform -translate-x-4 translate-y-4 ${palette.secondary} opacity-50`}></div>
+              <img
+                src={paraQuienImage}
+                alt="Postura de Yoga en Acompañamiento"
+                className="relative rounded-3xl shadow-xl w-full h-auto object-cover aspect-square"
+              />
+            </motion.div>
 
-            <div className="space-y-3">
-              {FOR_WHOM.map(({ icon, text }, idx) => (
-                <motion.div
-                  key={text}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-40px" }}
-                  variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0, transition: { duration: 0.45, delay: idx * 0.08 } } }}
-                  className="flex items-start gap-4 bg-card border border-border/40 rounded-2xl px-6 py-5 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-                >
-                  <div className="shrink-0 mt-0.5">{icon}</div>
-                  <p className="text-sm text-muted-foreground font-light leading-relaxed">{text}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={fadeUp}
+              className="space-y-10 order-1 md:order-2"
+            >
+              <div className="space-y-4 text-center md:text-left">
+                <Compass className="w-10 h-10 text-primary mx-auto md:mx-0 mb-2" />
+                <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground leading-tight">
+                  ¿Para quién es este espacio?
+                </h2>
+                <p className="text-muted-foreground font-light text-lg">
+                  Para personas que desean:
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {FOR_WHOM.map(({ icon, text }, idx) => (
+                  <motion.div
+                    key={text}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-40px" }}
+                    variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0, transition: { duration: 0.45, delay: idx * 0.08 } } }}
+                    className="flex items-center gap-5 bg-card border border-border/50 rounded-2xl px-6 py-5 hover:border-primary/40 hover:shadow-md transition-all duration-300 group"
+                  >
+                    <div className="shrink-0 p-2.5 rounded-full bg-primary/10 text-primary group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                      {icon}
+                    </div>
+                    <p className="text-base text-foreground font-medium leading-relaxed">{text}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </section>
 
         {/* ── CÓMO FUNCIONA ── */}
