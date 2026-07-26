@@ -357,6 +357,50 @@ const SabiduriaCiclica = () => {
           subtitle="Mujeres que han abrazado su ciclicidad y reconectado con su ritmo natural."
         />
 
+        {/* ── INVERSIÓN ── */}
+        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeUp}
+            className="max-w-4xl mx-auto space-y-10"
+          >
+            <div className="text-center space-y-3 mb-10">
+              <Flower2 className="w-12 h-12 text-primary mx-auto mb-2" />
+              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
+                Inversión del Taller
+              </h2>
+            </div>
+
+            <div className="max-w-md mx-auto">
+              <div className={`bg-gradient-to-br ${palette.primary} rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-lg border-2 border-white/20`}>
+                <div className="space-y-4 text-center text-white mt-2">
+                  <h3 className="font-serif text-2xl font-semibold">Sesión</h3>
+                  <div className="flex justify-center items-baseline gap-1">
+                    <span className="text-5xl font-bold">75</span>
+                    <span className="font-light opacity-90">USD</span>
+                  </div>
+                  <p className="text-sm font-light opacity-90">Taller de Sabiduría Cíclica</p>
+                </div>
+                <div className="mt-8 space-y-4 flex-grow border-t border-white/20 pt-6">
+                  {[
+                     "Acceso al encuentro virtual completo",
+                     "Herramientas de observación y autoconocimiento",
+                     "Prácticas de conexión femenina",
+                     "Espacio de círculo y acompañamiento"
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-start gap-3 text-white">
+                      <Flower2 className="w-5 h-5 opacity-90 shrink-0" />
+                      <span className="text-sm leading-relaxed font-medium opacity-90">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
         {/* ── CTA FINAL / CONTACTO ── */}
         <section id="ciclica-contacto" className={`py-24 md:py-32 px-6 ${palette.background} border-b border-border/10`}>
           <motion.div

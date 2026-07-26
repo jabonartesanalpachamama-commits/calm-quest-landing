@@ -432,6 +432,82 @@ const AcompanamientoIndividual = () => {
           subtitle="Personas que han transformado sus vidas a través del trabajo 1 a 1."
         />
 
+        {/* ── INVERSIÓN ── */}
+        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeUp}
+            className="max-w-5xl mx-auto space-y-10"
+          >
+            <div className="text-center space-y-3 mb-12">
+              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
+              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
+                Inversión del Acompañamiento
+              </h2>
+              <p className="text-muted-foreground font-light max-w-xl mx-auto">
+                Elige el plan que mejor acompañe tu proceso personal
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Card Pago por Sesión */}
+              <div className={`bg-card border border-border/50 rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-sm hover:border-primary/40 transition-all duration-300`}>
+                <div className="space-y-4 text-center">
+                  <h3 className="font-serif text-2xl font-semibold text-foreground">1 Sesión</h3>
+                  <div className="flex justify-center items-baseline gap-1">
+                    <span className="text-4xl font-bold text-foreground">17</span>
+                    <span className="text-muted-foreground font-light">USD</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground font-light">Pago por cada sesión individual</p>
+                </div>
+                <div className="mt-8 space-y-4 flex-grow">
+                  {[
+                     "Duración según lo acordado",
+                     "Atención 100% personalizada",
+                     "Sin compromisos a largo plazo",
+                     "Enfoque en temas específicos"
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <Leaf className="w-5 h-5 text-primary shrink-0" />
+                      <span className="text-sm text-muted-foreground leading-relaxed">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Mensualidad */}
+              <div className={`rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-lg md:-translate-y-4 border-2 border-white/20 bg-gradient-to-br ${palette.primary}`}>
+                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold tracking-wider uppercase shadow-sm">
+                  15% Descuento
+                </div>
+                <div className="space-y-4 text-center text-white mt-4">
+                  <h3 className="font-serif text-2xl font-semibold">Mensualidad</h3>
+                  <div className="flex justify-center items-baseline gap-1">
+                    <span className="text-5xl font-bold">116</span>
+                    <span className="font-light opacity-90">USD</span>
+                  </div>
+                  <p className="text-sm font-light opacity-90">Paquete de 8 sesiones profundas</p>
+                </div>
+                <div className="mt-8 space-y-4 flex-grow">
+                  {[
+                     "8 Sesiones adaptables a tu ritmo",
+                     "Seguimiento constante de tu progreso",
+                     "Recursos y herramientas entre sesiones",
+                     "Ideal para procesos de transformación humana",
+                  ].map((benefit, i) => (
+                    <div key={i} className="flex items-start gap-3 text-white">
+                      <Leaf className="w-5 h-5 text-white opacity-90 shrink-0" />
+                      <span className="text-sm leading-relaxed font-medium opacity-90">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
         {/* ── CTA ── */}
         <section id="individual-contacto" className={`py-24 md:py-32 px-6 ${palette.cardBackground} border-b border-border/10`}>
           <motion.div
