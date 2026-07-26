@@ -500,6 +500,11 @@ const CursoIniciacionYoga = () => {
                     </div>
                   ))}
                 </div>
+                <div className="mt-8 pt-6 border-t border-border/10">
+                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}>
+                    Inscribirme por Módulo
+                  </a>
+                </div>
               </div>
 
               {/* Card Pago Anual */}
@@ -527,6 +532,11 @@ const CursoIniciacionYoga = () => {
                       <span className="text-sm leading-relaxed font-medium opacity-90">{benefit}</span>
                     </div>
                   ))}
+                </div>
+                <div className="mt-8 pt-6 border-t border-white/20">
+                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}>
+                    Inscribirme al Año Completo
+                  </a>
                 </div>
               </div>
             </div>

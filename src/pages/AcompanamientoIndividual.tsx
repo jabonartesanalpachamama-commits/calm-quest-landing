@@ -475,6 +475,11 @@ const AcompanamientoIndividual = () => {
                     </div>
                   ))}
                 </div>
+                <div className="mt-8 pt-6 border-t border-border/10">
+                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}>
+                    Inscribirme a 1 Sesión
+                  </a>
+                </div>
               </div>
 
               {/* Card Mensualidad */}
@@ -502,6 +507,11 @@ const AcompanamientoIndividual = () => {
                       <span className="text-sm leading-relaxed font-medium opacity-90">{benefit}</span>
                     </div>
                   ))}
+                </div>
+                <div className="mt-8 pt-6 border-t border-white/20">
+                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}>
+                    Inscribirme a la Mensualidad
+                  </a>
                 </div>
               </div>
             </div>

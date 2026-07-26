@@ -396,6 +396,11 @@ const SabiduriaCiclica = () => {
                     </div>
                   ))}
                 </div>
+                <div className="mt-8 pt-6 border-t border-white/20">
+                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}>
+                    Inscribirme al Taller
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>
