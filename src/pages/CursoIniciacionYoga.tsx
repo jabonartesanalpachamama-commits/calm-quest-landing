@@ -501,7 +501,12 @@ const CursoIniciacionYoga = () => {
                   ))}
                 </div>
                 <div className="mt-8 pt-6 border-t border-border/10">
-                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}>
+                  <a 
+                    href="https://checkout.wompi.co/l/Bb5DdT" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}
+                  >
                     Inscribirme por Módulo
                   </a>
                 </div>
