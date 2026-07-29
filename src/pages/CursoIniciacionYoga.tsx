@@ -502,7 +502,7 @@ const CursoIniciacionYoga = () => {
                 </div>
                 <div className="mt-8 pt-6 border-t border-border/10">
                   <a 
-                    href="https://checkout.wompi.co/l/Bb5DdT" 
+                    href={`https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme al Curso de Iniciación al Yoga por módulo.')}`}
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}
@@ -539,7 +539,12 @@ const CursoIniciacionYoga = () => {
                   ))}
                 </div>
                 <div className="mt-8 pt-6 border-t border-white/20">
-                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}>
+                  <a 
+                    href={`https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme al Año Completo del Curso de Iniciación al Yoga.')}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}
+                  >
                     Inscribirme al Año Completo
                   </a>
                 </div>

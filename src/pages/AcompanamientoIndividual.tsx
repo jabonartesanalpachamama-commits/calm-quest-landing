@@ -476,7 +476,12 @@ const AcompanamientoIndividual = () => {
                   ))}
                 </div>
                 <div className="mt-8 pt-6 border-t border-border/10">
-                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}>
+                  <a 
+                    href={`https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría agendar 1 Sesión de Acompañamiento.')}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}
+                  >
                     Inscribirme a 1 Sesión
                   </a>
                 </div>
@@ -509,7 +514,12 @@ const AcompanamientoIndividual = () => {
                   ))}
                 </div>
                 <div className="mt-8 pt-6 border-t border-white/20">
-                  <a href="#" className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}>
+                  <a 
+                    href={`https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme a la Mensualidad de Acompañamiento.')}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}
+                  >
                     Inscribirme a la Mensualidad
                   </a>
                 </div>
