@@ -20,6 +20,7 @@ import Filosofia from "./pages/Filosofia";
 import AcompanamientoIndividual from "./pages/AcompanamientoIndividual";
 import SabiduriaCiclica from "./pages/SabiduriaCiclica";
 import PortalHome from "./pages/PortalHome";
+import TrafficSplitter from "./components/TrafficSplitter";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,7 @@ const App = () => (
         <SalesNotification />
         <Routes>
           <Route path="/" element={<PortalHome />} />
-          <Route path="/clase-gratuita" element={<Index />} />
+          <Route path="/clase-gratuita" element={<TrafficSplitter />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPostView />} />
           <Route path="/curso-iniciacion-yoga" element={<CursoIniciacionYoga />} />
