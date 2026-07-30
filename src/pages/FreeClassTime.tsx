@@ -22,7 +22,7 @@ const FreeClassTime = () => {
         const { data } = await supabase.from("cms_settings").select("*");
         if (data && data.length > 0) {
           const parsed = data.find((item) => item.key === "visual_identity")?.value;
-          if (parsed) activeSettings = parsed as VisualIdentity;
+          if (parsed) activeSettings = parsed as unknown as VisualIdentity;
         }
       } catch { /* use local fallback */ }
       applyCssVariablesForPalette(activeSettings.palette);
