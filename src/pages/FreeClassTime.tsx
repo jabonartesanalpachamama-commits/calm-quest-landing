@@ -22,7 +22,7 @@ const FreeClassTime = () => {
         const { data } = await supabase.from("cms_settings").select("*");
         if (data && data.length > 0) {
           const parsed = data.find((item) => item.key === "visual_identity")?.value;
-          if (parsed) activeSettings = parsed as VisualIdentity;
+          if (parsed) activeSettings = parsed as unknown as VisualIdentity;
         }
       } catch { /* use local fallback */ }
       applyCssVariablesForPalette(activeSettings.palette);
@@ -50,12 +50,12 @@ const FreeClassTime = () => {
     };
 
     return (
-        <main className={`min-h-screen ${palette.background} ${palette.foreground} flex flex-col items-center px-4 py-8 md:py-12">
+        <main className={`min-h-screen ${palette.background} ${palette.foreground} flex flex-col items-center px-4 py-8 md:py-12`}>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className={`flex justify-center mb-8 md:mb-12"
+                className="flex justify-center mb-8 md:mb-12"
             >
                 <img
                     src={santoshaLogo}
