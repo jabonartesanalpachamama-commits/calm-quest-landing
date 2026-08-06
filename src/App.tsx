@@ -14,7 +14,7 @@ import DynamicPage from "./pages/DynamicPage";
 import BlogList from "./pages/BlogList";
 import BlogPostView from "./pages/BlogPostView";
 import CursoIniciacionYoga from "./pages/CursoIniciacionYoga";
-import SantoshaSomatico from "./pages/SantoshaSomatico";
+
 import QuienSoy from "./pages/QuienSoy";
 import Filosofia from "./pages/Filosofia";
 import AcompanamientoIndividual from "./pages/AcompanamientoIndividual";
@@ -38,7 +38,7 @@ const App = () => (
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPostView />} />
           <Route path="/curso-iniciacion-yoga" element={<CursoIniciacionYoga />} />
-          <Route path="/santosha-somatico" element={<SantoshaSomatico />} />
+          
           <Route path="/quien-soy" element={<QuienSoy />} />
           <Route path="/filosofia" element={<Filosofia />} />
           <Route path="/acompanamiento-individual" element={<AcompanamientoIndividual />} />

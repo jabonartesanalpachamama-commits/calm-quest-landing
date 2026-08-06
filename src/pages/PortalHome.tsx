@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Moon, ShieldCheck, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle } from "lucide-react";
+import { Moon, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -27,17 +27,6 @@ const PROGRAMS = [
     color: "from-amber-50 to-orange-50",
     borderColor: "border-amber-200",
     accentColor: "text-amber-700",
-  },
-  {
-    icon: <ShieldCheck className="w-6 h-6 text-violet-700" />,
-    title: "Santosha Somático®",
-    subtitle: "Del Sobrevivir al Habitar",
-    desc: "Es ideal para procesos de integración emocional profunda, regulación del sistema nervioso, gestión y comprensión de traumas a través de Yogaterapia, Kundalini Yoga, y Conciencia corporal.",
-    features: ["3 Módulos progresivos", "100% Virtual", "Enfoque clínico & terapéutico"],
-    href: "/santosha-somatico",
-    color: "from-violet-50 to-purple-50",
-    borderColor: "border-violet-200",
-    accentColor: "text-violet-700",
   },
   {
     icon: <Flower2 className="w-6 h-6 text-rose-700" />,
@@ -84,8 +73,8 @@ const TESTIMONIALS = [
   },
   {
     name: "Carolina G.",
-    role: "Participante Santosha Somático®",
-    text: "Comprender cómo se almacena la tensión y el trauma en mi cuerpo y aprender a regular mi sistema nervioso me ha dado recursos invaluables para mi bienestar diario.",
+    role: "Participante Sabiduría Cíclica",
+    text: "Reconectar con mi naturaleza cíclica me devolvió una escucha profunda de mi cuerpo. Ahora vivo mis ciclos con más claridad, respeto y amor propio.",
   },
   {
     name: "Laura V.",
@@ -430,7 +419,6 @@ const PortalHome = () => {
             <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
             <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</Link>
             <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
-            <Link to="/santosha-somatico" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Santosha Somático®</Link>
             <Link to="/sabiduria-ciclica-esencia-femenina" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Sabiduría Cíclica</Link>
             <Link to="/acompanamiento-individual" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Acompañamiento 1:1</Link>
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">🔑 Admin</Link>
