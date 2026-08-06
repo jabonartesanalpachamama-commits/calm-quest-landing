@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Heart, Wind, User, Zap, Droplets, Loader2, Leaf, Sun, ChevronRight, Brain, Sparkles, Sprout, HandHeart, Moon, ShieldCheck, HeartHandshake, Settings, Flower2 } from "lucide-react";
+import { Search, Heart, Wind, User, Zap, Droplets, Loader2, Leaf, Sun, ChevronRight, Brain, Sparkles, Sprout, HandHeart, Moon, HeartHandshake, Settings, Flower2 } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -354,10 +354,10 @@ const Filosofia = () => {
                   href: "/curso-iniciacion-yoga",
                 },
                 {
-                  icon: <ShieldCheck className="w-8 h-8 text-primary mb-3" />,
-                  title: "Santosha Somático®",
-                  desc: "Del Sobrevivir al Habitar · 3 módulos",
-                  href: "/santosha-somatico",
+                  icon: <Flower2 className="w-8 h-8 text-primary mb-3" />,
+                  title: "Sabiduría Cíclica",
+                  desc: "Esencia Femenina · Virtual · Comunidad",
+                  href: "/sabiduria-ciclica-esencia-femenina",
                 },
               ].map(({ icon, title, desc, href }) => (
                 <Link
@@ -391,7 +391,6 @@ const Filosofia = () => {
             <Link to="/" className="hover:underline text-xs text-muted-foreground/70 transition-colors">← Inicio</Link>
             <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
             <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
-            <Link to="/santosha-somatico" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Santosha Somático®</Link>
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">🔑 Admin</Link>
           </div>
         </div>

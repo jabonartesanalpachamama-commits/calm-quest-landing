@@ -583,12 +583,6 @@ const AcompanamientoIndividual = () => {
                 >
                   <Moon className="w-4 h-4" /> Curso de Iniciación al Yoga
                 </Link>
-                <Link
-                  to="/santosha-somatico"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors bg-card border border-border/40 px-5 py-3 rounded-full hover:border-primary/30"
-                >
-                  <ShieldCheck className="w-4 h-4" /> Santosha Somático®
-                </Link>
               </div>
             </div>
           </motion.div>
@@ -610,7 +604,6 @@ const AcompanamientoIndividual = () => {
             <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
             <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</Link>
             <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
-            <Link to="/santosha-somatico" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Santosha Somático®</Link>
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors flex items-center gap-1"><Settings className="w-3 h-3" /> Admin</Link>
           </div>
         </div>
