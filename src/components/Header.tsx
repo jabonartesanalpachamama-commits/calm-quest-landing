@@ -40,7 +40,7 @@ const Header = ({ palette, brandName }: HeaderProps) => {
           <img
             src={santoshaLogo}
             alt="SantoSha Logo"
-            className="h-10 w-auto rounded-lg border border-border/20"
+            className="h-10 md:h-16 lg:h-20 w-auto rounded-lg border border-border/20"
             onError={(e) => ((e.target as HTMLElement).style.display = "none")}
           />
           <span className={`font-serif text-xl font-semibold ${palette.primaryText}`}>
