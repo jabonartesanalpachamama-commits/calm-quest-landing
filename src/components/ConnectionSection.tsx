@@ -55,13 +55,14 @@ const ConnectionSection = () => {
                 className="pt-4"
               >
                 <Button
-                  onClick={scrollToTop}
+                  onClick={openWhatsApp}
                   size="lg"
                   className="h-14 px-10 text-lg font-medium glow-primary hover:scale-105 transition-transform"
                 >
                   Quiero mi clase gratuita
                 </Button>
               </motion.div>
+
             </div>
           </motion.div>
 
