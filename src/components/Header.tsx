@@ -62,12 +62,15 @@ const Header = ({ palette, brandName }: HeaderProps) => {
           <Link to="/blog" className="hover:text-primary transition-colors">Blog</Link>
         </nav>
         <div className="flex items-center gap-3">
-          <Link
-            to="/clase-gratuita"
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`hidden md:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${palette.primary}`}
           >
             <Gift className="w-4 h-4" /> Clase Gratis
-          </Link>
+          </a>
+
           <button 
             className="md:hidden p-2 text-foreground/80 hover:text-foreground"
             onClick={toggleMenu}
