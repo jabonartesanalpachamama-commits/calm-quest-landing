@@ -56,9 +56,8 @@ const sanitizeObject = (obj: any): any => {
 // • "#anchor"   → smooth-scrolls to the element with that id
 // • "https://…" → navigates to the URL (external links open in new tab)
 // • ""           → falls back to WhatsApp
-import { WHATSAPP_URL } from "@/lib/utils";
-
 interface CtaButtonProps {
+
   text: string;
   link: string;
   className?: string;
