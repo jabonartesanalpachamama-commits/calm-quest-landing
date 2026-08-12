@@ -53,7 +53,9 @@ const sanitizeObject = (obj: any): any => {
 // ─── CtaButton: smart CTA that respects ctaLink field ───────────────────────
 // • "#anchor"   → smooth-scrolls to the element with that id
 // • "https://…" → navigates to the URL (external links open in new tab)
-// • ""           → falls back to scroll to #form-home-hero
+// • ""           → falls back to WhatsApp
+import { WHATSAPP_URL } from "@/lib/utils";
+
 interface CtaButtonProps {
   text: string;
   link: string;
@@ -64,15 +66,7 @@ const CtaButton = ({ text, link, className, id }: CtaButtonProps) => {
   const handleClick = () => {
     const target = link.trim();
     if (!target || target === "#form-home-hero" || target === "#form-form-section-1" || target === "#form-section-1") {
-      const formSection = document.querySelector("section[id^='form-']") || 
-                          document.querySelector("#form-form-section-1") || 
-                          document.querySelector("#form-section-1") || 
-                          document.querySelector("#form-home-hero");
-      if (formSection) {
-        formSection.scrollIntoView({ behavior: "smooth", block: "center" });
-      } else {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-      }
+      window.open(WHATSAPP_URL, "_blank", "noopener noreferrer");
       return;
     }
     if (target.startsWith("#")) {
@@ -102,6 +96,7 @@ const CtaButton = ({ text, link, className, id }: CtaButtonProps) => {
     </button>
   );
 };
+
 
 export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) => {
   const params = useParams<{ slug?: string; "*"?: string }>();
