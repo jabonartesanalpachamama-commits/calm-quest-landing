@@ -94,13 +94,16 @@ const Header = ({ palette, brandName }: HeaderProps) => {
             Programas
           </a>
           <Link to="/blog" onClick={handleLinkClick} className="text-foreground hover:text-primary font-medium py-2 border-b border-border/10">Blog</Link>
-          <Link
-            to="/clase-gratuita"
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={handleLinkClick}
             className={`inline-flex items-center justify-center gap-1.5 px-5 py-3 mt-2 rounded-full text-sm font-semibold tracking-wide uppercase ${palette.primary}`}
           >
             <Gift className="w-4 h-4" /> Clase Gratis
-          </Link>
+          </a>
+
         </div>
       )}
     </header>
