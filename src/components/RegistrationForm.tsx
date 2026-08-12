@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { WHATSAPP_URL } from "@/lib/utils";
+
 
 const RegistrationForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const navigate = useNavigate();
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,13 +35,13 @@ const RegistrationForm = () => {
       
       if (dbError) {
         if (dbError.code === "23505") {
-          navigate("/clase-gratuita");
+          window.location.href = WHATSAPP_URL;
           return;
         }
         throw dbError;
       }
 
-      navigate("/clase-gratuita");
+      window.location.href = WHATSAPP_URL;
     } catch (error) {
       console.error("Registration error:", error);
       toast({
@@ -51,6 +52,7 @@ const RegistrationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   return (

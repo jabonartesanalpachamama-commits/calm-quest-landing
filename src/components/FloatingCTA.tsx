@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Flame } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/utils";
+
 
 interface FloatingCTAProps {
   formAnchor?: string; // e.g. "#form-home-hero"
@@ -42,14 +44,10 @@ const FloatingCTA = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const scrollToForm = () => {
-    const anchor = document.querySelector(formAnchor);
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  const openWhatsApp = () => {
+    window.open(WHATSAPP_URL, "_blank", "noopener noreferrer");
   };
+
 
   const handleDismiss = () => {
     setVisible(false);
@@ -75,12 +73,13 @@ const FloatingCTA = ({
               </div>
               <Button
                 id="floating-cta-mobile-btn"
-                onClick={scrollToForm}
+                onClick={openWhatsApp}
                 size="sm"
                 className="shrink-0 rounded-full font-semibold text-xs px-4"
               >
-                Registrarme gratis
+                Escríbenos por WhatsApp
               </Button>
+
               <button
                 onClick={handleDismiss}
                 aria-label="Cerrar"
@@ -138,11 +137,12 @@ const FloatingCTA = ({
 
               <Button
                 id="floating-cta-desktop-btn"
-                onClick={scrollToForm}
+                onClick={openWhatsApp}
                 className="w-full rounded-full font-semibold"
               >
                 {ctaText}
               </Button>
+
             </div>
           </motion.div>
         </>

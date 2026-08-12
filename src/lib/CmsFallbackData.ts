@@ -424,9 +424,10 @@ const DEFAULT_SETTINGS: VisualIdentity = {
   logoText: "SantoSha",
   palette: "menta",
   fontFamily: "cormorant-lora",
-  whatsappNumber: "+5491123456789",
+  whatsappNumber: "+573105679517",
   footerText: "© 2026 SantoSha - Espacio de Bienestar, Psicología y Kundalini Yoga."
 };
+
 
 const DEFAULT_FORMS: CmsForm[] = [
   {
@@ -436,8 +437,9 @@ const DEFAULT_FORMS: CmsForm[] = [
       { id: "name", label: "Nombre Completo", type: "text", placeholder: "Tu nombre completo", required: true },
       { id: "email", label: "Correo Electrónico", type: "email", placeholder: "ejemplo@correo.com", required: true }
     ],
-    redirectUrl: "/clase-gratuita"
+    redirectUrl: "https://wa.me/573105679517"
   },
+
   {
     id: "e2a2c82c-b6e7-5878-ae8b-22f980796b5b",
     name: "Consulta de Terapia",
@@ -467,8 +469,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           tagline: "Clase Maestra Gratuita",
           description: "Aprende la técnica exacta que +10,000 profesionales ya usan para calmar su sistema nervioso, recuperar la claridad mental y eliminar la reactividad emocional.",
           buttonText: "Quiero mi clase gratuita",
-          buttonLink: "#form-home-hero",
+          buttonLink: "https://wa.me/573105679517",
           formId: "b191c71b-a5d6-4767-9d7a-11f879685a4a"
+
         }
       },
       {
@@ -480,8 +483,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           imageUrl: instructorImage,
           layout: "image-right",
           buttonText: "Quiero mi clase gratuita",
-          buttonLink: "#home-hero"
+          buttonLink: "https://wa.me/573105679517"
         }
+
       },
       {
         id: "home-benefits",
@@ -596,8 +600,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           title: "Un espacio seguro para tu mente y tu alma",
           subtitle: "YogaTerapia y técnicas holísticas que se convierten en una herramienta para cultivar conciencia corporal, regulación del sistema nervioso, conexión interna, resiliencia emocional y una relación más compasiva con nuestra humanidad.",
           buttonText: "Reserva tu Primera Sesión",
-          buttonLink: "#form-form-section-1",
+          buttonLink: "https://wa.me/573105679517",
           tagline: "Terapia Presencial y Online • Enfoque Integrativo"
+
         }
       },
       {
@@ -617,8 +622,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           title: "¿Cómo puede ayudarte nuestro enfoque?",
           showCta: true,
           ctaText: "Reserva tu primera sesión",
-          ctaLink: "#form-form-section-1",
+          ctaLink: "https://wa.me/573105679517",
           ctaSubtext: "Primera consulta sin compromiso",
+
           items: [
             { icon: "🌿", title: "Reducción de la Ansiedad", description: "Aprende técnicas corporales y de respiración para calmar el sistema nervioso en momentos de crisis." },
             { icon: "🧘", title: "Autoconocimiento Profundo", description: "Comprende el origen de tus pensamientos y cómo influyen en tus emociones y decisiones." },

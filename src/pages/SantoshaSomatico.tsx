@@ -585,7 +585,7 @@ const SantoshaSomatico = () => {
 
             <div className="space-y-4">
               <a
-                href="https://wa.link/1yymd8"
+                href="https://wa.me/573105679517"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}

@@ -1,0 +1,1 @@
+UPDATE public.cms_settings SET value = jsonb_set(value, '{whatsappNumber}', '"+573105679517"', false) WHERE key = 'visual_identity';

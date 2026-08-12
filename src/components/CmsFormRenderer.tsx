@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { CmsForm, getLocalSubmissions, saveLocalSubmissions } from "@/lib/CmsFallbackData";
+import { WHATSAPP_URL } from "@/lib/utils";
+
 
 interface CmsFormRendererProps {
   form: CmsForm;
@@ -22,17 +24,14 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
   const navigate = useNavigate();
 
   const handleSuccessRedirect = () => {
-    if (form.redirectUrl && form.redirectUrl.trim()) {
-      const url = form.redirectUrl.trim();
-      if (url.startsWith("http://") || url.startsWith("https://")) {
-        window.location.href = url;
-      } else {
-        navigate(url);
-      }
+    const url = (form.redirectUrl || WHATSAPP_URL).trim();
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      window.location.href = url;
     } else {
-      setIsSuccess(true);
+      navigate(url);
     }
   };
+
 
   const handleInputChange = (fieldId: string, value: any) => {
     setFormData((prev) => ({

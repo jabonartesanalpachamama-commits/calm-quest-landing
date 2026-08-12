@@ -168,7 +168,7 @@ const FreeClass = () => {
           </div>
 
           <div className="text-center">
-            <a href="https://wa.link/xy0brl" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/573105679517" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="text-lg px-10 py-6">
                 Quiero el Programa Completo
               </Button>
