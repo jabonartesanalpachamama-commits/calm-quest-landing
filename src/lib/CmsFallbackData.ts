@@ -437,8 +437,9 @@ const DEFAULT_FORMS: CmsForm[] = [
       { id: "name", label: "Nombre Completo", type: "text", placeholder: "Tu nombre completo", required: true },
       { id: "email", label: "Correo Electrónico", type: "email", placeholder: "ejemplo@correo.com", required: true }
     ],
-    redirectUrl: "/clase-gratuita"
+    redirectUrl: "https://wa.me/573105679517"
   },
+
   {
     id: "e2a2c82c-b6e7-5878-ae8b-22f980796b5b",
     name: "Consulta de Terapia",
