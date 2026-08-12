@@ -154,7 +154,7 @@ const PortalHome = () => {
                 className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
                 Ver programas formativos
-              </Link>
+              </a>
               <a
                 href="https://wa.me/573105679517"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
