@@ -156,7 +156,7 @@ const PortalHome = () => {
                 Ver programas formativos
               </a>
               <Link
-                to="/clase-gratuita"
+                href="https://wa.me/573105679517"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
               >
                 <Gift className="w-5 h-5" /> Acceder a Clase Gratuita
@@ -180,7 +180,7 @@ const PortalHome = () => {
               </p>
             </div>
             <Link
-              to="/clase-gratuita"
+              href="https://wa.me/573105679517"
               className={`shrink-0 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
               <PlayCircle className="w-5 h-5" /> Comenzar Clase Maestra
@@ -383,13 +383,13 @@ const PortalHome = () => {
 
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                to="/clase-gratuita"
+                href="https://wa.me/573105679517"
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
                 <Gift className="w-5 h-5" /> Acceder a la Clase Gratis
               </Link>
               <a
-                href="https://wa.link/1yymd8"
+                href="https://wa.me/573105679517"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold bg-white text-foreground border border-border/40 hover:bg-neutral-50 transition-all duration-300 shadow-sm"
