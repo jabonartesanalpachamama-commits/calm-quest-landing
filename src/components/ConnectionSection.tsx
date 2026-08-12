@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { WHATSAPP_URL } from "@/lib/utils";
 import instructor from "@/assets/fransury_portal.webp";
 
 const ConnectionSection = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const openWhatsApp = () => {
+    window.open(WHATSAPP_URL, "_blank", "noopener noreferrer");
   };
+
 
   return (
     <section className="py-24 md:py-32 bg-background overflow-hidden">
