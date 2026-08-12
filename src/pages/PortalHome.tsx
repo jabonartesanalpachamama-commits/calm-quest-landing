@@ -155,7 +155,7 @@ const PortalHome = () => {
               >
                 Ver programas formativos
               </a>
-              <Link
+              <a
                 href="https://wa.me/573105679517"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
               >
@@ -179,7 +179,7 @@ const PortalHome = () => {
                 Accede a nuestra Clase Maestra online de 30 minutos donde aprenderás una técnica somática neurocientífica para calmar tu sistema nervioso de inmediato.
               </p>
             </div>
-            <Link
+            <a
               href="https://wa.me/573105679517"
               className={`shrink-0 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
@@ -382,7 +382,7 @@ const PortalHome = () => {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
+              <a
                 href="https://wa.me/573105679517"
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
