@@ -137,11 +137,12 @@ const FloatingCTA = ({
 
               <Button
                 id="floating-cta-desktop-btn"
-                onClick={scrollToForm}
+                onClick={openWhatsApp}
                 className="w-full rounded-full font-semibold"
               >
                 {ctaText}
               </Button>
+
             </div>
           </motion.div>
         </>
