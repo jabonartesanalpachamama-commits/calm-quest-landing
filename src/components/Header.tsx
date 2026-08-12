@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Gift, Menu, X } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/utils";
 import santoshaLogo from "@/assets/santosha-logo.webp";
+
 
 interface HeaderProps {
   palette: any;
