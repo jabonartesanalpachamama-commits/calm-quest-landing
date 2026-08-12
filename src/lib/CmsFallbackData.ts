@@ -424,9 +424,10 @@ const DEFAULT_SETTINGS: VisualIdentity = {
   logoText: "SantoSha",
   palette: "menta",
   fontFamily: "cormorant-lora",
-  whatsappNumber: "+5491123456789",
+  whatsappNumber: "+573105679517",
   footerText: "© 2026 SantoSha - Espacio de Bienestar, Psicología y Kundalini Yoga."
 };
+
 
 const DEFAULT_FORMS: CmsForm[] = [
   {
