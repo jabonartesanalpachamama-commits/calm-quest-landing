@@ -600,8 +600,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           title: "Un espacio seguro para tu mente y tu alma",
           subtitle: "YogaTerapia y técnicas holísticas que se convierten en una herramienta para cultivar conciencia corporal, regulación del sistema nervioso, conexión interna, resiliencia emocional y una relación más compasiva con nuestra humanidad.",
           buttonText: "Reserva tu Primera Sesión",
-          buttonLink: "#form-form-section-1",
+          buttonLink: "https://wa.me/573105679517",
           tagline: "Terapia Presencial y Online • Enfoque Integrativo"
+
         }
       },
       {
