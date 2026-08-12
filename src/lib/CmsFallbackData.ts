@@ -469,8 +469,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           tagline: "Clase Maestra Gratuita",
           description: "Aprende la técnica exacta que +10,000 profesionales ya usan para calmar su sistema nervioso, recuperar la claridad mental y eliminar la reactividad emocional.",
           buttonText: "Quiero mi clase gratuita",
-          buttonLink: "#form-home-hero",
+          buttonLink: "https://wa.me/573105679517",
           formId: "b191c71b-a5d6-4767-9d7a-11f879685a4a"
+
         }
       },
       {
