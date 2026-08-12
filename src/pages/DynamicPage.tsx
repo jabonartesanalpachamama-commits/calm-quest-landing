@@ -23,7 +23,9 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
+import { WHATSAPP_URL } from "@/lib/utils";
 import santoshaLogo from "@/assets/santosha-logo.webp";
+
 
 const sanitizeText = (text: string): string => {
   return text
