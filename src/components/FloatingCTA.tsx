@@ -44,14 +44,10 @@ const FloatingCTA = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const scrollToForm = () => {
-    const anchor = document.querySelector(formAnchor);
-    if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  const openWhatsApp = () => {
+    window.open(WHATSAPP_URL, "_blank", "noopener noreferrer");
   };
+
 
   const handleDismiss = () => {
     setVisible(false);
