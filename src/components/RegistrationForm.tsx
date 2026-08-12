@@ -35,13 +35,13 @@ const RegistrationForm = () => {
       
       if (dbError) {
         if (dbError.code === "23505") {
-          navigate("/clase-gratuita");
+          window.location.href = WHATSAPP_URL;
           return;
         }
         throw dbError;
       }
 
-      navigate("/clase-gratuita");
+      window.location.href = WHATSAPP_URL;
     } catch (error) {
       console.error("Registration error:", error);
       toast({
@@ -52,6 +52,7 @@ const RegistrationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   return (
