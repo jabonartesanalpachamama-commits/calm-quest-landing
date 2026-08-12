@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { CmsForm, getLocalSubmissions, saveLocalSubmissions } from "@/lib/CmsFallbackData";
+import { WHATSAPP_URL } from "@/lib/utils";
+
 
 interface CmsFormRendererProps {
   form: CmsForm;
