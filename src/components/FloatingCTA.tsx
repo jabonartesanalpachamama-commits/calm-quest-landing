@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Flame } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/utils";
+
 
 interface FloatingCTAProps {
   formAnchor?: string; // e.g. "#form-home-hero"
