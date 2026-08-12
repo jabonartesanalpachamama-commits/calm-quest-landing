@@ -483,8 +483,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           imageUrl: instructorImage,
           layout: "image-right",
           buttonText: "Quiero mi clase gratuita",
-          buttonLink: "#home-hero"
+          buttonLink: "https://wa.me/573105679517"
         }
+
       },
       {
         id: "home-benefits",
