@@ -622,8 +622,9 @@ export const DEFAULT_PAGES: CmsPage[] = [
           title: "¿Cómo puede ayudarte nuestro enfoque?",
           showCta: true,
           ctaText: "Reserva tu primera sesión",
-          ctaLink: "#form-form-section-1",
+          ctaLink: "https://wa.me/573105679517",
           ctaSubtext: "Primera consulta sin compromiso",
+
           items: [
             { icon: "🌿", title: "Reducción de la Ansiedad", description: "Aprende técnicas corporales y de respiración para calmar el sistema nervioso en momentos de crisis." },
             { icon: "🧘", title: "Autoconocimiento Profundo", description: "Comprende el origen de tus pensamientos y cómo influyen en tus emociones y decisiones." },
