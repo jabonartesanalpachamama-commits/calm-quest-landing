@@ -73,12 +73,13 @@ const FloatingCTA = ({
               </div>
               <Button
                 id="floating-cta-mobile-btn"
-                onClick={scrollToForm}
+                onClick={openWhatsApp}
                 size="sm"
                 className="shrink-0 rounded-full font-semibold text-xs px-4"
               >
-                Registrarme gratis
+                Escríbenos por WhatsApp
               </Button>
+
               <button
                 onClick={handleDismiss}
                 aria-label="Cerrar"
