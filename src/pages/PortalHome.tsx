@@ -154,13 +154,13 @@ const PortalHome = () => {
                 className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
                 Ver programas formativos
-              </a>
+              </Link>
               <a
                 href="https://wa.me/573105679517"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
               >
                 <Gift className="w-5 h-5" /> Acceder a Clase Gratuita
-              </a>
+              </Link>
             </div>
           </motion.div>
         </section>
@@ -184,7 +184,7 @@ const PortalHome = () => {
               className={`shrink-0 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
               <PlayCircle className="w-5 h-5" /> Comenzar Clase Maestra
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -249,7 +249,7 @@ const PortalHome = () => {
                       className={`w-full py-3 rounded-full text-xs font-semibold tracking-wider uppercase text-center block transition-all duration-200 hover:scale-[1.01] ${palette.primary}`}
                     >
                       Ver todos los detalles →
-                    </a>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -323,7 +323,7 @@ const PortalHome = () => {
                 className="inline-flex items-center gap-2 text-sm font-semibold hover:underline text-primary"
               >
                 Leer el manifiesto completo de Santosha →
-              </a>
+              </Link>
             </div>
           </motion.div>
         </section>
@@ -387,7 +387,7 @@ const PortalHome = () => {
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
                 <Gift className="w-5 h-5" /> Acceder a la Clase Gratis
-              </a>
+              </Link>
               <a
                 href="https://wa.me/573105679517"
                 target="_blank"
@@ -395,7 +395,7 @@ const PortalHome = () => {
                 className="inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold bg-white text-foreground border border-border/40 hover:bg-neutral-50 transition-all duration-300 shadow-sm"
               >
                 <MessageCircle className="w-5 h-5" /> Escribir por WhatsApp
-              </a>
+              </Link>
             </div>
 
             <p className="text-xs text-muted-foreground/80">
@@ -416,12 +416,12 @@ const PortalHome = () => {
             {settings?.footerText || "Bienestar · Conciencia · Transformación"}
           </p>
           <div className="pt-4 flex flex-wrap justify-center gap-6">
-            <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</a>
-            <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</a>
-            <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</a>
-            <Link to="/sabiduria-ciclica-esencia-femenina" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Sabiduría Cíclica</a>
-            <Link to="/acompanamiento-individual" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Acompañamiento 1:1</a>
-            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">🔑 Admin</a>
+            <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
+            <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</Link>
+            <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
+            <Link to="/sabiduria-ciclica-esencia-femenina" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Sabiduría Cíclica</Link>
+            <Link to="/acompanamiento-individual" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Acompañamiento 1:1</Link>
+            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">🔑 Admin</Link>
           </div>
         </div>
       </footer>
