@@ -119,50 +119,59 @@ const PortalHome = () => {
       <main className="flex-grow">
 
         {/* ── HERO ── */}
-        <section className="py-24 md:py-32 px-6 relative overflow-hidden text-center">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25">
-            <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent/15 rounded-full blur-3xl" />
+        <section className="relative overflow-hidden">
+          <img
+            src={heroBackground.url}
+            alt="Mujer meditando al amanecer sobre las montañas"
+            className="absolute inset-0 w-full h-full object-cover object-[70%_center]"
+            loading="eager"
+          />
+          {/* Legibility overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/20 md:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-background/40" />
+
+          <div className="relative z-10 py-24 md:py-36 lg:py-44 px-6">
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={fadeUp}
+              className="max-w-6xl mx-auto"
+            >
+              <div className="max-w-2xl space-y-8 text-center md:text-left">
+                <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
+                  <Leaf className="w-4 h-4" /> Conciencia · Calma · Transformación humana
+                </span>
+
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
+                  Del modo supervivencia a la{" "}
+                  <span className={palette.primaryText}>calma consciente</span>
+                </h1>
+
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-xl mx-auto md:mx-0">
+                  Kundalini Yoga, regulación del sistema nervioso y sabiduría somática para recordar tu esencia y habitar tu vida.
+                </p>
+
+                <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                  <a
+                    href="#programas"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector("#programas")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
+                    className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
+                  >
+                    Ver programas formativos
+                  </a>
+                  <a
+                    href="https://wa.me/573105679517"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
+                  >
+                    <Gift className="w-5 h-5" /> Acceder a Clase Gratuita
+                  </a>
+                </div>
+              </div>
+            </motion.div>
           </div>
-
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-8 relative z-10"
-          >
-            <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              <Leaf className="w-4 h-4" /> Conciencia · Calma · Transformación humana
-            </span>
-
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
-              Del modo supervivencia a la<br />
-              <span className={palette.primaryText}>calma consciente</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
-              Kundalini Yoga, regulación del sistema nervioso y sabiduría somática para recordar tu esencia y habitar tu vida.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="#programas"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector("#programas")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
-              >
-                Ver programas formativos
-              </a>
-              <a
-                href="https://wa.me/573105679517"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
-              >
-                <Gift className="w-5 h-5" /> Acceder a Clase Gratuita
-              </a>
-            </div>
-          </motion.div>
         </section>
 
         {/* ── EMBÚDO PRINCIPAL: BANNER CLASE GRATUITA ── */}
