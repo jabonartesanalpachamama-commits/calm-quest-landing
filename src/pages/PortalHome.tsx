@@ -15,6 +15,7 @@ import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
 import fransuryImage from "@/assets/fransury_portal.webp";
 import santoshaLogo from "@/assets/santosha-logo.webp";
+import heroBackground from "@/assets/hero-sunrise.png.asset.json";
 
 const PROGRAMS = [
   {
