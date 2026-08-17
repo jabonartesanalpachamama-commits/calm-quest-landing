@@ -15,6 +15,8 @@ import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import santoshaLogo from "@/assets/santosha-logo.webp";
+import cursoHero from "@/assets/curso-hero.png.asset.json";
+
 
 // ─── Module data ──────────────────────────────────────────────────────────────
 const MODULES = [
@@ -167,18 +169,23 @@ const CursoIniciacionYoga = () => {
       <main className="flex-grow">
 
         {/* ── HERO ── */}
-        <section className={`py-24 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-            <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-3xl" />
-          </div>
+        <section className="relative overflow-hidden border-b border-border/10">
+          <img
+            src={cursoHero.url}
+            alt="Espacio sereno de práctica de yoga con mat, cojín y velas"
+            className="absolute inset-0 w-full h-full object-cover object-[75%_center]"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/30 md:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-background/40" />
 
           <motion.div
             initial="hidden"
             animate="show"
             variants={fadeUp}
-            className="max-w-4xl mx-auto text-center space-y-8 relative z-10"
+            className="max-w-5xl mx-auto px-6 py-24 md:py-36 relative z-10"
           >
+          <div className="max-w-2xl text-center md:text-left space-y-8">
             <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
               <Sparkles className="w-4 h-4" /> Curso de Iniciación · 6 Módulos Bimensuales
             </span>
@@ -188,13 +195,13 @@ const CursoIniciacionYoga = () => {
               <span className={palette.primaryText}>Yoga</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-xl mx-auto md:mx-0">
               Habitar el yoga como una práctica del día a día
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 pt-2">
+            <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
               {["6 Módulos", "Encuentros Bimensuales", "Práctica Progresiva", "Material de Apoyo"].map((badge) => (
-                <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card border border-border/50 px-4 py-2 rounded-full">
+                <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card/80 backdrop-blur-sm border border-border/50 px-4 py-2 rounded-full">
                   <svg className="w-3.5 h-3.5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
@@ -202,6 +209,7 @@ const CursoIniciacionYoga = () => {
                 </span>
               ))}
             </div>
+
 
             <a
               href="#curso-inscripcion"
@@ -213,7 +221,9 @@ const CursoIniciacionYoga = () => {
             >
               Quiero Inscribirme <Moon className="w-4 h-4 ml-1" />
             </a>
+          </div>
           </motion.div>
+
         </section>
 
         {/* ── INTRODUCCIÓN ── */}
