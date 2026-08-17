@@ -15,6 +15,8 @@ import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
 import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
 import santoshaLogo from "@/assets/santosha-logo.webp";
+import cursoHero from "@/assets/curso-hero.png.asset.json";
+
 
 // ─── Module data ──────────────────────────────────────────────────────────────
 const MODULES = [
