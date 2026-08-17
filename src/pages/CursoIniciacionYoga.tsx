@@ -219,7 +219,9 @@ const CursoIniciacionYoga = () => {
             >
               Quiero Inscribirme <Moon className="w-4 h-4 ml-1" />
             </a>
+          </div>
           </motion.div>
+
         </section>
 
         {/* ── INTRODUCCIÓN ── */}
