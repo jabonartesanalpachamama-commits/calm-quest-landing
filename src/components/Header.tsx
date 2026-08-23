@@ -94,18 +94,21 @@ const Header = ({ palette, brandName }: HeaderProps) => {
             Programas
           </a>
           <Link to="/blog" onClick={handleLinkClick} className="text-foreground hover:text-primary font-medium py-2 border-b border-border/10">Blog</Link>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleLinkClick}
+          <button
+            type="button"
+            onClick={() => {
+              handleLinkClick();
+              setFreeClassOpen(true);
+            }}
             className={`inline-flex items-center justify-center gap-1.5 px-5 py-3 mt-2 rounded-full text-sm font-semibold tracking-wide uppercase ${palette.primary}`}
           >
             <Gift className="w-4 h-4" /> Clase Gratis
-          </a>
+          </button>
 
         </div>
       )}
+
+      <FreeClassDialog open={freeClassOpen} onOpenChange={setFreeClassOpen} />
     </header>
   );
 };
