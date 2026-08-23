@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Flame } from "lucide-react";
-import { WHATSAPP_URL } from "@/lib/utils";
+import FreeClassDialog from "@/components/FreeClassDialog";
 
 
 interface FloatingCTAProps {
@@ -23,6 +23,7 @@ const FloatingCTA = ({
 }: FloatingCTAProps) => {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [freeClassOpen, setFreeClassOpen] = useState(false);
 
   const handleScroll = useCallback(() => {
     if (dismissed) return;
@@ -44,9 +45,7 @@ const FloatingCTA = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const openWhatsApp = () => {
-    window.open(WHATSAPP_URL, "_blank", "noopener noreferrer");
-  };
+  const openForm = () => setFreeClassOpen(true);
 
 
   const handleDismiss = () => {
@@ -55,6 +54,8 @@ const FloatingCTA = ({
   };
 
   return (
+    <>
+    <FreeClassDialog open={freeClassOpen} onOpenChange={setFreeClassOpen} />
     <AnimatePresence>
       {visible && !dismissed && (
         <>
@@ -73,11 +74,11 @@ const FloatingCTA = ({
               </div>
               <Button
                 id="floating-cta-mobile-btn"
-                onClick={openWhatsApp}
+                onClick={openForm}
                 size="sm"
                 className="shrink-0 rounded-full font-semibold text-xs px-4"
               >
-                Escríbenos por WhatsApp
+                Clase Gratis
               </Button>
 
               <button
@@ -137,7 +138,7 @@ const FloatingCTA = ({
 
               <Button
                 id="floating-cta-desktop-btn"
-                onClick={openWhatsApp}
+                onClick={openForm}
                 className="w-full rounded-full font-semibold"
               >
                 {ctaText}
@@ -148,6 +149,7 @@ const FloatingCTA = ({
         </>
       )}
     </AnimatePresence>
+    </>
   );
 };
 
