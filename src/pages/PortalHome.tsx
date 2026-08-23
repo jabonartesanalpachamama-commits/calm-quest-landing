@@ -12,6 +12,7 @@ import {
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
+import FreeClassDialog from "@/components/FreeClassDialog";
 import Header from "@/components/Header";
 import fransuryImage from "@/assets/fransury_portal.webp";
 import santoshaLogo from "@/assets/santosha-logo.webp";
@@ -86,6 +87,7 @@ const TESTIMONIALS = [
 
 const PortalHome = () => {
   const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
+  const [freeClassOpen, setFreeClassOpen] = useState(false);
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -163,12 +165,13 @@ const PortalHome = () => {
                   >
                     Ver programas formativos
                   </a>
-                  <a
-                    href="https://wa.me/573105679517"
+                  <button
+                    type="button"
+                    onClick={() => setFreeClassOpen(true)}
                     className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold bg-card border border-border hover:bg-muted/30 transition-all duration-300"
                   >
                     <Gift className="w-5 h-5" /> Acceder a Clase Gratuita
-                  </a>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -189,12 +192,13 @@ const PortalHome = () => {
                 Accede a nuestra Clase Maestra online de 30 minutos donde aprenderás una técnica somática neurocientífica para calmar tu sistema nervioso de inmediato.
               </p>
             </div>
-            <a
-              href="https://wa.me/573105679517"
+            <button
+              type="button"
+              onClick={() => setFreeClassOpen(true)}
               className={`shrink-0 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
             >
               <PlayCircle className="w-5 h-5" /> Comenzar Clase Maestra
-            </a>
+            </button>
           </div>
         </section>
 
@@ -392,12 +396,13 @@ const PortalHome = () => {
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="https://wa.me/573105679517"
+              <button
+                type="button"
+                onClick={() => setFreeClassOpen(true)}
                 className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-base font-bold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
               >
                 <Gift className="w-5 h-5" /> Acceder a la Clase Gratis
-              </a>
+              </button>
               <a
                 href="https://wa.me/573105679517"
                 target="_blank"
