@@ -442,6 +442,7 @@ const PortalHome = () => {
       </footer>
 
       <AiChatWidget pageSlug="home" />
+      <FreeClassDialog open={freeClassOpen} onOpenChange={setFreeClassOpen} />
     </div>
   );
 };
