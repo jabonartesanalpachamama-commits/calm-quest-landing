@@ -853,6 +853,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
           <p className="font-serif font-semibold text-foreground">{settings.brandName}</p>
           <p className="font-light">{settings.footerText}</p>
           <div className="pt-4 flex justify-center gap-6">
+            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors inline-flex items-center">
               <Lock className="w-3.5 h-3.5 mr-1" /> Acceso Administrador
             </Link>

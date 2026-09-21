@@ -600,6 +600,7 @@ const CursoIniciacionYoga = () => {
             <Link to="/" className="hover:underline text-xs text-muted-foreground/70 transition-colors">
               ← Inicio
             </Link>
+            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">
               🔑 Administrador
             </Link>

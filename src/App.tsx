@@ -20,6 +20,7 @@ import Filosofia from "./pages/Filosofia";
 import AcompanamientoIndividual from "./pages/AcompanamientoIndividual";
 import SabiduriaCiclica from "./pages/SabiduriaCiclica";
 import PortalHome from "./pages/PortalHome";
+import TerminosYCondiciones from "./pages/TerminosYCondiciones";
 import TrafficSplitter from "./components/TrafficSplitter";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/filosofia" element={<Filosofia />} />
           <Route path="/acompanamiento-individual" element={<AcompanamientoIndividual />} />
           <Route path="/sabiduria-ciclica-esencia-femenina" element={<SabiduriaCiclica />} />
+          <Route path="/terminos-y-condiciones" element={<TerminosYCondiciones />} />
 
           {/* CMS Administration Panel */}
           <Route path="/admin/login" element={<CmsLogin />} />

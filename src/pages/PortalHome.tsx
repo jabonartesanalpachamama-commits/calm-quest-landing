@@ -436,6 +436,7 @@ const PortalHome = () => {
             <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
             <Link to="/sabiduria-ciclica-esencia-femenina" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Sabiduría Cíclica</Link>
             <Link to="/acompanamiento-individual" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Acompañamiento 1:1</Link>
+            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
             <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors">🔑 Admin</Link>
           </div>
         </div>
