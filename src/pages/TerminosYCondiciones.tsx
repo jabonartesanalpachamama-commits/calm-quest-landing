@@ -36,7 +36,7 @@ const TerminosYCondiciones = () => {
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
   return (
-    <div className={`min-h-screen bg-background font-sans text-foreground flex flex-col ${palette.bgLayer}`}>
+    <div className={`min-h-screen font-sans text-foreground flex flex-col ${palette.background}`}>
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow pt-24 pb-16 px-6 relative z-10">
