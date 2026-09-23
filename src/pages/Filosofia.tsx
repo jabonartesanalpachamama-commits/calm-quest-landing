@@ -379,12 +379,6 @@ const Filosofia = () => {
                   href: "/quien-soy",
                 },
                 {
-                  icon: <Leaf className="w-8 h-8 text-primary mb-3" />,
-                  title: "Cultivar Mi Bienestar",
-                  desc: "Kundalini Yoga · Programas y Acompañamiento",
-                  href: "/cultivar-bienestar",
-                },
-                {
                   icon: <User className="w-8 h-8 text-primary mb-3" />,
                   title: "Mi Proceso Individual",
                   desc: "Psicoterapia individual · 100% Virtual",
@@ -395,6 +389,12 @@ const Filosofia = () => {
                   title: "Proceso de Pareja",
                   desc: "Psicoterapia de Pareja · 100% Virtual",
                   href: "/proceso-de-pareja",
+                },
+                {
+                  icon: <Leaf className="w-8 h-8 text-primary mb-3" />,
+                  title: "Cultivar Mi Bienestar",
+                  desc: "Kundalini Yoga · Programas y Acompañamiento",
+                  href: "/cultivar-bienestar",
                 },
               ].map(({ icon, title, desc, href }) => (
                 <Link

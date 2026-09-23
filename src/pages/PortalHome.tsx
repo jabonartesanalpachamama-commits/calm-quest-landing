@@ -20,17 +20,6 @@ import heroBackground from "@/assets/hero-sunrise.png.asset.json";
 
 const PROGRAMS = [
   {
-    icon: <Leaf className="w-6 h-6 text-teal-700" />,
-    title: "Cultivar Mi Bienestar",
-    subtitle: "Kundalini Yoga",
-    desc: "Espacios diseñados para habitar el cuerpo, encontrar equilibrio y conectar con tu verdadera esencia a través de la práctica constante.",
-    features: ["Curso de Iniciación", "Sabiduría Cíclica", "Acompañamiento 1:1"],
-    href: "/cultivar-bienestar",
-    color: "from-teal-50 to-cyan-50",
-    borderColor: "border-teal-200",
-    accentColor: "text-teal-700",
-  },
-  {
     icon: <User className="w-6 h-6 text-indigo-700" />,
     title: "Mi Proceso Individual",
     subtitle: "Psicoterapia Individual",
@@ -51,6 +40,17 @@ const PROGRAMS = [
     color: "from-violet-50 to-fuchsia-50",
     borderColor: "border-violet-200",
     accentColor: "text-violet-700",
+  },
+  {
+    icon: <Leaf className="w-6 h-6 text-teal-700" />,
+    title: "Cultivar Mi Bienestar",
+    subtitle: "Kundalini Yoga",
+    desc: "Espacios diseñados para habitar el cuerpo, encontrar equilibrio y conectar con tu verdadera esencia a través de la práctica constante.",
+    features: ["Curso de Iniciación", "Sabiduría Cíclica", "Acompañamiento 1:1"],
+    href: "/cultivar-bienestar",
+    color: "from-teal-50 to-cyan-50",
+    borderColor: "border-teal-200",
+    accentColor: "text-teal-700",
   },
 ];
 
