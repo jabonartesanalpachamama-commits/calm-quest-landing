@@ -22,6 +22,7 @@ import SabiduriaCiclica from "./pages/SabiduriaCiclica";
 import PortalHome from "./pages/PortalHome";
 import MiProcesoIndividual from "./pages/MiProcesoIndividual";
 import ProcesoDePareja from "./pages/ProcesoDePareja";
+import CultivarBienestar from "./pages/CultivarBienestar";
 import TerminosYCondiciones from "./pages/TerminosYCondiciones";
 import TrafficSplitter from "./components/TrafficSplitter";
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/acompanamiento-individual" element={<AcompanamientoIndividual />} />
           <Route path="/mi-proceso-individual" element={<MiProcesoIndividual />} />
           <Route path="/proceso-de-pareja" element={<ProcesoDePareja />} />
+          <Route path="/cultivar-bienestar" element={<CultivarBienestar />} />
           <Route path="/sabiduria-ciclica-esencia-femenina" element={<SabiduriaCiclica />} />
           <Route path="/terminos-y-condiciones" element={<TerminosYCondiciones />} />
 

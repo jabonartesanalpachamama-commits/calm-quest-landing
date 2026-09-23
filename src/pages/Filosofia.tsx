@@ -370,7 +370,7 @@ const Filosofia = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
               {[
                 {
                   icon: <User className="w-8 h-8 text-primary mb-3" />,
@@ -379,16 +379,10 @@ const Filosofia = () => {
                   href: "/quien-soy",
                 },
                 {
-                  icon: <Moon className="w-8 h-8 text-primary mb-3" />,
-                  title: "Curso de Iniciación al Yoga",
-                  desc: "6 módulos · Bimensual · Virtual",
-                  href: "/curso-iniciacion-yoga",
-                },
-                {
-                  icon: <Flower2 className="w-8 h-8 text-primary mb-3" />,
-                  title: "Sabiduría Cíclica",
-                  desc: "Esencia Femenina · Virtual · Comunidad",
-                  href: "/sabiduria-ciclica-esencia-femenina",
+                  icon: <Leaf className="w-8 h-8 text-primary mb-3" />,
+                  title: "Cultivar Mi Bienestar",
+                  desc: "Kundalini Yoga · Programas y Acompañamiento",
+                  href: "/cultivar-bienestar",
                 },
                 {
                   icon: <User className="w-8 h-8 text-primary mb-3" />,

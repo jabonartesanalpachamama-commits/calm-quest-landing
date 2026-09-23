@@ -20,34 +20,12 @@ import heroBackground from "@/assets/hero-sunrise.png.asset.json";
 
 const PROGRAMS = [
   {
-    icon: <Moon className="w-6 h-6 text-amber-700" />,
-    title: "Curso de Iniciación al Yoga",
-    subtitle: "Habitar el yoga como una práctica del día a día",
-    desc: "Un viaje de un año dividido en 6 módulos, para integrar el yoga, la meditación y la conciencia en tu vida cotidiana.",
-    features: ["100% Virtual", "Encuentros bimensuales", "Acompañamiento continuo"],
-    href: "/curso-iniciacion-yoga",
-    color: "from-amber-50 to-orange-50",
-    borderColor: "border-amber-200",
-    accentColor: "text-amber-700",
-  },
-  {
-    icon: <Flower2 className="w-6 h-6 text-rose-700" />,
-    title: "Sabiduría Cíclica, Esencia Femenina",
-    subtitle: "Reconecta con tu naturaleza. Habita tu poder. Recuerda tu ritmo.",
-    desc: "Experiencia grupal de reconexión profunda para mujeres que desean comprender su naturaleza cíclica, transformar su relación con la menstruación e intuición.",
-    features: ["100% Virtual", "Comunidad de apoyo", "Sabiduría ancestral & corporal"],
-    href: "/sabiduria-ciclica-esencia-femenina",
-    color: "from-rose-50 to-pink-50",
-    borderColor: "border-rose-200",
-    accentColor: "text-rose-700",
-  },
-  {
     icon: <Leaf className="w-6 h-6 text-teal-700" />,
-    title: "Acompañamiento Individual 1:1",
-    subtitle: "YogaTerapia, Kundalini Yoga y Meditación",
-    desc: "Clases privadas y programas adaptados a tu momento vital, tu historia y tu camino personal. Es un espacio diseñado para cultivar claridad y regulación interna.",
-    features: ["Sesiones personalizadas", "Formato 1 a 1", "100% Virtual"],
-    href: "/acompanamiento-individual",
+    title: "CULTIVAR MI BIENESTAR",
+    subtitle: "Kundalini Yoga",
+    desc: "Espacios diseñados para habitar el cuerpo, encontrar equilibrio y conectar con tu verdadera esencia a través de la práctica constante.",
+    features: ["Curso de Iniciación", "Sabiduría Cíclica", "Acompañamiento 1:1"],
+    href: "/cultivar-bienestar",
     color: "from-teal-50 to-cyan-50",
     borderColor: "border-teal-200",
     accentColor: "text-teal-700",
@@ -239,7 +217,7 @@ const PortalHome = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               {PROGRAMS.map((prog, idx) => (
                 <motion.div
                   key={prog.title}
