@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Heart, Wind, User, Zap, Droplets, Loader2, Leaf, Sun, ChevronRight, Brain, Sparkles, Sprout, HandHeart, Moon, HeartHandshake, Settings, Flower2 } from "lucide-react";
+import { Search, Heart, Wind, User, Users, Zap, Droplets, Loader2, Leaf, Sun, ChevronRight, Brain, Sparkles, Sprout, HandHeart, Moon, HeartHandshake, Settings, Flower2 } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -370,7 +370,7 @@ const Filosofia = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
               {[
                 {
                   icon: <User className="w-8 h-8 text-primary mb-3" />,
@@ -395,6 +395,12 @@ const Filosofia = () => {
                   title: "Mi Proceso Individual",
                   desc: "Psicoterapia individual · 100% Virtual",
                   href: "/mi-proceso-individual",
+                },
+                {
+                  icon: <Users className="w-8 h-8 text-primary mb-3" />,
+                  title: "Proceso de Pareja",
+                  desc: "Psicoterapia de Pareja · 100% Virtual",
+                  href: "/proceso-de-pareja",
                 },
               ].map(({ icon, title, desc, href }) => (
                 <Link

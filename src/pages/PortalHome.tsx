@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Moon, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle, User } from "lucide-react";
+import { Moon, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle, User, Users } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -62,6 +62,17 @@ const PROGRAMS = [
     color: "from-indigo-50 to-blue-50",
     borderColor: "border-indigo-200",
     accentColor: "text-indigo-700",
+  },
+  {
+    icon: <Users className="w-6 h-6 text-violet-700" />,
+    title: "Proceso de Pareja",
+    subtitle: "Psicoterapia de Pareja",
+    desc: "Un espacio donde ambos puedan observar lo que está ocurriendo, mejorar la comunicación y asumir responsabilidad sobre aquello que sí pueden transformar.",
+    features: ["Mejorar la comunicación", "Gestión de conflictos", "100% Virtual"],
+    href: "/proceso-de-pareja",
+    color: "from-violet-50 to-fuchsia-50",
+    borderColor: "border-violet-200",
+    accentColor: "text-violet-700",
   },
 ];
 
