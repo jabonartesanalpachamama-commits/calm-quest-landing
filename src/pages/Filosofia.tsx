@@ -370,7 +370,7 @@ const Filosofia = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-4 text-left">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
               {[
                 {
                   icon: <User className="w-8 h-8 text-primary mb-3" />,
@@ -389,6 +389,12 @@ const Filosofia = () => {
                   title: "Sabiduría Cíclica",
                   desc: "Esencia Femenina · Virtual · Comunidad",
                   href: "/sabiduria-ciclica-esencia-femenina",
+                },
+                {
+                  icon: <User className="w-8 h-8 text-primary mb-3" />,
+                  title: "Mi Proceso Individual",
+                  desc: "Psicoterapia individual · 100% Virtual",
+                  href: "/mi-proceso-individual",
                 },
               ].map(({ icon, title, desc, href }) => (
                 <Link

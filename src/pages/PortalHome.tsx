@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Moon, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle } from "lucide-react";
+import { Moon, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle, User } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -51,6 +51,17 @@ const PROGRAMS = [
     color: "from-teal-50 to-cyan-50",
     borderColor: "border-teal-200",
     accentColor: "text-teal-700",
+  },
+  {
+    icon: <User className="w-6 h-6 text-indigo-700" />,
+    title: "Mi Proceso Individual",
+    subtitle: "Psicoterapia Individual",
+    desc: "Un espacio terapéutico para comprender lo que estás viviendo, reconocer tus patrones emocionales y desarrollar nuevas maneras de responder ante aquello que hoy genera malestar.",
+    features: ["1 o 3 Sesiones", "Espacio Terapéutico", "100% Virtual"],
+    href: "/mi-proceso-individual",
+    color: "from-indigo-50 to-blue-50",
+    borderColor: "border-indigo-200",
+    accentColor: "text-indigo-700",
   },
 ];
 
