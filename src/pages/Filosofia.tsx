@@ -237,6 +237,37 @@ const Filosofia = () => {
           </motion.div>
         </section>
 
+        {/* ── DOS CAMINOS ── */}
+        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeUp}
+            className="max-w-3xl mx-auto space-y-8"
+          >
+            <div className="text-center space-y-3">
+              <Heart className="w-12 h-12 text-primary mx-auto mb-2" />
+              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
+                Dos caminos. Una misma intención.
+              </h2>
+            </div>
+            <div className="space-y-5 text-muted-foreground leading-relaxed font-light text-base text-center md:text-left">
+              <p>
+                La psicoterapia permite comprender los procesos emocionales, psicológicos y relacionales que están influyendo en nuestra vida.
+              </p>
+              <p>
+                El Kundalini Yoga ofrece prácticas de respiración, movimiento, meditación y conciencia corporal que pueden favorecer la presencia, la autorregulación y el contacto con uno mismo.
+              </p>
+              <div className={`mt-8 rounded-3xl p-8 space-y-3 ${palette.secondary} text-center`}>
+                <p className={`font-serif text-lg md:text-xl font-light italic leading-relaxed ${palette.secondaryText}`}>
+                  En Santosha, ambos caminos pueden encontrarse desde el respeto por cada historia, la naturaleza y los objetivos de cada proceso.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
         {/* ── MANIFIESTO PROFUNDO ── */}
         <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
           <motion.div
