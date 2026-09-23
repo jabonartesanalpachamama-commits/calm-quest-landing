@@ -21,7 +21,7 @@ import heroBackground from "@/assets/hero-sunrise.png.asset.json";
 const PROGRAMS = [
   {
     icon: <Leaf className="w-6 h-6 text-teal-700" />,
-    title: "CULTIVAR MI BIENESTAR",
+    title: "Cultivar Mi Bienestar",
     subtitle: "Kundalini Yoga",
     desc: "Espacios diseñados para habitar el cuerpo, encontrar equilibrio y conectar con tu verdadera esencia a través de la práctica constante.",
     features: ["Curso de Iniciación", "Sabiduría Cíclica", "Acompañamiento 1:1"],
