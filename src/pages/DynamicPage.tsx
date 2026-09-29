@@ -677,6 +677,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
 
             // 5. TESTIMONIALS SECTION
             case "testimonials":
+              return null;
               return (
                 <section 
                   key={section.id} 

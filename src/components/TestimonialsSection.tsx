@@ -103,6 +103,8 @@ const TestimonialsSection = ({
   title = <>Historias de <span className="text-primary">Transformación Real</span></>,
   subtitle = "Profesionales como tú que han recuperado el equilibrio emocional y transformado su bienestar."
 }: TestimonialsSectionProps) => {
+  // Testimonios ocultos en todo el sitio por solicitud de la clienta
+  if (testimonials) return null;
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
