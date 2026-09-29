@@ -342,49 +342,6 @@ const PortalHome = () => {
           </motion.div>
         </section>
 
-        {/* ── BLOQUE DE RESEÑAS ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-t border-border/10`}>
-          <div className="max-w-5xl mx-auto space-y-12">
-            <div className="text-center space-y-3">
-              <span className="text-xs uppercase tracking-widest font-bold text-muted-foreground/60">
-                Experiencias de Alumnas y Participantes
-              </span>
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Lo que dicen de Santosha
-              </h2>
-              <p className="text-muted-foreground font-light max-w-xl mx-auto">
-                Testimonios reales de personas que han transformado su relación con el cuerpo y la mente a través de nuestros espacios.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {TESTIMONIALS.map((t, idx) => (
-                <motion.div
-                  key={t.name}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-40px" }}
-                  variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.45, delay: idx * 0.08 } } }}
-                  className="bg-card border border-border/40 rounded-3xl p-7 space-y-5 hover:border-primary/20 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <p className="text-sm text-muted-foreground font-light italic leading-relaxed">
-                    "{t.text}"
-                  </p>
-                  <div className="pt-2 border-t border-border/20 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-bold text-xs text-primary">
-                      {t.name[0]}
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-foreground">{t.name}</p>
-                      <p className="text-[10px] text-muted-foreground">{t.role}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── CTA FINAL ── */}
         <section className={`py-24 md:py-32 px-6 ${palette.secondary} text-center relative overflow-hidden`}>
           <div className="max-w-3xl mx-auto space-y-8 relative z-10">
