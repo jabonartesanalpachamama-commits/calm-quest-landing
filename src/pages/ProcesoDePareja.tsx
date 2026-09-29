@@ -56,7 +56,7 @@ const ProcesoDePareja = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
   };
 
-  const cta1Session = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos a 1 Sesión de Psicoterapia de Pareja.')}`;
+  const cta1Session = "https://checkout.bold.co/payment/LNK_F9YHBRBQLU";
   const cta3Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos al paquete de 3 Sesiones de Psicoterapia de Pareja.')}`;
   const cta4Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos al paquete de 4 Sesiones de Psicoterapia de Pareja.')}`;
 
