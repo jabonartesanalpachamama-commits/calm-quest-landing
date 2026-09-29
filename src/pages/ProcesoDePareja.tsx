@@ -58,6 +58,7 @@ const ProcesoDePareja = () => {
 
   const cta1Session = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos a 1 Sesión de Psicoterapia de Pareja.')}`;
   const cta3Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos al paquete de 3 Sesiones de Psicoterapia de Pareja.')}`;
+  const cta4Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos al paquete de 4 Sesiones de Psicoterapia de Pareja.')}`;
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
@@ -204,7 +205,7 @@ const ProcesoDePareja = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               
               {/* Opción 1 Sesión */}
               <div className="relative group bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-border/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 flex flex-col h-full text-center">
@@ -235,9 +236,6 @@ const ProcesoDePareja = () => {
               <div className="relative group bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-border/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 flex flex-col h-full text-center">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent rounded-3xl pointer-events-none" />
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-sm z-20">
-                    Recomendado
-                  </div>
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Leaf className="w-6 h-6 text-primary" />
                   </div>
@@ -246,6 +244,8 @@ const ProcesoDePareja = () => {
                   </h3>
                   <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
                     Proceso de acompañamiento más profundo para trabajar patrones relacionales y generar verdaderas herramientas de cambio.
+                    <br/><br/>
+                    <span className="text-primary/80 text-xs">(descuento ya aplicado del 10%)</span>
                   </p>
                   
                   <a
@@ -255,6 +255,34 @@ const ProcesoDePareja = () => {
                     className={`w-full py-4 px-6 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-2 ${palette.primary} ${palette.primaryText} hover:opacity-90`}
                   >
                     Quiero 3 sesiones <span className="font-bold border-l border-black/20 pl-2 ml-1">216 USD</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Opción 4 Sesiones */}
+              <div className="relative group bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-primary/30 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full text-center">
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-3xl pointer-events-none" />
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-sm z-20">
+                    Recomendado
+                  </div>
+                  <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Star className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="font-serif text-2xl font-semibold text-foreground mb-4">
+                    4 Sesiones
+                  </h3>
+                  <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
+                    Recomendamos este paquete de sesiones, donde podrán tener cada uno un espacio individual y 2 espacios juntos.
+                  </p>
+                  
+                  <a
+                    href={cta4Sessions}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full py-4 px-6 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-2 ${palette.primary} ${palette.primaryText} hover:opacity-90`}
+                  >
+                    Quiero 4 sesiones <span className="font-bold border-l border-black/20 pl-2 ml-1">288 USD</span>
                   </a>
                 </div>
               </div>
