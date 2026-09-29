@@ -58,7 +58,7 @@ const ProcesoDePareja = () => {
 
   const cta1Session = "https://checkout.bold.co/payment/LNK_F9YHBRBQLU";
   const cta3Sessions = "https://checkout.bold.co/payment/LNK_7IOCCI6CQ4";
-  const cta4Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, nos gustaría inscribirnos al paquete de 4 Sesiones de Psicoterapia de Pareja.')}`;
+  const cta4Sessions = "https://checkout.bold.co/payment/LNK_TG1CNBMOKY";
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
