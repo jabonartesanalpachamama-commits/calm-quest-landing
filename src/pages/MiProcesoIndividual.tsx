@@ -61,7 +61,7 @@ const MiProcesoIndividual = () => {
   };
 
   const cta1Session = "https://checkout.bold.co/payment/LNK_2BNPOWDQ8L";
-  const cta3Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme al paquete de 3 Sesiones de Psicoterapia Individual.')}`;
+  const cta3Sessions = "https://checkout.bold.co/payment/LNK_43NGG631N3";
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
