@@ -274,6 +274,8 @@ const ProcesoDePareja = () => {
                   </h3>
                   <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
                     Recomendamos este paquete de sesiones, donde podrán tener cada uno un espacio individual y 2 espacios juntos.
+                    <br/><br/>
+                    <span className="text-primary/80 text-xs">(descuento ya aplicado del 10%)</span>
                   </p>
                   
                   <a
