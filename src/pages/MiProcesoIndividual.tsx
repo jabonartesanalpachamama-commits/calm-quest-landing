@@ -60,7 +60,7 @@ const MiProcesoIndividual = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
   };
 
-  const cta1Session = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme a 1 Sesión de Psicoterapia Individual.')}`;
+  const cta1Session = "https://checkout.bold.co/payment/LNK_2BNPOWDQ8L";
   const cta3Sessions = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme al paquete de 3 Sesiones de Psicoterapia Individual.')}`;
 
   return (
