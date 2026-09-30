@@ -6,11 +6,12 @@ import santoshaLogo from "@/assets/santosha-logo.webp";
 
 
 interface HeaderProps {
+  borderless?: boolean;
   palette: any;
   brandName?: string;
 }
 
-const Header = ({ palette, brandName }: HeaderProps) => {
+const Header = ({ palette, brandName, borderless }: HeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,7 +38,7 @@ const Header = ({ palette, brandName }: HeaderProps) => {
   };
 
   return (
-    <header className={`py-4 px-6 border-b border-border/40 ${palette.cardBackground} sticky top-0 z-40 shadow-sm backdrop-blur-md bg-opacity-90`}>
+    <header className={`py-4 px-6 ${borderless ? '' : 'border-b border-border/40 shadow-sm'} ${palette.cardBackground} sticky top-0 z-40 backdrop-blur-md bg-opacity-90`}>
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-3 shrink-0">
           <img
