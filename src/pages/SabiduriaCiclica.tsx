@@ -306,21 +306,32 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-6 md:pt-12 pb-12 md:pb-20 px-4 md:px-6 bg-gradient-to-b from-card via-card to-background">
+          <section className="relative pt-0 pb-12 md:pb-20 px-4 md:px-6 bg-gradient-to-b from-card via-card to-background">
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-12 items-center">
-              <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
-                <div className="overflow-hidden ciclica-hero-mask">
-                  <img
+              <div className="relative -mx-4 md:mx-0 md:self-start">
+                <div
+                  className="relative overflow-hidden aspect-square"
+                  style={{
+                    WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.92) 78%, rgba(0,0,0,0.75) 84%, rgba(0,0,0,0.5) 89%, rgba(0,0,0,0.25) 94%, rgba(0,0,0,0.08) 98%, rgba(0,0,0,0) 100%)",
+                    maskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.92) 78%, rgba(0,0,0,0.75) 84%, rgba(0,0,0,0.5) 89%, rgba(0,0,0,0.25) 94%, rgba(0,0,0,0.08) 98%, rgba(0,0,0,0) 100%)",
+                  }}
+                >
+                  <motion.img
                     src="/sabiduria-ciclica-17oct.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
                     width={1254}
                     height={1254}
                     loading="eager"
                     fetchPriority="high"
-                    className="w-full h-auto block"
+                    style={{
+                      y: heroImgY,
+                      top: -(heroParallax ? 80 : 28),
+                      height: `calc(100% + ${heroParallax ? 80 : 28}px)`,
+                    }}
+                    className="absolute left-0 w-full object-cover object-center block"
                   />
                 </div>
-              </motion.div>
+              </div>
 
               <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-5 text-center md:text-left">
                 <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
