@@ -275,7 +275,7 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-6 md:pt-12 pb-12 md:pb-20 px-4 md:px-6 bg-background">
+          <section className="relative pt-6 md:pt-12 pb-12 md:pb-20 px-4 md:px-6 bg-gradient-to-b from-card via-card to-background">
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
                 <div className="overflow-hidden ciclica-hero-mask">
