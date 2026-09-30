@@ -22,9 +22,9 @@ type Phase = "nueva" | "creciente" | "llena" | "menguante" | "completa";
 const MoonPhase = ({ phase, className = "w-6 h-6" }: { phase: Phase; className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
     <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.4" />
-    {phase === "creciente" && <path d="M12 3a9 9 0 0 1 0 18a5 9 0 0 0 0-18z" fill="currentColor" />}
+    {phase === "creciente" && <path d="M12 3A9 9 0 0 1 12 21A4.5 9 0 0 0 12 3Z" fill="currentColor" />}
     {phase === "llena" && <circle cx="12" cy="12" r="9" fill="currentColor" />}
-    {phase === "menguante" && <path d="M12 3a9 9 0 0 0 0 18a5 9 0 0 1 0-18z" fill="currentColor" />}
+    {phase === "menguante" && <path d="M12 3A9 9 0 0 0 12 21A4.5 9 0 0 1 12 3Z" fill="currentColor" />}
     {phase === "completa" && (
       <>
         <circle cx="12" cy="12" r="6" fill="currentColor" />
@@ -271,7 +271,7 @@ const SabiduriaCiclica = () => {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--warm-mauve)/0.7),transparent_60%)] pointer-events-none" />
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
-                <div className="md:rounded-[2rem] overflow-hidden [mask-image:linear-gradient(to_bottom,black_80%,transparent)] md:[mask-image:radial-gradient(ellipse_at_center,black_62%,transparent_78%)]">
+                <div className="md:rounded-[2rem] overflow-hidden [mask-image:linear-gradient(to_bottom,black_80%,transparent)] md:shadow-[0_30px_60px_-30px_hsl(var(--primary)/0.35)] md:[mask-image:linear-gradient(to_bottom,black_88%,transparent)]">
                   <img
                     src="/sabiduria-ciclica-17oct.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
