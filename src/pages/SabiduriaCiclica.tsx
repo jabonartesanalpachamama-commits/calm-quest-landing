@@ -15,7 +15,6 @@ import {
   applyFontPair,
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
-import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
 
 const LEARNING_POINTS = [
@@ -104,11 +103,6 @@ const SabiduriaCiclica = () => {
         <meta name="description" content="Taller en vivo con Fransury González, psicóloga y maestra de Kundalini Yoga: entiende las cuatro fases de tu ciclo. Sábado 17 de octubre, 10 a. m. a 2 p. m. (Colombia), por Google Meet." />
       </Helmet>
 
-      <FloatingCTA
-        formAnchor="#ciclica-precio"
-        ctaText="Quiero mi cupo"
-        subText={<><Flower2 className="w-3.5 h-3.5 inline-block mr-1 text-primary" /> Sabiduría Cíclica · 100% Virtual</>}
-      />
 
       {/* ── HEADER ── */}
       <Header palette={palette} brandName={settings?.brandName} />
