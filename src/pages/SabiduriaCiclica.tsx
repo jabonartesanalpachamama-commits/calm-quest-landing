@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion, useScroll, useTransform, MotionConfig } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, MotionConfig, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Flower2, Leaf, MessageCircle, Moon, CalendarDays, Clock, Video, ArrowDown, Sparkles } from "lucide-react";
@@ -121,6 +121,78 @@ const RevealWords = ({ text, className = "", blur = false, stagger = 0.06, as = 
           variants={{ hidden, show: { ...show, transition: { duration: blur ? 0.9 : 0.5, ease: EASE } } }}>{w}</motion.span>
       ))}
     </Tag>
+  );
+};
+
+const FRASES: { phase: Phase; a: string; b: string }[] = [
+  { phase: "creciente", a: "Tu cuerpo", b: "tiene memoria." },
+  { phase: "media", a: "Tu ciclo", b: "guarda sabiduría." },
+  { phase: "llena", a: "Tu esencia", b: "conoce el camino." },
+];
+
+/** Frase rotativa bajo los botones del hero */
+const RotatingPhrases = () => {
+  const reduce = useReducedMotion();
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (reduce || paused) return;
+    const t = setInterval(() => setI((n) => (n + 1) % FRASES.length), 3500);
+    return () => clearInterval(t);
+  }, [reduce, paused]);
+
+  if (reduce) {
+    return (
+      <p className="font-serif text-lg md:text-xl text-foreground text-center md:text-left">
+        {FRASES.map((f, k) => (
+          <span key={f.a}>
+            {k > 0 && <span className="text-[#B8977E]"> · </span>}
+            {f.a} <em className="italic text-[#795D64]">{f.b}</em>
+          </span>
+        ))}
+      </p>
+    );
+  }
+
+  const f = FRASES[i];
+  return (
+    <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} className="flex flex-col items-center md:items-start gap-2">
+      <div className="flex items-center gap-2.5 h-8 md:h-9 font-serif text-lg md:text-xl text-foreground">
+        <span className="relative w-4 h-4 shrink-0 text-[#B8977E]">
+          <AnimatePresence initial={false}>
+            <motion.span
+              key={f.phase}
+              className="absolute inset-0"
+              initial={{ opacity: 0, rotate: -60 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 60 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <MoonPhase phase={f.phase} className="w-4 h-4" />
+            </motion.span>
+          </AnimatePresence>
+        </span>
+        <span className="relative overflow-hidden h-full flex items-center" aria-live="polite">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={f.a}
+              className="block whitespace-nowrap"
+              initial={{ opacity: 0, y: 14, filter: "blur(3px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -14, filter: "blur(3px)" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+            >
+              {f.a} <em className="italic text-[#795D64]">{f.b}</em>
+            </motion.span>
+          </AnimatePresence>
+        </span>
+      </div>
+      <div className="flex gap-1.5" aria-hidden="true">
+        {FRASES.map((x, k) => (
+          <span key={x.a} className={`h-1.5 rounded-full bg-[#B8977E] transition-all duration-500 ${k === i ? "w-4 opacity-90" : "w-1.5 opacity-35"}`} />
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -359,30 +431,8 @@ const SabiduriaCiclica = () => {
                   </a>
                   <CupoLink />
                 </motion.div>
-                <motion.div
-                  initial="hidden"
-                  animate="show"
-                  variants={{ show: { transition: { delayChildren: 0.9, staggerChildren: 0.25 } } }}
-                  className="pt-4 md:pt-5"
-                >
-                  <motion.div variants={fadeUp} aria-hidden="true" className="flex items-center justify-center md:justify-start gap-2 mb-3 text-[#B8977E]">
-                    <span className="block h-px w-12 bg-[#B8977E]" />
-                    <MoonPhase phase="creciente" className="w-3 h-3" />
-                  </motion.div>
-                  <ul className="space-y-1.5 font-serif text-lg md:text-xl text-foreground">
-                    {[
-                      { phase: "creciente" as const, a: "Tu cuerpo", b: "tiene memoria." },
-                      { phase: "media" as const, a: "Tu ciclo", b: "guarda sabiduría." },
-                      { phase: "llena" as const, a: "Tu esencia", b: "conoce el camino." },
-                    ].map((l) => (
-                      <motion.li key={l.a} variants={fadeUp} className="flex items-center justify-center md:justify-start gap-2.5">
-                        <MoonPhase phase={l.phase} className="w-4 h-4 shrink-0 text-[#B8977E]" />
-                        <span>
-                          {l.a} <em className="italic text-[#795D64]">{l.b}</em>
-                        </span>
-                      </motion.li>
-                    ))}
-                  </ul>
+                <motion.div variants={fadeUp} className="pt-4 md:pt-5">
+                  <RotatingPhrases />
                 </motion.div>
               </motion.div>
             </div>
