@@ -18,6 +18,11 @@ export default {
         sans:  ['var(--font-body)',    'system-ui', 'sans-serif'],
       },
       colors: {
+        warm: {
+          gold: "hsl(var(--warm-gold))",
+          peach: "hsl(var(--warm-peach))",
+          mauve: "hsl(var(--warm-mauve))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
