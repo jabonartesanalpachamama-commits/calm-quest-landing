@@ -169,7 +169,6 @@ const TerminosYCondiciones = () => {
           </p>
           <div className="pt-4 flex flex-wrap justify-center gap-6">
             <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
-            <Link to="/admin/login" className="hover:underline text-xs text-muted-foreground/60 transition-colors flex items-center gap-1"><Settings className="w-3 h-3" /> Admin</Link>
           </div>
         </div>
       </footer>
