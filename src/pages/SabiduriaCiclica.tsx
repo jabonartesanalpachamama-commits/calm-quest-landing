@@ -426,18 +426,18 @@ const SabiduriaCiclica = () => {
           <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-gradient-to-b from-background via-warm-mauve/30 to-background">
             <motion.div {...inView} variants={fadeUp} className="max-w-md mx-auto space-y-6">
               <RevealTitle text="Tu inversión" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-              <div className={`bg-gradient-to-br ${palette.primary} rounded-3xl p-6 md:p-7 shadow-lg border-2 border-white/20`}>
+              <div className="bg-plum-deep rounded-3xl p-6 md:p-7 shadow-lg border border-primary/40">
                 <div className="space-y-2 text-center text-white">
                   <h3 className="font-serif text-2xl font-semibold">Taller Sabiduría Cíclica</h3>
                   {launch && <p className="text-xs font-semibold uppercase tracking-wider opacity-90">Precio de lanzamiento hasta el 10 de octubre</p>}
                   <div className="flex justify-center items-baseline gap-3">
                     <span className="text-5xl font-bold">USD {launch ? 60 : 75}</span>
-                    {launch && <span className="text-xl line-through opacity-70">USD 75</span>}
+                    {launch && <span className="text-xl line-through text-white/85">USD 75</span>}
                   </div>
                 </div>
-                <div className="mt-4 rounded-2xl bg-white/15 border border-white/25 px-4 py-3 text-white text-center">
-                  <p className="font-serif text-lg font-semibold">¿Vienes con una amiga?</p>
-                  <p className="text-sm opacity-90">Inscríbanse juntas y cada una paga USD 60, incluso después del 10 de octubre.</p>
+                <div className="mt-4 rounded-2xl bg-plum-soft border border-warm-gold/50 px-4 py-3 text-white text-center">
+                  <p className="font-serif text-lg font-semibold text-warm-gold">¿Vienes con una amiga?</p>
+                  <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD 60, incluso después del 10 de octubre.</p>
                 </div>
                 <ul className="mt-5 space-y-3 border-t border-white/20 pt-5">
                   {INCLUYE.map((b) => (
@@ -455,7 +455,7 @@ const SabiduriaCiclica = () => {
                 >
                   Quiero mi cupo
                 </a>
-                <p className="mt-3 text-[11px] text-white/80 text-center">Si pagas desde Colombia, el valor se convierte a pesos con la tasa de cambio del día.</p>
+                <p className="mt-3 text-[11px] text-white/90 text-center">Si pagas desde Colombia, el valor se convierte a pesos con la tasa de cambio del día.</p>
               </div>
             </motion.div>
           </section>
