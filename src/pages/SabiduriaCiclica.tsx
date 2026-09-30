@@ -275,7 +275,7 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_34%,hsl(var(--warm-peach))_50%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
+          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_520px,hsl(var(--warm-peach))_62%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
                 <div className="overflow-hidden" style={{ maskImage: HERO_MASK, WebkitMaskImage: HERO_MASK }}>
