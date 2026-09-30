@@ -188,6 +188,8 @@
 @layer base {
   :root {
     /* Tonos cálidos de la imagen de Sabiduría Cíclica */
+    --plum-deep: 328 45% 17%;
+    --plum-soft: 328 35% 26%;
     --warm-gold: 38 70% 88%;
     --warm-peach: 22 75% 90%;
     --warm-mauve: 330 25% 88%;
