@@ -317,7 +317,7 @@ const SabiduriaCiclica = () => {
                   }}
                 >
                   <motion.img
-                    src="/sabiduria-ciclica-17oct.webp"
+                    src="/sabiduria-ciclica-17oct-v2.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
                     width={1254}
                     height={1254}
