@@ -271,8 +271,9 @@ const SabiduriaCiclica = () => {
     u(); mq.addEventListener("change", u);
     return () => mq.removeEventListener("change", u);
   }, []);
-  // Clamped parallax: max 28px on mobile (gap 64px keeps the chip clear), 80px side by side.
-  const heroImgY = useTransform(scrollY, [0, 600], [0, (heroParallax ? 80 : 28) * k], { clamp: true });
+  // Subtle scroll zoom (top-center origin) so the top of the image is never cropped.
+  void heroParallax;
+  const heroImgScale = useTransform(scrollY, [0, 600], [1, 1 + 0.06 * k], { clamp: true });
   const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
   const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
   const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
@@ -306,16 +307,10 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-0 pb-12 md:pb-20 px-4 md:px-6 bg-gradient-to-b from-card via-card to-background">
-            <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-12 items-center">
+          <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-gradient-to-b from-card via-card to-background">
+            <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-16 md:gap-10 items-center">
               <div className="relative -mx-4 md:mx-0 md:self-start">
-                <div
-                  className="relative overflow-hidden aspect-square"
-                  style={{
-                    WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.92) 78%, rgba(0,0,0,0.75) 84%, rgba(0,0,0,0.5) 89%, rgba(0,0,0,0.25) 94%, rgba(0,0,0,0.08) 98%, rgba(0,0,0,0) 100%)",
-                    maskImage: "linear-gradient(to bottom, #000 0%, #000 72%, rgba(0,0,0,0.92) 78%, rgba(0,0,0,0.75) 84%, rgba(0,0,0,0.5) 89%, rgba(0,0,0,0.25) 94%, rgba(0,0,0,0.08) 98%, rgba(0,0,0,0) 100%)",
-                  }}
-                >
+                <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
                   <motion.img
                     src="/sabiduria-ciclica-17oct-v2.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
@@ -323,17 +318,13 @@ const SabiduriaCiclica = () => {
                     height={1254}
                     loading="eager"
                     fetchPriority="high"
-                    style={{
-                      y: heroImgY,
-                      top: -(heroParallax ? 80 : 28),
-                      height: `calc(100% + ${heroParallax ? 80 : 28}px)`,
-                    }}
-                    className="absolute left-0 w-full object-cover object-center block"
+                    style={{ scale: heroImgScale, transformOrigin: "top center" }}
+                    className="absolute inset-0 w-full h-full object-cover object-left-top block"
                   />
                 </div>
               </div>
 
-              <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-5 text-center md:text-left">
+              <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-5 text-center md:text-left md:pr-8 lg:pr-12 md:py-10 md:max-w-xl">
                 <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
                   <Flower2 className="w-3.5 h-3.5" /> Taller en vivo · Virtual
                 </motion.span>
