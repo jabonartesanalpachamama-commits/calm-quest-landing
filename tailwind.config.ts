@@ -18,7 +18,7 @@ export default {
         sans:  ['var(--font-body)',    'system-ui', 'sans-serif'],
       },
       colors: {
-        plum: { deep: 'hsl(var(--plum-deep))', soft: 'hsl(var(--plum-soft))' },
+        brand: { mauve: 'hsl(var(--brand-mauve))', cream: 'hsl(var(--brand-cream))', ink: 'hsl(var(--brand-ink))', gold: 'hsl(var(--brand-gold))' },
         warm: {
           gold: "hsl(var(--warm-gold))",
           peach: "hsl(var(--warm-peach))",
