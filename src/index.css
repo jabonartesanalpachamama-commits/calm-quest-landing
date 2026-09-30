@@ -184,3 +184,12 @@
     transform: translateY(-8px);
   }
 }
+
+@layer base {
+  :root {
+    /* Tonos cálidos de la imagen de Sabiduría Cíclica */
+    --warm-gold: 38 70% 88%;
+    --warm-peach: 22 75% 90%;
+    --warm-mauve: 330 25% 88%;
+  }
+}
