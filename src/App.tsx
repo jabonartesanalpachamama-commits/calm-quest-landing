@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import SalesNotification from "./components/SalesNotification";
 import ScrollToTop from "./components/ScrollToTop";
 
 // CMS Pages
@@ -35,7 +34,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <SalesNotification />
         <Routes>
           <Route path="/" element={<PortalHome />} />
           <Route path="/clase-gratuita" element={<TrafficSplitter />} />
