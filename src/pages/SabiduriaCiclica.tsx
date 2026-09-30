@@ -240,8 +240,8 @@ const SabiduriaCiclica = () => {
     u(); mq.addEventListener("change", u);
     return () => mq.removeEventListener("change", u);
   }, []);
-  // Clamped parallax: max 28px on mobile (gap 64px keeps the chip clear), 40px side by side.
-  const heroImgY = useTransform(scrollY, [0, 600], [0, (heroParallax ? 40 : 28) * k], { clamp: true });
+  // Clamped parallax: max 28px on mobile (gap 64px keeps the chip clear), 80px side by side.
+  const heroImgY = useTransform(scrollY, [0, 600], [0, (heroParallax ? 80 : 28) * k], { clamp: true });
   const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
   const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
   const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
@@ -275,7 +275,7 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 md:!bg-[linear-gradient(to_bottom,hsl(var(--background))_0%,hsl(var(--warm-mauve))_30%,hsl(var(--warm-peach))_60%,hsl(var(--warm-gold)/0.6)_82%,hsl(var(--background))_100%)] bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_520px,hsl(var(--warm-peach))_62%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
+          <section className="relative pt-6 md:pt-12 pb-12 md:pb-20 px-4 md:px-6 md:!bg-[linear-gradient(to_bottom,hsl(var(--background))_0%,hsl(var(--warm-mauve))_30%,hsl(var(--warm-peach))_60%,hsl(var(--warm-gold)/0.6)_82%,hsl(var(--background))_100%)] bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_520px,hsl(var(--warm-peach))_62%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
                 <div className="overflow-hidden ciclica-hero-mask">
