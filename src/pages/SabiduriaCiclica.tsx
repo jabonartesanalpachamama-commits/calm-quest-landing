@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform, MotionConfig } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Flower2, Leaf, MessageCircle, Moon, CalendarDays, Clock, Video, ArrowDown } from "lucide-react";
+import { Flower2, Leaf, MessageCircle, Moon, CalendarDays, Clock, Video, ArrowDown, Sparkles } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getWhatsAppUrl } from "@/lib/utils";
@@ -107,6 +107,37 @@ const RevealTitle = ({ text, as = "h2", className = "" }: { text: string; as?: "
   );
 };
 
+/** Texto que aparece palabra por palabra (opcional: desenfoque a nitidez) */
+const RevealWords = ({ text, className = "", blur = false, stagger = 0.06, as = "p" }: { text: string; className?: string; blur?: boolean; stagger?: number; as?: "p" | "h2" }) => {
+  const Tag = as === "h2" ? motion.h2 : motion.p;
+  const hidden = blur ? { opacity: 0, filter: "blur(6px)", y: 6 } : { opacity: 0, y: 12 };
+  const show = blur ? { opacity: 1, filter: "blur(0px)", y: 0 } : { opacity: 1, y: 0 };
+  return (
+    <Tag className={className} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}
+      variants={{ show: { transition: { staggerChildren: stagger } } }} aria-label={text}>
+      {text.split(" ").map((w, i) => (
+        <motion.span key={i} aria-hidden="true" className="inline-block mr-[0.25em]"
+          variants={{ hidden, show: { ...show, transition: { duration: blur ? 0.9 : 0.5, ease: EASE } } }}>{w}</motion.span>
+      ))}
+    </Tag>
+  );
+};
+
+/** Enlace secundario "Quiero mi cupo" con subrayado dorado que se dibuja */
+const CupoLink = () => {
+  const reduce = useReducedMotion();
+  return (
+    <a href="#ciclica-precio" onClick={scrollTo("#ciclica-precio")} className="group relative inline-flex items-center gap-1.5 text-sm font-semibold text-primary pb-1">
+      <motion.span aria-hidden="true" animate={reduce ? {} : { opacity: [0.5, 1, 0.5], scale: [0.9, 1.1, 0.9] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} className="inline-flex">
+        <Sparkles className="w-3.5 h-3.5 text-[#B8977E]" />
+      </motion.span>
+      Quiero mi cupo
+      <motion.span aria-hidden="true" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, delay: 1.1, ease: EASE }}
+        className="absolute left-0 right-0 bottom-0 h-px group-hover:h-[2.5px] bg-[#B8977E] origin-left transition-[height] duration-300" />
+    </a>
+  );
+};
+
 const scrollTo = (id: string) => (e: React.MouseEvent) => {
   e.preventDefault();
   document.querySelector(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -138,7 +169,7 @@ const TestimonialsCarousel = () => {
         <div className="flex">
           {TESTIMONIOS.map((t) => (
             <div key={t.name} className="flex-[0_0_100%] min-w-0 px-2">
-              <figure className="max-w-2xl mx-auto bg-card/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-border/40 text-center">
+              <figure className="h-full max-w-2xl mx-auto flex flex-col justify-center bg-card/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-border/40 text-center">
                 <blockquote className="font-serif text-lg md:text-xl text-foreground/90 leading-relaxed italic">"{t.quote}"</blockquote>
                 <figcaption className="mt-5 flex items-center justify-center gap-3">
                   <span className="relative w-11 h-11 rounded-full bg-gradient-to-br from-warm-mauve to-warm-gold flex items-center justify-center">
@@ -300,16 +331,13 @@ const SabiduriaCiclica = () => {
                   Un taller en vivo para comprender tu naturaleza cíclica y escuchar lo que tu cuerpo te dice, en cualquier etapa de tu vida.
                 </motion.p>
                 <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
-                  <li className="flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5 py-2">
+                  <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
                     <CalendarDays className="w-4 h-4 text-primary" /> Sábado 17 de octubre
                   </li>
-                  <li className="flex items-start gap-2 bg-card/80 backdrop-blur-sm border border-border/40 rounded-2xl px-3.5 py-2 text-left">
-                    <Clock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                    <span>10:00 a. m. a 2:00 p. m. hora Colombia
-                      <span className="block text-[11px] text-muted-foreground">9:00 a. m. Ciudad de México · 11:00 a. m. Miami/Nueva York</span>
-                    </span>
+                  <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
+                    <Clock className="w-4 h-4 text-primary shrink-0" /> 10:00 a. m. a 2:00 p. m. hora Colombia
                   </li>
-                  <li className="flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5 py-2">
+                  <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
                     <Video className="w-4 h-4 text-primary" /> 4 horas en vivo por Google Meet
                   </li>
                 </motion.ul>
@@ -317,26 +345,40 @@ const SabiduriaCiclica = () => {
                   <a
                     href="#que-es"
                     onClick={scrollTo("#que-es")}
-                    className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white`}
+                    className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group bg-[#795D64] hover:bg-[#6A5057] text-white`}
                   >
-                    Ver detalles del taller <ArrowDown className="w-4 h-4" />
+                    Ver detalles del taller
+                    <span className="inline-flex transition-transform duration-300 group-hover:translate-y-1">
+                      <motion.span className="inline-flex" animate={{ y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
+                        <ArrowDown className="w-4 h-4" />
+                      </motion.span>
+                    </span>
                   </a>
-                  <a href="#ciclica-precio" onClick={scrollTo("#ciclica-precio")} className="text-sm font-semibold text-primary underline-offset-4 hover:underline">
-                    Quiero mi cupo
-                  </a>
+                  <CupoLink />
                 </motion.div>
               </motion.div>
             </div>
           </section>
 
           {/* (2) QUÉ ES EL TALLER */}
-          <section id="que-es" className="relative py-12 md:py-16 px-6 scroll-mt-20">
-            <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-3xl mx-auto space-y-6 text-center">
-              <motion.p variants={fadeUp} className="font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground/95">
-                "¿Y si aquello que has interpretado como confusión, cansancio, sensibilidad intensa, desconexión o contradicción… fuera en realidad un lenguaje profundo de tu cuerpo intentando hablarte?"
-              </motion.p>
+          <section id="que-es" className="relative py-12 md:py-16 px-6 scroll-mt-20 overflow-hidden">
+            <div aria-hidden="true" className="pointer-events-none absolute -right-24 md:right-[6%] top-6 w-56 h-56 md:w-72 md:h-72 opacity-40">
+              <motion.svg viewBox="0 0 200 200" className="w-full h-full" animate={{ rotate: 360 }} transition={{ duration: 120, repeat: Infinity, ease: "linear" }}>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#B8977E" strokeWidth="0.8" strokeDasharray="2 7" />
+                <circle cx="100" cy="100" r="70" fill="none" stroke="#795D64" strokeWidth="0.5" strokeOpacity="0.6" />
+                <circle cx="100" cy="10" r="5" fill="#B8977E" fillOpacity="0.7" />
+                <circle cx="30" cy="100" r="3" fill="#795D64" fillOpacity="0.5" />
+              </motion.svg>
+            </div>
+            <RevealWords stagger={0.035} className="relative max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground/95"
+              text={'"¿Y si aquello que has interpretado como confusión, cansancio, sensibilidad intensa, desconexión o contradicción… fuera en realidad un lenguaje profundo de tu cuerpo intentando hablarte?"'} />
+            <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.35, delayChildren: 0.2 } } }} className="relative max-w-3xl mx-auto space-y-6 text-center mt-6">
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
-                Vivimos en una cultura que nos enseñó a funcionar de forma lineal, constante y productiva, desconectándonos de una verdad esencial: <strong className="text-foreground font-medium">la mujer es cíclica por naturaleza.</strong>
+                Vivimos en una cultura que nos enseñó a funcionar de forma lineal, constante y productiva, desconectándonos de una verdad esencial: <strong className="relative inline-block text-foreground font-medium">
+                  <motion.span aria-hidden="true" variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1, delay: 0.5, ease: EASE } } }}
+                    className="absolute left-0 right-0 bottom-0.5 h-[0.45em] -z-0 rounded-sm bg-gradient-to-r from-warm-mauve to-[#B8977E]/40 origin-left" />
+                  <span className="relative">la mujer es cíclica por naturaleza.</span>
+                </strong>
               </motion.p>
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                 <strong className="text-foreground font-medium">Sabiduría Cíclica, Esencia Femenina</strong> es un viaje de autoconocimiento, conciencia corporal y reconexión con tu ritmo interno. Un espacio donde aprenderás a ver tu ciclo no como algo que hay que aguantar, sino como información valiosa sobre tu energía, tu ánimo y lo que necesitas.
@@ -348,7 +390,7 @@ const SabiduriaCiclica = () => {
                 variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.8, ease: EASE } } }}
                 className="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent origin-center"
               />
-              <motion.blockquote variants={fadeUp} className="font-serif text-2xl md:text-3xl font-light italic text-foreground leading-snug py-5">
+              <motion.blockquote variants={{ hidden: { opacity: 0, scale: 0.95 }, show: { opacity: 1, scale: 1, transition: { duration: 0.9, ease: EASE } } }} className="font-serif text-2xl md:text-3xl font-light italic text-foreground leading-snug py-5">
                 Tu ciclo no está en tu contra.<br />Tu cuerpo no es un problema que debas corregir.
               </motion.blockquote>
               <motion.figcaption variants={fadeUp} className="ciclica-marquee text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary" aria-label="Vuelve a tu ritmo · Vuelve a tu cuerpo · Vuelve a tu esencia">
@@ -384,13 +426,12 @@ const SabiduriaCiclica = () => {
               </motion.div>
 
               <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="space-y-5 text-center md:text-left">
-                <RevealTitle text="Por qué nace este taller" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
+                <RevealWords as="h2" stagger={0.12} text="Por qué nace este taller" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
                 <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                   Desde mi experiencia clínica, terapéutica y vivencial, he acompañado a muchas mujeres que viven alejadas de su cuerpo, peleadas con su menstruación, con sus cambios hormonales o peor aún en desconocimiento de estos, confundidas por sus cambios emocionales o desconectadas de su intuición natural.
                 </motion.p>
-                <motion.p variants={fadeUp} className={`font-serif text-lg font-medium ${palette.primaryText} italic`}>
-                  Este taller nace para abrir un camino distinto: uno donde puedas comprenderte, escucharte y volver a ti.
-                </motion.p>
+                <RevealWords blur stagger={0.13} className={`font-serif text-lg font-medium ${palette.primaryText} italic`}
+                  text="Este taller nace para abrir un camino distinto: uno donde puedas comprenderte, escucharte y volver a ti." />
                 <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                   Soy Fransury González (Sury), psicóloga y maestra de Kundalini Yoga. En mi consulta he acompañado a muchas mujeres que viven peleadas con su ciclo o sin entenderlo. Este taller reúne lo que he aprendido desde la psicología y el yoga para que puedas escucharte con más claridad y compasión.
                 </motion.p>
@@ -413,17 +454,17 @@ const SabiduriaCiclica = () => {
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                 No importa en qué etapa estés. Si menstrúas cada mes, si tus ciclos son irregulares, si usas anticonceptivos, si estás en la perimenopausia o si ya viviste la menopausia, tu cuerpo sigue teniendo ritmos: cambian tu energía, tu ánimo y tu forma de relacionarte. En este taller aprenderás a reconocerlos y a escucharlos desde la etapa en la que estás hoy.
               </motion.p>
-              <ul className="flex flex-wrap justify-center gap-2.5">
+              <motion.ul variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="flex flex-wrap justify-center gap-1.5 md:gap-2.5">
                 {ETAPAS.map((e) => (
                   <motion.li
                     key={e}
                     variants={{ hidden: { opacity: 0, scale: 0.92 }, show: { opacity: 1, scale: 1, transition: { duration: 0.45, ease: EASE } } }}
-                    className="flex items-center gap-2 bg-card/80 border border-primary/20 rounded-full px-4 py-2 text-sm text-foreground"
+                    className="flex items-center gap-1.5 md:gap-2 whitespace-nowrap bg-card/80 border border-primary/20 rounded-full px-2.5 py-1 text-xs md:px-4 md:py-2 md:text-sm text-foreground"
                   >
-                    <Moon className="w-3.5 h-3.5 text-primary" /> {e}
+                    <Moon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary" /> {e}
                   </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
               <motion.p variants={fadeUp} className={`font-serif text-2xl md:text-3xl font-semibold pt-2 ${palette.primaryText}`}>
                 ¿Estás lista para volver a escucharte?
               </motion.p>
