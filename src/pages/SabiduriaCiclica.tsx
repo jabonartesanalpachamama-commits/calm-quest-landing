@@ -275,10 +275,10 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_520px,hsl(var(--warm-peach))_62%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
+          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 md:!bg-[linear-gradient(to_bottom,hsl(var(--background))_0%,hsl(var(--warm-mauve))_30%,hsl(var(--warm-peach))_60%,hsl(var(--warm-gold)/0.6)_82%,hsl(var(--background))_100%)] bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_520px,hsl(var(--warm-peach))_62%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
-                <div className="overflow-hidden" style={{ maskImage: HERO_MASK, WebkitMaskImage: HERO_MASK }}>
+                <div className="overflow-hidden ciclica-hero-mask">
                   <img
                     src="/sabiduria-ciclica-17oct.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
@@ -433,24 +433,24 @@ const SabiduriaCiclica = () => {
           <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-gradient-to-b from-background via-warm-mauve/30 to-background">
             <motion.div {...inView} variants={fadeUp} className="max-w-md mx-auto space-y-6">
               <RevealTitle text="Tu inversión" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-              <div className="bg-plum-deep rounded-3xl p-6 md:p-7 shadow-lg border border-primary/40">
+              <div className="bg-brand-mauve rounded-3xl p-6 md:p-7 shadow-lg">
                 <div className="space-y-2 text-center text-white">
                   <h3 className="font-serif text-2xl font-semibold">Taller Sabiduría Cíclica</h3>
-                  {launch && <p className="text-xs font-semibold uppercase tracking-wider opacity-90">Precio de lanzamiento hasta el 10 de octubre</p>}
+                  {launch && <p className="text-xs font-semibold uppercase tracking-wider text-white">Precio de lanzamiento hasta el 10 de octubre</p>}
                   <div className="flex justify-center items-baseline gap-3">
                     <span className="text-5xl font-bold">USD {launch ? 60 : 75}</span>
-                    {launch && <span className="text-xl line-through text-white/85">USD 75</span>}
+                    {launch && <span className="text-xl line-through text-brand-cream">USD 75</span>}
                   </div>
                 </div>
-                <div className="mt-4 rounded-2xl bg-plum-soft border border-warm-gold/50 px-4 py-3 text-white text-center">
-                  <p className="font-serif text-lg font-semibold text-warm-gold">¿Vienes con una amiga?</p>
+                <div className="mt-4 rounded-2xl bg-white/10 border border-brand-gold/70 px-4 py-3 text-white text-center">
+                  <p className="font-serif text-xl font-bold text-brand-cream">¿Vienes con una amiga?</p>
                   <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD 60, incluso después del 10 de octubre.</p>
                 </div>
                 <ul className="mt-5 space-y-3 border-t border-white/20 pt-5">
                   {INCLUYE.map((b) => (
                     <li key={b} className="flex items-start gap-3 text-white">
-                      <Flower2 className="w-4 h-4 mt-0.5 opacity-90 shrink-0" />
-                      <span className="text-sm leading-relaxed font-medium opacity-90">{b}</span>
+                      <Flower2 className="w-4 h-4 mt-0.5 shrink-0" />
+                      <span className="text-sm leading-relaxed font-medium">{b}</span>
                     </li>
                   ))}
                 </ul>
@@ -458,11 +458,11 @@ const SabiduriaCiclica = () => {
                   href={CUPO_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 block w-full py-3.5 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90"
+                  className="mt-5 block w-full py-3.5 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-brand-cream text-brand-ink hover:bg-brand-cream/90"
                 >
                   Quiero mi cupo
                 </a>
-                <p className="mt-3 text-[11px] text-white/90 text-center">Si pagas desde Colombia, el valor se convierte a pesos con la tasa de cambio del día.</p>
+                <p className="mt-3 text-xs text-white text-center">Si pagas desde Colombia, el valor se convierte a pesos con la tasa de cambio del día.</p>
               </div>
             </motion.div>
           </section>
@@ -547,6 +547,5 @@ const SabiduriaCiclica = () => {
   );
 };
 
-const HERO_MASK = "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 2%, rgba(0,0,0,0.12) 4%, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.42) 8%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.77) 12%, rgba(0,0,0,0.9) 14%, rgba(0,0,0,0.97) 16%, #000 18%, #000 80%, rgba(0,0,0,0.9) 84%, rgba(0,0,0,0.7) 88%, rgba(0,0,0,0.45) 92%, rgba(0,0,0,0.2) 96%, rgba(0,0,0,0) 100%)";
 
 export default SabiduriaCiclica;

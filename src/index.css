@@ -188,10 +188,26 @@
 @layer base {
   :root {
     /* Tonos cálidos de la imagen de Sabiduría Cíclica */
-    --plum-deep: 328 45% 17%;
-    --plum-soft: 328 35% 26%;
+    --brand-mauve: 344 13% 42%;
+    --brand-cream: 26 41% 92%;
+    --brand-ink: 327 26% 22%;
+    --brand-gold: 26 27% 61%;
     --warm-gold: 38 70% 88%;
     --warm-peach: 22 75% 90%;
     --warm-mauve: 330 25% 88%;
+  }
+}
+
+/* Sabiduría Cíclica hero image: soft vertical fade; all four sides on md+ */
+.ciclica-hero-mask {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 2%, rgba(0,0,0,0.12) 4%, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.42) 8%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.77) 12%, rgba(0,0,0,0.9) 14%, rgba(0,0,0,0.97) 16%, #000 18%, #000 80%, rgba(0,0,0,0.9) 84%, rgba(0,0,0,0.7) 88%, rgba(0,0,0,0.45) 92%, rgba(0,0,0,0.2) 96%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 2%, rgba(0,0,0,0.12) 4%, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.42) 8%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.77) 12%, rgba(0,0,0,0.9) 14%, rgba(0,0,0,0.97) 16%, #000 18%, #000 80%, rgba(0,0,0,0.9) 84%, rgba(0,0,0,0.7) 88%, rgba(0,0,0,0.45) 92%, rgba(0,0,0,0.2) 96%, rgba(0,0,0,0) 100%);
+}
+@media (min-width: 768px) {
+  .ciclica-hero-mask {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 2%, rgba(0,0,0,0.12) 4%, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.42) 8%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.77) 12%, rgba(0,0,0,0.9) 14%, rgba(0,0,0,0.97) 16%, #000 18%, #000 80%, rgba(0,0,0,0.9) 84%, rgba(0,0,0,0.7) 88%, rgba(0,0,0,0.45) 92%, rgba(0,0,0,0.2) 96%, rgba(0,0,0,0) 100%), linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 3%, rgba(0,0,0,0.4) 6%, rgba(0,0,0,0.75) 9%, rgba(0,0,0,0.95) 12%, #000 14%, #000 86%, rgba(0,0,0,0.95) 88%, rgba(0,0,0,0.75) 91%, rgba(0,0,0,0.4) 94%, rgba(0,0,0,0.12) 97%, rgba(0,0,0,0) 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 2%, rgba(0,0,0,0.12) 4%, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.42) 8%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.77) 12%, rgba(0,0,0,0.9) 14%, rgba(0,0,0,0.97) 16%, #000 18%, #000 80%, rgba(0,0,0,0.9) 84%, rgba(0,0,0,0.7) 88%, rgba(0,0,0,0.45) 92%, rgba(0,0,0,0.2) 96%, rgba(0,0,0,0) 100%), linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 3%, rgba(0,0,0,0.4) 6%, rgba(0,0,0,0.75) 9%, rgba(0,0,0,0.95) 12%, #000 14%, #000 86%, rgba(0,0,0,0.95) 88%, rgba(0,0,0,0.75) 91%, rgba(0,0,0,0.4) 94%, rgba(0,0,0,0.12) 97%, rgba(0,0,0,0) 100%);
+    mask-composite: intersect;
   }
 }
