@@ -233,7 +233,15 @@ const SabiduriaCiclica = () => {
   // Parallax
   const { scrollY } = useScroll();
   const k = reduce ? 0 : 1;
-  const heroImgY = useTransform(scrollY, [0, 800], [0, 90 * k]);
+  const [heroParallax, setHeroParallax] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const u = () => setHeroParallax(mq.matches);
+    u(); mq.addEventListener("change", u);
+    return () => mq.removeEventListener("change", u);
+  }, []);
+  // Parallax only when image and text are side by side; clamped so it never reaches the text.
+  const heroImgY = useTransform(scrollY, [0, 600], [0, heroParallax ? 40 * k : 0], { clamp: true });
   const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
   const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
   const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
@@ -269,9 +277,9 @@ const SabiduriaCiclica = () => {
           {/* (1) HERO */}
           <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 bg-gradient-to-b from-warm-peach via-warm-gold/60 to-background">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--warm-mauve)/0.7),transparent_60%)] pointer-events-none" />
-            <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
-                <div className="md:rounded-[2rem] overflow-hidden [mask-image:linear-gradient(to_bottom,black_80%,transparent)] md:shadow-[0_30px_60px_-30px_hsl(var(--primary)/0.35)] md:[mask-image:linear-gradient(to_bottom,black_88%,transparent)]">
+                <div className="md:rounded-[2rem] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_6%,black_80%,transparent)] md:shadow-[0_30px_60px_-30px_hsl(var(--primary)/0.35)] md:[mask-image:linear-gradient(to_bottom,transparent,black_5%,black_88%,transparent)]">
                   <img
                     src="/sabiduria-ciclica-17oct.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
