@@ -119,13 +119,17 @@ const SabiduriaCiclica = () => {
           <div className="max-w-[1672px] mx-auto relative z-10">
             <h1 className="sr-only">Sabiduría Cíclica, Esencia Femenina</h1>
             <motion.div 
-              className="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl ring-1 ring-border/20"
+              className="w-full max-w-[560px] mx-auto rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl ring-1 ring-border/20"
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="/sabiduria-ciclica-banner.webp" 
-                alt="Sabiduría Cíclica, esencia femenina - Un viaje de autoconocimiento" 
+                src="/sabiduria-ciclica-17oct.webp" 
+                alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet" 
+                width={1254}
+                height={1254}
+                loading="eager"
+                fetchPriority="high"
                 className="w-full h-auto block"
               />
             </motion.div>
@@ -256,22 +260,7 @@ const SabiduriaCiclica = () => {
 
         {/* ── QUÉ APRENDERÁS ── */}
         <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Columna Izquierda: Imagen del Programa */}
-              <motion.div
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-80px" }}
-                variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
-                className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
-              >
-                <div className="rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10 flex">
-                   <img src="/sabiduria-ciclica-flyer.webp" alt="Programa Sabiduría Cíclica" className="w-full h-auto object-contain" />
-                </div>
-              </motion.div>
-
-              {/* Columna Derecha: Bloques Nuevos */}
+          <div className="max-w-3xl mx-auto">
               <motion.div
                 initial="hidden"
                 whileInView="show"
@@ -279,8 +268,8 @@ const SabiduriaCiclica = () => {
                 variants={fadeUp}
                 className="space-y-10"
               >
-                <div className="space-y-3">
-                  <Sparkles className="w-10 h-10 text-primary mb-2" />
+                <div className="space-y-3 text-center">
+                  <Sparkles className="w-10 h-10 text-primary mb-2 mx-auto" />
                   <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground leading-tight">
                     En este viaje aprenderás a:
                   </h2>
@@ -302,7 +291,6 @@ const SabiduriaCiclica = () => {
                   ))}
                 </div>
               </motion.div>
-            </div>
           </div>
         </section>
 
@@ -334,15 +322,13 @@ const SabiduriaCiclica = () => {
 
         {/* ── NOTA DE CIERRE ── */}
         <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Columna Izquierda: Texto */}
+          <div className="max-w-3xl mx-auto">
               <motion.div
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, margin: "-80px" }}
-                variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
-                className="space-y-8 bg-background/50 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-border/40 shadow-sm"
+                variants={fadeUp}
+                className="space-y-8 text-center bg-background/50 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-border/40 shadow-sm"
               >
                 <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-light">
                   Hablaremos de menstruación, pero sobre todo de ti: de cómo cambian tu energía, tu ánimo y tu forma de relacionarte a lo largo del mes.
@@ -356,20 +342,6 @@ const SabiduriaCiclica = () => {
                   </p>
                 </div>
               </motion.div>
-
-              {/* Columna Derecha: Imagen */}
-              <motion.div
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-80px" }}
-                variants={{ hidden: { opacity: 0, x: 20 }, show: { opacity: 1, x: 0, transition: { duration: 0.6 } } }}
-                className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg"
-              >
-                <div className="rounded-[2rem] overflow-hidden shadow-2xl relative border border-border/10 flex">
-                   <img src="/sabiduria-cierre.webp" alt="Sabiduría Cíclica" className="w-full h-auto object-contain" />
-                </div>
-              </motion.div>
-            </div>
           </div>
         </section>
 
