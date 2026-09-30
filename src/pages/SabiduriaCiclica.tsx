@@ -240,8 +240,8 @@ const SabiduriaCiclica = () => {
     u(); mq.addEventListener("change", u);
     return () => mq.removeEventListener("change", u);
   }, []);
-  // Clamped parallax: max 28px on mobile (gap 64px keeps the chip clear), 40px side by side.
-  const heroImgY = useTransform(scrollY, [0, 600], [0, (heroParallax ? 40 : 28) * k], { clamp: true });
+  // Clamped parallax: max 28px on mobile (gap 64px keeps the chip clear), 80px side by side.
+  const heroImgY = useTransform(scrollY, [0, 600], [0, (heroParallax ? 80 : 28) * k], { clamp: true });
   const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
   const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
   const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
