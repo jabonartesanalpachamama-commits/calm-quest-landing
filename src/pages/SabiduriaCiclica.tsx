@@ -17,12 +17,13 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 
-type Phase = "nueva" | "creciente" | "llena" | "menguante" | "completa";
+type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
 const MoonPhase = ({ phase, className = "w-6 h-6" }: { phase: Phase; className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
     <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.4" />
     {phase === "creciente" && <path d="M12 3A9 9 0 0 1 12 21A4.5 9 0 0 0 12 3Z" fill="currentColor" />}
+    {phase === "media" && <path d="M12 3A9 9 0 0 1 12 21Z" fill="currentColor" />}
     {phase === "llena" && <circle cx="12" cy="12" r="9" fill="currentColor" />}
     {phase === "menguante" && <path d="M12 3A9 9 0 0 0 12 21A4.5 9 0 0 1 12 3Z" fill="currentColor" />}
     {phase === "completa" && (
@@ -312,13 +313,13 @@ const SabiduriaCiclica = () => {
               <div className="relative -mx-4 md:mx-0 md:self-start">
                 <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
                   <motion.img
-                    src="/sabiduria-ciclica-17oct-v2.webp"
+                    src="/sabiduria-ciclica-17oct-v3.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
                     width={1254}
                     height={1254}
                     loading="eager"
                     fetchPriority="high"
-                    style={{ scale: heroImgScale, transformOrigin: "top center" }}
+                    style={{ scale: heroImgScale, transformOrigin: "top center", filter: "saturate(0.85) brightness(1.04) contrast(0.95)" }}
                     className="absolute inset-0 w-full h-full object-cover object-left-top block"
                   />
                 </div>
@@ -357,6 +358,31 @@ const SabiduriaCiclica = () => {
                     </span>
                   </a>
                   <CupoLink />
+                </motion.div>
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  variants={{ show: { transition: { delayChildren: 0.9, staggerChildren: 0.25 } } }}
+                  className="pt-4 md:pt-5"
+                >
+                  <motion.div variants={fadeUp} aria-hidden="true" className="flex items-center justify-center md:justify-start gap-2 mb-3 text-[#B8977E]">
+                    <span className="block h-px w-12 bg-[#B8977E]" />
+                    <MoonPhase phase="creciente" className="w-3 h-3" />
+                  </motion.div>
+                  <ul className="space-y-1.5 font-serif text-lg md:text-xl text-foreground">
+                    {[
+                      { phase: "creciente" as const, a: "Tu cuerpo", b: "tiene memoria." },
+                      { phase: "media" as const, a: "Tu ciclo", b: "guarda sabiduría." },
+                      { phase: "llena" as const, a: "Tu esencia", b: "conoce el camino." },
+                    ].map((l) => (
+                      <motion.li key={l.a} variants={fadeUp} className="flex items-center justify-center md:justify-start gap-2.5">
+                        <MoonPhase phase={l.phase} className="w-4 h-4 shrink-0 text-[#B8977E]" />
+                        <span>
+                          {l.a} <em className="italic text-[#795D64]">{l.b}</em>
+                        </span>
+                      </motion.li>
+                    ))}
+                  </ul>
                 </motion.div>
               </motion.div>
             </div>
