@@ -211,3 +211,18 @@
     mask-composite: intersect;
   }
 }
+
+/* Sabiduría Cíclica marquee */
+.ciclica-marquee { position: relative; overflow: hidden; white-space: nowrap;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); }
+.ciclica-marquee-track { display: flex; width: max-content; animation: ciclica-marquee 40s linear infinite; }
+.ciclica-marquee:hover .ciclica-marquee-track { animation-play-state: paused; }
+.ciclica-marquee-group { display: flex; flex-shrink: 0; }
+.ciclica-marquee-static { display: none; }
+@keyframes ciclica-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .ciclica-marquee { -webkit-mask-image: none; mask-image: none; white-space: normal; }
+  .ciclica-marquee-track { display: none; }
+  .ciclica-marquee-static { display: block; text-align: center; }
+}

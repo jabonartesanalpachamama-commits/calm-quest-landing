@@ -240,8 +240,8 @@ const SabiduriaCiclica = () => {
     u(); mq.addEventListener("change", u);
     return () => mq.removeEventListener("change", u);
   }, []);
-  // Parallax only when image and text are side by side; clamped so it never reaches the text.
-  const heroImgY = useTransform(scrollY, [0, 600], [0, heroParallax ? 40 * k : 0], { clamp: true });
+  // Clamped parallax: max 28px on mobile (gap 64px keeps the chip clear), 40px side by side.
+  const heroImgY = useTransform(scrollY, [0, 600], [0, (heroParallax ? 40 : 28) * k], { clamp: true });
   const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
   const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
   const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
@@ -276,7 +276,7 @@ const SabiduriaCiclica = () => {
 
           {/* (1) HERO */}
           <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 md:!bg-[linear-gradient(to_bottom,hsl(var(--background))_0%,hsl(var(--warm-mauve))_30%,hsl(var(--warm-peach))_60%,hsl(var(--warm-gold)/0.6)_82%,hsl(var(--background))_100%)] bg-[linear-gradient(to_bottom,hsl(var(--background))_0px,hsl(345_22%_78%)_30px,hsl(345_18%_58%)_70px,hsl(345_16%_46%)_130px,hsl(345_18%_54%)_240px,hsl(345_22%_68%)_380px,hsl(var(--warm-mauve))_520px,hsl(var(--warm-peach))_62%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
-            <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
+            <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
                 <div className="overflow-hidden ciclica-hero-mask">
                   <img
@@ -317,7 +317,7 @@ const SabiduriaCiclica = () => {
                   <a
                     href="#que-es"
                     onClick={scrollTo("#que-es")}
-                    className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
+                    className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white`}
                   >
                     Ver detalles del taller <ArrowDown className="w-4 h-4" />
                   </a>
@@ -351,8 +351,17 @@ const SabiduriaCiclica = () => {
               <motion.blockquote variants={fadeUp} className="font-serif text-2xl md:text-3xl font-light italic text-foreground leading-snug py-5">
                 Tu ciclo no está en tu contra.<br />Tu cuerpo no es un problema que debas corregir.
               </motion.blockquote>
-              <motion.figcaption variants={fadeUp} className="text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary">
-                Vuelve a tu ritmo · Vuelve a tu cuerpo · Vuelve a tu esencia
+              <motion.figcaption variants={fadeUp} className="ciclica-marquee text-[11px] md:text-xs uppercase tracking-[0.25em] text-primary" aria-label="Vuelve a tu ritmo · Vuelve a tu cuerpo · Vuelve a tu esencia">
+                <div className="ciclica-marquee-track" aria-hidden="true">
+                  {[0, 1].map((g) => (
+                    <span key={g} className="ciclica-marquee-group">
+                      {[0, 1, 2].map((i) => (
+                        <span key={i} className="px-3">Vuelve a tu ritmo · Vuelve a tu cuerpo · Vuelve a tu esencia ·</span>
+                      ))}
+                    </span>
+                  ))}
+                </div>
+                <span className="ciclica-marquee-static">Vuelve a tu ritmo · Vuelve a tu cuerpo · Vuelve a tu esencia</span>
               </motion.figcaption>
               <motion.div
                 variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.8, ease: EASE } } }}
@@ -433,7 +442,7 @@ const SabiduriaCiclica = () => {
           <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-gradient-to-b from-background via-warm-mauve/30 to-background">
             <motion.div {...inView} variants={fadeUp} className="max-w-md mx-auto space-y-6">
               <RevealTitle text="Tu inversión" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-              <div className="bg-brand-mauve rounded-3xl p-6 md:p-7 shadow-lg">
+              <div className="bg-[#795D64] rounded-3xl p-6 md:p-7 shadow-lg">
                 <div className="space-y-2 text-center text-white">
                   <h3 className="font-serif text-2xl font-semibold">Taller Sabiduría Cíclica</h3>
                   {launch && <p className="text-xs font-semibold uppercase tracking-wider text-white">Precio de lanzamiento hasta el 10 de octubre</p>}
@@ -495,7 +504,7 @@ const SabiduriaCiclica = () => {
                   href={DUDA_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
+                  className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white`}
                 >
                   <MessageCircle className="w-5 h-5" /> Escribirle a Sury
                 </a>
