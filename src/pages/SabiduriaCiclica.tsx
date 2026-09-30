@@ -385,7 +385,7 @@ const SabiduriaCiclica = () => {
               <div className="relative -mx-4 md:mx-0 md:self-start">
                 <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
                   <motion.img
-                    src="/sabiduria-ciclica-17oct-v3.webp"
+                    src="/sabiduria-ciclica-17oct-v4.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
                     width={1254}
                     height={1254}
