@@ -258,7 +258,7 @@ const SabiduriaCiclica = () => {
           <meta name="description" content="Taller en vivo con Fransury González, psicóloga y maestra de Kundalini Yoga, para todas las mujeres: comprende tu naturaleza cíclica. Sábado 17 de octubre, 10 a. m. a 2 p. m. (Colombia), por Google Meet." />
         </Helmet>
 
-        <Header palette={palette} brandName={settings?.brandName} />
+        <Header palette={palette} brandName={settings?.brandName} borderless />
 
         {/* Elementos decorativos con parallax */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -275,11 +275,10 @@ const SabiduriaCiclica = () => {
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 bg-gradient-to-b from-warm-peach via-warm-gold/60 to-background">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(var(--warm-mauve)/0.7),transparent_60%)] pointer-events-none" />
+          <section className="relative pt-6 md:pt-12 pb-12 md:pb-16 px-4 md:px-6 bg-[linear-gradient(to_bottom,hsl(345_16%_40%)_0%,hsl(345_18%_52%)_10%,hsl(345_22%_68%)_22%,hsl(var(--warm-mauve))_34%,hsl(var(--warm-peach))_50%,hsl(var(--warm-gold)/0.6)_72%,hsl(var(--background))_100%)]">
             <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-12 items-center">
               <motion.div style={{ y: heroImgY }} className="relative -mx-4 md:mx-0">
-                <div className="md:rounded-[2rem] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_6%,black_80%,transparent)] md:shadow-[0_30px_60px_-30px_hsl(var(--primary)/0.35)] md:[mask-image:linear-gradient(to_bottom,transparent,black_5%,black_88%,transparent)]">
+                <div className="overflow-hidden" style={{ maskImage: HERO_MASK, WebkitMaskImage: HERO_MASK }}>
                   <img
                     src="/sabiduria-ciclica-17oct.webp"
                     alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
@@ -547,5 +546,7 @@ const SabiduriaCiclica = () => {
     </MotionConfig>
   );
 };
+
+const HERO_MASK = "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 2%, rgba(0,0,0,0.12) 4%, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.42) 8%, rgba(0,0,0,0.6) 10%, rgba(0,0,0,0.77) 12%, rgba(0,0,0,0.9) 14%, rgba(0,0,0,0.97) 16%, #000 18%, #000 80%, rgba(0,0,0,0.9) 84%, rgba(0,0,0,0.7) 88%, rgba(0,0,0,0.45) 92%, rgba(0,0,0,0.2) 96%, rgba(0,0,0,0) 100%)";
 
 export default SabiduriaCiclica;
