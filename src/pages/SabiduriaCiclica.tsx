@@ -443,7 +443,7 @@ const SabiduriaCiclica = () => {
                   </div>
                 </div>
                 <div className="mt-4 rounded-2xl bg-white/10 border border-brand-gold/70 px-4 py-3 text-white text-center">
-                  <p className="font-serif text-xl font-semibold text-brand-cream">¿Vienes con una amiga?</p>
+                  <p className="font-serif text-xl font-bold text-brand-cream">¿Vienes con una amiga?</p>
                   <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD 60, incluso después del 10 de octubre.</p>
                 </div>
                 <ul className="mt-5 space-y-3 border-t border-white/20 pt-5">
