@@ -45,7 +45,7 @@ const LEARNING_POINTS: { phase: Phase; text: string }[] = [
 
 const ETAPAS = ["Menstrúo cada mes", "Mis ciclos son irregulares", "Uso anticonceptivos", "Estoy en la perimenopausia", "Ya viví la menopausia"];
 
-const CUPO_URL = getWhatsAppUrl("Hola Fransu, quiero mi cupo para el taller Sabiduría Cíclica del 17 de octubre");
+const CUPO_URL = "https://checkout.bold.co/payment/LNK_66A1LU2TZR";
 const DUDA_URL = getWhatsAppUrl("Hola Fransu, tengo una pregunta sobre el taller Sabiduría Cíclica");
 
 // Precio de lanzamiento vigente hasta el 10 de octubre de 2026 23:59 hora Colombia (UTC-5)
