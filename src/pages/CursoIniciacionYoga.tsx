@@ -512,7 +512,7 @@ const CursoIniciacionYoga = () => {
                 </div>
                 <div className="mt-8 pt-6 border-t border-border/10">
                   <a 
-                    href={`https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hola, me gustaría inscribirme al Curso de Iniciación al Yoga por módulo.')}`}
+                    href="https://checkout.bold.co/payment/LNK_FGBEX3L6X9"
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}
