@@ -132,7 +132,7 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
     items: [
       { q: "¿Qué necesito para el taller?", a: [
         "Principalmente, disposición para observarte y escucharte.",
-        "Además, un celular o computador con internet, un espacio tranquilo donde puedas moverte, un tapete o una manta, y un cuaderno. No necesitas experiencia en yoga ni conocimientos previos sobre el ciclo femenino.",
+        "Además, un celular o computador con internet, un espacio tranquilo donde puedas moverte, un tapete de yoga, mat o aquello con lo que te sientas cómoda, y un cuaderno. No necesitas experiencia en yoga ni conocimientos previos sobre el ciclo femenino.",
       ] },
       { q: "¿A qué hora es en mi país?", a: [
         "El taller es de 10:00 a. m. a 2:00 p. m., hora Colombia. Equivale a 9:00 a. m. a 1:00 p. m. en Ciudad de México, y a 11:00 a. m. a 3:00 p. m. en Miami y Nueva York. Si estás en otro país, escríbeme y te confirmo tu horario.",
@@ -739,25 +739,27 @@ const SabiduriaCiclica = () => {
           <section className="relative py-12 md:py-16 px-6">
             <motion.div {...inView} variants={fadeUp} className="max-w-3xl mx-auto space-y-6">
               <RevealTitle text="Preguntas frecuentes" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-              <div>
+              <Accordion type="single" collapsible className="w-full">
                 {FAQ_GROUPS.map((g, gi) => (
-                  <div key={g.title}>
-                    <h3 className={`font-serif text-xl text-foreground mb-2 ${gi > 0 ? "mt-8" : ""}`}>{g.title}</h3>
-                    <Accordion type="single" collapsible className="w-full">
-                      {g.items.map((f, i) => (
-                        <AccordionItem key={i} value={`faq-${gi}-${i}`} className="border-border/40">
-                          <AccordionTrigger className="text-left font-medium">{f.q}</AccordionTrigger>
-                          <AccordionContent className="text-muted-foreground leading-relaxed">
-                            <div className="space-y-2">
-                              {f.a.map((p, pi) => <p key={pi}>{p}</p>)}
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                  </div>
+                  <AccordionItem key={g.title} value={`grupo-${gi}`} className="border-border/40">
+                    <AccordionTrigger className="text-left font-serif text-xl text-foreground py-5 hover:no-underline">{g.title}</AccordionTrigger>
+                    <AccordionContent className="pl-2 md:pl-4">
+                      <Accordion type="single" collapsible className="w-full">
+                        {g.items.map((f, i) => (
+                          <AccordionItem key={i} value={`faq-${gi}-${i}`} className="border-border/40">
+                            <AccordionTrigger className="text-left font-medium">{f.q}</AccordionTrigger>
+                            <AccordionContent className="text-muted-foreground leading-relaxed">
+                              <div className="space-y-2">
+                                {f.a.map((p, pi) => <p key={pi}>{p}</p>)}
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
-              </div>
+              </Accordion>
             </motion.div>
           </section>
 
