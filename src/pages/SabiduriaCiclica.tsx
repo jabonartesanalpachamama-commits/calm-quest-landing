@@ -35,11 +35,11 @@ const MoonPhase = ({ phase, className = "w-6 h-6" }: { phase: Phase; className?:
   </svg>
 );
 
-const LEARNING_POINTS: { phase: Phase; text: string }[] = [
+const LEARNING_POINTS: { phase: Phase; text: string; bold?: string }[] = [
   { phase: "nueva", text: "Comprender tu naturaleza cíclica y las fases que habitan tu experiencia femenina." },
   { phase: "creciente", text: "Reconocer tus propios patrones emocionales, energéticos y corporales, entendiendo cómo se expresa tu ciclo en tu vida cotidiana." },
   { phase: "llena", text: "Desarrollar herramientas prácticas de observación y autoconocimiento, para interpretar las señales de tu cuerpo con mayor claridad y compasión." },
-  { phase: "menguante", text: "Transformar tu relación con tu ciclo y con tu cuerpo, dejando atrás la desconexión, la culpa o la lucha constante." },
+  { phase: "menguante", text: "Transformar tu relación con tu ciclo y con tu cuerpo, dejando atrás la desconexión, la culpa o la lucha constante.", bold: "dejando atrás la desconexión, la culpa o la lucha constante" },
   { phase: "completa", text: "Organizar tus semanas según tu energía: saber cuándo te conviene hacer más y cuándo te conviene bajar el ritmo." },
 ];
 
@@ -58,21 +58,136 @@ const TESTIMONIOS = [
   { name: "Verónica I.", country: "México", quote: "Terminamos cansadas, pero felices. Aprendí mucho sobre un tema que no tenía tan presente y del que hoy tomo conciencia. Gracias por ser mi guía." },
 ];
 
-const FAQS = [
-  { q: "¿Necesito experiencia previa?", a: "No. El taller está pensado para cualquier mujer que quiera comprender su ciclo, sin importar si ha practicado yoga o no." },
-  { q: "¿Es para mí si ya no menstrúo?", a: "Sí. El taller es para todas las mujeres, en cualquier etapa: también si estás en la perimenopausia o ya viviste la menopausia." },
-  { q: "Uso anticonceptivos o mis ciclos son irregulares. ¿Me sirve?", a: "Sí. Aprenderás a observar los ritmos de tu energía y tu ánimo desde tu situación actual. Si tienes una duda puntual, escríbeme antes de inscribirte y lo revisamos juntas." },
-  { q: "¿Qué necesito para conectarme?", a: "Un celular o computador con internet, un lugar tranquilo y un cuaderno. Si aún menstrúas, ten a mano la fecha de tu última menstruación." },
-  { q: "¿A qué hora es en mi país?", a: "El taller es de 10:00 a. m. a 2:00 p. m. hora Colombia. Equivale a 9:00 a. m. a 1:00 p. m. en Ciudad de México y 11:00 a. m. a 3:00 p. m. en Miami y Nueva York. Si estás en otro país, escríbeme y te confirmo tu horario." },
-  { q: "¿Cómo pago?", a: "Al escribirme por WhatsApp te comparto los medios de pago. Si pagas desde Colombia, el valor se convierte a pesos con la tasa de cambio del día." },
-  { q: "¿Qué pasa después de inscribirme?", a: "Te confirmo tu cupo por WhatsApp y unos días antes del taller te envío el enlace de Google Meet y lo que necesitas tener a mano." },
+const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
+  {
+    title: "Tu cuerpo y tu etapa",
+    items: [
+      { q: "¿Necesito tener un ciclo menstrual regular para hacer el taller?", a: [
+        "No. Sabiduría Cíclica, Esencia Femenina no está dirigido únicamente a mujeres con ciclos regulares.",
+        "Si tu ciclo es irregular, cambia de duración, es muy diferente cada mes, tienes meses en los que no menstrúas o estás atravesando transformaciones hormonales, puedes participar. El propósito no es enseñarte a encajar tu cuerpo en un ciclo \"perfecto\", sino ayudarte a observar otras señales: tu energía, tus emociones, tu descanso y tus necesidades.",
+        "Tu cuerpo no tiene que comportarse como un reloj para que puedas aprender a escucharlo.",
+      ] },
+      { q: "¿Puedo hacer el taller si tomo anticonceptivos hormonales?", a: [
+        "Sí.",
+        "Es importante tener presente que los anticonceptivos hormonales pueden modificar o suprimir las características naturales del ciclo menstrual. Por eso, en el taller no se trata de forzar la experiencia de las cuatro fases como si necesariamente estuvieran ocurriendo de la misma manera.",
+        "Trabajaremos desde la observación y la conciencia corporal, respetando la experiencia particular de cada mujer.",
+      ] },
+      { q: "¿El taller es para mujeres en perimenopausia?", a: [
+        "Sí.",
+        "La perimenopausia es precisamente una etapa en la que el cuerpo puede comenzar a cambiar sus ritmos: los ciclos pueden hacerse más largos o más cortos, variar en intensidad o presentarse de manera diferente.",
+        "El taller puede ser un espacio para escuchar esos cambios, en lugar de vivirlos únicamente desde la exigencia de que el cuerpo siga funcionando como antes.",
+      ] },
+      { q: "¿Puedo hacer el taller si ya estoy en la menopausia?", a: [
+        "Sí.",
+        "Aunque ya no exista menstruación, la relación con tu propia energía, tu cuerpo, tus emociones y tus ritmos internos continúa.",
+        "En este caso, la propuesta no se centra en \"seguir\" un ciclo que ya terminó, sino en reconocer la sabiduría de esta nueva etapa y establecer una relación más consciente con tu cuerpo.",
+      ] },
+      { q: "¿Y si ya no menstrúo por otras razones?", a: [
+        "También puedes participar.",
+        "La ausencia de menstruación puede tener diferentes causas, por lo que no sería adecuado asumir que todas las mujeres que no menstrúan están viviendo la misma experiencia.",
+        "El taller propone observar y escuchar el cuerpo desde la realidad particular de cada mujer, sin comparaciones ni exigencias.",
+      ] },
+      { q: "¿Importa en qué momento de mi ciclo esté el día del taller?", a: [
+        "No.",
+        "Si ese día estás menstruando, podrás observar esa experiencia; si estás en otra fase, trabajarás desde el momento vital y corporal en el que te encuentres. No tienes que esperar la \"fase correcta\".",
+      ] },
+    ],
+  },
+  {
+    title: "La práctica",
+    items: [
+      { q: "¿Este es un taller de yoga o sobre el ciclo menstrual?", a: [
+        "Es un taller que se vive desde el yoga.",
+        "Sabiduría Cíclica, Esencia Femenina parte de la práctica del Kundalini Yoga y de la comprensión yóguica del cuerpo para explorar cómo el movimiento, la respiración y la meditación acompañan cada momento del ciclo.",
+        "No es una charla médica ni psicológica sobre la menstruación, ni una clase convencional de yoga: es una experiencia práctica para reconectar con tus ritmos.",
+      ] },
+      { q: "¿Necesito experiencia previa en yoga?", a: [
+        "No.",
+        "El taller está pensado para que te acerques a la práctica desde tu propio nivel. No necesitas saber hacer posturas avanzadas ni tener experiencia previa en Kundalini Yoga.",
+        "La práctica será un medio para desarrollar presencia, conciencia corporal y conexión contigo misma, no una prueba de flexibilidad.",
+      ] },
+      { q: "¿Necesito saber meditar?", a: [
+        "No.",
+        "La meditación se abordará como una práctica de observación y conciencia. No necesitas \"saber meditar\" ni conseguir dejar la mente en blanco: esa expectativa suele ser el primer obstáculo.",
+      ] },
+      { q: "¿Tengo que creer en una determinada espiritualidad para participar?", a: [
+        "No.",
+        "La propuesta parte de la visión del Kundalini Yoga y de una comprensión espiritual del ser humano, pero no busca imponerte una creencia.",
+        "La invitación es a explorar, experimentar y observar qué ocurre en ti a través de la práctica.",
+      ] },
+      { q: "¿Este taller busca enseñarme a controlar mi ciclo?", a: [
+        "No.",
+        "El objetivo no es controlar tu cuerpo ni conseguir que funcione de una determinada manera. Es una invitación a relacionarte con él desde un lugar diferente: menos exigencia y más escucha; menos lucha contra tus ritmos y más conciencia de ellos.",
+        "La sabiduría cíclica no consiste en controlar el ciclo. Consiste en aprender a escucharlo y a conocerte.",
+      ] },
+      { q: "¿El taller reemplaza una consulta médica o ginecológica?", a: [
+        "No.",
+        "Este taller tiene un propósito corporal, espiritual y de autoconocimiento desde el yoga. No sustituye una valoración médica, ginecológica, endocrinológica o psicológica cuando sea necesaria.",
+        "Si presentas cambios importantes o persistentes en tu ciclo, dolor, sangrado inusual, ausencia de menstruación u otros síntomas que te preocupen, consulta con un profesional de la salud.",
+      ] },
+    ],
+  },
+  {
+    title: "Inscripción y día del taller",
+    items: [
+      { q: "¿Qué necesito para el taller?", a: [
+        "Principalmente, disposición para observarte y escucharte.",
+        "Además, un celular o computador con internet, un espacio tranquilo donde puedas moverte, un tapete o una manta, y un cuaderno. No necesitas experiencia en yoga ni conocimientos previos sobre el ciclo femenino.",
+      ] },
+      { q: "¿A qué hora es en mi país?", a: [
+        "El taller es de 10:00 a. m. a 2:00 p. m., hora Colombia. Equivale a 9:00 a. m. a 1:00 p. m. en Ciudad de México, y a 11:00 a. m. a 3:00 p. m. en Miami y Nueva York. Si estás en otro país, escríbeme y te confirmo tu horario.",
+      ] },
+      { q: "¿Cómo pago?", a: [
+        "En línea y de forma segura a través de Bold, con el botón \"Quiero mi cupo\". El cobro se hace en la moneda local de tu tarjeta.",
+        "Si vienes con una amiga, cada una paga USD 60 con el enlace para amigas que encuentras en la sección \"Tu inversión\".",
+      ] },
+      { q: "¿Qué pasa después de inscribirme?", a: [
+        "Te contactaremos a tu correo o WhatsApp registrado para confirmar tu participación.",
+      ] },
+    ],
+  },
 ];
+
+const PAGE_URL = "https://santoshayoga.com.co/sabiduria-ciclica-esencia-femenina";
+const SEO_TITLE = "Taller Sabiduría Cíclica | Kundalini Yoga y ciclo femenino";
+const SEO_DESC = "Taller en vivo con Fransury González: comprende tu ciclo desde el Kundalini Yoga, en cualquier etapa de tu vida. Sábado 17 de octubre por Google Meet.";
+const SEO_IMAGE = "https://santoshayoga.com.co/sabiduria-ciclica-17oct-v4.webp";
+
+const FAQ_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_GROUPS.flatMap((g) => g.items).map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a.join(" ") },
+  })),
+};
+
+const EVENT_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: "Sabiduría Cíclica, Esencia Femenina",
+  description: SEO_DESC,
+  startDate: "2026-10-17T10:00:00-05:00",
+  endDate: "2026-10-17T14:00:00-05:00",
+  eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+  eventStatus: "https://schema.org/EventScheduled",
+  location: { "@type": "VirtualLocation", url: PAGE_URL },
+  image: SEO_IMAGE,
+  organizer: { "@type": "Person", name: "Fransury González", url: "https://santoshayoga.com.co" },
+  performer: { "@type": "Person", name: "Fransury González" },
+  inLanguage: "es",
+  offers: [
+    { "@type": "Offer", price: "60", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL, validFrom: "2026-09-25", priceValidUntil: "2026-10-10" },
+    { "@type": "Offer", price: "75", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL, validFrom: "2026-10-11" },
+  ],
+};
 
 const INCLUYE = [
   "Taller en vivo de 4 horas por Google Meet",
   "Las fases de tu ciclo y cómo se expresan en tu cuerpo, tu energía y tus emociones",
-  "Herramientas prácticas para observar y registrar tu ciclo",
-  "Espacio de círculo para compartir y hacer preguntas",
+  "Herramientas prácticas para observar tu ciclo en tu día a día",
+  "Círculo de mujeres para compartir y hacer preguntas",
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -287,7 +402,7 @@ const LearningTimeline = () => {
       <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px bg-border/50 md:-translate-x-1/2" />
       <motion.div style={{ scaleY }} className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px bg-primary origin-top md:-translate-x-1/2" />
       <ol className="space-y-6 md:space-y-4">
-        {LEARNING_POINTS.map(({ phase, text }, i) => {
+        {LEARNING_POINTS.map(({ phase, text, bold }, i) => {
           const right = i % 2 === 1;
           return (
             <motion.li
@@ -300,7 +415,13 @@ const LearningTimeline = () => {
                 <MoonPhase phase={phase} className="w-5 h-5" />
               </span>
               <p className="bg-card/70 backdrop-blur-sm border border-border/40 rounded-2xl px-5 py-4 text-sm md:text-base text-muted-foreground font-light leading-relaxed">
-                {text}
+                {bold && text.includes(bold) ? (
+                  <>
+                    {text.split(bold)[0]}
+                    <span className="font-semibold">{bold}</span>
+                    {text.split(bold)[1]}
+                  </>
+                ) : text}
               </p>
             </motion.li>
           );
@@ -359,8 +480,16 @@ const SabiduriaCiclica = () => {
     <MotionConfig reducedMotion="user">
       <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col overflow-x-hidden`}>
         <Helmet>
-          <title>Sabiduría Cíclica | Taller en vivo 17 de octubre | SantoSha</title>
-          <meta name="description" content="Taller en vivo con Fransury González, psicóloga y maestra de Kundalini Yoga, para todas las mujeres: comprende tu naturaleza cíclica. Sábado 17 de octubre, 10 a. m. a 2 p. m. (Colombia), por Google Meet." />
+          <title>{SEO_TITLE}</title>
+          <meta name="description" content={SEO_DESC} />
+          <meta property="og:title" content={SEO_TITLE} />
+          <meta property="og:description" content={SEO_DESC} />
+          <meta property="og:type" content="website" />
+          <meta property="og:image" content={SEO_IMAGE} />
+          <meta property="og:url" content={PAGE_URL} />
+          <link rel="canonical" href={PAGE_URL} />
+          <script type="application/ld+json">{JSON.stringify(FAQ_JSONLD)}</script>
+          <script type="application/ld+json">{JSON.stringify(EVENT_JSONLD)}</script>
         </Helmet>
 
         <Header palette={palette} brandName={settings?.brandName} borderless />
@@ -386,7 +515,7 @@ const SabiduriaCiclica = () => {
                 <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
                   <motion.img
                     src="/sabiduria-ciclica-17oct-v4.webp"
-                    alt="Taller Sabiduría Cíclica, sábado 17 de octubre, 4 horas en vivo por Google Meet"
+                    alt="Taller Sabiduría Cíclica de Kundalini Yoga y ciclo femenino, sábado 17 de octubre por Google Meet"
                     width={1254}
                     height={1254}
                     loading="eager"
@@ -506,7 +635,7 @@ const SabiduriaCiclica = () => {
               <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="space-y-5 text-center md:text-left">
                 <RevealWords as="h2" stagger={0.12} text="Por qué nace este taller" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
                 <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
-                  Desde mi experiencia clínica, terapéutica y vivencial, he acompañado a muchas mujeres que viven alejadas de su cuerpo, peleadas con su menstruación, con sus cambios hormonales o peor aún en desconocimiento de estos, confundidas por sus cambios emocionales o desconectadas de su intuición natural.
+                  Desde mi experiencia clínica, terapéutica y vivencial, he acompañado a muchas mujeres que viven alejadas de su cuerpo, peleadas con su periodo, con sus cambios hormonales o, peor aún, en desconocimiento de estos, confundidas por sus cambios emocionales o desconectadas de su intuición natural.
                 </motion.p>
                 <RevealWords blur stagger={0.13} className={`font-serif text-lg font-medium ${palette.primaryText} italic`}
                   text="Este taller nace para abrir un camino distinto: uno donde puedas comprenderte, escucharte y volver a ti." />
@@ -532,17 +661,28 @@ const SabiduriaCiclica = () => {
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                 No importa en qué etapa estés. Si menstrúas cada mes, si tus ciclos son irregulares, si usas anticonceptivos, si estás en la perimenopausia o si ya viviste la menopausia, tu cuerpo sigue teniendo ritmos: cambian tu energía, tu ánimo y tu forma de relacionarte. En este taller aprenderás a reconocerlos y a escucharlos desde la etapa en la que estás hoy.
               </motion.p>
-              <motion.ul variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="flex flex-wrap justify-center gap-1.5 md:gap-2.5">
-                {ETAPAS.map((e) => (
-                  <motion.li
-                    key={e}
-                    variants={{ hidden: { opacity: 0, scale: 0.92 }, show: { opacity: 1, scale: 1, transition: { duration: 0.45, ease: EASE } } }}
-                    className="flex items-center gap-1.5 md:gap-2 whitespace-nowrap bg-card/80 border border-primary/20 rounded-full px-2.5 py-1 text-xs md:px-4 md:py-2 md:text-sm text-foreground"
-                  >
-                    <Moon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary" /> {e}
-                  </motion.li>
-                ))}
-              </motion.ul>
+              <motion.div variants={fadeUp} className="ciclica-marquee py-1" aria-label={ETAPAS.join(" · ")}>
+                <div className="ciclica-marquee-track" aria-hidden="true">
+                  {[0, 1].map((g) => (
+                    <ul key={g} className="ciclica-marquee-group">
+                      {ETAPAS.map((e) => (
+                        <li key={e} className="mr-1.5 md:mr-2.5 flex items-center gap-1.5 md:gap-2 whitespace-nowrap bg-card/80 border border-primary/20 rounded-full px-2.5 py-1 text-xs md:px-4 md:py-2 md:text-sm text-foreground">
+                          <Moon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary" /> {e}
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
+                </div>
+                <div className="ciclica-marquee-static">
+                  <ul className="flex flex-wrap justify-center gap-1.5 md:gap-2.5">
+                    {ETAPAS.map((e) => (
+                      <li key={e} className="flex items-center gap-1.5 md:gap-2 whitespace-nowrap bg-card/80 border border-primary/20 rounded-full px-2.5 py-1 text-xs md:px-4 md:py-2 md:text-sm text-foreground">
+                        <Moon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary" /> {e}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
               <motion.p variants={fadeUp} className={`font-serif text-2xl md:text-3xl font-semibold pt-2 ${palette.primaryText}`}>
                 ¿Estás lista para volver a escucharte?
               </motion.p>
@@ -590,7 +730,7 @@ const SabiduriaCiclica = () => {
                 >
                   Quiero mi cupo
                 </a>
-                <p className="mt-3 text-xs text-white text-center">Si pagas desde Colombia, el valor se convierte a pesos con la tasa de cambio del día.</p>
+                <p className="mt-3 text-xs text-white text-center">El cobro se hace en la moneda local de tu tarjeta.</p>
               </div>
             </motion.div>
           </section>
@@ -599,17 +739,25 @@ const SabiduriaCiclica = () => {
           <section className="relative py-12 md:py-16 px-6">
             <motion.div {...inView} variants={fadeUp} className="max-w-3xl mx-auto space-y-6">
               <RevealTitle text="Preguntas frecuentes" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-              <Accordion type="single" collapsible className="w-full">
-                {FAQS.map((f, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="border-border/40">
-                    <AccordionTrigger className="text-left font-medium">{f.q}</AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
-                  </AccordionItem>
+              <div>
+                {FAQ_GROUPS.map((g, gi) => (
+                  <div key={g.title}>
+                    <h3 className={`font-serif text-xl text-foreground mb-2 ${gi > 0 ? "mt-8" : ""}`}>{g.title}</h3>
+                    <Accordion type="single" collapsible className="w-full">
+                      {g.items.map((f, i) => (
+                        <AccordionItem key={i} value={`faq-${gi}-${i}`} className="border-border/40">
+                          <AccordionTrigger className="text-left font-medium">{f.q}</AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground leading-relaxed">
+                            <div className="space-y-2">
+                              {f.a.map((p, pi) => <p key={pi}>{p}</p>)}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </div>
                 ))}
-              </Accordion>
-              <p className="text-xs text-muted-foreground text-center">
-                Este taller no reemplaza la atención ginecológica ni médica. Si tienes un diagnóstico, sigue las indicaciones de tu médico.
-              </p>
+              </div>
             </motion.div>
           </section>
 
