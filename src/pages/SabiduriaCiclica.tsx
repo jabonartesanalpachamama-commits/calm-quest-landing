@@ -97,7 +97,7 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
     title: "La práctica",
     items: [
       { q: "¿Este es un taller de yoga o sobre el ciclo menstrual?", a: [
-        "Es un taller que se vive desde el yoga.",
+        "Es un taller que integra las dos.",
         "Sabiduría Cíclica, Esencia Femenina parte de la práctica del Kundalini Yoga y de la comprensión yóguica del cuerpo para explorar cómo el movimiento, la respiración y la meditación acompañan cada momento del ciclo.",
         "No es una charla médica ni psicológica sobre la menstruación, ni una clase convencional de yoga: es una experiencia práctica para reconectar con tus ritmos.",
       ] },
@@ -149,8 +149,8 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
 ];
 
 const PAGE_URL = "https://santoshayoga.com.co/sabiduria-ciclica-esencia-femenina";
-const SEO_TITLE = "Taller Sabiduría Cíclica | Kundalini Yoga y ciclo femenino";
-const SEO_DESC = "Taller en vivo con Fransury González: comprende tu ciclo desde el Kundalini Yoga, en cualquier etapa de tu vida. Sábado 17 de octubre por Google Meet.";
+const SEO_TITLE = "Taller Sabiduría Cíclica | Ciclo femenino y yoga";
+const SEO_DESC = "Comprende tu naturaleza cíclica y vívela en tu cuerpo con el yoga, en cualquier etapa de tu vida. Taller en vivo, sábado 17 de octubre por Google Meet.";
 const SEO_IMAGE = "https://santoshayoga.com.co/sabiduria-ciclica-17oct-v4.webp";
 
 const FAQ_JSONLD = {
@@ -185,6 +185,7 @@ const EVENT_JSONLD = {
 
 const INCLUYE = [
   "Taller en vivo de 4 horas por Google Meet",
+  "Práctica de yoga, respiración y meditación para habitar cada fase de tu ciclo",
   "Las fases de tu ciclo y cómo se expresan en tu cuerpo, tu energía y tus emociones",
   "Herramientas prácticas para observar tu ciclo en tu día a día",
   "Círculo de mujeres para compartir y hacer preguntas",
@@ -515,7 +516,7 @@ const SabiduriaCiclica = () => {
                 <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
                   <motion.img
                     src="/sabiduria-ciclica-17oct-v4.webp"
-                    alt="Taller Sabiduría Cíclica de Kundalini Yoga y ciclo femenino, sábado 17 de octubre por Google Meet"
+                    alt="Taller Sabiduría Cíclica sobre el ciclo femenino y el yoga, sábado 17 de octubre por Google Meet"
                     width={1254}
                     height={1254}
                     loading="eager"
@@ -532,7 +533,7 @@ const SabiduriaCiclica = () => {
                 </motion.span>
                 <RevealTitle as="h1" text="Sabiduría Cíclica, Esencia Femenina" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
                 <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
-                  Un taller en vivo para comprender tu naturaleza cíclica y escuchar lo que tu cuerpo te dice, en cualquier etapa de tu vida.
+                  Comprende tu naturaleza cíclica e intégrala a tu cuerpo a través del yoga, en cualquier etapa de tu vida.
                 </motion.p>
                 <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
                   <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
@@ -588,7 +589,7 @@ const SabiduriaCiclica = () => {
                 </strong>
               </motion.p>
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
-                <strong className="text-foreground font-medium">Sabiduría Cíclica, Esencia Femenina</strong> es un viaje de autoconocimiento, conciencia corporal y reconexión con tu ritmo interno. Un espacio donde aprenderás a ver tu ciclo no como algo que hay que aguantar, sino como información valiosa sobre tu energía, tu ánimo y lo que necesitas.
+                <strong className="text-foreground font-medium">Sabiduría Cíclica, Esencia Femenina</strong> es un viaje de autoconocimiento y reconexión con tu ritmo interno, donde la comprensión de tu ciclo y la práctica del yoga se acompañan. Un espacio donde aprenderás a ver tu ciclo no como algo que hay que aguantar, sino como información valiosa sobre tu energía, tu ánimo y lo que necesitas.
               </motion.p>
             </motion.div>
 
