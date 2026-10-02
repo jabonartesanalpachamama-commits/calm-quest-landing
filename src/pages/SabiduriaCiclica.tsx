@@ -673,15 +673,15 @@ const SabiduriaCiclica = () => {
                     </ul>
                   ))}
                 </div>
-                <ul className="ciclica-marquee-static">
-                  <span className="flex flex-wrap justify-center gap-1.5 md:gap-2.5">
+                <div className="ciclica-marquee-static">
+                  <ul className="flex flex-wrap justify-center gap-1.5 md:gap-2.5">
                     {ETAPAS.map((e) => (
                       <li key={e} className="flex items-center gap-1.5 md:gap-2 whitespace-nowrap bg-card/80 border border-primary/20 rounded-full px-2.5 py-1 text-xs md:px-4 md:py-2 md:text-sm text-foreground">
                         <Moon className="w-3 h-3 md:w-3.5 md:h-3.5 text-primary" /> {e}
                       </li>
                     ))}
-                  </span>
-                </ul>
+                  </ul>
+                </div>
               </motion.div>
               <motion.p variants={fadeUp} className={`font-serif text-2xl md:text-3xl font-semibold pt-2 ${palette.primaryText}`}>
                 ¿Estás lista para volver a escucharte?
