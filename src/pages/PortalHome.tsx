@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowDown, Leaf, Info, MessageCircle, Gift, PlayCircle, User, Users } from "lucide-react";
+import { ArrowDown, ArrowRight, Leaf, Info, MessageCircle, Gift, PlayCircle, User, Users } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -15,7 +15,7 @@ import AiChatWidget from "@/components/AiChatWidget";
 import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import FreeClassDialog from "@/components/FreeClassDialog";
-import FloatingCTA from "@/components/FloatingCTA";
+import { getWhatsAppUrl } from "@/lib/utils";
 import Header from "@/components/Header";
 import fransuryImage from "@/assets/fransury-retrato.webp";
 import heroBackground from "@/assets/hero-sunrise.png.asset.json";
@@ -26,6 +26,7 @@ const HERO_IMAGE = heroBackground.url;
 
 const BTN_SOLID = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-base font-semibold shadow-md justify-center hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
 const BTN_OUTLINE = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-base font-semibold justify-center bg-card border border-[#795D64]/40 text-foreground hover:bg-muted/40 transition-all duration-300";
+const FOCUS = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
 const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground";
 
 const PROGRAMS = [
@@ -57,15 +58,25 @@ const PROGRAMS = [
 
 const PHILOSOPHY_PILLARS = [
   {
+    icon: Leaf,
+    title: "Salir del modo supervivencia",
+    text: "Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Santosha propone restaurar el sistema nervioso para volver a habitar el presente.",
+    bg: "bg-brand-cream",
+  },
+  {
     icon: Info,
     title: "¿Qué es Santosha?",
     text: "Santosha es un Niyama sánscrito que habla de contentamiento. Para mí, va más allá de conformarse: es cultivar una presencia profunda, calma consciente y equilibrio tanto en la expansión como en la incertidumbre.",
+    bg: "bg-warm-mauve/40",
   },
-  {
-    icon: Leaf,
-    title: "Salir del Modo Supervivencia",
-    text: "Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Santosha propone restaurar el sistema nervioso para volver a habitar el presente.",
-  },
+];
+
+const START_OPTIONS = [
+  { text: "Quiero comprender por qué me pasa lo que me pasa", to: "/mi-proceso-individual" },
+  { text: "Mi relación atraviesa un conflicto", to: "/proceso-de-pareja" },
+  { text: "Quiero calmar mi cuerpo y mi mente", to: "/acompanamiento-individual" },
+  { text: "Quiero aprender yoga desde cero", to: "/curso-iniciacion-yoga" },
+  { text: "Quiero comprender mi ciclo", to: "/sabiduria-ciclica-esencia-femenina" },
 ];
 
 const PortalHome = () => {
@@ -103,7 +114,6 @@ const PortalHome = () => {
         description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury Gonzáles. Atención virtual desde cualquier lugar."
         path="/"
       />
-      <FloatingCTA scrollTo="#programas" ctaText="Ver programas" subText="Psicoterapia, yoga y meditación" />
 
       <Header palette={palette} brandName={settings?.brandName} />
 
