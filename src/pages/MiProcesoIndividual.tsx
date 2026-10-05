@@ -91,7 +91,7 @@ const MiProcesoIndividual = () => {
   const cta3Sessions = "https://checkout.bold.co/payment/LNK_43NGG631N3";
 
   return (
-    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
+    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
 
       <Seo
         title="Psicoterapia individual online | SantoSha"
