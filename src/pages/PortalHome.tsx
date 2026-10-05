@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Moon, Flower2, Leaf, Info, MessageCircle, Gift, PlayCircle, User, Users } from "lucide-react";
+import { Leaf, Info, MessageCircle, Gift, PlayCircle, User, Users } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -11,11 +11,11 @@ import {
   applyFontPair,
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
-import FloatingCTA from "@/components/FloatingCTA";
+import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import FreeClassDialog from "@/components/FreeClassDialog";
 import Header from "@/components/Header";
 import fransuryImage from "@/assets/fransury_portal.webp";
-import santoshaLogo from "@/assets/santosha-logo.webp";
 import heroBackground from "@/assets/hero-sunrise.png.asset.json";
 
 const PROGRAMS = [
@@ -67,24 +67,6 @@ const PHILOSOPHY_PILLARS = [
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    name: "Andrea M.",
-    role: "Alumna Curso de Iniciación",
-    text: "Este espacio ha cambiado mi forma de relacionarme conmigo misma. El Kundalini Yoga y la guía de Sury me devolvieron la calma mental y corporal que había perdido hace años.",
-  },
-  {
-    name: "Carolina G.",
-    role: "Participante Sabiduría Cíclica",
-    text: "Reconectar con mi naturaleza cíclica me devolvió una escucha profunda de mi cuerpo. Ahora vivo mis ciclos con más claridad, respeto y amor propio.",
-  },
-  {
-    name: "Laura V.",
-    role: "Acompañamiento 1:1",
-    text: "Un acompañamiento sumamente amoroso, profesional e integrador. Sury sostiene el espacio con una presencia y una sabiduría increíbles.",
-  },
-];
-
 const PortalHome = () => {
   const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const [freeClassOpen, setFreeClassOpen] = useState(false);
@@ -115,6 +97,11 @@ const PortalHome = () => {
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
+      <Seo
+        title="SantoSha | Psicoterapia, yoga y meditación online"
+        description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury Gonzáles. Atención virtual desde cualquier lugar."
+        path="/"
+      />
 
       {/* ── HEADER ── */}
       <Header palette={palette} brandName={settings?.brandName} />
@@ -189,7 +176,7 @@ const PortalHome = () => {
                 ¿Sufres de ansiedad o agotamiento mental?
               </h3>
               <p className="text-sm font-light text-muted-foreground/90 max-w-xl">
-                Accede a nuestra Clase Maestra online de 30 minutos donde aprenderás una técnica somática neurocientífica para calmar tu sistema nervioso de inmediato.
+                Una clase online de 30 minutos donde aprendes una técnica somática para ayudar a calmar tu sistema nervioso.
               </p>
             </div>
             <button
@@ -210,10 +197,10 @@ const PortalHome = () => {
                 Formación & Acompañamiento
               </span>
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Nuestros Programas y Espacios
+                Mis programas y espacios
               </h2>
               <p className="text-muted-foreground font-light max-w-xl mx-auto">
-                Recorridos de transformación progresivos y personalizados orientados a restaurar tu equilibrio interno.
+                Recorridos para comprender lo que vives y recuperar tu equilibrio.
               </p>
             </div>
 
@@ -278,10 +265,10 @@ const PortalHome = () => {
               <div className="relative">
                 {/* Image Placeholder Block for the Yoga Teacher */}
                 <div className="w-full max-w-sm rounded-3xl bg-muted border border-border/50 shadow-md overflow-hidden relative">
-                  <img src={fransuryImage} alt="Fransury González" className="w-full h-auto object-cover" />
+                  <img src={fransuryImage} alt="Fransury Gonzáles" className="w-full h-auto object-cover" />
                 </div>
                 <div className={`absolute -bottom-4 -right-4 px-5 py-2 rounded-full text-sm font-semibold shadow-md bg-white text-foreground border border-border/40 flex items-center gap-2`}>
-                  Sury González <Leaf className="w-4 h-4 text-primary" />
+                  Fransury Gonzáles <Leaf className="w-4 h-4 text-primary" />
                 </div>
               </div>
             </div>
@@ -294,10 +281,10 @@ const PortalHome = () => {
                 Quién te acompaña
               </h2>
               <p className="text-muted-foreground leading-relaxed font-light text-base">
-                Hola, soy <strong className="text-foreground font-medium">Fransury González (Sury)</strong>. Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
+                Hola, soy <strong className="text-foreground font-medium">Fransury Gonzáles (Sury)</strong>. Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
               </p>
               <p className="text-muted-foreground leading-relaxed font-light text-base">
-                Mi propósito es acompañarte a sanar experiencias difíciles, a transformar el significado de estás y habitar una vida en mayor plenitud, lo haremos a través de la integración del yoga, como medicina ancestral y comprendiendo algunos factores psicológicos, para que puedas aprender cómo regular tu sistema nervioso.
+                Mi propósito es acompañarte a sanar experiencias difíciles, a transformar el significado de lo que viviste y a habitar una vida en mayor plenitud. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a regular tu sistema nervioso.
               </p>
             </div>
           </div>
@@ -317,7 +304,7 @@ const PortalHome = () => {
                 Manifiesto Santosha
               </span>
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Nuestra Filosofía de Trabajo
+                Mi filosofía de trabajo
               </h2>
             </div>
 
@@ -346,10 +333,10 @@ const PortalHome = () => {
         <section className={`py-24 md:py-32 px-6 ${palette.secondary} text-center relative overflow-hidden`}>
           <div className="max-w-3xl mx-auto space-y-8 relative z-10">
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-foreground">
-              ¿Listo(a) para dar el primer paso?
+              ¿Quieres empezar? Escríbeme.
             </h2>
             <p className="text-lg text-muted-foreground/90 font-light max-w-xl mx-auto leading-relaxed">
-              Explora nuestros programas o inicia completamente gratis con nuestra Clase Maestra de 30 minutos sobre regulación y equilibrio emocional.
+              Explora los programas o empieza con la clase gratuita de 30 minutos.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
@@ -371,32 +358,14 @@ const PortalHome = () => {
             </div>
 
             <p className="text-xs text-muted-foreground/80">
-              Acompañamiento virtual disponible desde cualquier lugar del mundo.
+              Atención virtual desde cualquier lugar del mundo.
             </p>
           </div>
         </section>
 
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-foreground">
-            {settings?.brandName || "SantoSha"}
-          </p>
-          <p className="font-light">
-            {settings?.footerText || "Bienestar · Conciencia · Transformación"}
-          </p>
-          <div className="pt-4 flex flex-wrap justify-center gap-6">
-            <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
-            <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</Link>
-            <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
-            <Link to="/sabiduria-ciclica-esencia-femenina" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Sabiduría Cíclica</Link>
-            <Link to="/acompanamiento-individual" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Acompañamiento 1:1</Link>
-            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter palette={palette} />
 
       <AiChatWidget pageSlug="home" />
       <FreeClassDialog open={freeClassOpen} onOpenChange={setFreeClassOpen} />
