@@ -58,8 +58,8 @@ const FAQS = [
 const SERVICE_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Psicoterapia individual",
-  serviceType: "Psicoterapia individual en línea",
+  name: "Acompañamiento individual en psicoterapia",
+  serviceType: "Acompañamiento individual en psicoterapia",
   provider: { "@type": "Person", name: "Fransury Gonzáles", jobTitle: "Psicóloga" },
   offers: [
     { "@type": "Offer", name: "1 sesión", price: "75", priceCurrency: "USD" },
@@ -102,7 +102,7 @@ const MiProcesoIndividual = () => {
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
 
       <Seo
-        title="Psicoterapia individual online | SantoSha"
+        title="Acompañamiento individual en psicoterapia online | SantoSha"
         description="Psicoterapia individual virtual con la psicóloga Fransury Gonzáles. Sesiones por Google Meet de 60 a 75 minutos."
         path="/mi-proceso-individual"
         jsonLd={[faqJsonLd(FAQS), SERVICE_JSONLD]}
@@ -119,12 +119,18 @@ const MiProcesoIndividual = () => {
 
       <main className="flex-grow">
 
-        <SplitHero image={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga, en sesión de psicoterapia individual online">
+        <SplitHero image={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga, en sesión de acompañamiento individual online">
           <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
-            Mi proceso individual
+            Psicoterapia individual
           </motion.span>
-          <RevealTitle as="h1" text="¿Por qué siempre me pasa lo mismo?" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
+          <RevealTitle as="h1" text="Acompañamiento individual" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
+          <motion.p variants={fadeUp} className="font-serif text-2xl md:text-3xl font-light italic text-foreground">
+            Comprende el para qué.
+          </motion.p>
           <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
+            Todo lo que atravesamos tiene un propósito y un aprendizaje, incluso cuando duele o incomoda. Entiende tu para qué y transítalo en paz, aunque hoy estés en medio de tu propio caos.
+          </motion.p>
+          <motion.p variants={fadeUp} className="text-base text-foreground/70 leading-relaxed font-light">
             Un espacio terapéutico para comprender lo que estás viviendo, reconocer tus patrones emocionales y relacionales y desarrollar nuevas maneras de responder ante aquello que hoy genera malestar.
           </motion.p>
           <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
@@ -149,7 +155,10 @@ const MiProcesoIndividual = () => {
 
         <LandingSection tone="plain">
           <div className="max-w-4xl mx-auto space-y-8">
-            <RevealTitle text="¿Te reconoces en alguna de estas situaciones?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
+            <div className="text-center space-y-3">
+              <RevealTitle text="¿Por qué siempre me pasa lo mismo?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
+              <p className="text-muted-foreground font-light text-lg">¿Te reconoces en alguna de estas situaciones?</p>
+            </div>
             <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.06 } } }} className="grid md:grid-cols-2 gap-x-10">
               {FOR_WHOM.map((item) => (
                 <motion.li key={item} variants={fadeUp} className="flex items-start gap-4 py-4 border-b border-border/30">
@@ -164,7 +173,7 @@ const MiProcesoIndividual = () => {
         <LandingSection tone="mauve" className="overflow-hidden">
           <RotatingOrnament className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80 opacity-25" />
           <RevealWords stagger={0.04} className="relative max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
-            text={'"Entender por qué te pasa es el comienzo. Aprender qué hacer con lo que comprendes es el proceso."'} />
+            text={'"Entender el para qué es el comienzo. Aprender qué hacer con lo que comprendes es el proceso."'} />
         </LandingSection>
 
         <LandingSection id="tarifas" tone="peach">
