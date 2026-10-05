@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import type React from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Users, Leaf, Sparkles, HeartHandshake, Settings, Star, Anchor } from "lucide-react";
+import { ArrowDown, Clock, MessageCircle, Monitor, Video } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -18,6 +19,17 @@ import SiteFooter from "@/components/SiteFooter";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import bannerImage from "@/assets/banner-acompanamiento.webp";
+import {
+  fadeUp, inView, RevealTitle, RevealWords, RotatingOrnament,
+  LandingSection, SplitHero, PriceCard, PriceCardLight,
+} from "@/components/landing";
+
+// Foto del hero: cambiar solo esta línea cuando llegue la foto definitiva.
+const HERO_IMAGE = bannerImage;
+
+const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5";
+const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
+const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información para iniciar un proceso de psicoterapia de pareja.");
 
 const FOR_WHOM = [
   "Se les dificulta comunicarse sin que termine en discusión.",
@@ -74,9 +86,9 @@ const ProcesoDePareja = () => {
 
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  const goTarifas = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.querySelector("#tarifas")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const cta1Session = "https://checkout.bold.co/payment/LNK_F9YHBRBQLU";
@@ -103,244 +115,134 @@ const ProcesoDePareja = () => {
 
       <main className="flex-grow">
 
-        {/* ── HERO ── */}
-        <section className="relative py-32 md:py-48 px-6 overflow-hidden border-b border-border/10 flex items-center min-h-[90vh] w-full">
-          {/* Background Image & Overlay */}
-          <div className="absolute inset-0 z-0 w-full">
-            <img 
-              src={bannerImage} 
-              alt="Psicoterapia de Pareja Background" 
-              className="w-full h-full object-cover object-center"
-            />
-            {/* Gradient Overlay to ensure text readability */}
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/50" />
-          </div>
-
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="w-full max-w-3xl md:mr-auto md:ml-8 lg:ml-16 text-center md:text-left space-y-8 relative z-10"
-          >
-            <span className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 shadow-sm">
-              <Users className="w-4 h-4" /> Psicoterapia de pareja
-            </span>
-
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white drop-shadow-md">
-              ¿Por qué siempre discutimos por lo mismo?
-            </h1>
-
-            <div className="text-lg md:text-xl text-white/90 leading-relaxed font-light max-w-2xl drop-shadow mx-auto md:mx-0 space-y-4">
-              <p>
-                Una relación no cambia únicamente cuando cambia el otro. En terapia de pareja trabajamos para comprender las dinámicas que se han construido entre ambos: la comunicación, los conflictos, las heridas emocionales, los patrones repetitivos, los límites, la confianza y la manera en que cada uno participa en la relación.
-              </p>
-              <p>
-                El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
-              </p>
-            </div>
-
-            <div className="pt-8">
-              <a
-                href="#tarifas"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector("#tarifas")?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-white text-gray-900 hover:bg-gray-50"
-              >
-                Ver opciones de consulta <Anchor className="w-4 h-4 ml-1 text-gray-700" />
-              </a>
-            </div>
+        <SplitHero image={HERO_IMAGE} alt="Psicoterapia de pareja online con Fransury Gonzáles">
+          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
+            Psicoterapia de pareja
+          </motion.span>
+          <RevealTitle as="h1" text="¿Por qué siempre discutimos por lo mismo?" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
+          <motion.div variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light space-y-4">
+            <p>
+              Una relación no cambia únicamente cuando cambia el otro. En terapia de pareja trabajamos para comprender las dinámicas que se han construido entre ambos: la comunicación, los conflictos, las heridas emocionales, los patrones repetitivos, los límites, la confianza y la manera en que cada uno participa en la relación.
+            </p>
+            <p>
+              El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
+            </p>
           </motion.div>
-        </section>
+          <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
+            <li className={PILL}><Monitor className="w-4 h-4 text-primary" /> 100% virtual</li>
+            <li className={PILL}><Video className="w-4 h-4 text-primary" /> Google Meet</li>
+          </motion.ul>
+          <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center md:justify-start gap-5 pt-1">
+            <a href="#tarifas" onClick={goTarifas} className={BTN_SOLID + " group"}>
+              Ver opciones de consulta
+              <span className="inline-flex transition-transform duration-300 group-hover:translate-y-1">
+                <motion.span className="inline-flex" animate={{ y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
+                  <ArrowDown className="w-4 h-4" />
+                </motion.span>
+              </span>
+            </a>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline decoration-brand-gold underline-offset-4 hover:opacity-80">
+              Escríbeme por WhatsApp
+            </a>
+          </motion.div>
+        </SplitHero>
 
-        {/* ── PARA QUÉ AYUDA ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-12"
-          >
-            <div className="text-center space-y-3">
-              <HeartHandshake className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                ¿Se reconocen en alguna de estas situaciones?
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              {FOR_WHOM.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-40px" }}
-                  variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.3, delay: idx * 0.05 } } }}
-                  className="flex items-start gap-4 bg-background border border-border/40 rounded-2xl p-5 hover:border-primary/30 transition-all duration-300"
-                >
-                  <Star className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                  <p className="text-sm text-foreground leading-relaxed font-light">{item}</p>
-                </motion.div>
+        <LandingSection tone="plain">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <RevealTitle text="¿Se reconocen en alguna de estas situaciones?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
+            <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.06 } } }} className="grid md:grid-cols-2 gap-x-10">
+              {FOR_WHOM.map((item) => (
+                <motion.li key={item} variants={fadeUp} className="flex items-start gap-4 py-4 border-b border-border/30">
+                  <span aria-hidden="true" className="mt-1 w-px h-5 shrink-0 bg-[#B8977E]" />
+                  <span className="text-base text-foreground/90 leading-relaxed">{item}</span>
+                </motion.li>
               ))}
-            </div>
-          </motion.div>
-        </section>
+            </motion.ul>
+          </div>
+        </LandingSection>
 
-        {/* ── RECUADRO DESTACADO ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto"
-          >
-            <div className={`rounded-3xl p-10 md:p-14 text-center space-y-8 ${palette.secondary} shadow-lg relative overflow-hidden`}>
-              <div className="absolute inset-0 bg-white/40 backdrop-blur-3xl z-0" />
-              <div className="relative z-10 space-y-6">
-                <Sparkles className="w-12 h-12 text-primary mx-auto mb-4" />
-                <p className={`font-serif text-2xl md:text-3xl font-medium leading-relaxed ${palette.secondaryText}`}>
-                  "Y cuando continuar juntos deja de ser el camino, la terapia también puede ayudar a transitar una separación de manera más consciente, especialmente cuando existen vínculos familiares que necesitan ser cuidados."
-                </p>
-                <div className="h-px w-24 bg-primary/30 mx-auto" />
-                <p className={`font-serif text-xl font-light italic leading-relaxed ${palette.secondaryText} opacity-90`}>
-                  "La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no."
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </section>
+        <LandingSection tone="mauve" className="overflow-hidden">
+          <RotatingOrnament className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80 opacity-25" />
+          <div className="relative max-w-3xl mx-auto text-center space-y-6">
+            <RevealWords stagger={0.03} className="font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
+              text={'"Y cuando continuar juntos deja de ser el camino, la terapia también puede ayudar a transitar una separación de manera más consciente, especialmente cuando existen vínculos familiares que necesitan ser cuidados."'} />
+            <div aria-hidden="true" className="h-px w-16 mx-auto bg-[#B8977E]" />
+            <RevealWords stagger={0.04} className="font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
+              text={'"La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no."'} />
+          </div>
+        </LandingSection>
 
-        {/* ── TARIFAS / BOTONES ── */}
-        <section id="tarifas" className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-12"
-          >
+        <LandingSection id="tarifas" tone="peach">
+          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-4xl mx-auto space-y-10">
             <div className="text-center space-y-3">
-              <Settings className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Inicien su proceso
-              </h2>
-              <p className="text-muted-foreground font-light text-lg">
+              <RevealTitle text="Inicien su proceso" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
+              <motion.p variants={fadeUp} className="text-muted-foreground font-light text-lg">
                 Elijan la opción que mejor se adapte a su momento actual
-              </p>
+              </motion.p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              
-              {/* Opción 1 Sesión */}
-              <div className="relative group bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-border/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 flex flex-col h-full text-center">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent rounded-3xl pointer-events-none" />
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Users className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-serif text-2xl font-semibold text-foreground mb-4">
-                    1 Sesión
-                  </h3>
-                  <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
-                    Ideal para explorar una situación puntual, tener un primer acercamiento o abordar un bloqueo específico en pareja.
-                  </p>
-                  
-                  <a
-                    href={cta1Session}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full py-4 px-6 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-2 ${palette.primary} ${palette.primaryText} hover:opacity-90`}
-                  >
-                    Quiero 1 sesión <span className="font-bold border-l border-black/20 pl-2 ml-1">80 USD</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Opción 3 Sesiones */}
-              <div className="relative group bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-border/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 flex flex-col h-full text-center">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent rounded-3xl pointer-events-none" />
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Leaf className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-serif text-2xl font-semibold text-foreground mb-4">
-                    3 Sesiones
-                  </h3>
-                  <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
-                    Proceso de acompañamiento más profundo para trabajar patrones relacionales y generar verdaderas herramientas de cambio.
-                    <br/><br/>
-                    <span className="text-primary/80 text-xs">(descuento ya aplicado del 10%)</span>
-                  </p>
-                  
-                  <a
-                    href={cta3Sessions}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full py-4 px-6 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-2 ${palette.primary} ${palette.primaryText} hover:opacity-90`}
-                  >
-                    Quiero 3 sesiones <span className="font-bold border-l border-black/20 pl-2 ml-1">216 USD</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Opción 4 Sesiones */}
-              <div className="relative group bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-primary/30 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full text-center">
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-3xl pointer-events-none" />
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-sm z-20">
-                    Recomendado
-                  </div>
-                  <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Star className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-serif text-2xl font-semibold text-foreground mb-4">
-                    4 Sesiones
-                  </h3>
-                  <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
-                    Es el paquete que recomiendo: cada uno tiene un espacio individual y compartimos 2 espacios juntos.
-                    <br/><br/>
-                    <span className="text-primary/80 text-xs">(descuento ya aplicado del 10%)</span>
-                  </p>
-                  
-                  <a
-                    href={cta4Sessions}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full py-4 px-6 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-2 ${palette.primary} ${palette.primaryText} hover:opacity-90`}
-                  >
-                    Quiero 4 sesiones <span className="font-bold border-l border-black/20 pl-2 ml-1">288 USD</span>
-                  </a>
-                </div>
-              </div>
-
+            <div className="grid lg:grid-cols-3 gap-8 max-w-md lg:max-w-none mx-auto items-stretch">
+              <PriceCardLight
+                title="1 Sesión"
+                price="80"
+                href={cta1Session}
+                description={<p>Ideal para explorar una situación puntual, tener un primer acercamiento o abordar un bloqueo específico en pareja.</p>}
+                cta={<>Quiero 1 sesión <span className="font-bold border-l border-white/30 pl-2 ml-1">80 USD</span></>}
+              />
+              <PriceCardLight
+                title="3 Sesiones"
+                price="216"
+                href={cta3Sessions}
+                description={<>
+                  <p>Proceso de acompañamiento más profundo para trabajar patrones relacionales y generar verdaderas herramientas de cambio.</p>
+                  <p className="text-primary/80 text-xs">(descuento ya aplicado del 10%)</p>
+                </>}
+                cta={<>Quiero 3 sesiones <span className="font-bold border-l border-white/30 pl-2 ml-1">216 USD</span></>}
+              />
+              <PriceCard
+                badge="Recomendado"
+                title="4 Sesiones"
+                price="288"
+                href={cta4Sessions}
+                description={<>
+                  <p>Es el paquete que recomiendo: cada uno tiene un espacio individual y compartimos 2 espacios juntos.</p>
+                  <p className="text-xs">(descuento ya aplicado del 10%)</p>
+                </>}
+                cta={<>Quiero 4 sesiones <span className="font-bold border-l border-brand-ink/20 pl-2 ml-1">288 USD</span></>}
+              />
             </div>
 
-            <div className="text-center space-y-3 max-w-2xl mx-auto">
-              <p className="text-muted-foreground font-light">
+            <motion.div variants={fadeUp} className="text-center space-y-2 max-w-2xl mx-auto text-sm">
+              <p className="text-muted-foreground">
                 Desde Colombia pagan en pesos a la TRM del día. Si prefieren transferencia o PayPal, escríbanme y lo coordinamos.
               </p>
-              <a
-                href={getWhatsAppUrl("Hola Fransury, quiero información para iniciar un proceso de psicoterapia de pareja.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block font-semibold text-primary underline underline-offset-4 hover:opacity-80"
-              >
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-block font-semibold text-primary underline underline-offset-4 hover:opacity-80">
                 Escríbeme por WhatsApp
               </a>
               <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
-            </div>
+            </motion.div>
           </motion.div>
-        </section>
+        </LandingSection>
 
-        <section className={`py-20 md:py-28 px-6 ${palette.background}`}>
+        <LandingSection tone="plain">
           <div className="max-w-3xl mx-auto">
-            <FaqSection title="Preguntas frecuentes" items={FAQS} />
+            <FaqSection
+              items={FAQS}
+              titleSlot={<RevealTitle text="Preguntas frecuentes" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center mb-6" />}
+            />
           </div>
-        </section>
+        </LandingSection>
+
+        <LandingSection tone="peach">
+          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-2xl mx-auto text-center space-y-6">
+            <RevealTitle text="¿Quieren empezar? Escríbanme." className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
+            <motion.div variants={fadeUp}>
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
+                <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
+              </a>
+            </motion.div>
+          </motion.div>
+        </LandingSection>
 
       </main>
 
