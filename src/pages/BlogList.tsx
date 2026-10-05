@@ -133,7 +133,7 @@ export const BlogList = () => {
         </p>
 
         {/* Search Bar */}
-        <div className="max-w-md mx-auto pt-6 relative">
+        <div className="max-w-md mx-auto mt-6 relative">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input 
             type="text"
