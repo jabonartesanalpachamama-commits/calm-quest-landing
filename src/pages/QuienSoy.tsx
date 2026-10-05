@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Leaf, HandHeart, Plane, Flower2, HeartHandshake, Sun, GraduationCap, Globe2, Moon, MessageCircle } from "lucide-react";
+import { Flower2, Moon, MessageCircle } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -13,82 +13,37 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
-import santoshaLogo from "@/assets/santosha-logo.webp";
+import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
 import fransuryImage from "@/assets/fransury_quiensoy.webp";
+import {
+  fadeUp, inView, RevealTitle, RevealWords, RotatingOrnament, LandingSection, SplitHero,
+} from "@/components/landing";
+
+// Foto del hero: cambiar solo esta línea cuando llegue la foto definitiva.
+const HERO_IMAGE = fransuryImage;
+
+const PILL = "h-10 flex items-center whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-4";
+const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground text-center";
 
 const FORMATION = [
-  {
-    year: "2024",
-    title: "Terapeuta Transpersonal de Pareja",
-    institution: "Escuela Española de Desarrollo Transpersonal y Universidad Miguel de Cervantes",
-    country: "España",
-  },
-  {
-    year: "2021",
-    title: "Profesorado Kundalini Yoga",
-    institution: "Happy Yoga Colombia, avalado por KRY International",
-    country: "Colombia",
-  },
-  {
-    year: "2013",
-    title: "Especialista en Gerencia del Talento Humano",
-    institution: "Universidad Manuela Beltrán",
-    country: "Colombia",
-  },
-  {
-    year: "2009",
-    title: "Psicóloga",
-    institution: "Universidad Cooperativa de Colombia",
-    country: "Colombia",
-  },
+  { year: "2024", title: "Terapeuta Transpersonal de Pareja", institution: "Escuela Española de Desarrollo Transpersonal y Universidad Miguel de Cervantes", country: "España" },
+  { year: "2021", title: "Profesorado Kundalini Yoga", institution: "Happy Yoga Colombia, avalado por KRY International", country: "Colombia" },
+  { year: "2013", title: "Especialista en Gerencia del Talento Humano", institution: "Universidad Manuela Beltrán", country: "Colombia" },
+  { year: "2009", title: "Psicóloga", institution: "Universidad Cooperativa de Colombia", country: "Colombia" },
 ];
 
 const COURSES = [
-  {
-    year: "2026",
-    role: "Participante",
-    title: "Diplomado en Yogaterapia",
-    detail: "",
-  },
-  {
-    year: "2026",
-    role: "Participante",
-    title: "Retiro Transpersonal: Cómo sanar el trauma y el dolor emocional",
-    detail: "Colombia, Escuela Española de Desarrollo Transpersonal",
-  },
-  {
-    year: "2024",
-    role: "Participante",
-    title: "Iniciación al Chamanismo",
-    detail: "Inti Waka, Córdoba, Argentina",
-  },
-  {
-    year: "2023",
-    role: "Facilitadora",
-    title: "Taller de Esencia Femenina y Yoga para Sanar el Útero",
-    detail: "Portal Yoga, España",
-  },
-  {
-    year: "2023",
-    role: "Participante",
-    title: "Taller de Meditación",
-    detail: "Centro de Yoga Shadak Ramiro Calle, Madrid, España",
-  },
-  {
-    year: "2023",
-    role: "Participante",
-    title: "Congreso: Egipto de Luz",
-    detail: "El Cairo, Egipto",
-  },
-  {
-    year: "2020",
-    role: "Participante",
-    title: "Claves para Atraer y Relacionarte con tu Pareja Ideal",
-    detail: "Enric Corbera Institute",
-  },
+  { year: "2026", role: "Participante", title: "Diplomado en Yogaterapia", detail: "" },
+  { year: "2026", role: "Participante", title: "Retiro Transpersonal: Cómo sanar el trauma y el dolor emocional", detail: "Colombia, Escuela Española de Desarrollo Transpersonal" },
+  { year: "2024", role: "Participante", title: "Iniciación al Chamanismo", detail: "Inti Waka, Córdoba, Argentina" },
+  { year: "2023", role: "Facilitadora", title: "Taller de Esencia Femenina y Yoga para Sanar el Útero", detail: "Portal Yoga, España" },
+  { year: "2023", role: "Participante", title: "Taller de Meditación", detail: "Centro de Yoga Shadak Ramiro Calle, Madrid, España" },
+  { year: "2023", role: "Participante", title: "Congreso: Egipto de Luz", detail: "El Cairo, Egipto" },
+  { year: "2020", role: "Participante", title: "Claves para Atraer y Relacionarte con tu Pareja Ideal", detail: "Enric Corbera Institute" },
 ];
 
-const DESTINATIONS = ["🇪🇬 Egipto", "🇲🇽 México", "🇦🇷 Argentina", "🇨🇭 Suiza", "🇪🇸 España", "🇮🇹 Italia"];
+const DESTINATIONS = ["Egipto", "México", "Argentina", "Suiza", "España", "Italia"];
 
 const STATS = [
   { value: "+20", label: "años recorriendo el camino del autoconocimiento" },
@@ -97,7 +52,30 @@ const STATS = [
   { value: "100s", label: "de personas acompañadas alrededor del mundo" },
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
+const PERSON_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Fransury Gonzáles",
+  jobTitle: "Psicóloga y maestra de Kundalini Yoga",
+  url: "https://santoshayoga.com.co/quien-soy",
+};
+
+const Timeline = ({ items }: { items: { year: string; title: string; sub: string; role?: string }[] }) => (
+  <motion.ol {...inView} variants={{ show: { transition: { staggerChildren: 0.07 } } }} className="max-w-2xl mx-auto">
+    {items.map((it) => (
+      <motion.li key={it.title} variants={fadeUp} className="grid grid-cols-[3.5rem_1fr] gap-4">
+        <span className="font-serif text-xl text-[#B8977E] pt-0.5">{it.year}</span>
+        <div className="border-l border-border/60 pl-5 pb-7 relative">
+          <span aria-hidden="true" className="absolute -left-[4px] top-2.5 w-2 h-2 rounded-full bg-[#B8977E]" />
+          {it.role && <p className="text-[11px] uppercase tracking-wider text-muted-foreground">{it.role}</p>}
+          <p className="font-semibold text-foreground leading-snug">{it.title}</p>
+          {it.sub && <p className="text-sm text-muted-foreground font-light mt-0.5">{it.sub}</p>}
+        </div>
+      </motion.li>
+    ))}
+  </motion.ol>
+);
+
 const QuienSoy = () => {
   const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
 
@@ -120,400 +98,157 @@ const QuienSoy = () => {
 
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
-  };
-
   return (
-    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
-
-      <FloatingCTA
-        formAnchor="#quien-soy-contacto"
-        ctaText="Trabajar con Sury"
-        subText="Acompañamiento consciente · Transformación real"
+    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
+      <Seo
+        title="Quién soy | Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga"
+        description="Soy Fransury Gonzáles, psicóloga, psicoterapeuta y maestra de Kundalini Yoga. Conoce mi historia y mi formación."
+        path="/quien-soy"
+        jsonLd={PERSON_JSONLD}
       />
+      <FloatingCTA scrollTo="#quien-soy-contacto" ctaText="Escríbeme" subText="Fransury Gonzáles" />
 
-      {/* ── HEADER ── */}
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-
-        {/* ── HERO / PRESENTACIÓN ── */}
-        <section className={`py-24 md:py-32 px-6 relative overflow-hidden ${palette.background} border-b border-border/10`}>
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-            <div className="absolute inset-0 bg-[url('/src/assets/santosha-logo.webp')] bg-center bg-no-repeat bg-contain opacity-5"></div>
-            <div className="absolute top-0 -right-32 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 -left-32 w-[400px] h-[400px] bg-accent/10 rounded-full blur-3xl" />
-          </div>
-
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-14 md:gap-20 items-center relative z-10">
-            {/* Avatar placeholder */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-              className="flex justify-center md:justify-end order-2 md:order-1"
-            >
-              <div className="relative">
-                <div className="w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden border-4 border-white shadow-xl relative bg-card">
-                  <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/0 transition-colors duration-500 z-10 rounded-[2rem]"></div>
-                  <img src={fransuryImage} alt="Fransury González" className="w-full h-full object-cover" />
-                </div>
-                {/* Floating badge */}
-                <div className={`absolute -bottom-4 -right-4 px-4 py-2 rounded-full text-xs font-semibold shadow-md ${palette.primary}`}>
-                  Fundadora de Santosha
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Text */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-              className="space-y-6 order-1 md:order-2"
-            >
-              <div className="space-y-1">
-                <span className={`text-xs font-semibold tracking-wider uppercase ${palette.primaryText}`}>
-                  Quién soy
-                </span>
-                <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight text-foreground">
-                  Hola, soy<br />
-                  <span className={palette.primaryText}>Fransury González.</span>
-                </h1>
-                <p className="text-muted-foreground text-base font-light">
-                  Aunque quienes han caminado conmigo desde hace años me llaman <strong className="text-foreground font-medium">Sury</strong>.
-                </p>
-              </div>
-
-              <p className="text-muted-foreground leading-relaxed font-light">
-                Soy psicóloga, psicoterapeuta, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante del comportamiento y la Psique <em>(desde su raíz original: Alma)</em> humana.
-              </p>
-
-              <div className={`border-l-2 border-primary/30 pl-4 py-1`}>
-                <p className="font-serif text-base italic text-foreground/80 leading-relaxed">
-                  "Mi camino hacia la espiritualidad no comenzó en un templo, comenzó en una pregunta profunda: ¿por qué nos cuesta tanto relacionarnos con nosotros mismos y con los demás desde el amor?"
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {["Psicóloga", "Psicoterapeuta", "Maestra Kundalini Yoga", "Terapia Transpersonal"].map((tag) => (
-                  <span key={tag} className={`text-xs px-3 py-1.5 rounded-full border font-medium ${palette.secondary} ${palette.secondaryText} border-transparent`}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── ESTADÍSTICAS ── */}
-        <section className={`py-14 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={fadeUp}
-            className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6"
-          >
-            {STATS.map(({ value, label }) => (
-              <div key={label} className="text-center space-y-1">
-                <p className={`font-serif text-3xl md:text-4xl font-bold ${palette.primaryText}`}>{value}</p>
-                <p className="text-xs text-muted-foreground font-light leading-snug">{label}</p>
-              </div>
+        <SplitHero image={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga">
+          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
+            Quién soy
+          </motion.span>
+          <RevealTitle as="h1" text="Hola, soy Fransury Gonzáles." className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
+          <motion.p variants={fadeUp} className="text-base text-foreground/70 font-light">
+            Aunque quienes han caminado conmigo desde hace años me llaman <strong className="text-foreground font-medium">Sury</strong>.
+          </motion.p>
+          <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
+            Soy psicóloga, psicoterapeuta, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante del comportamiento y la Psique <em>(desde su raíz original: Alma)</em> humana.
+          </motion.p>
+          <motion.blockquote variants={fadeUp} className="border-l-2 border-[#B8977E] pl-4 text-left font-serif text-lg italic text-foreground/80 leading-relaxed">
+            "Mi camino hacia la espiritualidad no comenzó en un templo, comenzó en una pregunta profunda: ¿por qué nos cuesta tanto relacionarnos con nosotros mismos y con los demás desde el amor?"
+          </motion.blockquote>
+          <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
+            {["Psicóloga", "Psicoterapeuta", "Maestra Kundalini Yoga", "Terapia Transpersonal"].map((t) => (
+              <li key={t} className={PILL}>{t}</li>
             ))}
-          </motion.div>
-        </section>
+          </motion.ul>
+        </SplitHero>
 
-        {/* ── MI HISTORIA ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-8"
-          >
-            <div className="text-center space-y-3">
-              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Mi Historia
-              </h2>
-            </div>
+        {/* Estadísticas */}
+        <LandingSection tone="plain">
+          <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+            {STATS.map(({ value, label }) => (
+              <motion.li key={label} variants={fadeUp} className="text-center space-y-1">
+                <p className="font-serif text-4xl md:text-5xl text-[#795D64]">{value}</p>
+                <p className="text-sm text-muted-foreground font-light leading-snug">{label}</p>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </LandingSection>
 
-            <div className="space-y-5 text-muted-foreground leading-relaxed font-light text-base">
-              <p>
-                Hace más de 20 años inicié un viaje de búsqueda, transformación e integración. La psicología fue una de mis primeras respuestas… pero también una puerta hacia preguntas mucho más profundas sobre el sentido de la experiencia humana, el sufrimiento, la conciencia y la evolución personal.
-              </p>
-              <p>
-                Mi formación profesional integra la Psicología, estudios en Gerencia del Talento Humano, Terapia Transpersonal de Pareja, más de 7 años de experiencia clínica como psicoterapeuta, y una trayectoria previa en trabajo social, comunitario y cooperación internacional, experiencias que ampliaron profundamente mi mirada sobre la humanidad.
-              </p>
-              <p>
-                Viajar, acompañar comunidades diversas y observar distintas realidades me permitió comprender algo esencial: más allá de culturas, creencias, clases sociales o contextos, existe un anhelo profundamente humano de sanar, crecer, encontrar sentido, amar mejor y vivir con mayor coherencia.
-              </p>
+        {/* Mi historia */}
+        <LandingSection tone="plain">
+          <div className="max-w-2xl mx-auto space-y-5 text-foreground/80 leading-relaxed font-light text-lg">
+            <RevealTitle text="Mi Historia" className={H2 + " mb-4"} />
+            <p>Hace más de 20 años inicié un viaje de búsqueda, transformación e integración. La psicología fue una de mis primeras respuestas… pero también una puerta hacia preguntas mucho más profundas sobre el sentido de la experiencia humana, el sufrimiento, la conciencia y la evolución personal.</p>
+            <p>Mi formación profesional integra la Psicología, estudios en Gerencia del Talento Humano, Terapia Transpersonal de Pareja, más de 7 años de experiencia clínica como psicoterapeuta, y una trayectoria previa en trabajo social, comunitario y cooperación internacional, experiencias que ampliaron profundamente mi mirada sobre la humanidad.</p>
+            <p>Viajar, acompañar comunidades diversas y observar distintas realidades me permitió comprender algo esencial: más allá de culturas, creencias, clases sociales o contextos, existe un anhelo profundamente humano de sanar, crecer, encontrar sentido, amar mejor y vivir con mayor coherencia.</p>
+          </div>
+        </LandingSection>
 
-              <div className={`rounded-3xl ${palette.secondary} p-6 space-y-3`}>
-                <p className={`font-serif text-base md:text-lg font-light italic leading-relaxed ${palette.secondaryText}`}>
-                  "Las experiencias personales, los procesos de transformación y los desafíos de mi propia historia me llevaron a profundizar cada vez más en caminos de autoconocimiento, espiritualidad y sabiduría ancestral."
-                </p>
-              </div>
+        <LandingSection tone="mauve" className="overflow-hidden">
+          <RotatingOrnament className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80 opacity-25" />
+          <RevealWords stagger={0.04} className="relative max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
+            text={'"Las experiencias personales, los procesos de transformación y los desafíos de mi propia historia me llevaron a profundizar cada vez más en caminos de autoconocimiento, espiritualidad y sabiduría ancestral."'} />
+        </LandingSection>
 
-              <p>
-                Fue allí donde el Yoga, la meditación, las prácticas contemplativas, las prácticas ancestrales se convirtieron no solo en herramientas, sino en una manera de habitar la vida.
-              </p>
-              <p>
-                Como Maestra de Kundalini Yoga, he acompañado e impactado a cientos de personas de distintos lugares del mundo a través de esta poderosa tecnología de conciencia.
-              </p>
-              <p>
-                Practico meditación desde hace más de ocho años y continúo recorriendo caminos de aprendizaje alrededor del mundo, explorando la historia espiritual de la humanidad y encontrándome con maestros, tradiciones y comunidades comprometidas con una búsqueda auténtica de servicio y evolución.
-              </p>
-            </div>
-          </motion.div>
-        </section>
+        <LandingSection tone="plain">
+          <div className="max-w-2xl mx-auto space-y-5 text-foreground/80 leading-relaxed font-light text-lg">
+            <p>Fue allí donde el Yoga, la meditación, las prácticas contemplativas, las prácticas ancestrales se convirtieron no solo en herramientas, sino en una manera de habitar la vida.</p>
+            <p>Como Maestra de Kundalini Yoga, he acompañado e impactado a cientos de personas de distintos lugares del mundo a través de esta poderosa tecnología de conciencia.</p>
+            <p>Practico meditación desde hace más de ocho años y continúo recorriendo caminos de aprendizaje alrededor del mundo, explorando la historia espiritual de la humanidad y encontrándome con maestros, tradiciones y comunidades comprometidas con una búsqueda auténtica de servicio y evolución.</p>
+          </div>
+        </LandingSection>
 
-        {/* ── VIAJES ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-8"
-          >
-            <div className="text-center space-y-3">
-              <Plane className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Un camino que cruza fronteras
-              </h2>
-              <p className="text-muted-foreground font-light max-w-xl mx-auto text-sm leading-relaxed">
-                Mis viajes me han llevado a lugares profundamente simbólicos y transformadores, donde he seguido nutriendo una visión integradora entre psicología, espiritualidad, cuerpo, conciencia y propósito.
-              </p>
-            </div>
+        {/* Viajes */}
+        <LandingSection tone="mauve">
+          <div className="max-w-3xl mx-auto space-y-6 text-center">
+            <RevealTitle text="Un camino que cruza fronteras" className={H2} />
+            <p className="text-muted-foreground font-light text-lg leading-relaxed">
+              Mis viajes me han llevado a lugares profundamente simbólicos y transformadores, donde he seguido nutriendo una visión integradora entre psicología, espiritualidad, cuerpo, conciencia y propósito.
+            </p>
+            <ul className="flex flex-wrap justify-center gap-2 text-sm">
+              {DESTINATIONS.map((d) => <li key={d} className={PILL}>{d}</li>)}
+            </ul>
+          </div>
+        </LandingSection>
 
-            <div className="flex flex-wrap justify-center gap-3">
-              {DESTINATIONS.map((dest) => (
-                <span
-                  key={dest}
-                  className="bg-card border border-border/50 rounded-full px-5 py-2.5 text-sm font-medium text-foreground hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-                >
-                  {dest}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-
-
-        {/* ── HOY — SANTOSHA ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-8"
-          >
-            <div className="text-center space-y-3">
-              <Sun className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Hoy, desde Santosha
-              </h2>
-            </div>
-
-            <p className="text-muted-foreground leading-relaxed font-light text-base text-center max-w-2xl mx-auto">
+        {/* Hoy */}
+        <LandingSection tone="plain">
+          <div className="max-w-2xl mx-auto space-y-5 text-center">
+            <RevealTitle text="Hoy, desde Santosha" className={H2} />
+            <p className="text-foreground/80 leading-relaxed font-light text-lg">
               Acompaño procesos de transformación interior donde el Kundalini Yoga, la meditación, la psicología, la espiritualidad consciente y el trabajo profundo con el ser humano se unen para ayudar a las personas a vivir con más verdad, presencia, libertad y amor.
             </p>
-
-            <div className={`rounded-3xl p-8 space-y-4 text-center ${palette.secondary}`}>
-              <p className={`font-serif text-base font-light italic leading-relaxed ${palette.secondaryText}`}>
-                "Porque creo profundamente que sanar no significa convertirse en alguien distinto."
-              </p>
-              <p className={`font-serif text-xl font-semibold ${palette.secondaryText}`}>
-                Significa recordar quién eres cuando vuelves a tu esencia.
-              </p>
-            </div>
+          </div>
+        </LandingSection>
+        <LandingSection tone="peach">
+          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-3xl mx-auto text-center space-y-3">
+            <motion.p variants={fadeUp} className="font-serif text-lg md:text-xl italic text-foreground/80">
+              "Porque creo profundamente que sanar no significa convertirse en alguien distinto."
+            </motion.p>
+            <motion.p variants={fadeUp} className="font-serif text-2xl md:text-4xl font-semibold text-foreground leading-snug">
+              Significa recordar quién eres cuando vuelves a tu esencia.
+            </motion.p>
           </motion.div>
-        </section>
+        </LandingSection>
 
-        {/* ── FORMACIÓN ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-10"
-          >
-            <div className="text-center space-y-3">
-              <GraduationCap className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Formación Académica
-              </h2>
-            </div>
+        {/* Formación */}
+        <LandingSection tone="plain">
+          <div className="space-y-8">
+            <RevealTitle text="Formación Académica" className={H2} />
+            <Timeline items={FORMATION.map((f) => ({ year: f.year, title: f.title, sub: `${f.institution} · ${f.country}` }))} />
+          </div>
+        </LandingSection>
 
-            <div className="space-y-4">
-              {FORMATION.map((item, idx) => (
-                <motion.div
-                  key={item.title}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-40px" }}
-                  variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0, transition: { duration: 0.5, delay: idx * 0.08 } } }}
-                  className="flex items-start gap-5 bg-card border border-border/50 rounded-3xl p-6 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-                >
-                  <div className={`shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center font-serif font-bold text-sm ${palette.secondary} ${palette.secondaryText}`}>
-                    {item.year}
-                  </div>
-                  <div className="space-y-1 min-w-0">
-                    <p className="font-semibold text-foreground leading-snug">{item.title}</p>
-                    <p className="text-sm text-muted-foreground font-light">{item.institution}</p>
-                    <span className="inline-block text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
-                      {item.country}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
+        <LandingSection tone="mauve">
+          <div className="space-y-8">
+            <RevealTitle text="Cursos y Participaciones" className={H2} />
+            <Timeline items={COURSES.map((c) => ({ year: c.year, title: c.title, sub: c.detail, role: c.role }))} />
+          </div>
+        </LandingSection>
 
-        {/* ── CURSOS Y PARTICIPACIONES ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-10"
-          >
-            <div className="text-center space-y-3">
-              <Globe2 className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Cursos y Participaciones
-              </h2>
-            </div>
-
-            <div className="space-y-3">
-              {COURSES.map((item, idx) => (
-                <motion.div
-                  key={item.title}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-40px" }}
-                  variants={{ hidden: { opacity: 0, x: -12 }, show: { opacity: 1, x: 0, transition: { duration: 0.4, delay: idx * 0.07 } } }}
-                  className="flex items-start gap-4 bg-card border border-border/40 rounded-2xl px-5 py-4 hover:border-primary/20 transition-all duration-300"
-                >
-                  <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-                      {item.year}
-                    </span>
-                  </div>
-                  <div className="space-y-0.5 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-semibold text-muted-foreground/70 uppercase tracking-wider">
-                        {item.role}
-                      </span>
-                    </div>
-                    <p className="text-sm font-semibold text-foreground leading-snug">{item.title}</p>
-                    {item.detail && (
-                      <p className="text-xs text-muted-foreground font-light">{item.detail}</p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ── CTA FINAL ── */}
-        <section id="quien-soy-contacto" className={`py-24 md:py-32 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto text-center space-y-8"
-          >
-            <div className="space-y-3">
-              <Leaf className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                ¿Quieres caminar conmigo?
-              </h2>
-              <p className="text-muted-foreground leading-relaxed font-light text-lg max-w-xl mx-auto">
-                Si algo de lo que leíste resonó en ti, me alegra. Eso ya es el comienzo de algo.
-              </p>
-            </div>
-
-            {/* Programs */}
-            <div className="grid sm:grid-cols-2 gap-4 text-left">
+        {/* CTA final */}
+        <LandingSection id="quien-soy-contacto" tone="peach">
+          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-3xl mx-auto text-center space-y-6">
+            <RevealTitle text="¿Quieres caminar conmigo?" className={H2} />
+            <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
+              Si algo de lo que leíste resonó en ti, me alegra. Eso ya es el comienzo de algo.
+            </motion.p>
+            <motion.div variants={fadeUp} className="grid sm:grid-cols-2 gap-4 text-left">
               {[
-                {
-                  icon: <Moon className="w-6 h-6 text-primary shrink-0" />,
-                  title: "Curso de Iniciación al Yoga",
-                  desc: "6 módulos · Encuentros bimensuales · 100% Virtual",
-                  href: "/curso-iniciacion-yoga",
-                },
-                {
-                  icon: <Flower2 className="w-6 h-6 text-primary shrink-0" />,
-                  title: "Sabiduría Cíclica",
-                  desc: "Esencia Femenina · Virtual · Comunidad",
-                  href: "/sabiduria-ciclica-esencia-femenina",
-                },
-              ].map(({ icon, title, desc, href }) => (
-                <Link
-                  key={title}
-                  to={href}
-                  className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-5 hover:border-primary/40 hover:shadow-sm transition-all duration-300 group"
-                >
-                  {icon}
+                { icon: Moon, title: "Curso de Iniciación al Yoga", desc: "6 módulos · Encuentros bimensuales · 100% Virtual", href: "/curso-iniciacion-yoga" },
+                { icon: Flower2, title: "Sabiduría Cíclica", desc: "Esencia Femenina · Virtual · Comunidad", href: "/sabiduria-ciclica-esencia-femenina" },
+              ].map(({ icon: Icon, title, desc, href }) => (
+                <Link key={title} to={href} className="flex items-start gap-4 bg-card border border-border/40 rounded-3xl p-5 hover:border-primary/40 transition-colors group">
+                  <Icon className="w-6 h-6 text-primary shrink-0" />
                   <div>
-                    <p className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">{title}</p>
-                    <p className="text-xs text-muted-foreground font-light mt-0.5">{desc}</p>
+                    <p className="font-serif text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{title}</p>
+                    <p className="text-sm text-muted-foreground font-light mt-0.5">{desc}</p>
                   </div>
                 </Link>
               ))}
-            </div>
-
-            <a
-              href="https://wa.me/573105679517"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
-            >
-              <MessageCircle className="w-5 h-5" /> Escribirme por WhatsApp
-            </a>
-
-            <p className="text-xs text-muted-foreground">
-              Sin compromiso · Te respondo personalmente
-            </p>
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <a href="https://wa.me/573105679517" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md transition-all bg-[#795D64] hover:bg-[#6A5057] text-white">
+                <MessageCircle className="w-5 h-5" /> Escribirme por WhatsApp
+              </a>
+            </motion.div>
+            <p className="text-xs text-muted-foreground">Sin compromiso · Te respondo personalmente.</p>
           </motion.div>
-        </section>
-
+        </LandingSection>
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-foreground">
-            {settings?.brandName || "SantoSha"}
-          </p>
-          <p className="font-light">
-            {settings?.footerText || "Bienestar · Conciencia · Transformación"}
-          </p>
-          <div className="pt-4 flex flex-wrap justify-center gap-6">
-            <Link to="/" className="hover:underline text-xs text-muted-foreground/70 transition-colors">
-              ← Inicio
-            </Link>
-            <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">
-              Curso de Iniciación
-            </Link>
-            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
-          </div>
-        </div>
-      </footer>
-
+      <SiteFooter palette={palette} />
       <AiChatWidget pageSlug="quien-soy" />
     </div>
   );
