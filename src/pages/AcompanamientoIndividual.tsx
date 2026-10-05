@@ -289,7 +289,7 @@ const AcompanamientoIndividual = () => {
               <PriceCardLight
                 title="1 Sesión"
                 price="17"
-                href={`https://wa.me/${waNumber}?text=${encodeURIComponent("Hola, me gustaría agendar 1 Sesión de Acompañamiento.")}`}
+                href={getWhatsAppUrl("Hola, me gustaría agendar 1 Sesión de Acompañamiento.")}
                 description={<>
                   <p>Pago por cada sesión individual</p>
                   <Benefits light items={["Duración según lo acordado", "Atención 100% personalizada", "Sin compromisos a largo plazo", "Enfoque en temas específicos"]} />
@@ -300,7 +300,7 @@ const AcompanamientoIndividual = () => {
                 badge="15% de descuento"
                 title="Mensualidad"
                 price="116"
-                href={`https://wa.me/${waNumber}?text=${encodeURIComponent("Hola, me gustaría inscribirme a la Mensualidad de Acompañamiento.")}`}
+                href={getWhatsAppUrl("Hola, me gustaría inscribirme a la Mensualidad de Acompañamiento.")}
                 description={<>
                   <p>Paquete de 8 sesiones</p>
                   <Benefits items={["8 Sesiones adaptables a tu ritmo", "Seguimiento constante de tu progreso", "Recursos y herramientas entre sesiones", "Ideal para procesos de transformación humana"]} />
