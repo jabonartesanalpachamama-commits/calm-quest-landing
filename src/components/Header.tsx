@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { createPortal } from "react-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import santoshaLogo from "@/assets/santosha-logo.webp";
 import { getWhatsAppUrl } from "@/lib/utils";
@@ -169,7 +170,7 @@ const Header = ({ borderless }: HeaderProps) => {
         </div>
       </div>
 
-      {mobileOpen && (
+      {mobileOpen && createPortal(
         <div id="menu-movil" className="lg:hidden fixed inset-x-0 bottom-0 top-[64px] md:top-[80px] z-50 bg-brand-cream flex flex-col">
           <nav aria-label="Principal móvil" className="flex-1 overflow-y-auto px-6 py-4">
             {NAV_GROUPS.map((g) => {
@@ -220,7 +221,8 @@ const Header = ({ borderless }: HeaderProps) => {
               Agendar por WhatsApp
             </a>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );
