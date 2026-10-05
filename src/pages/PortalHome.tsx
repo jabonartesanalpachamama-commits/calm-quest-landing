@@ -108,7 +108,7 @@ const PortalHome = () => {
   };
 
   return (
-    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
+    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
       <Seo
         title="SantoSha | Psicoterapia, yoga y meditación online"
         description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury Gonzáles. Atención virtual desde cualquier lugar."
