@@ -16,21 +16,48 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
+import Seo from "@/components/Seo";
+import FaqSection from "@/components/FaqSection";
+import SiteFooter from "@/components/SiteFooter";
+import { faqJsonLd } from "@/lib/seo";
+import { getWhatsAppUrl } from "@/lib/utils";
 import bannerImage from "@/assets/banner-acompanamiento.webp";
 
 const FOR_WHOM = [
-  "Dificultades en sus relaciones.",
-  "Dependencia emocional o miedo a estar solas.",
-  "Baja autoestima y necesidad constante de aprobación.",
-  "Dificultad para poner límites.",
-  "Procesos de duelo y pérdidas.",
-  "Crisis o momentos de transición.",
-  "Patrones que se repiten en sus relaciones.",
-  "Dificultad para comprender o gestionar sus emociones.",
-  "Sensación de estar desconectadas de sí mismas.",
-  "Necesidad de replantear su proyecto de vida.",
-  "Para quienes desean sanar sus patrones transgeneracionales."
+  "Tienes dificultades en tus relaciones.",
+  "Sientes dependencia emocional o miedo a la soledad.",
+  "Tu autoestima está baja y buscas aprobación todo el tiempo.",
+  "No sabes poner límites y, cuando lo intentas, sientes miedo.",
+  "Estás pasando por un duelo o una pérdida: familia, amistades, una mascota o cualquier cierre que estés viviendo.",
+  "Atraviesas una crisis o un momento de cambio.",
+  "Repites un mismo patrón en tus relaciones.",
+  "Te cuesta entender y manejar lo que sientes.",
+  "Sientes que te has desconectado de ti.",
+  "Necesitas replantear tu proyecto de vida.",
+  "Quieres sanar patrones que vienen de tu familia.",
 ];
+
+const FAQS = [
+  { q: "¿La terapia es presencial?", a: "No. Todas mis sesiones son virtuales, por Google Meet. Puedes conectarte desde donde estés." },
+  { q: "¿Una sesión dura más de una hora?", a: "Sí. Dura entre 60 y 75 minutos." },
+  { q: "¿Necesito saber qué quiero trabajar antes de empezar?", a: "No. Puedes llegar con una sola frase y lo vamos aclarando durante la sesión." },
+  { q: "¿Lo que cuento es confidencial?", a: "Sí. Todo lo que hablamos en sesión es confidencial y trato tus datos personales según la Ley 1581 de 2012." },
+  { q: "¿Atiendes crisis o emergencias?", a: "No. Mi consulta no es un servicio de urgencias. Si sientes que estás en riesgo, llama al 123 o acude al servicio de urgencias más cercano." },
+  { q: "¿Puedo pagar con tarjeta?", a: "Sí. Puedes pagar en línea con tarjeta débito o crédito, por transferencia o por PayPal. Desde Colombia el pago se hace en pesos a la TRM del día." },
+  { q: "¿Hay descuento por paquete?", a: "Sí. El paquete de 3 sesiones cuesta 203 USD e incluye una sesión adicional de 30 minutos." },
+];
+
+const SERVICE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Psicoterapia individual",
+  serviceType: "Psicoterapia individual en línea",
+  provider: { "@type": "Person", name: "Fransury Gonzáles", jobTitle: "Psicóloga" },
+  offers: [
+    { "@type": "Offer", name: "1 sesión", price: "75", priceCurrency: "USD" },
+    { "@type": "Offer", name: "3 sesiones", price: "203", priceCurrency: "USD" },
+  ],
+};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const MiProcesoIndividual = () => {
@@ -64,12 +91,19 @@ const MiProcesoIndividual = () => {
   const cta3Sessions = "https://checkout.bold.co/payment/LNK_43NGG631N3";
 
   return (
-    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
+    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
+
+      <Seo
+        title="Psicoterapia individual online | SantoSha"
+        description="Psicoterapia individual virtual con la psicóloga Fransury Gonzáles. Sesiones por Google Meet de 60 a 75 minutos."
+        path="/mi-proceso-individual"
+        jsonLd={[faqJsonLd(FAQS), SERVICE_JSONLD]}
+      />
 
       <FloatingCTA
-        formAnchor="#tarifas"
-        ctaText="Iniciar mi proceso"
-        subText={<><Heart className="w-3.5 h-3.5 inline-block mr-1 text-primary" /> Psicoterapia Individual</>}
+        scrollTo="#tarifas"
+        ctaText="Elegir mi sesión"
+        subText="Psicoterapia individual"
       />
 
       {/* ── HEADER ── */}
@@ -98,12 +132,11 @@ const MiProcesoIndividual = () => {
             className="w-full max-w-3xl md:mr-auto md:ml-8 lg:ml-16 text-center md:text-left space-y-8 relative z-10"
           >
             <span className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 shadow-sm">
-              <Brain className="w-4 h-4" /> Psicoterapia Individual
+              Mi proceso individual
             </span>
 
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white drop-shadow-md">
-              MI PROCESO<br />
-              <span className="text-white/90 font-light italic">Individual</span>
+              ¿Por qué siempre me pasa lo mismo?
             </h1>
 
             <p className="text-lg md:text-xl text-white/90 leading-relaxed font-light max-w-2xl drop-shadow mx-auto md:mx-0">
@@ -137,7 +170,7 @@ const MiProcesoIndividual = () => {
             <div className="text-center space-y-3">
               <HeartHandshake className="w-12 h-12 text-primary mx-auto mb-2" />
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Para personas que están atravesando:
+                ¿Te reconoces en alguna de estas situaciones?
               </h2>
             </div>
 
@@ -173,7 +206,7 @@ const MiProcesoIndividual = () => {
               <div className="relative z-10 space-y-4">
                 <Sparkles className="w-12 h-12 text-primary mx-auto mb-4" />
                 <p className={`font-serif text-2xl md:text-3xl font-medium leading-relaxed ${palette.secondaryText}`}>
-                  "No se trata solamente de entender por qué te pasa. Se trata de aprender qué hacer con aquello que hoy comprendes."
+                  "Entender por qué te pasa es el comienzo. Aprender qué hacer con lo que comprendes es el proceso."
                 </p>
               </div>
             </div>
@@ -242,6 +275,9 @@ const MiProcesoIndividual = () => {
                   <p className="text-muted-foreground text-sm font-light mb-8 flex-grow">
                     Proceso de acompañamiento más profundo para trabajar patrones y generar verdaderas herramientas de cambio.
                   </p>
+                  <p className="text-muted-foreground text-sm font-light mb-8 -mt-4">
+                    Incluye una sesión adicional de 30 minutos, de psicoterapia o de yoga y meditación. Precio válido hasta el 31 de diciembre de 2026.
+                  </p>
                   
                   <a
                     href={cta3Sessions}
@@ -255,28 +291,33 @@ const MiProcesoIndividual = () => {
               </div>
 
             </div>
+
+            <div className="text-center space-y-3 max-w-2xl mx-auto">
+              <p className="text-muted-foreground font-light">
+                Desde Colombia pagas en pesos a la TRM del día. Si prefieres transferencia o PayPal, escríbeme y lo coordinamos.
+              </p>
+              <a
+                href={getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión de psicoterapia individual.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block font-semibold text-primary underline underline-offset-4 hover:opacity-80"
+              >
+                Escríbeme por WhatsApp
+              </a>
+              <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
+            </div>
           </motion.div>
+        </section>
+
+        <section className={`py-20 md:py-28 px-6 ${palette.background}`}>
+          <div className="max-w-3xl mx-auto">
+            <FaqSection title="Preguntas frecuentes" items={FAQS} />
+          </div>
         </section>
 
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-foreground">
-            {settings?.brandName || "SantoSha"}
-          </p>
-          <p className="font-light">
-            {settings?.footerText || "Bienestar · Conciencia · Transformación"}
-          </p>
-          <div className="pt-4 flex flex-wrap justify-center gap-6">
-            <Link to="/" className="hover:underline text-xs text-muted-foreground/70 transition-colors">← Inicio</Link>
-            <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
-            <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
-            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter palette={palette} />
 
       <AiChatWidget pageSlug="mi-proceso-individual" />
     </div>
