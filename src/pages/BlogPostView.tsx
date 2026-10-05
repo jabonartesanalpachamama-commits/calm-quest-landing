@@ -14,7 +14,9 @@ import {
 } from "@/lib/CmsFallbackData";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
-import santoshaLogo from "@/assets/santosha-logo.webp";
+import SiteFooter from "@/components/SiteFooter";
+import NextSteps from "@/components/NextSteps";
+import { getWhatsAppUrl } from "@/lib/utils";
 
 export const BlogPostView = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -129,9 +131,9 @@ export const BlogPostView = () => {
         }
         const textOnly = trimmed.slice(2);
         renderedBlocks.push(
-          <h1 key={`h1-${idx}`} className="font-serif text-3xl md:text-4xl font-bold mt-10 mb-6 text-primary leading-tight">
+          <h2 key={`h1-${idx}`} className="font-serif text-3xl md:text-4xl font-semibold mt-10 mb-6 text-[#795D64] leading-tight">
             {textOnly}
-          </h1>
+          </h2>
         );
       } 
       // Heading 2 (## title)
@@ -205,7 +207,7 @@ export const BlogPostView = () => {
         renderedBlocks.push(
           <p 
             key={`p-${idx}`} 
-            className="leading-relaxed font-serif text-md md:text-lg text-foreground/85 font-light mb-6 text-justify"
+            className="leading-relaxed font-serif text-md md:text-lg text-foreground/85 font-light mb-6"
             dangerouslySetInnerHTML={{ __html: parsedText }}
           />
         );
@@ -276,7 +278,7 @@ export const BlogPostView = () => {
       <Header palette={palette} brandName={settings.brandName} />
 
       {/* Main Content Area */}
-      <main className="flex-grow w-full max-w-3xl mx-auto px-6 py-12 md:py-16 space-y-8 select-text">
+      <main className="flex-grow w-full max-w-[68ch] mx-auto px-6 py-12 md:py-16 space-y-8 select-text">
         {/* Back link */}
         <Link to="/blog" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -331,11 +333,11 @@ export const BlogPostView = () => {
           </p>
           <div className="pt-2">
             <a 
-              href={`https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}?text=Hola,%20leí%20el%20artículo%20"${encodeURIComponent(post.title)}"%20y%20me%20gustaría%20solicitar%20información%20sobre%20sus%20servicios.`} 
+              href={getWhatsAppUrl(`Hola, leí el artículo "${post.title}" y me gustaría solicitar información sobre sus servicios.`)} 
               target="_blank" 
               rel="noopener noreferrer"
             >
-              <Button className={`${palette.primary} rounded-full font-medium px-8 py-5 text-sm`}>
+              <Button className="bg-[#795D64] hover:bg-[#6A5057] text-white rounded-full font-medium px-8 py-5 text-sm">
                 <MessageCircle className="w-4 h-4 mr-2" /> Solicitar Información vía WhatsApp
               </Button>
             </a>
@@ -343,13 +345,8 @@ export const BlogPostView = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-foreground">{settings.brandName}</p>
-          <p className="font-light">{settings.footerText}</p>
-        </div>
-      </footer>
+      <NextSteps />
+      <SiteFooter palette={palette} />
 
     </div>
   );

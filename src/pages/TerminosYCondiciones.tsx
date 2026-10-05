@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import { RevealTitle } from "@/components/landing";
+import { SideToc, PillToc, useActiveSection } from "@/components/landing/StickyToc";
 
 const TOC: [string, string][] = [
   ["consultas", "Consultas en línea"],
@@ -53,6 +54,7 @@ const TerminosYCondiciones = () => {
   }, []);
 
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
+  const active = useActiveSection(TOC.map(([id]) => id));
 
   return (
     <div className={`min-h-screen font-sans text-foreground flex flex-col ${palette.background}`}>
@@ -63,33 +65,26 @@ const TerminosYCondiciones = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl mx-auto space-y-10"
+          className="max-w-6xl mx-auto space-y-10"
         >
           {/* Header Section */}
-          <section className="text-center space-y-6">
+          <section className="text-center space-y-6 max-w-3xl mx-auto">
             <RevealTitle as="h1" text="Términos y Condiciones" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-[1.1]" />
             <p className="text-lg text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed">
               Condiciones del servicio para Terapia psicológica y programas de Yoga online. SantoSha: Bienestar Integral
             </p>
           </section>
 
-          {/* Content Section */}
-          <nav aria-label="Índice" className="border-y border-border/40 py-5">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-3">Contenido</p>
-            <ul className="flex flex-wrap gap-2 text-sm">
-              {TOC.map(([id, label]) => (
-                <li key={id}><a href={`#${id}`} className="inline-flex px-3 py-1.5 rounded-full border border-border/40 bg-card text-primary hover:border-primary/40">{label}</a></li>
-              ))}
-            </ul>
-          </nav>
-
-          <section className="text-foreground/80 leading-relaxed space-y-10">
+          <div className="lg:grid lg:grid-cols-[14rem_1fr] lg:gap-12">
+          <SideToc items={TOC} active={active} />
+          <PillToc items={TOC} active={active} />
+          <section className="min-w-0 text-foreground/80 leading-relaxed space-y-6 pt-6 lg:pt-0">
             
             <div className="space-y-4">
               <h2 className="text-2xl md:text-3xl font-serif font-semibold text-foreground">Políticas y condiciones aplicables de manera general para todos los servicios</h2>
             </div>
 
-            <div id="consultas" className="space-y-4 scroll-mt-24">
+            <div id="consultas" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre todas las consultas en línea</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>La duración de la sesión es de 1 hora, y solo necesitas conexión a Internet y un dispositivo con audio y vídeo.</li>
@@ -100,7 +95,7 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div className="space-y-4">
+            <div className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Otras consideraciones:</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>En caso de acompañamiento a niños y adolescentes se requerirá participación y/o autorización de sus padres o tutores legales.</li>
@@ -112,7 +107,7 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div className="space-y-4">
+            <div className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre las consultas en línea:</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>Muchas personas esperan por el acompañamiento, por esta razón somos muy estrictos con el cumplimiento de la agenda.</li>
@@ -124,7 +119,7 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div id="yoga" className="space-y-4 scroll-mt-24">
+            <div id="yoga" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre las clases de Yoga, talleres y programa formativo en línea:</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>Son programas en línea que se realizan a través de grupos cerrados y en fechas previamente establecidas, en salas compartidas para los encuentros, es importante que tengas presente que al adquirir una clase, taller o programa formativo estarás aceptando que tu participación se realizará mediante este espacio común.</li>
@@ -134,7 +129,7 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div id="eventos" className="space-y-4 scroll-mt-24">
+            <div id="eventos" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre los eventos presenciales y otros servicios:</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>Es importante que preveas todo lo necesario antes de adquirir tu lugar en un evento presencial, ten presente que por ningún motivo se realizarán devoluciones económicas, entenderás que los eventos presenciales tienen cupos limitados y por tanto nos vemos en la obligación de reservar, contratar y pagar todos los servicios asociados a la realización del evento desde el momento en el que confirmas tu participación.</li>
@@ -145,13 +140,13 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div id="derechos" className="space-y-4 scroll-mt-24">
+            <div id="derechos" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Derechos de autor:</h3>
               <p>Protección de los derechos de propiedad intelectual de Fransury Gonzáles.</p>
               <p>No se autoriza la publicación del contenido de este sitio web o del material compartido en los procesos individuales y de formación a menos que el autor explícitamente así lo autorice. Se prohíbe el uso de los derechos de autor, imágenes o marcas de Fransury Gonzáles, sin su permiso escrito.</p>
             </div>
 
-            <div id="datos" className="space-y-4 scroll-mt-24">
+            <div id="datos" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre la privacidad de la información</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>Al inscribirse en las listas de espera, formularios de comunidad o cualquier otro espacio de registro, así como al crear su usuario en cualquier web del dominio santoshayoga.com.co, inscribirse para participar en sus eventos presenciales y virtuales, solicitar citas de acompañamiento o disfrutar de cualquier contenido en esta web, usted afirma estar suministrando de manera voluntaria y libre sus datos de contacto e identificación personal.</li>
@@ -164,7 +159,7 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div id="uso" className="space-y-4 scroll-mt-24">
+            <div id="uso" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre el uso del servicio:</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
                 <li>Fransury Gonzáles, no es responsable de las acciones, contenidos, información o datos de terceros, por tanto usted la libera de reclamos o daños, conocidos y desconocidos, que surjan por alguna relación con o reclamo que tenga en contra de cualquier tipo de terceros.</li>
@@ -176,12 +171,13 @@ const TerminosYCondiciones = () => {
               </ul>
             </div>
 
-            <div id="contacto" className="space-y-4 scroll-mt-24">
+            <div id="contacto" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Contáctanos</h3>
               <p>Estaremos encantados de asesorarte y acompañarte a elegir el acompañamiento que más se ajuste a tus necesidades, ponte en contacto con nosotros. Responderemos tu mensaje en menos de 24 horas hábiles.</p>
             </div>
             
           </section>
+          </div>
         </motion.div>
       </main>
 

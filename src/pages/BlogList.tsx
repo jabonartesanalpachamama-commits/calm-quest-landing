@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
-import santoshaLogo from "@/assets/santosha-logo.webp";
+import SiteFooter from "@/components/SiteFooter";
 
 export const BlogList = () => {
   const [posts, setPosts] = useState<CmsPost[]>([]);
@@ -125,7 +125,7 @@ export const BlogList = () => {
         <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider ${palette.secondary} ${palette.secondaryText}`}>
           Espacio de Lectura y Reflexión
         </span>
-        <h1 className="font-serif text-4xl md:text-5xl font-bold tracking-tight">
+        <h1 className="font-serif text-4xl md:text-6xl font-semibold tracking-tight">
           El Blog de SantoSha
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
@@ -133,7 +133,7 @@ export const BlogList = () => {
         </p>
 
         {/* Search Bar */}
-        <div className="max-w-md mx-auto pt-6 relative">
+        <div className="max-w-md mx-auto mt-6 relative">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input 
             type="text"
@@ -148,74 +148,68 @@ export const BlogList = () => {
       {/* Articles Grid */}
       <main className="max-w-6xl mx-auto px-6 pb-24 flex-grow w-full">
         {filteredPosts.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post, idx) => (
-              <motion.article 
-                key={post.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className={`flex flex-col justify-between rounded-3xl ${palette.cardBackground} border border-border/40 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group`}
-              >
-                <div>
-                  {/* Thumbnail */}
-                  <Link to={`/blog/${post.slug}`} className="block overflow-hidden aspect-[16/10] bg-muted relative">
-                    {post.imageUrl ? (
-                      <img 
-                        src={post.imageUrl} 
-                        alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-4xl">
-                        🧘
+          <div className="space-y-8">
+            {(() => {
+              const [first, ...rest] = filteredPosts;
+              const Meta = ({ p }: { p: CmsPost }) => (
+                <div className="flex items-center gap-4 text-xs text-muted-foreground font-light">
+                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" />{formatDate(p.publishedAt)}</span>
+                  <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{calculateReadingTime(p.content)} min</span>
+                </div>
+              );
+              const Thumb = ({ p, cls }: { p: CmsPost; cls: string }) => (
+                <div className={`overflow-hidden bg-warm-mauve/30 ${cls}`}>
+                  {p.imageUrl ? (
+                    <img src={p.imageUrl} alt={p.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center"><BookOpen className="w-10 h-10 text-[#795D64]/50" /></div>
+                  )}
+                </div>
+              );
+              return (
+                <>
+                  <motion.article initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
+                    className="group rounded-[2rem] bg-card border border-border/40 overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                    <Link to={`/blog/${first.slug}`} className="grid md:grid-cols-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-[2rem]">
+                      <Thumb p={first} cls="aspect-[16/10] md:aspect-auto md:min-h-[22rem]" />
+                      <div className="p-7 md:p-10 flex flex-col justify-center space-y-4">
+                        <span className="text-[11px] font-semibold tracking-widest uppercase text-[#795D64]">Destacado</span>
+                        <Meta p={first} />
+                        <h2 className="font-serif text-3xl md:text-4xl font-semibold leading-tight">{first.title}</h2>
+                        <p className="text-muted-foreground font-light leading-relaxed line-clamp-4">{first.excerpt}</p>
+                        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#795D64]">
+                          <BookOpen className="w-4 h-4" /> Leer Artículo Completo <span className="transition-transform group-hover:translate-x-1">→</span>
+                        </span>
                       </div>
-                    )}
-                  </Link>
-
-                  {/* Metadata and Content */}
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground font-light">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {formatDate(post.publishedAt)}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" />
-                        {calculateReadingTime(post.content)} min
-                      </span>
-                    </div>
-
-                    <Link to={`/blog/${post.slug}`} className="block">
-                      <h2 className="font-serif text-xl font-bold leading-snug group-hover:text-primary transition-colors duration-200">
-                        {post.title}
-                      </h2>
                     </Link>
-
-                    <p className="text-sm text-muted-foreground font-light line-clamp-3 leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Read Button */}
-                <div className="p-6 pt-0">
-                  <Link to={`/blog/${post.slug}`} className="block">
-                    <Button variant="ghost" className="w-full justify-between hover:bg-primary/5 rounded-2xl group-hover:text-primary border border-border/40">
-                      <span className="text-xs font-semibold flex items-center gap-1.5">
-                        <BookOpen className="w-3.5 h-3.5" />
-                        Leer Artículo Completo
-                      </span>
-                      <span>→</span>
-                    </Button>
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
+                  </motion.article>
+                  {rest.length > 0 && (
+                    <div className="grid md:grid-cols-2 gap-8">
+                      {rest.map((post, idx) => (
+                        <motion.article key={post.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: (idx + 1) * 0.08 }}
+                          className="group rounded-3xl bg-card border border-border/40 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                          <Link to={`/blog/${post.slug}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-3xl">
+                            <Thumb p={post} cls="aspect-[16/9]" />
+                            <div className="p-6 space-y-3">
+                              <Meta p={post} />
+                              <h2 className="font-serif text-2xl font-semibold leading-snug">{post.title}</h2>
+                              <p className="text-sm text-muted-foreground font-light line-clamp-3 leading-relaxed">{post.excerpt}</p>
+                              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#795D64]">
+                                <BookOpen className="w-3.5 h-3.5" /> Leer Artículo Completo <span className="transition-transform group-hover:translate-x-1">→</span>
+                              </span>
+                            </div>
+                          </Link>
+                        </motion.article>
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </div>
         ) : (
           <div className="text-center py-16 bg-card/40 border border-border/60 rounded-3xl p-8 max-w-md mx-auto space-y-4">
-            <span className="text-4xl block">📚</span>
+            <BookOpen className="w-10 h-10 mx-auto text-[#795D64]" />
             <h3 className="font-serif text-xl font-semibold">No se encontraron artículos</h3>
             <p className="text-sm text-muted-foreground font-light leading-relaxed">
               Prueba a buscar con otras palabras clave o explora de nuevo más tarde cuando el equipo publique nuevas lecturas.
@@ -231,13 +225,7 @@ export const BlogList = () => {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-foreground">{settings?.brandName || "SantoSha"}</p>
-          <p className="font-light">{settings?.footerText || "© 2026 SantoSha - Espacio de Bienestar."}</p>
-        </div>
-      </footer>
+      <SiteFooter palette={palette} />
     </div>
   );
 };
