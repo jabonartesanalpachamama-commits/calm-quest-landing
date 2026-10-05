@@ -240,3 +240,19 @@
     mask-composite: intersect;
   }
 }
+
+/* Movimiento reducido: detiene animaciones CSS decorativas */
+@media (prefers-reduced-motion: reduce) {
+  .ciclica-marquee, .ciclica-marquee-track, .ciclica-marquee-group,
+  .ciclica-hero-mask, .ciclica-hero-bleed,
+  .animate-fade-in, .animate-fade-in-up, .animate-float {
+    animation: none !important;
+    transition: none !important;
+  }
+  .animate-fade-in, .animate-fade-in-up { opacity: 1; transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
