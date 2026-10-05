@@ -30,6 +30,13 @@ const FloatingCTA = ({
   const handleScroll = useCallback(() => {
     if (dismissed) return;
 
+    // Nunca tapar el pie de página
+    const footer = document.querySelector("footer");
+    if (footer && footer.getBoundingClientRect().top < window.innerHeight) {
+      setVisible(false);
+      return;
+    }
+
     if (scrollTo) {
       const target = document.querySelector(scrollTo);
       let targetVisible = false;
@@ -85,7 +92,7 @@ const FloatingCTA = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-            className="md:hidden fixed bottom-0 left-0 right-0 z-[90] bg-card border-t border-border/60 shadow-2xl px-4 py-3"
+            className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-card border-t border-border/60 shadow-2xl px-4 py-3"
           >
             <div className="flex items-center gap-3">
               <div className="flex-1 min-w-0">
@@ -119,7 +126,7 @@ const FloatingCTA = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-            className="hidden md:block fixed bottom-8 right-8 z-[90] max-w-xs w-full"
+            className="hidden md:block fixed bottom-8 right-8 z-40 max-w-xs w-full"
           >
             <div className="bg-card border border-border/60 rounded-2xl p-5 shadow-2xl shadow-foreground/[0.06] relative">
               {/* Dismiss */}
