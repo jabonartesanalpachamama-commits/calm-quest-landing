@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MotionConfig } from "framer-motion";
 import Index from "./pages/Index";
 import ScrollToTop from "./components/ScrollToTop";
@@ -51,6 +51,9 @@ const App = () => (
           <Route path="/cultivar-bienestar" element={<CultivarBienestar />} />
           <Route path="/sabiduria-ciclica-esencia-femenina" element={<SabiduriaCiclica />} />
           <Route path="/terminos-y-condiciones" element={<TerminosYCondiciones />} />
+
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/terapia-individual" element={<Navigate to="/mi-proceso-individual" replace />} />
 
           {/* CMS Administration Panel */}
           <Route path="/admin/login" element={<CmsLogin />} />

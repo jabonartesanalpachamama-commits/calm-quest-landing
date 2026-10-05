@@ -131,66 +131,82 @@ const PortalHome = () => {
           </motion.div>
         </SplitHero>
 
-        {/* Banner clase gratuita */}
-        <LandingSection tone="mauve" className="!py-10 md:!py-12">
-          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center md:text-left">
-              <span className="inline-block text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full bg-card/80 text-primary">
-                Entrada Gratuita
-              </span>
-              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">
-                ¿Sufres de ansiedad o agotamiento mental?
-              </h2>
-              <p className="text-base font-light text-muted-foreground max-w-xl">
-                Una clase online de 30 minutos donde aprendes una técnica somática para ayudar a calmar tu sistema nervioso.
-              </p>
+        {/* ¿Por dónde empiezo? */}
+        <LandingSection tone="plain">
+          <div className="max-w-5xl mx-auto space-y-8">
+            <div className="text-center space-y-3">
+              <RevealTitle text="¿Por dónde empiezo?" className={H2} />
+              <p className="text-muted-foreground font-light text-lg">Elige lo que más se parece a tu momento.</p>
             </div>
-            <button type="button" onClick={() => setFreeClassOpen(true)} className={BTN_SOLID + " shrink-0"}>
+            <div className="-mx-6 px-6 md:mx-0 md:px-0 flex md:grid md:grid-cols-6 gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-3 md:pb-0">
+              {START_OPTIONS.map(({ text, to }, i) => (
+                <Link key={to} to={to}
+                  className={`group snap-start shrink-0 w-[78%] sm:w-[46%] md:w-auto ${i < 3 ? "md:col-span-2" : "md:col-span-3"} flex flex-col justify-between gap-6 p-6 rounded-3xl bg-card border border-border/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${FOCUS}`}>
+                  <span className="font-serif text-5xl font-semibold text-brand-gold leading-none" aria-hidden="true">{i + 1}</span>
+                  <span className="font-serif text-xl text-foreground leading-snug">{text}</span>
+                  <ArrowRight className="w-5 h-5 text-[#795D64] transition-transform group-hover:translate-x-1.5" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </LandingSection>
+
+        {/* Banner clase gratuita */}
+        <section className="bg-brand-ink text-brand-cream px-6 py-8">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
+            <p className="space-x-2">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full bg-brand-cream/15 align-middle">Entrada Gratuita</span>
+              <strong className="font-serif text-xl md:text-2xl font-semibold align-middle">¿Sufres de ansiedad o agotamiento mental?</strong>
+              <span className="block md:inline text-brand-cream/90 font-light mt-1 md:mt-0">Una clase online de 30 minutos donde aprendes una técnica somática para ayudar a calmar tu sistema nervioso.</span>
+            </p>
+            <button type="button" onClick={() => setFreeClassOpen(true)}
+              className={`shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold bg-brand-cream text-brand-ink hover:bg-card transition-colors ${FOCUS}`}>
               <PlayCircle className="w-5 h-5" /> Comenzar Clase Maestra
             </button>
           </div>
-        </LandingSection>
+        </section>
 
         {/* Programas */}
         <LandingSection id="programas" tone="plain">
           <div className="max-w-5xl mx-auto space-y-10">
             <div className="text-center space-y-3">
-              <span className="text-xs uppercase tracking-widest font-bold text-muted-foreground/70">Formación & Acompañamiento</span>
+              <span className="text-xs uppercase tracking-widest font-bold text-muted-foreground">Formación & Acompañamiento</span>
               <RevealTitle text="Mis programas y espacios" className={H2} />
               <p className="text-muted-foreground font-light text-lg">Recorridos para comprender lo que vives y recuperar tu equilibrio.</p>
             </div>
-            <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="grid md:grid-cols-3 gap-5">
-              {PROGRAMS.map(({ icon: Icon, title, subtitle, desc, features, href }) => (
-                <motion.div key={title} variants={fadeUp} className="bg-card border border-border/40 rounded-3xl p-6 flex flex-col gap-4">
-                  <div className="flex items-start gap-3">
-                    <Icon className="w-6 h-6 text-primary shrink-0 mt-1" />
-                    <div>
-                      <h3 className="font-serif text-xl font-semibold text-foreground leading-snug">{title}</h3>
-                      <p className="text-sm italic text-primary">{subtitle}</p>
+            <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="border-t border-border/50">
+              {PROGRAMS.map(({ title, subtitle, desc, features, href }, i) => (
+                <motion.li key={title} variants={fadeUp} className="border-b border-border/50">
+                  <Link to={href} className={`group relative grid md:grid-cols-[110px_1fr_auto] gap-4 md:gap-8 items-start md:items-center py-8 md:py-10 ${FOCUS}`}>
+                    <span aria-hidden="true" className="font-serif text-5xl md:text-6xl font-semibold text-brand-gold leading-none transition-transform duration-300 group-hover:translate-x-2">0{i + 1}</span>
+                    <div className="space-y-3">
+                      <h3 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">{title}</h3>
+                      <p className="text-sm italic text-[#795D64]">{subtitle}</p>
+                      <p className="text-base text-muted-foreground font-light leading-relaxed max-w-2xl">{desc}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {features.map((f) => (
+                          <span key={f} className="text-xs font-medium px-3 py-1 rounded-full bg-card border border-border/50 text-[#795D64]">{f}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <p className="text-base text-muted-foreground font-light leading-relaxed flex-grow">{desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {features.map((f) => (
-                      <span key={f} className="text-xs font-medium px-3 py-1 rounded-full bg-background border border-border/40 text-primary">{f}</span>
-                    ))}
-                  </div>
-                  <Link to={href} className="mt-1 w-full py-3 rounded-full text-sm font-semibold text-center bg-[#795D64] hover:bg-[#6A5057] text-white transition-colors">
-                    Ver detalles
+                    <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#795D64] whitespace-nowrap">
+                      Ver detalles <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" aria-hidden="true" />
+                    </span>
+                    <span aria-hidden="true" className="absolute left-0 bottom-0 h-0.5 w-full origin-left scale-x-0 bg-brand-gold transition-transform duration-500 group-hover:scale-x-100" />
                   </Link>
-                </motion.div>
+                </motion.li>
               ))}
-            </motion.div>
+            </motion.ul>
           </div>
         </LandingSection>
 
         {/* Quién te acompaña */}
-        <LandingSection tone="mauve">
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+        <LandingSection tone="plain" className="bg-card">
+          <div className="max-w-5xl mx-auto grid md:grid-cols-[2fr_3fr] gap-10 items-center">
             <motion.img {...inView} variants={fadeUp} src={fransuryImage} alt="Fransury Gonzáles" loading="lazy"
-              className="w-full max-w-sm mx-auto rounded-3xl object-cover object-top aspect-[4/5]" />
+              className="w-full max-w-sm mx-auto rounded-3xl object-cover object-top aspect-[3/4]" />
             <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-5 text-center md:text-left">
-              <motion.span variants={fadeUp} className="block text-xs font-semibold tracking-wider uppercase text-primary">Acompañamiento Humano</motion.span>
+              <motion.span variants={fadeUp} className="block text-xs font-semibold tracking-wider uppercase text-[#795D64]">Acompañamiento Humano</motion.span>
               <RevealTitle text="Quién te acompaña" className={H2} />
               <motion.p variants={fadeUp} className="text-foreground/80 leading-relaxed font-light text-lg">
                 Hola, soy <strong className="text-foreground font-medium">Fransury Gonzáles (Sury)</strong>. Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
@@ -198,29 +214,40 @@ const PortalHome = () => {
               <motion.p variants={fadeUp} className="text-foreground/80 leading-relaxed font-light text-lg">
                 Mi propósito es acompañarte a sanar experiencias difíciles, a transformar el significado de lo que viviste y a habitar una vida en mayor plenitud. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a regular tu sistema nervioso.
               </motion.p>
+              <motion.div variants={fadeUp}>
+                <Link to="/quien-soy" className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border border-[#795D64]/50 text-[#795D64] hover:bg-brand-cream transition-colors ${FOCUS}`}>
+                  Conoce mi historia <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </LandingSection>
 
         {/* Filosofía */}
         <LandingSection tone="plain">
-          <div className="max-w-4xl mx-auto space-y-10">
+          <div className="max-w-5xl mx-auto space-y-10">
             <div className="text-center space-y-3">
-              <span className="text-xs uppercase tracking-widest font-bold text-muted-foreground/70">Manifiesto Santosha</span>
+              <span className="text-xs uppercase tracking-widest font-bold text-muted-foreground">Manifiesto Santosha</span>
               <RevealTitle text="Mi filosofía de trabajo" className={H2} />
             </div>
-            <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="grid md:grid-cols-2">
-              {PHILOSOPHY_PILLARS.map(({ icon: Icon, title, text }, i) => (
-                <motion.div key={title} variants={fadeUp}
-                  className={`space-y-3 py-6 md:py-0 md:px-8 ${i === 1 ? "border-t md:border-t-0 md:border-l border-[#B8977E]/50" : ""}`}>
-                  <Icon className="w-5 h-5 text-primary" />
-                  <h3 className="font-serif text-xl font-semibold text-foreground">{title}</h3>
-                  <p className="text-base text-muted-foreground font-light leading-relaxed">{text}</p>
-                </motion.div>
+            <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="grid md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-6 items-stretch">
+              {PHILOSOPHY_PILLARS.map(({ icon: Icon, title, text, bg }, i) => (
+                <Fragment key={title}>
+                  {i === 1 && (
+                    <div className="flex items-center justify-center" aria-hidden="true">
+                      <ArrowRight className="w-8 h-8 text-brand-gold rotate-90 md:rotate-0" />
+                    </div>
+                  )}
+                  <motion.div variants={fadeUp} className={`space-y-3 p-8 md:p-10 rounded-3xl ${bg}`}>
+                    <Icon className="w-6 h-6 text-[#795D64]" />
+                    <h3 className="font-serif text-2xl md:text-3xl font-semibold text-foreground">{title}</h3>
+                    <p className="text-base text-foreground/80 font-light leading-relaxed">{text}</p>
+                  </motion.div>
+                </Fragment>
               ))}
             </motion.div>
             <div className="text-center">
-              <Link to="/filosofia" className="inline-flex items-center gap-2 text-sm font-semibold hover:underline text-primary">
+              <Link to="/filosofia" className={`inline-flex items-center gap-2 text-sm font-semibold hover:underline text-[#795D64] rounded ${FOCUS}`}>
                 Leer el manifiesto completo de Santosha →
               </Link>
             </div>
@@ -228,19 +255,19 @@ const PortalHome = () => {
         </LandingSection>
 
         {/* CTA final */}
-        <LandingSection tone="peach">
+        <LandingSection tone="plain">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-3xl mx-auto text-center space-y-6">
             <RevealTitle text="¿Quieres empezar? Escríbeme." className={H2} />
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
               Explora los programas o empieza con la clase gratuita de 30 minutos.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-3">
-              <button type="button" onClick={() => setFreeClassOpen(true)} className={BTN_SOLID}>
-                <Gift className="w-5 h-5" /> Acceder a la Clase Gratis
-              </button>
-              <a href="https://wa.me/573105679517" target="_blank" rel="noopener noreferrer" className={BTN_OUTLINE}>
-                <MessageCircle className="w-5 h-5 text-primary" /> Escribir por WhatsApp
+              <a href={getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión.")} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
+                <MessageCircle className="w-5 h-5" /> Escribir por WhatsApp
               </a>
+              <button type="button" onClick={() => setFreeClassOpen(true)} className={BTN_OUTLINE}>
+                <Gift className="w-5 h-5 text-[#795D64]" /> Acceder a la Clase Gratis
+              </button>
             </motion.div>
             <p className="text-xs text-muted-foreground">Atención virtual desde cualquier lugar del mundo.</p>
           </motion.div>

@@ -129,7 +129,6 @@ const AcompanamientoIndividual = () => {
   }, []);
 
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
-  const waNumber = settings?.whatsappNumber?.replace(/[^0-9]/g, "");
 
   const goPrecios = (e: React.MouseEvent) => {
     e.preventDefault();
