@@ -44,6 +44,14 @@ const TerminosYCondiciones = () => {
     loadSettings();
   }, []);
 
+  // Permite enlaces directos como /terminos-y-condiciones#datos
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    const t = setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 300);
+    return () => clearTimeout(t);
+  }, []);
+
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
   return (

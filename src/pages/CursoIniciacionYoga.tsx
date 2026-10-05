@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import type React from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { Sun, Wrench, Zap, Brain, Leaf, Feather, FileText, Headphones, Flame, Book, Users, Sparkles, HandHeart, Search, Smile, Wind, MessageCircle, Home, BookOpen, Calendar, MonitorPlay, Moon } from "lucide-react";
+import { ArrowDown, Book, Smile, Wind, MessageCircle, Home, BookOpen, FileText, Headphones, Flame, Users } from "lucide-react";
 import {
   VisualIdentity,
   COLOR_PALETTES,
@@ -13,119 +13,97 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
-import TestimonialsSection, { Testimonial } from "@/components/TestimonialsSection";
-import santoshaLogo from "@/assets/santosha-logo.webp";
+import Seo from "@/components/Seo";
+import SiteFooter from "@/components/SiteFooter";
+import { getWhatsAppUrl } from "@/lib/utils";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
+import {
+  fadeUp, inView, RevealTitle, RevealWords, RotatingOrnament,
+  LandingSection, SplitHero, PriceCard, PriceCardLight,
+} from "@/components/landing";
 
+// Foto del hero: cambiar solo esta línea para usar otra imagen.
+const HERO_IMAGE = cursoHero.url;
 
-// ─── Module data ──────────────────────────────────────────────────────────────
+const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5";
+const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
+const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground text-center";
+const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información para inscribirme al Curso de Iniciación al Yoga.");
+const BOLD_MODULO = "https://checkout.bold.co/payment/LNK_FGBEX3L6X9";
+const BOLD_ANUAL = "https://checkout.bold.co/payment/LNK_XB1KU5ZXEA";
+
 const MODULES = [
-  {
-    num: "01",
-    title: "Fundamentos y Despertar de la Conciencia",
-    theme: "¿Qué es Kundalini Yoga y por qué emerge con fuerza en esta era?",
-    icon: <Sun className="w-8 h-8 text-amber-700" />,
-    color: "from-amber-50 to-orange-50",
-    borderColor: "border-amber-200",
-    accentColor: "text-amber-700",
-    badgeColor: "bg-amber-100 text-amber-800",
-  },
-  {
-    num: "02",
-    title: "Las Herramientas del Kundalini Yoga",
-    theme: "Cómo funciona el yoga y por qué transforma nuestra vida.",
-    icon: <Wrench className="w-8 h-8 text-green-700" />,
-    color: "from-green-50 to-emerald-50",
-    borderColor: "border-green-200",
-    accentColor: "text-green-700",
-    badgeColor: "bg-green-100 text-green-800",
-  },
-  {
-    num: "03",
-    title: "Anatomía Yóguica y Desarrollo Humano",
-    theme: "Comprender la arquitectura energética del ser humano.",
-    icon: <Zap className="w-8 h-8 text-violet-700" />,
-    color: "from-violet-50 to-purple-50",
-    borderColor: "border-violet-200",
-    accentColor: "text-violet-700",
-    badgeColor: "bg-violet-100 text-violet-800",
-  },
-  {
-    num: "04",
-    title: "La Mente, las Emociones y la Transformación Interna",
-    theme: "El yoga como tecnología para relacionarnos diferente con la mente.",
-    icon: <Brain className="w-8 h-8 text-blue-700" />,
-    color: "from-blue-50 to-cyan-50",
-    borderColor: "border-blue-200",
-    accentColor: "text-blue-700",
-    badgeColor: "bg-blue-100 text-blue-800",
-  },
-  {
-    num: "05",
-    title: "Relaciones, Propósito y Estilo de Vida Consciente",
-    theme: "Llevar el yoga fuera del mat.",
-    icon: <Leaf className="w-8 h-8 text-rose-700" />,
-    color: "from-rose-50 to-pink-50",
-    borderColor: "border-rose-200",
-    accentColor: "text-rose-700",
-    badgeColor: "bg-rose-100 text-rose-800",
-  },
-  {
-    num: "06",
-    title: "Integración, Liderazgo Interior y Camino Espiritual",
-    theme: "Habitar el Yoga como una práctica del día a día.",
-    icon: <Feather className="w-8 h-8 text-teal-700" />,
-    color: "from-teal-50 to-cyan-50",
-    borderColor: "border-teal-200",
-    accentColor: "text-teal-700",
-    badgeColor: "bg-teal-100 text-teal-800",
-  },
+  { num: "01", title: "Fundamentos y Despertar de la Conciencia", theme: "¿Qué es Kundalini Yoga y por qué emerge con fuerza en esta era?" },
+  { num: "02", title: "Las Herramientas del Kundalini Yoga", theme: "Cómo funciona el yoga y por qué transforma nuestra vida." },
+  { num: "03", title: "Anatomía Yóguica y Desarrollo Humano", theme: "Comprender la arquitectura energética del ser humano." },
+  { num: "04", title: "La Mente, las Emociones y la Transformación Interna", theme: "El yoga como tecnología para relacionarnos diferente con la mente." },
+  { num: "05", title: "Relaciones, Propósito y Estilo de Vida Consciente", theme: "Llevar el yoga fuera del mat." },
+  { num: "06", title: "Integración, Liderazgo Interior y Camino Espiritual", theme: "Habitar el Yoga como una práctica del día a día." },
+];
+
+const INVITES = [
+  "Comprender el yoga como camino de transformación interna",
+  "Explorar las herramientas del Kundalini Yoga",
+  "Profundizar en la relación con el cuerpo, la mente, la energía y el espíritu",
+  "Desarrollar una práctica consciente que pueda integrarse en la vida cotidiana",
+];
+
+const ENCOUNTER = [
+  { icon: Book, text: "Enseñanza teórica" },
+  { icon: Smile, text: "Experiencia práctica de Kundalini Yoga" },
+  { icon: Wind, text: "Respiración, kriyas, mantra y meditación" },
+  { icon: MessageCircle, text: "Espacios de reflexión e integración" },
+  { icon: Home, text: "Práctica sugerida entre módulos" },
+  { icon: BookOpen, text: "Material de apoyo y profundización" },
 ];
 
 const BETWEEN_MODULES = [
-  { icon: <FileText className="w-8 h-8 text-primary" />, label: "PDF de apoyo temático" },
-  { icon: <Headphones className="w-8 h-8 text-primary" />, label: "Audio de meditación o pranayama" },
-  { icon: <Flame className="w-8 h-8 text-primary" />, label: "Práctica de 21 o 40 días" },
-  { icon: <Book className="w-8 h-8 text-primary" />, label: "Bitácora de integración personal" },
-  { icon: <Users className="w-8 h-8 text-primary" />, label: "Grupo de acompañamiento (opcional)" },
+  { icon: FileText, label: "PDF de apoyo temático" },
+  { icon: Headphones, label: "Audio de meditación o pranayama" },
+  { icon: Flame, label: "Práctica de 21 o 40 días" },
+  { icon: Book, label: "Bitácora de integración personal" },
+  { icon: Users, label: "Grupo de acompañamiento (opcional)" },
 ];
 
-const CURSO_TESTIMONIALS: Testimonial[] = [
-  {
-    name: "Elena G.",
-    role: "Estudiante",
-    age: 34,
-    initials: "EG",
-    quote: "Nunca había practicado yoga y este curso fue el inicio perfecto. La progresión de los módulos me permitió integrar la filosofía de forma natural en mi vida diaria.",
-    timeframe: "Módulo 4"
-  },
-  {
-    name: "Martín R.",
-    role: "Diseñador",
-    age: 41,
-    initials: "MR",
-    quote: "Buscaba algo más que posturas físicas, buscaba entender el 'por qué'. Este curso me dio las herramientas teóricas y prácticas para conectar con mi respiración y mi centro.",
-    timeframe: "Graduado"
-  },
-  {
-    name: "Sofía T.",
-    role: "Psicóloga",
-    age: 29,
-    initials: "ST",
-    quote: "La estructura bimensual me dio el tiempo exacto para asimilar cada concepto. Mi nivel de estrés ha bajado notablemente y me siento mucho más enfocada.",
-    timeframe: "Graduada"
-  },
-  {
-    name: "Diego L.",
-    role: "Emprendedor",
-    age: 37,
-    initials: "DL",
-    quote: "Pensé que no tendría tiempo, pero los recursos entre módulos fueron clave. Hoy la práctica es mi ancla diaria indispensable.",
-    timeframe: "Módulo 6"
-  }
+const FOR_WHOM = [
+  { title: "Principiantes en el camino", desc: "Si eres nuevo en el yoga y quieres comenzar desde los fundamentos con una guía progresiva y profunda." },
+  { title: "Practicantes que desean profundizar", desc: "Si ya tienes experiencia y buscas comprender más a fondo la filosofía, la anatomía yóguica y las herramientas del Kundalini Yoga." },
+  { title: "Personas en búsqueda de bienestar", desc: "Si atraviesas estrés, ansiedad, desconexión o una búsqueda de sentido y quieres herramientas reales de transformación." },
+  { title: "Buscadores espirituales", desc: "Si sientes el llamado a explorar el desarrollo espiritual con disciplina, apertura y desde una tradición probada." },
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
+const COURSE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Curso de Iniciación al Yoga",
+  description: "Curso de iniciación al Kundalini Yoga: 6 módulos en un año con encuentros bimensuales, 100% virtual.",
+  provider: { "@type": "Person", name: "Fransury Gonzáles" },
+  offers: [
+    { "@type": "Offer", name: "Pago por módulo", price: "220", priceCurrency: "USD" },
+    { "@type": "Offer", name: "Anualidad", price: "990", priceCurrency: "USD" },
+  ],
+};
+
+const GoldRow = ({ children }: { children: React.ReactNode }) => (
+  <motion.li variants={fadeUp} className="flex items-start gap-4 py-4 border-b border-border/30">
+    <span aria-hidden="true" className="mt-1 w-px h-5 shrink-0 bg-[#B8977E]" />
+    <div className="text-base text-foreground/90 leading-relaxed">{children}</div>
+  </motion.li>
+);
+
+const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
+  <ul className="space-y-3 text-left">
+    {items.map((b) => (
+      <li key={b} className="flex items-start gap-3">
+        <span aria-hidden="true" className={`mt-2 w-1.5 h-1.5 rounded-full shrink-0 ${light ? "bg-[#B8977E]" : "bg-brand-cream"}`} />
+        <span>{b}</span>
+      </li>
+    ))}
+  </ul>
+);
+
+const stagger = (s = 0.06) => ({ show: { transition: { staggerChildren: s } } });
+
 const CursoIniciacionYoga = () => {
   const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
 
@@ -148,464 +126,205 @@ const CursoIniciacionYoga = () => {
 
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  const goInscripcion = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.querySelector("#curso-inscripcion")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
-
-      {/* Floating CTA */}
-      <FloatingCTA
-        formAnchor="#curso-inscripcion"
-        ctaText="Inscribirme al Curso"
-        subText="🌙 Encuentros bimensuales — 6 módulos en un año"
+    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
+      <Seo
+        title="Curso de Iniciación al Yoga online | SantoSha"
+        description="Curso de iniciación al Kundalini Yoga con Fransury Gonzáles: 6 módulos en un año con encuentros bimensuales, 100% virtual."
+        path="/curso-iniciacion-yoga"
+        jsonLd={COURSE_JSONLD}
       />
+      <FloatingCTA scrollTo="#curso-inscripcion" ctaText="Inscribirme" subText="Curso de iniciación al yoga" />
 
-      {/* ── HEADER ── */}
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-
-        {/* ── HERO ── */}
-        <section className="relative overflow-hidden border-b border-border/10">
-          <img
-            src={cursoHero.url}
-            alt="Espacio sereno de práctica de yoga con mat, cojín y velas"
-            className="absolute inset-0 w-full h-full object-cover object-[75%_center]"
-            loading="eager"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/30 md:to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-background/40" />
-
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            className="max-w-5xl mx-auto px-6 py-24 md:py-36 relative z-10"
-          >
-          <div className="max-w-2xl text-center md:text-left space-y-8">
-            <span className={`inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold tracking-wider uppercase rounded-full ${palette.secondary} ${palette.secondaryText}`}>
-              <Sparkles className="w-4 h-4" /> Curso de Iniciación · 6 Módulos Bimensuales
-            </span>
-
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-foreground">
-              Curso de Iniciación al<br />
-              <span className={palette.primaryText}>Yoga</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-xl mx-auto md:mx-0">
-              Habitar el yoga como una práctica del día a día
-            </p>
-
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
-              {["6 Módulos", "Encuentros Bimensuales", "Práctica Progresiva", "Material de Apoyo"].map((badge) => (
-                <span key={badge} className="flex items-center gap-1.5 text-sm text-muted-foreground bg-card/80 backdrop-blur-sm border border-border/50 px-4 py-2 rounded-full">
-                  <svg className="w-3.5 h-3.5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                  {badge}
-                </span>
-              ))}
-            </div>
-
-
-            <a
-              href="#curso-inscripcion"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#curso-inscripcion")?.scrollIntoView({ behavior: "smooth", block: "center" });
-              }}
-              className={`inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
-            >
-              Quiero Inscribirme <Moon className="w-4 h-4 ml-1" />
+        <SplitHero image={HERO_IMAGE} alt="Espacio sereno de práctica de yoga con mat, cojín y velas">
+          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
+            Curso de iniciación · 6 módulos bimensuales
+          </motion.span>
+          <RevealTitle as="h1" text="Curso de Iniciación al Yoga" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
+          <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
+            Habitar el yoga como una práctica del día a día
+          </motion.p>
+          <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
+            {["6 Módulos", "Encuentros Bimensuales", "Práctica Progresiva", "Material de Apoyo"].map((b) => (
+              <li key={b} className={PILL}>
+                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#B8977E]" /> {b}
+              </li>
+            ))}
+          </motion.ul>
+          <motion.div variants={fadeUp} className="pt-1">
+            <a href="#curso-inscripcion" onClick={goInscripcion} className={BTN_SOLID}>
+              Quiero inscribirme
+              <motion.span className="inline-flex" animate={{ y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
+                <ArrowDown className="w-4 h-4" />
+              </motion.span>
             </a>
+          </motion.div>
+        </SplitHero>
+
+        {/* Introducción */}
+        <LandingSection tone="plain">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <RevealTitle text="Introducción del Curso" className={H2} />
+            <div className="space-y-5 text-foreground/80 leading-relaxed text-lg font-light">
+              <p>
+                Vivimos en un tiempo de aceleración, exceso de estímulos, desconexión del cuerpo, ansiedad mental y búsqueda profunda de sentido. En medio de esta realidad, el <strong className="text-foreground font-semibold">Kundalini Yoga</strong> surge como una tecnología ancestral para recordar algo esencial: la capacidad humana de vivir con mayor conciencia, vitalidad, claridad y conexión espiritual.
+              </p>
+              <p>
+                En este curso te propongo un recorrido progresivo por las bases filosóficas, prácticas y experienciales del Kundalini Yoga. El curso te invita a:
+              </p>
+            </div>
+            <motion.ul {...inView} variants={stagger()}>
+              {INVITES.map((i) => <GoldRow key={i}>{i}</GoldRow>)}
+            </motion.ul>
+            <div className="pt-4 space-y-4">
+              <h3 className="font-serif text-2xl font-semibold text-foreground text-center">Cada encuentro incluirá:</h3>
+              <motion.ul {...inView} variants={stagger()} className="grid sm:grid-cols-2 gap-x-8">
+                {ENCOUNTER.map(({ icon: Icon, text }) => (
+                  <motion.li key={text} variants={fadeUp} className="flex items-center gap-3 py-3 border-b border-border/30 text-base text-foreground/90">
+                    <Icon className="w-5 h-5 text-primary shrink-0" /> {text}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </div>
           </div>
+        </LandingSection>
+
+        <LandingSection tone="mauve" className="overflow-hidden">
+          <RotatingOrnament className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80 opacity-25" />
+          <RevealWords stagger={0.04} className="relative max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
+            text={'"Este curso está dirigido tanto a personas nuevas en el camino del yoga como a practicantes que desean profundizar su comprensión y experiencia del Kundalini Yoga."'} />
+        </LandingSection>
+
+        <LandingSection tone="peach">
+          <motion.div {...inView} variants={stagger(0.15)} className="max-w-2xl mx-auto text-center space-y-1 font-serif text-xl md:text-2xl text-foreground">
+            <motion.p variants={fadeUp} className="italic font-light">Porque el yoga no ocurre únicamente en el mat.</motion.p>
+            <motion.p variants={fadeUp} className="italic font-light">Ocurre en cómo respiras. En cómo eliges.</motion.p>
+            <motion.p variants={fadeUp} className="italic font-light">En cómo sostienes tu energía.</motion.p>
+            <motion.p variants={fadeUp} className="font-semibold pt-1">En cómo habitas tu humanidad y tu espiritualidad.</motion.p>
           </motion.div>
+        </LandingSection>
 
-        </section>
-
-        {/* ── INTRODUCCIÓN ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto space-y-8"
-          >
+        {/* Módulos */}
+        <LandingSection tone="plain">
+          <div className="max-w-3xl mx-auto space-y-8">
             <div className="text-center space-y-3">
-              <HandHeart className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Introducción del Curso
-              </h2>
+              <RevealTitle text="Los 6 Módulos del Curso" className={H2} />
+              <p className="text-muted-foreground font-light text-lg">Un recorrido progresivo a lo largo de un año, con encuentros bimensuales.</p>
             </div>
-
-            <div className="space-y-5 text-muted-foreground leading-relaxed text-base font-light">
-              <p>
-                Vivimos en un tiempo de aceleración, exceso de estímulos, desconexión del cuerpo, ansiedad mental y búsqueda profunda de sentido. En medio de esta realidad, el <strong className="text-foreground font-medium">Kundalini Yoga</strong> surge como una tecnología ancestral para recordar algo esencial: la capacidad humana de vivir con mayor conciencia, vitalidad, claridad y conexión espiritual.
-              </p>
-              <p>
-                Este curso de iniciación propone un recorrido progresivo a través de las bases filosóficas, prácticas y experienciales del Kundalini Yoga. No se trata únicamente de aprender posturas, respiraciones o meditaciones.
-              </p>
-
-              <div className={`border-l-2 border-primary/40 pl-6 py-2 space-y-2`}>
-                {[
-                  "Comprender el yoga como camino de transformación interna",
-                  "Explorar las herramientas del Kundalini Yoga",
-                  "Profundizar en la relación con el cuerpo, la mente, la energía y el espíritu",
-                  "Desarrollar una práctica consciente que pueda integrarse en la vida cotidiana",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <span className="text-primary mt-1 shrink-0">✦</span>
-                    <span>{item}</span>
+            <motion.ol {...inView} variants={stagger(0.08)}>
+              {MODULES.map((m, i) => (
+                <motion.li key={m.num} variants={fadeUp} className="grid grid-cols-[3rem_1fr] md:grid-cols-[4rem_1fr] gap-3 md:gap-5">
+                  <span className="font-serif text-3xl md:text-4xl text-[#B8977E] leading-none pt-1">{m.num}</span>
+                  <div className={`relative border-l border-border/60 pl-5 ${i === MODULES.length - 1 ? "pb-0" : "pb-8"}`}>
+                    <span aria-hidden="true" className="absolute -left-[4px] top-2.5 w-2 h-2 rounded-full bg-[#B8977E]" />
+                    <h3 className="font-semibold text-lg text-foreground leading-snug">{m.title}</h3>
+                    <p className="text-base text-muted-foreground font-light mt-1 leading-relaxed">{m.theme}</p>
+                    <span className="inline-block mt-2 text-[11px] px-2.5 py-0.5 rounded-full border border-border/50 text-muted-foreground">Bimensual</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* What each encounter includes */}
-            <div className="bg-card border border-border/50 rounded-3xl p-8 space-y-5">
-              <h3 className="font-serif text-xl font-semibold text-foreground">Cada encuentro incluirá:</h3>
-              <div className="grid sm:grid-cols-2 gap-3">
-                {[
-                  { icon: <Book className="w-6 h-6 text-primary" />, text: "Enseñanza teórica" },
-                  { icon: <Smile className="w-6 h-6 text-primary" />, text: "Experiencia práctica de Kundalini Yoga" },
-                  { icon: <Wind className="w-6 h-6 text-primary" />, text: "Respiración, kriyas, mantra y meditación" },
-                  { icon: <MessageCircle className="w-6 h-6 text-primary" />, text: "Espacios de reflexión e integración" },
-                  { icon: <Home className="w-6 h-6 text-primary" />, text: "Práctica sugerida entre módulos" },
-                  { icon: <BookOpen className="w-6 h-6 text-primary" />, text: "Material de apoyo y profundización" },
-                ].map(({ icon, text }) => (
-                  <div key={text} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span className="shrink-0">{icon}</span>
-                    <span>{text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <p className="text-center font-serif text-lg italic text-foreground/80 max-w-2xl mx-auto leading-relaxed">
-              "Este curso está dirigido tanto a personas nuevas en el camino del yoga como a practicantes que desean profundizar su comprensión y experiencia del Kundalini Yoga."
-            </p>
-
-            {/* Poetic closing */}
-            <div className={`text-center space-y-1 py-6 px-6 rounded-2xl ${palette.secondary} opacity-90`}>
-              <p className={`font-serif text-base ${palette.secondaryText} font-light italic`}>
-                Porque el yoga no ocurre únicamente en el mat.
-              </p>
-              <p className={`font-serif text-base ${palette.secondaryText} font-light italic`}>
-                Ocurre en cómo respiras. En cómo eliges.
-              </p>
-              <p className={`font-serif text-base ${palette.secondaryText} font-light italic`}>
-                En cómo sostienes tu energía.
-              </p>
-              <p className={`font-serif text-base ${palette.secondaryText} font-semibold`}>
-                En cómo habitas tu humanidad y tu espiritualidad.
-              </p>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ── MÓDULOS ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <div className="max-w-4xl mx-auto space-y-8">
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={fadeUp}
-              className="text-center space-y-3 mb-12"
-            >
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Los 6 Módulos del Curso
-              </h2>
-              <p className="text-muted-foreground font-light max-w-xl mx-auto">
-                Un recorrido progresivo a lo largo de un año, con encuentros bimensuales.
-              </p>
-            </motion.div>
-
-            {/* Module Cards — static, solo tema central */}
-            <div className="space-y-4">
-              {MODULES.map((mod, idx) => (
-                <motion.div
-                  key={mod.num}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-60px" }}
-                  variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, delay: idx * 0.06 } } }}
-                >
-                  <div className={`rounded-3xl border ${mod.borderColor} overflow-hidden shadow-sm bg-gradient-to-r ${mod.color}`}>
-                    <div className="p-6 flex items-center gap-5">
-                      {/* Emoji badge */}
-                      <div className="w-12 h-12 rounded-2xl bg-white/70 border border-white/80 flex items-center justify-center text-2xl shadow-sm shrink-0">
-                        {mod.icon}
-                      </div>
-
-                      {/* Text */}
-                      <div className="flex-grow min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className={`text-xs font-bold tracking-wider uppercase ${mod.accentColor}`}>
-                            Módulo {mod.num}
-                          </span>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${mod.badgeColor}`}>
-                            Bimensual
-                          </span>
-                        </div>
-                        <h3 className="font-serif text-lg md:text-xl font-semibold text-foreground leading-snug">
-                          {mod.title}
-                        </h3>
-                        <p className={`text-sm font-light mt-1 leading-relaxed ${mod.accentColor} opacity-90`}>
-                          {mod.theme}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+                </motion.li>
               ))}
-            </div>
+            </motion.ol>
           </div>
-        </section>
+        </LandingSection>
 
-        {/* ── ENTRE MÓDULOS ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-10"
-          >
+        {/* Recursos entre módulos */}
+        <LandingSection tone="mauve">
+          <div className="max-w-3xl mx-auto space-y-6">
             <div className="text-center space-y-3">
-              <Sparkles className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Recursos Entre Módulos
-              </h2>
-              <p className="text-muted-foreground font-light max-w-2xl mx-auto">
+              <RevealTitle text="Recursos Entre Módulos" className={H2} />
+              <p className="text-muted-foreground font-light text-lg">
                 Porque el verdadero aprendizaje del Kundalini Yoga no ocurre cada dos meses. Ocurre en la repetición, la observación y la experiencia cotidiana.
               </p>
             </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {BETWEEN_MODULES.map(({ icon, label }) => (
-                <div
-                  key={label}
-                  className="flex items-center gap-4 bg-card border border-border/50 rounded-2xl p-5 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-                >
-                  <span className="shrink-0">{icon}</span>
-                  <span className="text-sm text-muted-foreground font-light">{label}</span>
-                </div>
+            <motion.ul {...inView} variants={stagger()} className="grid sm:grid-cols-2 gap-x-8">
+              {BETWEEN_MODULES.map(({ icon: Icon, label }) => (
+                <motion.li key={label} variants={fadeUp} className="flex items-center gap-3 py-3 border-b border-border/30 text-base text-foreground/90">
+                  <Icon className="w-5 h-5 text-primary shrink-0" /> {label}
+                </motion.li>
               ))}
-            </div>
-
-            <blockquote className={`text-center mx-auto max-w-2xl py-8 px-6 rounded-3xl ${palette.secondary}`}>
-              <p className={`font-serif text-base md:text-lg italic leading-relaxed ${palette.secondaryText}`}>
+            </motion.ul>
+            <blockquote className="text-center pt-6">
+              <p className="font-serif text-xl md:text-2xl italic font-light text-foreground leading-relaxed">
                 "La disciplina primero negocia contigo… luego empieza a revelarte cosas."
               </p>
-              <p className={`text-xs mt-3 ${palette.secondaryText} opacity-70`}>
+              <p className="text-sm mt-3 text-muted-foreground">
                 — Como diría cualquier practicante después del día 17 de una práctica de 40 días
               </p>
             </blockquote>
-          </motion.div>
-        </section>
+          </div>
+        </LandingSection>
 
-        {/* ── PARA QUIÉN ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-4xl mx-auto space-y-10"
-          >
-            <div className="text-center space-y-3">
-              <Search className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                ¿Para quién es este curso?
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  icon: <Leaf className="w-8 h-8 text-primary" />,
-                  title: "Principiantes en el camino",
-                  desc: "Si eres nuevo en el yoga y quieres comenzar desde los fundamentos con una guía progresiva y profunda.",
-                },
-                {
-                  icon: <Flame className="w-8 h-8 text-primary" />,
-                  title: "Practicantes que desean profundizar",
-                  desc: "Si ya tienes experiencia y buscas comprender más a fondo la filosofía, la anatomía yóguica y las herramientas del Kundalini Yoga.",
-                },
-                {
-                  icon: <Smile className="w-8 h-8 text-primary" />,
-                  title: "Personas en búsqueda de bienestar",
-                  desc: "Si atraviesas estrés, ansiedad, desconexión o una búsqueda de sentido y quieres herramientas reales de transformación.",
-                },
-                {
-                  icon: <Wind className="w-8 h-8 text-primary" />,
-                  title: "Buscadores espirituales",
-                  desc: "Si sientes el llamado a explorar el desarrollo espiritual con disciplina, apertura y desde una tradición probada.",
-                },
-              ].map(({ icon, title, desc }) => (
-                <div key={title} className="flex items-start gap-4 bg-card border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300">
-                  <span className="shrink-0">{icon}</span>
-                  <div className="space-y-1">
-                    <h3 className="font-semibold text-foreground">{title}</h3>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">{desc}</p>
-                  </div>
-                </div>
+        {/* Para quién */}
+        <LandingSection tone="plain">
+          <div className="max-w-4xl mx-auto space-y-6">
+            <RevealTitle text="¿Para quién es este curso?" className={H2} />
+            <motion.ul {...inView} variants={stagger()} className="grid md:grid-cols-2 gap-x-10">
+              {FOR_WHOM.map(({ title, desc }) => (
+                <GoldRow key={title}>
+                  <p className="font-semibold text-foreground">{title}</p>
+                  <p className="text-muted-foreground font-light mt-1">{desc}</p>
+                </GoldRow>
               ))}
+            </motion.ul>
+          </div>
+        </LandingSection>
+
+        {/* Inversión */}
+        <LandingSection tone="peach">
+          <motion.div {...inView} variants={stagger(0.1)} className="max-w-4xl mx-auto space-y-8">
+            <div className="text-center space-y-3">
+              <RevealTitle text="Tu inversión" className={H2} />
+              <p className="text-muted-foreground font-light text-lg">Elige la modalidad que mejor se adapte a tu proceso.</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 pt-3">
+              <PriceCardLight
+                title="Pago por Módulo"
+                price="220"
+                href={BOLD_MODULO}
+                description={<>
+                  <p>Pago bimensual por cada módulo</p>
+                  <Benefits light items={["Acceso completo al módulo en curso", "Material teórico y de apoyo", "Audio de meditación o pranayama", "Prácticas sugeridas entre encuentros"]} />
+                </>}
+                cta="Inscribirme por Módulo"
+              />
+              <PriceCard
+                badge="25% de descuento"
+                title="Anualidad"
+                price="990"
+                href={BOLD_ANUAL}
+                description={<>
+                  <p>Ahorra y comprométete con tu formación completa</p>
+                  <Benefits items={["Acceso asegurado a los 6 módulos", "Material teórico y de apoyo completo", "Prácticas de 21 o 40 días ininterrumpidas", "Proceso integrado a lo largo del año"]} />
+                </>}
+                cta="Inscribirme al Año Completo"
+              />
             </div>
           </motion.div>
-        </section>
+        </LandingSection>
 
-        {/* ── TESTIMONIOS ── */}
-        <TestimonialsSection 
-          testimonials={CURSO_TESTIMONIALS} 
-          title={<>Historias de <span className="text-primary">Iniciación</span></>}
-          subtitle="Personas que ya han transformado su relación con el cuerpo y la mente."
-        />
-
-        {/* ── INVERSIÓN ── */}
-        <section className={`py-20 md:py-28 px-6 ${palette.background} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-5xl mx-auto space-y-10"
-          >
-            <div className="text-center space-y-3 mb-12">
-              <Sparkles className="w-12 h-12 text-primary mx-auto mb-2" />
-              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground">
-                Inversión del Curso
-              </h2>
-              <p className="text-muted-foreground font-light max-w-xl mx-auto">
-                Elige la modalidad que mejor se adapte a tu proceso.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Card Pago por Módulo */}
-              <div className={`bg-card border border-border/50 rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-sm hover:border-primary/40 transition-all duration-300`}>
-                <div className="space-y-4 text-center">
-                  <h3 className="font-serif text-2xl font-semibold text-foreground">Pago por Módulo</h3>
-                  <div className="flex justify-center items-baseline gap-1">
-                    <span className="text-4xl font-bold text-foreground">220</span>
-                    <span className="text-muted-foreground font-light">USD</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground font-light">Pago bimensual por cada módulo</p>
-                </div>
-                <div className="mt-8 space-y-4 flex-grow">
-                  {[
-                     "Acceso completo al módulo en curso",
-                     "Material teórico y de apoyo",
-                     "Audio de meditación o pranayama",
-                     "Prácticas sugeridas entre encuentros"
-                  ].map((benefit, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <Sparkles className="w-5 h-5 text-primary shrink-0" />
-                      <span className="text-sm text-muted-foreground leading-relaxed">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 pt-6 border-t border-border/10">
-                  <a 
-                    href="https://checkout.bold.co/payment/LNK_FGBEX3L6X9"
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={`block w-full py-4 text-center rounded-2xl font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] bg-primary/10 text-primary hover:bg-primary hover:text-white`}
-                  >
-                    Inscribirme por Módulo
-                  </a>
-                </div>
-              </div>
-
-              {/* Card Pago Anual */}
-              <div className={`rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-lg md:-translate-y-4 border-2 border-white/20 bg-gradient-to-br ${palette.primary}`}>
-                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold tracking-wider uppercase shadow-sm">
-                  25% Descuento
-                </div>
-                <div className="space-y-4 text-center text-white mt-4">
-                  <h3 className="font-serif text-2xl font-semibold">Anualidad</h3>
-                  <div className="flex justify-center items-baseline gap-1">
-                    <span className="text-5xl font-bold">990</span>
-                    <span className="font-light opacity-90">USD</span>
-                  </div>
-                  <p className="text-sm font-light opacity-90">Ahorra y comprométete con tu formación completa</p>
-                </div>
-                <div className="mt-8 space-y-4 flex-grow">
-                  {[
-                     "Acceso asegurado a los 6 módulos",
-                     "Material teórico y de apoyo completo",
-                     "Prácticas de 21 o 40 días ininterrumpidas",
-                     "Proceso integrado a lo largo del año",
-                  ].map((benefit, i) => (
-                    <div key={i} className="flex items-start gap-3 text-white">
-                      <Sparkles className="w-5 h-5 text-white opacity-90 shrink-0" />
-                      <span className="text-sm leading-relaxed font-medium opacity-90">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 pt-6 border-t border-white/20">
-                  <a 
-                    href="https://checkout.bold.co/payment/LNK_XB1KU5ZXEA"
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={`block w-full py-4 text-center rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] bg-white text-primary hover:bg-white/90`}
-                  >
-                    Inscribirme al Año Completo
-                  </a>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ── CTA / INSCRIPCIÓN ── */}
-        <section id="curso-inscripcion" className={`py-24 md:py-32 px-6 ${palette.cardBackground} border-b border-border/10`}>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
-            className="max-w-3xl mx-auto text-center space-y-8"
-          >
-            <div className="flex justify-center">
-              <a
-                href="https://wa.me/573105679517"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2 px-10 py-5 rounded-full text-lg font-semibold shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${palette.primary}`}
-              >
-                <MessageCircle className="w-5 h-5" /> Inscribirme por WhatsApp
+        {/* Cierre */}
+        <LandingSection id="curso-inscripcion" tone="plain">
+          <motion.div {...inView} variants={stagger(0.1)} className="max-w-2xl mx-auto text-center space-y-6">
+            <RevealTitle text="¿Quieres inscribirte? Escríbeme." className={H2} />
+            <motion.div variants={fadeUp}>
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
+                <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
               </a>
-            </div>
+            </motion.div>
+            <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
           </motion.div>
-        </section>
-
+        </LandingSection>
       </main>
 
-      {/* ── FOOTER ── */}
-      <footer className={`py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="font-serif font-semibold text-foreground">
-            {settings?.brandName || "SantoSha"}
-          </p>
-          <p className="font-light">
-            {settings?.footerText || "Bienestar · Conciencia · Transformación"}
-          </p>
-          <div className="pt-4 flex justify-center gap-6">
-            <Link to="/" className="hover:underline text-xs text-muted-foreground/70 transition-colors">
-              ← Inicio
-            </Link>
-            <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
-          </div>
-        </div>
-      </footer>
-
-      {/* AI Chat */}
+      <SiteFooter palette={palette} />
       <AiChatWidget pageSlug="curso-iniciacion-yoga" />
     </div>
   );
