@@ -24,8 +24,8 @@ import { fadeUp, inView, RevealTitle, LandingSection, SplitHero } from "@/compon
 // Foto del hero: cambiar solo esta línea para usar otra imagen.
 const HERO_IMAGE = heroBackground.url;
 
-const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
-const BTN_OUTLINE = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold bg-card border border-[#795D64]/40 text-foreground hover:bg-muted/40 transition-all duration-300";
+const BTN_SOLID = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-base font-semibold shadow-md justify-center hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
+const BTN_OUTLINE = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-base font-semibold justify-center bg-card border border-[#795D64]/40 text-foreground hover:bg-muted/40 transition-all duration-300";
 const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground";
 
 const PROGRAMS = [
@@ -108,9 +108,9 @@ const PortalHome = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <SplitHero image={HERO_IMAGE} alt="Mujer meditando al amanecer sobre las montañas">
-          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
-            Conciencia · Calma · Transformación humana
+        <SplitHero image={HERO_IMAGE} imageClassName="object-[70%_20%]" maskClassName="hero-bleed-narrow" alt="Mujer meditando al amanecer sobre las montañas">
+          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary shadow-sm">
+            <Leaf className="w-3.5 h-3.5" /> Conciencia · Calma · Transformación humana
           </motion.span>
           <motion.h1 variants={fadeUp} className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground">
             Del modo supervivencia a la <span className="text-primary">calma consciente</span>
@@ -118,7 +118,7 @@ const PortalHome = () => {
           <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
             Kundalini Yoga, regulación del sistema nervioso y sabiduría somática para recordar tu esencia y habitar tu vida.
           </motion.p>
-          <motion.div variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-3 pt-1">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-3 pt-1 [&>*]:w-full sm:[&>*]:w-auto [&>*]:whitespace-nowrap md:[&>*]:text-[15px] md:[&>*]:px-5">
             <a href="#programas" onClick={goProgramas} className={BTN_SOLID}>
               Ver programas formativos
               <motion.span className="inline-flex" animate={{ y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
