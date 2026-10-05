@@ -1,1 +1,2 @@
 - Landing pages build on the shared kit in src/components/landing (RevealTitle, LandingSection, SplitHero, PriceCard); copy patterns there instead of importing from SabiduriaCiclica.tsx, which stays standalone.
+- Service pages load CMS palette/fonts via src/hooks/useVisualSettings; why: one copy of the loader instead of per-page duplicates.
