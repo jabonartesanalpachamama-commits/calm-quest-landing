@@ -259,7 +259,7 @@ const CursoIniciacionYoga = () => {
               className="grid grid-cols-2 rounded-3xl overflow-hidden border border-border/50 shadow-lg">
               {/* Por módulo */}
               <div role="rowgroup" className="bg-card flex flex-col">
-                <div className="p-4 md:p-8 text-center space-y-2 border-b border-border/50 min-h-[11rem] md:min-h-[12rem] flex flex-col justify-center">
+                <div className="p-4 md:p-8 text-center space-y-2 border-b border-border/50 min-h-[14rem] md:min-h-[13.5rem] flex flex-col justify-center">
                   <h3 className="font-serif text-lg md:text-2xl font-semibold text-foreground">Pago por Módulo</h3>
                   <p className="flex items-baseline justify-center gap-1 text-foreground"><span className="text-3xl md:text-5xl font-bold">220</span><span className="text-xs md:text-sm font-semibold">USD</span></p>
                   <p className="text-xs md:text-sm text-muted-foreground">Pago bimensual por cada módulo</p>
@@ -278,7 +278,7 @@ const CursoIniciacionYoga = () => {
               </div>
               {/* Anualidad */}
               <div role="rowgroup" className="relative bg-[#795D64] text-white flex flex-col">
-                <div className="relative p-4 md:p-8 text-center space-y-2 border-b border-white/20 min-h-[11rem] md:min-h-[12rem] flex flex-col justify-center">
+                <div className="relative p-4 md:p-8 text-center space-y-2 border-b border-white/20 min-h-[14rem] md:min-h-[13.5rem] flex flex-col justify-center">
                   <span className="mx-auto mb-1 px-2.5 py-1 rounded-full bg-brand-gold text-brand-ink text-[9px] md:text-[10px] font-bold uppercase tracking-widest">25% de descuento</span>
                   <h3 className="font-serif text-lg md:text-2xl font-semibold">Anualidad</h3>
                   <p className="flex items-baseline justify-center gap-1"><span className="text-3xl md:text-5xl font-bold">990</span><span className="text-xs md:text-sm font-semibold">USD</span></p>
