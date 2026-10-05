@@ -1,0 +1,1 @@
+- Landing pages build on the shared kit in src/components/landing (RevealTitle, LandingSection, SplitHero, PriceCard); copy patterns there instead of importing from SabiduriaCiclica.tsx, which stays standalone.
