@@ -17,7 +17,7 @@ import SiteFooter from "@/components/SiteFooter";
 import FreeClassDialog from "@/components/FreeClassDialog";
 import FloatingCTA from "@/components/FloatingCTA";
 import Header from "@/components/Header";
-import fransuryImage from "@/assets/fransury_portal.webp";
+import fransuryImage from "@/assets/fransury-retrato.webp";
 import heroBackground from "@/assets/hero-sunrise.png.asset.json";
 import { fadeUp, inView, RevealTitle, LandingSection, SplitHero } from "@/components/landing";
 
@@ -188,7 +188,7 @@ const PortalHome = () => {
         <LandingSection tone="mauve">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
             <motion.img {...inView} variants={fadeUp} src={fransuryImage} alt="Fransury Gonzáles" loading="lazy"
-              className="w-full max-w-sm mx-auto rounded-3xl object-cover" />
+              className="w-full max-w-sm mx-auto rounded-3xl object-cover object-top aspect-[4/5]" />
             <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-5 text-center md:text-left">
               <motion.span variants={fadeUp} className="block text-xs font-semibold tracking-wider uppercase text-primary">Acompañamiento Humano</motion.span>
               <RevealTitle text="Quién te acompaña" className={H2} />

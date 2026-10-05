@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
  * - description: máximo 155 caracteres.
  */
 const SITE_URL = "https://santoshayoga.com.co";
-const DEFAULT_IMAGE = "https://lovable.dev/opengraph-image-p98pqg.png";
+const DEFAULT_IMAGE = `${SITE_URL}/fransury-retrato.webp`;
 
 type JsonLd = Record<string, unknown> | Record<string, unknown>[];
 
