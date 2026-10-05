@@ -9,6 +9,7 @@ interface FloatingCTAProps {
   formAnchor?: string; // e.g. "#form-home-hero"
   ctaText?: React.ReactNode;
   subText?: React.ReactNode;
+  scrollTo?: string; // e.g. "#tarifas" — scroll target instead of opening the dialog
 }
 
 /**
@@ -20,6 +21,7 @@ const FloatingCTA = ({
   formAnchor = "#form-home-hero",
   ctaText = "Accede a tu Clase Gratuita",
   subText = <><Flame className="w-3.5 h-3.5 inline-block mr-1 text-orange-500" /> +247 personas se registraron esta semana</>,
+  scrollTo,
 }: FloatingCTAProps) => {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -27,6 +29,17 @@ const FloatingCTA = ({
 
   const handleScroll = useCallback(() => {
     if (dismissed) return;
+
+    if (scrollTo) {
+      const target = document.querySelector(scrollTo);
+      let targetVisible = false;
+      if (target) {
+        const r = target.getBoundingClientRect();
+        targetVisible = r.top < window.innerHeight && r.bottom > 0;
+      }
+      setVisible(window.scrollY > 400 && !targetVisible);
+      return;
+    }
 
     const anchor = document.querySelector(formAnchor);
     if (!anchor) {
@@ -38,14 +51,20 @@ const FloatingCTA = ({
     const rect = anchor.getBoundingClientRect();
     // Show when the form is completely above the viewport
     setVisible(rect.bottom < -80);
-  }, [formAnchor, dismissed]);
+  }, [formAnchor, dismissed, scrollTo]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const openForm = () => setFreeClassOpen(true);
+  const openForm = () => {
+    if (scrollTo) {
+      document.querySelector(scrollTo)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    setFreeClassOpen(true);
+  };
 
 
   const handleDismiss = () => {
@@ -78,7 +97,7 @@ const FloatingCTA = ({
                 size="sm"
                 className="shrink-0 rounded-full font-semibold text-xs px-4"
               >
-                Clase Gratis
+                {scrollTo ? ctaText : "Clase Gratis"}
               </Button>
 
               <button
@@ -118,7 +137,7 @@ const FloatingCTA = ({
               <p className="text-xs text-muted-foreground mb-3 pr-4">{subText}</p>
 
               {/* Trust strip */}
-              <div className="flex items-center gap-3 text-[10px] text-muted-foreground mb-4">
+              {!scrollTo && <div className="flex items-center gap-3 text-[10px] text-muted-foreground mb-4">
                 <span className="flex items-center gap-1">
                   <svg className="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -134,7 +153,7 @@ const FloatingCTA = ({
                 </span>
                 <span>·</span>
                 <span>Acceso inmediato</span>
-              </div>
+              </div>}
 
               <Button
                 id="floating-cta-desktop-btn"
