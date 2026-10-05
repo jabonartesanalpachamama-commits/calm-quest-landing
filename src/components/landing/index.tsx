@@ -92,7 +92,7 @@ export const LandingSection = ({
 export const SplitHero = ({ image, alt, children }: { image: string; alt: string; children: ReactNode }) => (
   <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-gradient-to-b from-card via-card to-background overflow-hidden">
     <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-10 items-center">
-      <div className="relative -mx-4 md:mx-0">
+      <div className="relative -mx-4 md:mx-0 md:self-start">
         <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
           <img
             src={image}
