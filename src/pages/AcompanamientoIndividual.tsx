@@ -1,36 +1,24 @@
-import { useEffect, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
-import { ArrowDown, User, Leaf, Search, Sparkles, Zap, Sun, MessageCircle, Smartphone, Clock, Calendar, Users, Moon } from "lucide-react";
-import {
-  VisualIdentity,
-  COLOR_PALETTES,
-  getLocalSettings,
-  applyCssVariablesForPalette,
-  applyFontPair,
-} from "@/lib/CmsFallbackData";
+import { ArrowDown, ArrowRight, User, Leaf, Search, Sparkles, Zap, Sun, MessageCircle, Smartphone, Clock, Calendar, Users, Moon } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
 import Seo from "@/components/Seo";
-import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
+import NextSteps from "@/components/NextSteps";
+import Quote from "@/components/landing/Quote";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
-import fransuryRetrato from "@/assets/fransury-retrato.webp";
+import { useVisualSettings } from "@/hooks/useVisualSettings";
 import paraQuienImage from "@/assets/para-quien-image.webp";
-import {
-  fadeUp, inView, RevealTitle, RotatingOrnament,
-  LandingSection, SplitHero, PriceCard, PriceCardLight,
-} from "@/components/landing";
+import { fadeUp, inView, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
 
-// Foto del hero: cambiar solo esta línea cuando llegue la foto definitiva.
-const HERO_IMAGE = fransuryRetrato;
+// Estructura "recorrido": hero invertido con imagen en arco a la derecha.
+const HERO_IMAGE = paraQuienImage;
 
-const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5";
-const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
+const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
 const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground";
 const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información sobre las sesiones 1 a 1 de yoga y meditación.");
 
@@ -40,12 +28,14 @@ const SERVICES = [
     title: "Clases Privadas de Kundalini Yoga y Meditación",
     desc: "Diseñadas según tu proceso personal, intención terapéutica o camino espiritual.",
     tags: ["1 a 1", "Personalizada", "Virtual"],
+    bg: "bg-gradient-to-br from-warm-mauve/70 via-warm-mauve/25 to-card",
   },
   {
     icon: Leaf,
     title: "Procesos de Acompañamiento Integrativo",
     desc: "Programas de varias sesiones orientados a profundizar en objetivos específicos de regulación, autoconocimiento, integración emocional o transformación humana.",
     tags: ["Multi-sesión", "Integrativo", "Virtual"],
+    bg: "bg-gradient-to-br from-warm-peach/90 via-warm-peach/35 to-card",
   },
 ];
 
@@ -108,27 +98,10 @@ const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
   </ul>
 );
 
+const stagger = (s = 0.08) => ({ show: { transition: { staggerChildren: s } } });
+
 const AcompanamientoIndividual = () => {
-  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
-
-  useEffect(() => {
-    const loadSettings = async () => {
-      let activeSettings = getLocalSettings();
-      try {
-        const { data } = await supabase.from("cms_settings").select("*");
-        if (data && data.length > 0) {
-          const parsed = data.find((i) => i.key === "visual_identity")?.value;
-          if (parsed) activeSettings = parsed as unknown as VisualIdentity;
-        }
-      } catch { /* local fallback */ }
-      applyCssVariablesForPalette(activeSettings.palette);
-      applyFontPair(activeSettings.fontFamily);
-      setSettings(activeSettings);
-    };
-    loadSettings();
-  }, []);
-
-  const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
+  const { settings, palette } = useVisualSettings();
 
   const goPrecios = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -143,143 +116,137 @@ const AcompanamientoIndividual = () => {
         path="/acompanamiento-individual"
         jsonLd={[SERVICE_JSONLD, faqJsonLd(FAQS)]}
       />
-
       <FloatingCTA scrollTo="#precios" ctaText="Reservar sesión" subText="Yoga y meditación 1:1" />
-
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <SplitHero image={HERO_IMAGE} imagePosition="object-top" maskClassName="hero-bleed-narrow" alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga">
-          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
-            Sesiones 1 a 1 · Virtual
-          </motion.span>
-          <RevealTitle as="h1" text="Yoga y meditación 1:1" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
-          <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
-            YogaTerapia, Kundalini Yoga y Meditación
-          </motion.p>
-          <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
-            {WHAT_CULTIVATES.map(({ icon: Icon, label }) => (
-              <li key={label} className={PILL}><Icon className="w-4 h-4 text-primary" /> {label}</li>
-            ))}
-          </motion.ul>
-          <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center md:justify-start gap-5 pt-1">
-            <a href="#precios" onClick={goPrecios} className={BTN_SOLID + " group"}>
-              Quiero saber más
-              <motion.span className="inline-flex" animate={{ y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
-                <ArrowDown className="w-4 h-4" />
+        {/* HERO invertido: texto izquierda, arco derecha */}
+        <section className="px-6 pt-10 pb-14 md:pt-16 md:pb-20 bg-gradient-to-b from-warm-peach/45 to-background overflow-hidden">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-14 items-center">
+            <motion.div initial="hidden" animate="show" variants={stagger(0.1)} className="space-y-6 order-2 md:order-1 min-w-0">
+              <motion.span variants={fadeUp} className="inline-flex px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card text-[#795D64]">
+                Sesiones 1 a 1 · Virtual
               </motion.span>
-            </a>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline decoration-brand-gold underline-offset-4 hover:opacity-80">
-              Escríbeme por WhatsApp
-            </a>
-          </motion.div>
-        </SplitHero>
+              <RevealTitle as="h1" text="Yoga y meditación 1:1" className="font-serif text-4xl md:text-6xl font-semibold leading-[1.05] text-foreground" />
+              <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
+                YogaTerapia, Kundalini Yoga y Meditación
+              </motion.p>
+              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5">
+                <a href="#precios" onClick={goPrecios} className={BTN_SOLID + " group"}>
+                  Quiero saber más
+                  <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
+                </a>
+                <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#795D64] underline decoration-brand-gold underline-offset-4 hover:opacity-80">
+                  Escríbeme por WhatsApp
+                </a>
+              </motion.div>
+              <motion.ul variants={fadeUp} className="-mx-6 px-6 md:mx-0 md:px-0 flex gap-2 overflow-x-auto md:flex-wrap snap-x pb-2 text-sm">
+                {WHAT_CULTIVATES.map(({ icon: Icon, label }) => (
+                  <li key={label} className="snap-start shrink-0 h-10 flex items-center gap-2 whitespace-nowrap bg-card border border-border/40 rounded-full px-3.5">
+                    <Icon className="w-4 h-4 text-primary" /> {label}
+                  </li>
+                ))}
+              </motion.ul>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="order-1 md:order-2">
+              <div className="mx-auto w-full max-w-[22rem] md:max-w-md aspect-[4/5] rounded-t-full rounded-b-3xl overflow-hidden shadow-xl ring-1 ring-brand-gold/40">
+                <img src={HERO_IMAGE} alt="Postura de yoga durante una sesión de acompañamiento" loading="eager" fetchPriority="high" className="w-full h-full object-cover object-center" />
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
         {/* Qué es */}
-        <LandingSection tone="plain">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-3xl mx-auto text-center space-y-5">
+        <section className="px-6 py-12 md:py-14">
+          <motion.div {...inView} variants={stagger(0.1)} className="max-w-3xl mx-auto text-center space-y-5">
             <RevealTitle text="¿Deseas un proceso personalizado?" className={H2} />
             <motion.p variants={fadeUp} className="text-lg text-foreground/80 leading-relaxed font-light">
               Te acompaño 1 a 1 en clases privadas donde el <strong className="text-foreground font-semibold">Kundalini Yoga</strong>, la <strong className="text-foreground font-semibold">meditación</strong> y la <strong className="text-foreground font-semibold">conciencia corporal</strong> se ponen al servicio de tu transformación humana.
             </motion.p>
           </motion.div>
-        </LandingSection>
-
-        <LandingSection tone="mauve" className="overflow-hidden">
-          <RotatingOrnament className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80 opacity-25" />
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="relative max-w-3xl mx-auto text-center space-y-4">
-            <motion.p variants={fadeUp} className="font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground">
-              Un espacio diseñado para ayudarte a cultivar mayor claridad, regulación interna, autoconocimiento, conexión espiritual y coherencia con tu esencia.
-            </motion.p>
-            <motion.p variants={fadeUp} className="font-serif text-lg md:text-xl font-light italic text-foreground/80">
-              Procesos adaptados a tu momento vital, tu historia y tu camino personal.
-            </motion.p>
-          </motion.div>
-        </LandingSection>
+        </section>
 
         {/* Qué ofrezco */}
-        <LandingSection tone="plain">
-          <div className="max-w-4xl mx-auto space-y-8">
+        <section className="px-6 py-12 md:py-16">
+          <div className="max-w-5xl mx-auto space-y-8">
             <div className="text-center space-y-3">
               <RevealTitle text="¿Qué ofrezco?" className={H2} />
               <p className="text-muted-foreground font-light text-lg">Dos modalidades de acompañamiento, ambas adaptadas a tu proceso.</p>
             </div>
-            <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="grid md:grid-cols-2 gap-5">
-              {SERVICES.map(({ icon: Icon, title, desc, tags }) => (
-                <motion.div key={title} variants={fadeUp} className="bg-card border border-border/40 rounded-3xl p-6 md:p-7 space-y-4">
-                  <div className="flex items-start gap-4">
-                    <Icon className="w-6 h-6 text-primary shrink-0 mt-1" />
-                    <h3 className="font-serif text-xl font-semibold text-foreground leading-snug">{title}</h3>
-                  </div>
-                  <p className="text-base text-muted-foreground font-light leading-relaxed">{desc}</p>
+            <motion.div {...inView} variants={stagger(0.12)} className="grid md:grid-cols-2 gap-6">
+              {SERVICES.map(({ icon: Icon, title, desc, tags, bg }) => (
+                <motion.div key={title} variants={fadeUp} className={`${bg} rounded-[2rem] p-8 md:p-10 min-h-[22rem] flex flex-col gap-5 border border-border/30`}>
+                  <span className="w-16 h-16 rounded-2xl bg-card/80 flex items-center justify-center">
+                    <Icon className="w-9 h-9 text-[#795D64]" strokeWidth={1.4} />
+                  </span>
+                  <h3 className="font-serif text-2xl md:text-3xl font-semibold text-foreground leading-snug">{title}</h3>
+                  <p className="text-base text-foreground/75 font-light leading-relaxed flex-grow">{desc}</p>
                   <div className="flex flex-wrap gap-2">
                     {tags.map((t) => (
-                      <span key={t} className="text-xs font-medium px-3 py-1 rounded-full bg-background border border-border/40 text-primary">{t}</span>
+                      <span key={t} className="text-xs font-medium px-3 py-1 rounded-full bg-card/80 text-[#795D64]">{t}</span>
                     ))}
                   </div>
                 </motion.div>
               ))}
             </motion.div>
           </div>
-        </LandingSection>
+        </section>
 
-        {/* Para quién */}
-        <LandingSection tone="plain">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <motion.img
-              {...inView}
-              variants={fadeUp}
-              src={paraQuienImage}
-              alt="Postura de yoga durante una sesión de acompañamiento"
-              loading="lazy"
-              className="w-full max-w-md mx-auto rounded-3xl aspect-square object-cover"
-            />
-            <div className="space-y-6">
-              <RevealTitle text="¿Para quién es este espacio?" className={H2 + " text-center md:text-left"} />
-              <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.06 } } }}>
-                {FOR_WHOM.map((item) => (
-                  <motion.li key={item} variants={fadeUp} className="flex items-start gap-4 py-4 border-b border-border/30">
-                    <span aria-hidden="true" className="mt-1 w-px h-5 shrink-0 bg-[#B8977E]" />
-                    <span className="text-base text-foreground/90 leading-relaxed">{item}</span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </div>
-          </div>
-        </LandingSection>
+        <Quote variant="ornament" cite="Procesos adaptados a tu momento vital, tu historia y tu camino personal.">
+          Un espacio diseñado para ayudarte a cultivar mayor claridad, regulación interna, autoconocimiento, conexión espiritual y coherencia con tu esencia.
+        </Quote>
 
-        {/* Cómo funciona */}
-        <LandingSection tone="mauve">
-          <div className="max-w-5xl mx-auto space-y-10">
+        {/* Cómo funciona: línea de tiempo vertical */}
+        <section className="px-6 py-14 md:py-16 bg-brand-cream/60">
+          <div className="max-w-4xl mx-auto space-y-10">
             <div className="text-center space-y-3">
               <RevealTitle text="¿Cómo funciona?" className={H2} />
               <p className="text-muted-foreground font-light text-lg">Un proceso simple, claro y completamente a tu medida.</p>
             </div>
-            <motion.ol {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="relative grid md:grid-cols-3 gap-8">
-              <span aria-hidden="true" className="hidden md:block absolute top-5 left-[16.6%] right-[16.6%] h-px bg-[#B8977E]/60" />
+            <motion.ol {...inView} variants={stagger(0.15)} className="relative max-w-2xl mx-auto">
+              <span aria-hidden="true" className="absolute left-[1.6rem] md:left-[2.1rem] top-4 bottom-4 w-px bg-brand-gold" />
               {STEPS.map(({ title, desc }, i) => (
-                <motion.li key={title} variants={fadeUp} className="relative text-center space-y-3">
-                  <span className="relative z-10 mx-auto w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-[#795D64] text-white">{i + 1}</span>
-                  <p className="font-serif text-xl font-semibold text-foreground">{title}</p>
-                  <p className="text-base text-muted-foreground font-light leading-relaxed">{desc}</p>
+                <motion.li key={title} variants={fadeUp} className="relative grid grid-cols-[3.25rem_1fr] md:grid-cols-[4.25rem_1fr] gap-5 pb-10 last:pb-0">
+                  <span className="relative z-10 w-[3.25rem] h-[3.25rem] md:w-[4.25rem] md:h-[4.25rem] rounded-full bg-brand-cream border border-brand-gold flex items-center justify-center font-serif text-3xl md:text-4xl text-[#795D64]">
+                    {i + 1}
+                  </span>
+                  <div className="pt-2 md:pt-3">
+                    <p className="font-serif text-2xl font-semibold text-foreground">{title}</p>
+                    <p className="text-base text-muted-foreground font-light leading-relaxed mt-1">{desc}</p>
+                  </div>
                 </motion.li>
               ))}
             </motion.ol>
-            <ul className="flex flex-wrap justify-center gap-2 text-sm">
+            <motion.ul {...inView} variants={stagger()} className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
               {KEY_INFO.map(({ icon: Icon, label, value }) => (
-                <li key={label} className={PILL}>
-                  <Icon className="w-4 h-4 text-primary" />
-                  <span className="text-muted-foreground">{label}:</span>
-                  <span className="font-semibold text-foreground">{value}</span>
-                </li>
+                <motion.li key={label} variants={fadeUp} className="bg-card rounded-2xl p-5 text-center space-y-2 border border-border/40">
+                  <Icon className="w-6 h-6 text-[#795D64] mx-auto" />
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
+                  <p className="font-serif text-lg md:text-xl font-semibold text-foreground leading-tight">{value}</p>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </div>
-        </LandingSection>
+        </section>
+
+        {/* Para quién: chips grandes */}
+        <section className="px-6 py-14 md:py-16">
+          <div className="max-w-5xl mx-auto space-y-8 text-center">
+            <RevealTitle text="¿Para quién es este espacio?" className={H2} />
+            <motion.ul {...inView} variants={stagger(0.07)} className="flex flex-wrap justify-center gap-3">
+              {FOR_WHOM.map((item) => (
+                <motion.li key={item} variants={fadeUp}
+                  className="px-6 py-4 rounded-full border border-[#795D64]/30 bg-warm-mauve/20 text-base md:text-lg text-foreground/90 leading-snug max-w-full">
+                  {item}
+                </motion.li>
+              ))}
+            </motion.ul>
+          </div>
+        </section>
 
         {/* Precios */}
-        <LandingSection id="precios" tone="peach">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-4xl mx-auto space-y-8">
+        <section id="precios" className="scroll-mt-24 px-6 py-14 md:py-16 bg-gradient-to-b from-background via-warm-peach/35 to-background">
+          <motion.div {...inView} variants={stagger(0.1)} className="max-w-4xl mx-auto space-y-8">
             <div className="text-center space-y-3">
               <RevealTitle text="Tu inversión" className={H2} />
               <p className="text-muted-foreground font-light text-lg">Elige el plan que mejor acompañe tu proceso</p>
@@ -308,43 +275,50 @@ const AcompanamientoIndividual = () => {
               />
             </div>
           </motion.div>
-        </LandingSection>
+        </section>
 
-        <LandingSection tone="plain">
-          <div className="max-w-3xl mx-auto">
-            <FaqSection
-              items={FAQS}
-              titleSlot={<RevealTitle text="Preguntas frecuentes" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center mb-6" />}
-            />
+        {/* FAQ en tarjetas 2x2 */}
+        <section className="px-6 py-14 md:py-16">
+          <div className="max-w-5xl mx-auto space-y-8">
+            <RevealTitle text="Preguntas frecuentes" className={H2 + " text-center"} />
+            <motion.dl {...inView} variants={stagger()} className="grid md:grid-cols-2 gap-5">
+              {FAQS.map((f) => (
+                <motion.div key={f.q} variants={fadeUp} className="rounded-3xl bg-card border border-border/50 p-6 md:p-7 space-y-2">
+                  <dt className="font-serif text-xl font-semibold text-foreground">{f.q}</dt>
+                  <dd className="text-base text-muted-foreground leading-relaxed">{f.a}</dd>
+                </motion.div>
+              ))}
+            </motion.dl>
           </div>
-        </LandingSection>
+        </section>
 
         {/* Cierre */}
-        <LandingSection id="individual-contacto" tone="peach">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-2xl mx-auto text-center space-y-6">
-            <RevealTitle text="Reserva tu sesión" className={H2} />
-            <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
-              Cuéntame qué necesitas y lo conversamos. El primer paso es simplemente llegar.
-            </motion.p>
-            <motion.div variants={fadeUp}>
-              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
-                <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
-              </a>
-            </motion.div>
-            <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
-            <ul className="flex flex-wrap justify-center gap-2 text-sm">
-              {["Proceso personalizado", "100% virtual", "Acompañamiento real"].map((b) => (
-                <li key={b} className={PILL}><Leaf className="w-4 h-4 text-primary" /> {b}</li>
-              ))}
-            </ul>
-            <div className="pt-4 space-y-3">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">¿Buscas un programa grupal?</p>
-              <Link to="/curso-iniciacion-yoga" className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary bg-card border border-border/40 px-5 py-3 rounded-full">
-                <Moon className="w-4 h-4 text-primary" /> Curso de Iniciación al Yoga
-              </Link>
+        <section id="individual-contacto" className="px-6 pb-4">
+          <motion.div {...inView} variants={stagger(0.1)}
+            className="max-w-5xl mx-auto rounded-[2.5rem] border border-brand-gold/50 bg-card grid md:grid-cols-[1.4fr_1fr] gap-8 p-8 md:p-12 items-center">
+            <div className="space-y-4 text-center md:text-left">
+              <RevealTitle text="Reserva tu sesión" className={H2} />
+              <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
+                Cuéntame qué necesitas y lo conversamos. El primer paso es simplemente llegar.
+              </motion.p>
+              <motion.div variants={fadeUp}>
+                <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
+                  <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
+                </a>
+              </motion.div>
+              <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
             </div>
+            <motion.div variants={fadeUp} className="md:border-l md:border-border/50 md:pl-8 space-y-3 text-center md:text-left">
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">¿Buscas un programa grupal?</p>
+              <Link to="/curso-iniciacion-yoga" className="group inline-flex items-center gap-2 font-serif text-xl text-foreground hover:text-[#795D64] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-sm">
+                <Moon className="w-5 h-5 text-[#795D64]" /> Curso de Iniciación al Yoga
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
           </motion.div>
-        </LandingSection>
+        </section>
+
+        <NextSteps exclude="/acompanamiento-individual" />
       </main>
 
       <SiteFooter palette={palette} />

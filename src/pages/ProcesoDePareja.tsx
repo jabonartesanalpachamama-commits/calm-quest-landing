@@ -1,34 +1,22 @@
-import { useEffect, useState } from "react";
 import type React from "react";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
-import { ArrowDown, Clock, MessageCircle, Monitor, Video } from "lucide-react";
-import {
-  VisualIdentity,
-  COLOR_PALETTES,
-  getLocalSettings,
-  applyCssVariablesForPalette,
-  applyFontPair,
-} from "@/lib/CmsFallbackData";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { ArrowDown, MessageCircle, Minus, Monitor, Plus, Video } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
 import Seo from "@/components/Seo";
-import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
+import NextSteps from "@/components/NextSteps";
+import Quote from "@/components/landing/Quote";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
-import fransuryRetrato from "@/assets/fransury-retrato.webp";
-import {
-  fadeUp, inView, RevealTitle, RevealWords, RotatingOrnament,
-  LandingSection, SplitHero, PriceCard, PriceCardLight,
-} from "@/components/landing";
+import { useVisualSettings } from "@/hooks/useVisualSettings";
+import { fadeUp, inView, EASE, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
 
-// Foto del hero: cambiar solo esta línea cuando llegue la foto definitiva.
-const HERO_IMAGE = fransuryRetrato;
-
-const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5";
-const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
+// Estructura "dos voces": hero partido en color, situaciones como diálogo.
+const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 border border-border/40 rounded-full px-3.5";
+const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
 const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información para iniciar un proceso de psicoterapia de pareja.");
 
 const FOR_WHOM = [
@@ -63,28 +51,8 @@ const SERVICE_JSONLD = {
   ],
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
 const ProcesoDePareja = () => {
-  const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
-
-  useEffect(() => {
-    const loadSettings = async () => {
-      let activeSettings = getLocalSettings();
-      try {
-        const { data } = await supabase.from("cms_settings").select("*");
-        if (data && data.length > 0) {
-          const parsed = data.find((i) => i.key === "visual_identity")?.value;
-          if (parsed) activeSettings = parsed as unknown as VisualIdentity;
-        }
-      } catch { /* local fallback */ }
-      applyCssVariablesForPalette(activeSettings.palette);
-      applyFontPair(activeSettings.fontFamily);
-      setSettings(activeSettings);
-    };
-    loadSettings();
-  }, []);
-
-  const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
+  const { settings, palette } = useVisualSettings();
 
   const goTarifas = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -103,77 +71,76 @@ const ProcesoDePareja = () => {
         path="/proceso-de-pareja"
         jsonLd={[faqJsonLd(FAQS), SERVICE_JSONLD]}
       />
-
-      <FloatingCTA
-        scrollTo="#tarifas"
-        ctaText="Elegir mi proceso"
-        subText="Psicoterapia de pareja"
-      />
-
-      {/* ── HEADER ── */}
+      <FloatingCTA scrollTo="#tarifas" ctaText="Elegir mi proceso" subText="Psicoterapia de pareja" />
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-
-        <SplitHero image={HERO_IMAGE} imagePosition="object-top" maskClassName="hero-bleed-narrow" alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga">
-          <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
-            Psicoterapia de pareja
-          </motion.span>
-          <RevealTitle as="h1" text="¿Por qué siempre discutimos por lo mismo?" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
-          <motion.div variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light space-y-4">
-            <p>
-              Una relación no cambia únicamente cuando cambia el otro. En terapia de pareja trabajamos para comprender las dinámicas que se han construido entre ambos: la comunicación, los conflictos, las heridas emocionales, los patrones repetitivos, los límites, la confianza y la manera en que cada uno participa en la relación.
-            </p>
-            <p>
-              El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
-            </p>
+        {/* HERO 50/50 */}
+        <section className="relative grid md:grid-cols-2">
+          <div aria-hidden="true" className="hidden md:block absolute left-1/2 top-10 bottom-10 w-px bg-brand-gold z-10" />
+          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}
+            className="bg-[#795D64] text-brand-cream px-6 py-14 md:px-12 lg:px-16 md:py-24 flex flex-col justify-center space-y-6">
+            <motion.span variants={fadeUp} className="self-start px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full border border-brand-cream/40 text-brand-cream">
+              Psicoterapia de pareja
+            </motion.span>
+            <RevealTitle as="h1" text="¿Por qué siempre discutimos por lo mismo?" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-brand-cream" />
           </motion.div>
-          <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
-            <li className={PILL}><Monitor className="w-4 h-4 text-primary" /> 100% virtual</li>
-            <li className={PILL}><Video className="w-4 h-4 text-primary" /> Google Meet</li>
-          </motion.ul>
-          <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center md:justify-start gap-5 pt-1">
-            <a href="#tarifas" onClick={goTarifas} className={BTN_SOLID + " group"}>
-              Ver opciones de consulta
-              <span className="inline-flex transition-transform duration-300 group-hover:translate-y-1">
-                <motion.span className="inline-flex" animate={{ y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
-                  <ArrowDown className="w-4 h-4" />
-                </motion.span>
-              </span>
-            </a>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline decoration-brand-gold underline-offset-4 hover:opacity-80">
-              Escríbeme por WhatsApp
-            </a>
-          </motion.div>
-        </SplitHero>
-
-        <LandingSection tone="plain">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <RevealTitle text="¿Se reconocen en alguna de estas situaciones?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-            <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.06 } } }} className="grid md:grid-cols-2 gap-x-10">
-              {FOR_WHOM.map((item) => (
-                <motion.li key={item} variants={fadeUp} className="flex items-start gap-4 py-4 border-b border-border/30">
-                  <span aria-hidden="true" className="mt-1 w-px h-5 shrink-0 bg-[#B8977E]" />
-                  <span className="text-base text-foreground/90 leading-relaxed">{item}</span>
-                </motion.li>
-              ))}
+          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } } }}
+            className="bg-brand-cream px-6 py-12 md:px-12 lg:px-16 md:py-24 flex flex-col justify-center space-y-6">
+            <motion.div variants={fadeUp} className="text-lg text-foreground/85 leading-relaxed font-light space-y-4">
+              <p>
+                Una relación no cambia únicamente cuando cambia el otro. En terapia de pareja trabajamos para comprender las dinámicas que se han construido entre ambos: la comunicación, los conflictos, las heridas emocionales, los patrones repetitivos, los límites, la confianza y la manera en que cada uno participa en la relación.
+              </p>
+              <p>
+                El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
+              </p>
+            </motion.div>
+            <motion.ul variants={fadeUp} className="flex flex-wrap gap-2 text-sm">
+              <li className={PILL}><Monitor className="w-4 h-4 text-primary" /> 100% virtual</li>
+              <li className={PILL}><Video className="w-4 h-4 text-primary" /> Google Meet</li>
             </motion.ul>
-          </div>
-        </LandingSection>
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5">
+              <a href="#tarifas" onClick={goTarifas} className={BTN_SOLID + " group"}>
+                Ver opciones de consulta
+                <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
+              </a>
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#795D64] underline decoration-brand-gold underline-offset-4 hover:opacity-80">
+                Escríbeme por WhatsApp
+              </a>
+            </motion.div>
+          </motion.div>
+        </section>
 
-        <LandingSection tone="mauve" className="overflow-hidden">
-          <RotatingOrnament className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80 opacity-25" />
-          <div className="relative max-w-3xl mx-auto text-center space-y-6">
-            <RevealWords stagger={0.03} className="font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
-              text={'"Y cuando continuar juntos deja de ser el camino, la terapia también puede ayudar a transitar una separación de manera más consciente, especialmente cuando existen vínculos familiares que necesitan ser cuidados."'} />
-            <div aria-hidden="true" className="h-px w-16 mx-auto bg-[#B8977E]" />
-            <RevealWords stagger={0.04} className="font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground"
-              text={'"La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no."'} />
+        {/* Situaciones como diálogo */}
+        <section className="px-6 py-14 md:py-20">
+          <div className="max-w-3xl mx-auto space-y-10">
+            <RevealTitle text="¿Se reconocen en alguna de estas situaciones?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
+            <ul className="flex flex-col gap-4">
+              {FOR_WHOM.map((item, i) => {
+                const left = i % 2 === 0;
+                return (
+                  <motion.li key={item}
+                    initial={{ opacity: 0, x: left ? -32 : 32 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.6, ease: EASE }}
+                    className={`max-w-[85%] md:max-w-[70%] px-6 py-4 text-base md:text-lg leading-relaxed text-foreground/90 rounded-3xl ${
+                      left ? "self-start bg-warm-mauve/50 rounded-bl-md" : "self-end bg-warm-peach/70 rounded-br-md text-right"
+                    }`}>
+                    {item}
+                  </motion.li>
+                );
+              })}
+            </ul>
           </div>
-        </LandingSection>
+        </section>
 
-        <LandingSection id="tarifas" tone="peach">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-4xl mx-auto space-y-10">
+        <Quote variant="side">Y cuando continuar juntos deja de ser el camino, la terapia también puede ayudar a transitar una separación de manera más consciente, especialmente cuando existen vínculos familiares que necesitan ser cuidados.</Quote>
+        <Quote variant="side">La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no.</Quote>
+
+        {/* Tarifas */}
+        <section id="tarifas" className="scroll-mt-24 px-6 py-14 md:py-20 bg-brand-cream/70">
+          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-6xl mx-auto space-y-10">
             <div className="text-center space-y-3">
               <RevealTitle text="Inicien su proceso" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
               <motion.p variants={fadeUp} className="text-muted-foreground font-light text-lg">
@@ -181,7 +148,7 @@ const ProcesoDePareja = () => {
               </motion.p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 max-w-md lg:max-w-none mx-auto items-stretch">
+            <div className="grid lg:grid-cols-3 gap-8 max-w-md lg:max-w-none mx-auto items-center">
               <PriceCardLight
                 title="1 Sesión"
                 price="80"
@@ -189,26 +156,28 @@ const ProcesoDePareja = () => {
                 description={<p>Ideal para explorar una situación puntual, tener un primer acercamiento o abordar un bloqueo específico en pareja.</p>}
                 cta={<>Quiero 1 sesión <span className="font-bold border-l border-white/30 pl-2 ml-1">80 USD</span></>}
               />
+              <div className="order-first lg:order-none lg:[&>div]:py-12">
+                <PriceCard
+                  badge="Recomendado"
+                  title="4 Sesiones"
+                  price="288"
+                  href={cta4Sessions}
+                  description={<>
+                    <p>Es el paquete que recomiendo: cada uno tiene un espacio individual y compartimos 2 espacios juntos.</p>
+                    <p className="text-xs">(descuento ya aplicado del 10%)</p>
+                  </>}
+                  cta={<>Quiero 4 sesiones <span className="font-bold border-l border-brand-ink/20 pl-2 ml-1">288 USD</span></>}
+                />
+              </div>
               <PriceCardLight
                 title="3 Sesiones"
                 price="216"
                 href={cta3Sessions}
                 description={<>
                   <p>Proceso de acompañamiento más profundo para trabajar patrones relacionales y generar verdaderas herramientas de cambio.</p>
-                  <p className="text-primary/80 text-xs">(descuento ya aplicado del 10%)</p>
+                  <p className="text-[#795D64] text-xs">(descuento ya aplicado del 10%)</p>
                 </>}
                 cta={<>Quiero 3 sesiones <span className="font-bold border-l border-white/30 pl-2 ml-1">216 USD</span></>}
-              />
-              <PriceCard
-                badge="Recomendado"
-                title="4 Sesiones"
-                price="288"
-                href={cta4Sessions}
-                description={<>
-                  <p>Es el paquete que recomiendo: cada uno tiene un espacio individual y compartimos 2 espacios juntos.</p>
-                  <p className="text-xs">(descuento ya aplicado del 10%)</p>
-                </>}
-                cta={<>Quiero 4 sesiones <span className="font-bold border-l border-brand-ink/20 pl-2 ml-1">288 USD</span></>}
               />
             </div>
 
@@ -216,38 +185,54 @@ const ProcesoDePareja = () => {
               <p className="text-muted-foreground">
                 Desde Colombia pagan en pesos a la TRM del día. Si prefieren transferencia o PayPal, escríbanme y lo coordinamos.
               </p>
-              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-block font-semibold text-primary underline underline-offset-4 hover:opacity-80">
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-block font-semibold text-[#795D64] underline underline-offset-4 hover:opacity-80">
                 Escríbeme por WhatsApp
               </a>
               <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
             </motion.div>
           </motion.div>
-        </LandingSection>
+        </section>
 
-        <LandingSection tone="plain">
-          <div className="max-w-3xl mx-auto">
-            <FaqSection
-              items={FAQS}
-              titleSlot={<RevealTitle text="Preguntas frecuentes" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center mb-6" />}
-            />
+        {/* FAQ ancho completo con más/menos */}
+        <section className="px-6 py-14 md:py-16">
+          <div className="max-w-5xl mx-auto space-y-8">
+            <RevealTitle text="Preguntas frecuentes" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
+            <AccordionPrimitive.Root type="single" collapsible className="border-t border-border/60">
+              {FAQS.map((f, i) => (
+                <AccordionPrimitive.Item key={i} value={`f-${i}`} className="border-b border-border/60">
+                  <AccordionPrimitive.Header>
+                    <AccordionPrimitive.Trigger className="group w-full min-h-[56px] flex items-center justify-between gap-6 py-5 text-left font-serif text-lg md:text-xl text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-sm">
+                      {f.q}
+                      <span className="shrink-0 w-9 h-9 rounded-full border border-[#795D64]/40 flex items-center justify-center text-[#795D64]">
+                        <Plus className="w-4 h-4 group-data-[state=open]:hidden" aria-hidden="true" />
+                        <Minus className="w-4 h-4 hidden group-data-[state=open]:block" aria-hidden="true" />
+                      </span>
+                    </AccordionPrimitive.Trigger>
+                  </AccordionPrimitive.Header>
+                  <AccordionPrimitive.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                    <p className="pb-5 pr-14 text-base leading-relaxed text-muted-foreground">{f.a}</p>
+                  </AccordionPrimitive.Content>
+                </AccordionPrimitive.Item>
+              ))}
+            </AccordionPrimitive.Root>
           </div>
-        </LandingSection>
+        </section>
 
-        <LandingSection tone="peach">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-2xl mx-auto text-center space-y-6">
-            <RevealTitle text="¿Quieren empezar? Escríbanme." className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
-            <motion.div variants={fadeUp}>
-              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
-                <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
-              </a>
-            </motion.div>
+        {/* Cierre: franja ciruela */}
+        <section className="bg-brand-ink text-brand-cream px-6 py-12 md:py-14">
+          <motion.div {...inView} variants={fadeUp} className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold">¿Quieren empezar? Escríbanme.</h2>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-brand-cream text-brand-ink hover:scale-[1.02] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-ink">
+              <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
+            </a>
           </motion.div>
-        </LandingSection>
+        </section>
 
+        <NextSteps exclude="/proceso-de-pareja" />
       </main>
 
       <SiteFooter palette={palette} />
-
       <AiChatWidget pageSlug="proceso-de-pareja" />
     </div>
   );
