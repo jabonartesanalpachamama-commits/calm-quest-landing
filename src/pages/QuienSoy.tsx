@@ -15,13 +15,13 @@ import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
 import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
-import fransuryImage from "@/assets/fransury_quiensoy.webp";
+import fransuryRetrato from "@/assets/fransury-retrato.webp";
 import {
   fadeUp, inView, RevealTitle, RevealWords, RotatingOrnament, LandingSection, SplitHero,
 } from "@/components/landing";
 
 // Foto del hero: cambiar solo esta línea cuando llegue la foto definitiva.
-const HERO_IMAGE = fransuryImage;
+const HERO_IMAGE = fransuryRetrato;
 
 const PILL = "h-10 flex items-center whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-4";
 const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground text-center";
@@ -111,7 +111,7 @@ const QuienSoy = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <SplitHero image={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga">
+        <SplitHero image={HERO_IMAGE} imagePosition="object-top" maskClassName="hero-bleed-narrow" alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga">
           <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
             Quién soy
           </motion.span>

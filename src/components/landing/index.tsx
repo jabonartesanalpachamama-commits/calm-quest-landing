@@ -89,7 +89,7 @@ export const LandingSection = ({
 );
 
 /** Hero con imagen que sangra a la izquierda en desktop */
-export const SplitHero = ({ image, alt, children, imageClassName = "object-center", maskClassName = "ciclica-hero-bleed" }: { image: string; alt: string; children: ReactNode; imageClassName?: string; maskClassName?: string }) => (
+export const SplitHero = ({ image, alt, children, imagePosition, imageClassName = "object-center", maskClassName = "ciclica-hero-bleed" }: { image: string; alt: string; children: ReactNode; imagePosition?: string; imageClassName?: string; maskClassName?: string }) => (
   <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-gradient-to-b from-card via-card to-background overflow-hidden">
     <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-10 items-center">
       <div className="relative -mx-4 md:mx-0 md:self-start">
@@ -100,7 +100,7 @@ export const SplitHero = ({ image, alt, children, imageClassName = "object-cente
             loading="eager"
             fetchPriority="high"
             style={{ filter: HERO_IMAGE_FILTER }}
-            className={`absolute inset-0 w-full h-full object-cover ${imageClassName} block`}
+            className={`absolute inset-0 w-full h-full object-cover ${imagePosition ?? imageClassName} block`}
           />
         </div>
       </div>

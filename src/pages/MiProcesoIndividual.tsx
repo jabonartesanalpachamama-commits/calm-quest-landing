@@ -18,14 +18,14 @@ import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
-import bannerImage from "@/assets/banner-acompanamiento.webp";
+import fransuryRetrato from "@/assets/fransury-retrato.webp";
 import {
   fadeUp, inView, RevealTitle, RevealWords, RotatingOrnament,
   LandingSection, SplitHero, PriceCard, PriceCardLight,
 } from "@/components/landing";
 
 // Foto del hero: cambiar solo esta línea cuando llegue la foto definitiva.
-const HERO_IMAGE = bannerImage;
+const HERO_IMAGE = fransuryRetrato;
 
 const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5";
 const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white";
@@ -119,7 +119,7 @@ const MiProcesoIndividual = () => {
 
       <main className="flex-grow">
 
-        <SplitHero image={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga, en sesión de acompañamiento individual online">
+        <SplitHero image={HERO_IMAGE} imagePosition="object-top" maskClassName="hero-bleed-narrow" alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga">
           <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
             Psicoterapia individual
           </motion.span>
