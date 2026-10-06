@@ -207,7 +207,7 @@ const MAUVE_DEEP = "#DDD3D6";
 const WordsMarquee = () => {
   const reduce = useReducedMotion();
   const word = (w: string) => (
-    <span className="font-serif font-extralight uppercase tracking-[0.24em] text-xl md:text-3xl whitespace-nowrap text-brand-cream">{w}</span>
+    <span className={`font-serif font-extralight uppercase tracking-[0.24em] text-xl md:text-3xl text-brand-cream ${reduce ? "" : "whitespace-nowrap"}`}>{w}</span>
   );
   const half = [...WHAT_CULTIVATES, ...WHAT_CULTIVATES];
   return (
@@ -215,7 +215,7 @@ const WordsMarquee = () => {
       <div className="py-14 md:py-20">
         {reduce ? (
           <ul className="flex flex-wrap justify-center items-center gap-x-8 gap-y-5 px-6 text-center">
-            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-8">{i > 0 && <Diamond />}{word(w)}</li>)}
+            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-8 max-w-full">{i > 0 && <Diamond />}{word(w)}</li>)}
           </ul>
         ) : (
           <div className="logo-marquee" tabIndex={0}>
