@@ -25,7 +25,7 @@ import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
 import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
 
-// Foto del hero: cambiar solo esta línea para usar otra imagen (pensada para un retrato vertical sobre fondo beige).
+// Foto del hero: cambiar solo esta línea para usar otra imagen (retrato vertical sobre fondo malva).
 const HERO_IMAGE = heroPhoto;
 
 const FOCUS = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-4";
@@ -71,20 +71,20 @@ const Hero = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
   const mask = desktop
-    ? "linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to bottom, transparent 0%, #000 10%, #000 88%, transparent 100%)"
+    ? "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)"
     : "linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%)";
   return (
     <section ref={ref} className="relative md:min-h-[calc(100svh-96px)] overflow-hidden flex flex-col md:flex-row md:items-center bg-background"
-      style={desktop ? { background: "linear-gradient(90deg, #FFFFFF 0%, #FBF9F8 40%, #EADDD0 66%, #CDB49C 100%)" } : undefined}>
-      <div className="relative h-[64svh] md:absolute md:inset-y-0 md:right-0 md:w-[48%] md:h-auto overflow-hidden"
+      style={desktop ? { background: "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" } : undefined}>
+      <div className="relative h-[64svh] md:absolute md:inset-y-0 md:right-0 md:w-[62%] md:h-auto overflow-hidden"
         style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
         <motion.div aria-hidden="true"
           className="absolute left-[15%] top-[5%] w-[70%] aspect-square rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.45),transparent_68%)]"
           animate={reduce ? undefined : { scale: [1, 1.05, 1], opacity: [0.6, 0.9, 0.6] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.img src={HERO_IMAGE} alt="Fransury Gonzáles sentada, sonriendo, con camisa blanca y jeans" fetchPriority="high"
+        <motion.img src={HERO_IMAGE} alt="Fransury Gonzáles sentada en el suelo, sonriendo, con camisa blanca y jeans" fetchPriority="high"
           style={reduce || !desktop ? { scale: 1.04 } : { y, scale: 1.06 }}
-          className="absolute inset-0 w-full h-full object-cover object-[50%_12%] md:object-[50%_18%] will-change-transform" />
+          className="absolute inset-0 w-full h-full object-cover object-[40%_20%] md:object-[50%_22%] will-change-transform" />
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
         className="relative w-full max-w-6xl mx-auto px-6 -mt-6 pb-24 md:mt-0 md:py-32">
