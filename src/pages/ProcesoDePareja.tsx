@@ -45,7 +45,7 @@ const SERVICE_JSONLD = {
   "@type": "Service",
   name: "Psicoterapia de pareja",
   serviceType: "Psicoterapia de pareja en línea",
-  provider: { "@type": "Person", name: "Fransury Gonzáles", jobTitle: "Psicóloga" },
+  provider: { "@type": "Person", name: "Fransury González", jobTitle: "Psicóloga" },
   offers: [
     { "@type": "Offer", name: "1 sesión", price: "80", priceCurrency: "USD" },
     { "@type": "Offer", name: "3 sesiones", price: "216", priceCurrency: "USD" },
@@ -69,7 +69,7 @@ const ProcesoDePareja = () => {
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
       <Seo
         title="Psicoterapia de pareja online | SantoSha"
-        description="Psicoterapia de pareja virtual con la psicóloga Fransury Gonzáles. Sesiones por Google Meet para ambos en la misma sesión."
+        description="Psicoterapia de pareja virtual con la psicóloga Fransury González. Sesiones por Google Meet para ambos en la misma sesión."
         path="/proceso-de-pareja"
         jsonLd={[faqJsonLd(FAQS), SERVICE_JSONLD]}
       />
