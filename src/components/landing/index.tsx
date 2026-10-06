@@ -93,18 +93,20 @@ interface PriceCardProps {
   href: string;
   cta: ReactNode;
   badge?: string;
+  /** "lux": precio en trazo extrafino, insignia dorada y borde malva pleno (solo Yoga y meditación 1:1). */
+  variant?: "lux";
 }
 
-export const PriceCard = ({ title, price, description, href, cta, badge }: PriceCardProps) => (
+export const PriceCard = ({ title, price, description, href, cta, badge, variant }: PriceCardProps) => (
   <motion.div variants={fadeUp} className="relative bg-brand-mauve text-primary-foreground p-8 md:p-10 flex flex-col text-center h-full">
     {badge && (
-      <span aria-hidden="true" className="block text-[10px] uppercase tracking-[0.3em] text-primary-foreground/90 mb-2">{badge}</span>
+      <span aria-hidden="true" className={`block text-[10px] uppercase tracking-[0.3em] mb-2 ${variant === "lux" ? "text-brand-gold" : "text-primary-foreground/90"}`}>{badge}</span>
     )}
     {badge && <span className="sr-only">{badge}</span>}
     <h3 className="mt-2">{title}</h3>
     <span aria-hidden="true" className="block mx-auto w-10 h-px bg-brand-gold my-5" />
     <p className="flex items-baseline justify-center gap-2">
-      <span className="font-serif text-5xl">{price}</span>
+      <span className={`font-serif text-5xl ${variant === "lux" ? "font-extralight md:text-6xl" : ""}`}>{price}</span>
       <span className="text-xs tracking-[0.2em]">USD</span>
     </p>
     <div className="mt-5 text-sm leading-relaxed text-primary-foreground flex-grow space-y-3">{description}</div>
@@ -115,12 +117,12 @@ export const PriceCard = ({ title, price, description, href, cta, badge }: Price
   </motion.div>
 );
 
-export const PriceCardLight = ({ title, price, description, href, cta }: PriceCardProps) => (
-  <motion.div variants={fadeUp} className="relative bg-card border border-brand-mauve/40 p-8 md:p-10 flex flex-col text-center h-full">
+export const PriceCardLight = ({ title, price, description, href, cta, variant }: PriceCardProps) => (
+  <motion.div variants={fadeUp} className={`relative bg-card border ${variant === "lux" ? "border-brand-mauve" : "border-brand-mauve/40"} p-8 md:p-10 flex flex-col text-center h-full`}>
     <h3 className="mt-2 text-foreground">{title}</h3>
     <span aria-hidden="true" className="block mx-auto w-10 h-px bg-brand-gold my-5" />
     <p className="flex items-baseline justify-center gap-2 text-foreground">
-      <span className="font-serif text-5xl">{price}</span>
+      <span className={`font-serif text-5xl ${variant === "lux" ? "font-extralight md:text-6xl" : ""}`}>{price}</span>
       <span className="text-xs tracking-[0.2em]">USD</span>
     </p>
     <div className="mt-5 text-sm leading-relaxed text-muted-foreground flex-grow space-y-3">{description}</div>
