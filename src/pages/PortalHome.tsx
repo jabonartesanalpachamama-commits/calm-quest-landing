@@ -327,6 +327,8 @@ const ProgramScene = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => 
           [mask-image:linear-gradient(to_bottom,black_55%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,black_55%,transparent)] ${mask}`}>
         <motion.img src={p.image} alt="" loading="lazy" style={motionOn ? { y: imgY, scale: 1.16 } : undefined}
           className="absolute inset-0 w-full h-full object-cover" />
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1/4 hidden md:block" style={{ background: "linear-gradient(to bottom, var(--page-bg), transparent)" }} />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3" style={{ background: "linear-gradient(to top, var(--page-bg), transparent)" }} />
       </motion.div>
       <div className={`relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 -mt-12 md:mt-0 flex ${flip ? "md:justify-start" : "md:justify-end"}`}>
         <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-md">
@@ -405,7 +407,7 @@ const Companion = () => {
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-[6fr_5fr] gap-6 md:gap-16 items-start">
         <div className="relative mx-auto w-full max-w-[380px] md:max-w-none md:sticky md:top-[10vh]">
           <BreathingCircle className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 w-[120%] aspect-square" />
-          <div className="relative aspect-[4/5] overflow-hidden [mask-image:radial-gradient(ellipse_70%_75%_at_50%_40%,black_55%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_70%_75%_at_50%_40%,black_55%,transparent_100%)]">
+          <div className="relative aspect-[4/5] overflow-hidden [mask-image:radial-gradient(ellipse_58%_62%_at_50%_42%,black_35%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_58%_62%_at_50%_42%,black_35%,transparent_100%)]">
             <motion.img src={fransuryImage} alt="Fransury Gonzáles" loading="lazy" style={reduce ? undefined : { y: photoY, scale: 1.18 }}
               className="absolute inset-0 w-full h-full object-cover object-top" />
           </div>
