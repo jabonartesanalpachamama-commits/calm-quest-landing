@@ -87,7 +87,7 @@ const TerminosYCondiciones = () => {
             <div id="consultas" className="rounded-3xl border border-border/50 bg-card p-6 md:p-8 space-y-4 scroll-mt-40 lg:scroll-mt-28">
               <h3 className="text-xl md:text-2xl font-serif font-semibold text-foreground pb-2 border-b border-[#B8977E]/50">Sobre todas las consultas en línea</h3>
               <ul className="list-disc pl-5 space-y-3 leading-relaxed marker:text-[#B8977E]">
-                <li>La duración de la sesión es de 1 hora, y solo necesitas conexión a Internet y un dispositivo con audio y vídeo.</li>
+                <li>Las clases de yoga duran 60 minutos y las sesiones de psicoterapia, entre 60 y 75 minutos. Solo necesitas conexión a Internet y un dispositivo con audio y vídeo.</li>
                 <li>Una vez realizado el pago de tu sesión recibirás, un e-mail con las instrucciones para reservar tu cita.</li>
                 <li>La atención es de lunes a viernes de 8:00 am a 6:00 pm | hora Colombia. Con previo acuerdo y disponibilidad, podrán asignarse sesiones los sábados de 8:00 am a 2:00 pm.</li>
                 <li>Después de adquirida la cita de psicoterapia, el consultante tendrá 3 meses para hacer uso de la sesión o de su paquete. Si después de este tiempo el comprador no ha tomado su sesión o su paquete, se entenderá que ha desistido de su intención de hacer uso del servicio.</li>
