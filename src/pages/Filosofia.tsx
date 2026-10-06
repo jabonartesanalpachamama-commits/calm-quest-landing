@@ -63,7 +63,7 @@ const Filosofia = () => {
 
       <main className="flex-grow">
         {/* Hero tipográfico */}
-        <section className="relative overflow-hidden px-6 pt-16 pb-14 md:pt-24 md:pb-20 text-center bg-gradient-to-b from-brand-cream to-background">
+        <section className="relative overflow-hidden px-6 pt-16 pb-14 md:pt-24 md:pb-20 text-center bg-brand-cream">
           <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
             <BreathingCircle tone="gold" className="relative w-[min(80vw,460px)] aspect-square opacity-70" />
           </div>

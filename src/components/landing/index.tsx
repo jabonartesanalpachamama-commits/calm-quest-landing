@@ -46,8 +46,8 @@ export const RotatingOrnament = ({ className = "" }: { className?: string }) => 
 
 const TONES = {
   plain: "",
-  mauve: "bg-gradient-to-b from-background via-warm-mauve/30 to-background",
-  peach: "bg-gradient-to-b from-background via-warm-peach/50 to-background",
+  mauve: "bg-brand-cream",
+  peach: "bg-brand-cream",
 };
 
 export const LandingSection = ({
@@ -60,7 +60,7 @@ export const LandingSection = ({
 
 /** Hero con imagen que sangra a la izquierda en desktop */
 export const SplitHero = ({ image, alt, children, imagePosition, imageClassName = "object-center", maskClassName = "ciclica-hero-bleed" }: { image: string; alt: string; children: ReactNode; imagePosition?: string; imageClassName?: string; maskClassName?: string }) => (
-  <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-gradient-to-b from-card via-card to-background overflow-hidden">
+  <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-background overflow-hidden">
     <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-10 items-center">
       <div className="relative -mx-4 md:mx-0 md:self-start">
         <div className={`relative overflow-hidden aspect-square ${maskClassName}`}>
