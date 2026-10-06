@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import {
-  AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform,
+  AnimatePresence, motion, useMotionTemplate, useReducedMotion, useScroll, useSpring, useTransform,
 } from "framer-motion";
 import { ArrowDown, ArrowRight, Gift, Leaf, MessageCircle, PlayCircle, X } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
@@ -18,6 +18,8 @@ import cursoHero from "@/assets/curso-hero.png.asset.json";
 import bannerAcompanamiento from "@/assets/banner-acompanamiento.webp";
 import paraQuienImage from "@/assets/para-quien-image.webp";
 import { EASE, fadeUp, inView, RotatingOrnament } from "@/components/landing";
+import { ScrollFillText } from "@/components/landing/ScrollFillText";
+import SectionTransition from "@/components/SectionTransition";
 import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
 import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
@@ -66,6 +68,17 @@ const START_OPTIONS = [
   { text: "Quiero comprender mi ciclo", to: "/sabiduria-ciclica-esencia-femenina" },
 ];
 
+const useMedia = (q: string) => {
+  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(q);
+    const on = () => setM(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, [q]);
+  return m;
+};
+
 const RESTLESS = ["Reaccionar", "Controlar", "Exigirse", "Desconectarse"];
 const CALM = ["Presencia", "Ecuanimidad", "Conexión", "Contentamiento consciente"];
 
@@ -85,6 +98,9 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "8%"]);
   const scale = useTransform(scrollYProgress, [0, 1], [1.08, 1]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const desktop = useMedia("(min-width: 768px)");
   const goProgramas = (e: React.MouseEvent) => {
     e.preventDefault();
     document.querySelector("#programas")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
@@ -100,6 +116,7 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
         <div aria-hidden="true" className="hidden md:block absolute inset-0 bg-gradient-to-r from-brand-cream from-25% via-brand-cream/75 via-45% to-transparent to-70%" />
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } }}
+        style={reduce || !desktop ? undefined : { y: textY, opacity: textOpacity }}
         className="relative w-full max-w-6xl mx-auto px-6 -mt-10 pb-12 md:mt-0 md:py-28">
         <div className="max-w-xl space-y-5 text-center md:text-left">
           <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/80 text-brand-mauve shadow-sm">
@@ -129,6 +146,14 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
           </motion.div>
         </div>
       </motion.div>
+      {!reduce && (
+        <div aria-hidden="true" className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-brand-mauve/80">
+          <span className="text-[10px] uppercase tracking-[0.35em]">Desliza</span>
+          <span className="relative block w-px h-10 overflow-hidden bg-brand-gold/25">
+            <motion.span className="absolute inset-x-0 top-0 h-1/2 bg-brand-gold" animate={{ y: ["-100%", "200%"] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />
+          </span>
+        </div>
+      )}
     </section>
   );
 };
