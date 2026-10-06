@@ -143,7 +143,7 @@ const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
         style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
         <motion.picture style={reduce || !desktop ? undefined : { y }} className="absolute inset-0 block will-change-transform">
           <source media="(min-width: 768px)" srcSet={HERO_IMAGE_WIDE} />
-          <img src={HERO_IMAGE} alt="Fransury Gonzales en postura de cobra sobre un tapete de yoga, con los ojos cerrados" fetchPriority="high"
+          <img src={HERO_IMAGE} alt="Fransury González en postura de cobra sobre un tapete de yoga, con los ojos cerrados" fetchPriority="high"
             width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[72%_100%] md:object-[50%_60%] md:scale-[1.06]" />
         </motion.picture>
       </div>
