@@ -74,6 +74,12 @@ const Programas = () => {
         <div id="lista-programas" className="scroll-mt-28">
           {PROGRAMS.map((p, i) => <ProgramRow key={p.href} p={p} i={i} />)}
         </div>
+        <section className="px-6 py-16 md:py-24 text-center border-t border-border">
+          <p className="text-[10px] uppercase tracking-[0.35em] text-brand-mauve">Clases privadas por videollamada</p>
+          <Link to="/acompanamiento-individual" className="mt-5 inline-block font-serif font-light uppercase tracking-[0.12em] text-lg md:text-xl text-foreground underline decoration-brand-gold decoration-1 underline-offset-[8px] hover:text-brand-ink transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-4">
+            Yoga y meditación 1:1
+          </Link>
+        </section>
       </main>
       <SiteFooter palette={palette} />
       <AiChatWidget pageSlug="programas" />

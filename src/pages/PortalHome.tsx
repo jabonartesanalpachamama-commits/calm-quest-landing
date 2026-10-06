@@ -35,6 +35,23 @@ const LABEL = "block text-[10px] uppercase tracking-[0.35em] text-brand-mauve";
 const POPUP_KEY = "santosha_free_popup_seen";
 const WHATSAPP_HREF = getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión.");
 
+const SITE = "https://santoshayoga.com.co";
+const HOME_JSONLD = [
+  { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE}/#website`, name: "SantoSha", url: `${SITE}/`, inLanguage: "es-CO" },
+  {
+    "@context": "https://schema.org", "@type": ["Organization", "ProfessionalService"], "@id": `${SITE}/#organization`,
+    name: "SantoSha", url: `${SITE}/`, image: `${SITE}/fransury-retrato.webp`,
+    description: "Psicoterapia, terapia de pareja, Kundalini Yoga y meditación 100 % online, desde Medellín para todo el mundo.",
+    address: { "@type": "PostalAddress", addressLocality: "Medellín", addressRegion: "Antioquia", addressCountry: "CO" },
+    areaServed: "Worldwide", availableLanguage: "es",
+  },
+  {
+    "@context": "https://schema.org", "@type": "Person", "@id": `${SITE}/#fransury`,
+    name: "Fransury González", jobTitle: "Psicóloga y maestra de Kundalini Yoga", url: `${SITE}/quien-soy`,
+    worksFor: { "@id": `${SITE}/#organization` },
+  },
+];
+
 const START_OPTIONS = [
   { text: "Quiero comprender por qué me pasa lo que me pasa", to: "/mi-proceso-individual" },
   { text: "Mi relación atraviesa un conflicto", to: "/proceso-de-pareja" },
@@ -211,6 +228,9 @@ const StartSelector = () => (
         <h2 id="empiezo-titulo" className="text-foreground">¿Por dónde empiezo?</h2>
         <Rule className="my-8" />
         <p className="text-base text-muted-foreground max-w-[26ch]">Elige lo que más se parece a tu momento.</p>
+        <p className="mt-6 text-sm text-muted-foreground">
+          ¿Buscas clases de yoga? <Link to="/acompanamiento-individual" className={`text-foreground underline decoration-brand-gold decoration-1 underline-offset-[6px] hover:text-brand-ink transition-colors ${FOCUS}`}>Yoga y meditación 1:1</Link>
+        </p>
       </motion.div>
       <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="border-t border-border">
         {START_OPTIONS.map(({ text, to }) => (
@@ -370,6 +390,7 @@ const PortalHome = () => {
         title="SantoSha | Psicoterapia, yoga y meditación online"
         description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury González. Atención virtual desde cualquier lugar."
         path="/"
+        jsonLd={HOME_JSONLD}
       />
       <Header palette={palette} brandName={settings?.brandName} />
 

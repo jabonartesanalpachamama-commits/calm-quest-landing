@@ -32,7 +32,13 @@ const Seo = ({ title, description, path, image, jsonLd }: SeoProps) => {
       <meta property="og:url" content={url} />
       <meta property="og:image" content={img} />
       <meta property="og:locale" content="es_CO" />
+      <meta property="og:site_name" content="SantoSha" />
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={img} />
+      <link rel="alternate" hrefLang="es-CO" href={url} />
+      <link rel="alternate" hrefLang="x-default" href={url} />
       {jsonLd && (
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       )}
