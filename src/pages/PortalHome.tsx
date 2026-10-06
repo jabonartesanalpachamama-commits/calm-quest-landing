@@ -186,13 +186,13 @@ const Companion = () => {
           <motion.h2 variants={fadeUp} id="acompana-titulo" className="mt-6 text-foreground">Soy Fransury Gonzáles,</motion.h2>
           <Rule className="my-8" />
           <motion.p variants={fadeUp} className="text-base text-foreground">
-            aunque quienes han caminado conmigo desde hace años me llaman Sury, soy psicóloga y maestra de Kundalini Yoga.
+            Aunque quienes han caminado conmigo desde hace años me llaman Sury, soy psicóloga y maestra de Kundalini Yoga.
           </motion.p>
           <motion.p variants={fadeUp} className="mt-5 text-base text-muted-foreground">
             Soy facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
           </motion.p>
           <motion.p variants={fadeUp} className="mt-5 text-base text-muted-foreground">
-            Mi propósito es acompañarte a <GoldLine>transformar el significado de lo que viviste</GoldLine>. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a <GoldLine>regular tu sistema nervioso</GoldLine>.
+            Mi propósito es acompañarte a <GoldLine>transformar el significado de lo que has vivido</GoldLine>. Lo haremos integrando el yoga, como medicina ancestral, y la integración de algunos factores psicológicos, para que aprendas a <GoldLine>regular tu sistema nervioso</GoldLine> y vivas una vida tranquila y feliz.
           </motion.p>
           <motion.div variants={fadeUp} className="pt-10">
             <Link to="/quien-soy" className={BTN_LINE}>Conoce mi historia</Link>
