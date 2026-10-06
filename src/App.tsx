@@ -2,7 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import type { ReactNode } from "react";
 import { MotionConfig } from "framer-motion";
 import Index from "./pages/Index";
 import ScrollToTop from "./components/ScrollToTop";
@@ -25,6 +26,16 @@ import ProcesoDePareja from "./pages/ProcesoDePareja";
 import CultivarBienestar from "./pages/CultivarBienestar";
 import TerminosYCondiciones from "./pages/TerminosYCondiciones";
 import TrafficSplitter from "./components/TrafficSplitter";
+import Programas from "./pages/Programas";
+
+/** Rutas con el lenguaje editorial (.lux). Sabiduría Cíclica, clase gratuita, admin y páginas del CMS quedan fuera. */
+const LUX_PATHS = ["/", "/programas", "/blog", "/curso-iniciacion-yoga", "/quien-soy", "/filosofia", "/acompanamiento-individual",
+  "/mi-proceso-individual", "/proceso-de-pareja", "/cultivar-bienestar", "/terminos-y-condiciones"];
+const ThemeScope = ({ children }: { children: ReactNode }) => {
+  const { pathname } = useLocation();
+  const lux = LUX_PATHS.some((p) => pathname === p || (p !== "/" && pathname.startsWith(p + "/")));
+  return lux ? <div className="lux">{children}</div> : <>{children}</>;
+};
 
 const queryClient = new QueryClient();
 
@@ -36,6 +47,7 @@ const App = () => (
       <MotionConfig reducedMotion="user">
       <BrowserRouter>
         <ScrollToTop />
+        <ThemeScope>
         <Routes>
           <Route path="/" element={<PortalHome />} />
           <Route path="/clase-gratuita" element={<TrafficSplitter />} />
@@ -48,6 +60,7 @@ const App = () => (
           <Route path="/acompanamiento-individual" element={<AcompanamientoIndividual />} />
           <Route path="/mi-proceso-individual" element={<MiProcesoIndividual />} />
           <Route path="/proceso-de-pareja" element={<ProcesoDePareja />} />
+          <Route path="/programas" element={<Programas />} />
           <Route path="/cultivar-bienestar" element={<CultivarBienestar />} />
           <Route path="/sabiduria-ciclica-esencia-femenina" element={<SabiduriaCiclica />} />
           <Route path="/terminos-y-condiciones" element={<TerminosYCondiciones />} />
@@ -62,6 +75,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<DynamicPage />} />
         </Routes>
+        </ThemeScope>
       </BrowserRouter>
       </MotionConfig>
     </TooltipProvider>
