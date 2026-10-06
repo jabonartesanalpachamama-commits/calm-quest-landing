@@ -287,9 +287,9 @@
 .logo-marquee { position: relative; overflow: hidden; outline: none;
   -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
-.logo-marquee-track { display: flex; width: max-content; animation: logo-marquee-ltr 70s linear infinite; }
+.logo-marquee-track { display: flex; width: max-content; animation: logo-marquee-rtl 70s linear infinite; }
 .logo-marquee:hover .logo-marquee-track, .logo-marquee:focus-within .logo-marquee-track { animation-play-state: paused; }
-@keyframes logo-marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes logo-marquee-rtl { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ───────────── Lenguaje editorial (Lote I): blanco + malva, display fino en mayúsculas, Montserrat ─────────────
    Se aplica con la clase .lux (App.tsx la pone en todas las rutas salvo Sabiduría Cíclica, clase gratuita y admin).

@@ -9,7 +9,7 @@ const Item = ({ p, wrap = false }: { p: Participacion; wrap?: boolean }) =>
     <span className={`font-serif text-xs md:text-sm tracking-[0.24em] uppercase ${wrap ? "whitespace-normal text-center block" : "whitespace-nowrap"} text-muted-foreground`}>{p.name}</span>
   );
 
-/** Franja blanca de participaciones: desplazamiento lineal y lento de izquierda a derecha; estática con movimiento reducido. */
+/** Franja blanca de participaciones: desplazamiento lineal y lento de derecha a izquierda; estática con movimiento reducido. */
 export const LogoMarquee = () => {
   const reduce = useReducedMotion();
   const reps = Math.max(2, Math.ceil(8 / PARTICIPACIONES.length));
