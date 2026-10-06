@@ -8,7 +8,7 @@
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { ArrowRight, PlayCircle, X } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Seo from "@/components/Seo";
