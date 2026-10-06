@@ -1,7 +1,7 @@
 /**
  * YOGA Y MEDITACIÓN 1:1 — lenguaje editorial de lujo (Lote Q), el mismo de la portada:
- * blanco / #FBF9F8 alternados, display fino en mayúsculas, filetes dorados que se dibujan,
- * fade + 14 px. Única animación firma: la franja de palabras en movimiento.
+ * display fino en mayúsculas, filetes dorados que se dibujan, fade + 14 px.
+ * Lote S: bandas de color (malva, ciruela, malva claro) con fondo continuo que cambia con el scroll.
  */
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
@@ -15,6 +15,8 @@ import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
+import { BreathingCircle } from "@/components/landing/Breath";
+import SectionTransition from "@/components/SectionTransition";
 import { Highlight } from "@/components/landing/Highlight";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
@@ -195,20 +197,25 @@ const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
   );
 };
 
-/* ───────────── Franja de palabras en movimiento ───────────── */
+/* ───────────── Franja de palabras en movimiento (banda malva) ───────────── */
+const MAUVE = "#795D64";
+const MAUVE_LIGHT = "#EFE7E9";
+const MAUVE_TINT = "#F6F1F2";
+const PLUM = "#482A3A";
+const MAUVE_DEEP = "#DDD3D6";
+
 const WordsMarquee = () => {
   const reduce = useReducedMotion();
-  const word = (w: string, i: number) => (
-    <span className={`font-serif font-extralight uppercase tracking-[0.24em] text-xl md:text-3xl whitespace-nowrap ${i % 2 ? "text-brand-mauve" : "text-brand-ink"}`}>{w}</span>
+  const word = (w: string) => (
+    <span className="font-serif font-extralight uppercase tracking-[0.24em] text-xl md:text-3xl whitespace-nowrap text-brand-cream">{w}</span>
   );
   const half = [...WHAT_CULTIVATES, ...WHAT_CULTIVATES];
   return (
-    <section aria-label="Lo que cultivas" className="bg-background">
-      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.45), transparent)" }} />
+    <section aria-label="Lo que cultivas" style={{ background: MAUVE }}>
       <div className="py-14 md:py-20">
         {reduce ? (
           <ul className="flex flex-wrap justify-center items-center gap-x-8 gap-y-5 px-6 text-center">
-            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-8">{i > 0 && <Diamond />}{word(w, i)}</li>)}
+            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-8">{i > 0 && <Diamond />}{word(w)}</li>)}
           </ul>
         ) : (
           <div className="logo-marquee" tabIndex={0}>
@@ -217,7 +224,7 @@ const WordsMarquee = () => {
               {[0, 1].map((g) => (
                 <div key={g} className="flex shrink-0 items-center">
                   {half.map((w, i) => (
-                    <div key={`${g}-${i}`} className="flex items-center gap-10 md:gap-16 pr-10 md:pr-16">{word(w, i)}<Diamond /></div>
+                    <div key={`${g}-${i}`} className="flex items-center gap-10 md:gap-16 pr-10 md:pr-16">{word(w)}<Diamond /></div>
                   ))}
                 </div>
               ))}
@@ -225,10 +232,30 @@ const WordsMarquee = () => {
           </div>
         )}
       </div>
-      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.45), transparent)" }} />
     </section>
   );
 };
+
+/** Columna de «¿Qué ofrezco?»: numeral gigante con parallax suave; la columna se tiñe al pasar el cursor. */
+const ServiceColumn = ({ title, desc, tags, i }: { title: string; desc: string; tags: string[]; i: number }) => {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  return (
+    <motion.article ref={ref} variants={fadeUp}
+      className={`px-4 py-12 md:py-10 md:px-14 transition-colors duration-500 hover:bg-[#F6F1F2] ${i === 0 ? "border-b border-border md:border-b-0 md:border-r" : ""}`}>
+      <motion.span aria-hidden="true" style={reduce ? undefined : { y }}
+        className="block font-serif font-extralight text-[5.5rem] md:text-[9rem] text-brand-mauve leading-none">0{i + 1}</motion.span>
+      <h3 className="mt-8 !text-lg md:!text-xl text-foreground !leading-[1.5]">{title}</h3>
+      <p className="mt-5 text-base text-muted-foreground leading-relaxed">{desc}</p>
+      <p className="mt-8 text-[11px] uppercase tracking-[0.3em] text-brand-mauve">{tags.join(" · ")}</p>
+    </motion.article>
+  );
+};
+
+/** Transición de 96 px entre bandas: nunca un corte seco. */
+const Fade = ({ from, to }: { from: string; to: string }) => <SectionTransition from={from} to={to} wave={false} className="!h-24" />;
 
 /* ───────────── Preguntas frecuentes (acordeón) ───────────── */
 const FaqAccordion = () => {
@@ -276,9 +303,12 @@ const StepsLine = () => {
         className="absolute left-[1.9rem] md:left-[2.6rem] top-3 bottom-3 w-px bg-brand-gold origin-top" />
       {STEPS.map(({ title, desc }, i) => (
         <motion.li key={title} variants={fadeUp} className="relative grid grid-cols-[3.8rem_1fr] md:grid-cols-[5.2rem_1fr] gap-6 md:gap-10 pb-14 md:pb-20 last:pb-0">
-          <span className="relative z-10 bg-brand-cream py-1 text-center font-serif font-extralight text-4xl md:text-5xl text-brand-mauve leading-none">
+          <motion.span className="relative z-10 py-1 text-center font-serif font-extralight text-4xl md:text-5xl leading-none"
+            style={{ background: MAUVE_LIGHT, WebkitTextStroke: "1px hsl(var(--brand-mauve))" }}
+            initial={{ color: "rgba(121,93,100,0)" }} whileInView={{ color: "rgba(121,93,100,1)" }}
+            viewport={{ once: true, margin: "-20% 0px" }} transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}>
             {String(i + 1).padStart(2, "0")}
-          </span>
+          </motion.span>
           <div className="pt-1">
             <h3 className="!text-lg md:!text-xl text-foreground">{title}</h3>
             <p className="text-base text-muted-foreground leading-relaxed mt-3">{desc}</p>
@@ -287,6 +317,16 @@ const StepsLine = () => {
       ))}
     </motion.ol>
   );
+};
+
+/** Zona de color continuo: el fondo cambia con el scroll (blanco → malva claro → … → #DDD3D6), como en Filosofía.
+ *  Las secciones de fondo blanco son transparentes y dejan ver este tono. Con movimiento reducido queda en blanco. */
+const ColorZone = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const bg = useTransform(scrollYProgress, [0, 0.3, 0.45, 0.6, 0.75, 1], ["#FFFFFF", MAUVE_TINT, "#FFFFFF", MAUVE_TINT, "#FBF8F9", MAUVE_DEEP]);
+  return <motion.div ref={ref} style={{ backgroundColor: reduce ? "#FFFFFF" : bg }}>{children}</motion.div>;
 };
 
 const AcompanamientoIndividual = () => {
@@ -300,8 +340,8 @@ const AcompanamientoIndividual = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative flex flex-col pb-20 md:pb-0">
       <Seo
-        title="Yoga y meditación 1:1 online | SantoSha"
-        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury González, por videollamada. Clases de 60 minutos."
+        title="Yoga y meditación online 1:1 | Fransury González"
+        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 por videollamada con Fransury González, desde Medellín para todo el mundo. 60 min, desde 17 USD."
         path="/acompanamiento-individual"
         jsonLd={[SERVICE_JSONLD, faqJsonLd(FAQS)]}
       />
@@ -310,11 +350,15 @@ const AcompanamientoIndividual = () => {
 
       <main className="flex-grow">
         <Hero onPrecios={goPrecios} />
+        <ColorZone>
+        <Fade from="#FFFFFF" to={MAUVE} />
         <WordsMarquee />
+        <Fade from={MAUVE} to="#FFFFFF" />
 
         {/* ¿Deseas un proceso personalizado? */}
-        <section className={`${SECTION} bg-background`}>
-          <motion.div {...inView} variants={stagger(0.15)} className="max-w-3xl mx-auto text-center">
+        <section className={`${SECTION} relative overflow-hidden`} style={{ background: `linear-gradient(180deg, #FFFFFF 0%, ${MAUVE_LIGHT} 100%)` }}>
+          <BreathingCircle className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[130vw] h-[130vw] md:w-[52rem] md:h-[52rem] opacity-40" />
+          <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-3xl mx-auto text-center">
             <motion.h2 variants={fadeUp} className={H2}>¿Deseas un proceso personalizado?</motion.h2>
             <Rule className="mx-auto my-10" />
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/85 leading-[1.9]">
@@ -322,9 +366,10 @@ const AcompanamientoIndividual = () => {
             </motion.p>
           </motion.div>
         </section>
+        <Fade from={MAUVE_LIGHT} to="transparent" />
 
         {/* ¿Qué ofrezco? */}
-        <section className={`${SECTION} bg-background pt-0 md:pt-0`}>
+        <section className={`${SECTION} pt-8 md:pt-12`}>
           <div className="max-w-6xl mx-auto">
             <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
               <h2 className={H2}>¿Qué ofrezco?</h2>
@@ -332,25 +377,19 @@ const AcompanamientoIndividual = () => {
               <p className="text-muted-foreground text-lg">Dos modalidades de acompañamiento, ambas adaptadas a tu proceso.</p>
             </motion.div>
             <motion.div {...inView} variants={stagger(0.15)} className="grid md:grid-cols-2 border-t border-border md:border-t-0">
-              {SERVICES.map(({ title, desc, tags }, i) => (
-                <motion.article key={title} variants={fadeUp}
-                  className={`py-12 md:py-4 md:px-14 ${i === 0 ? "md:pl-0 border-b border-border md:border-b-0 md:border-r" : "md:pr-0"}`}>
-                  <span className="block font-serif font-extralight text-5xl md:text-6xl text-brand-mauve leading-none">0{i + 1}</span>
-                  <h3 className="mt-8 !text-lg md:!text-xl text-foreground !leading-[1.5]">{title}</h3>
-                  <p className="mt-5 text-base text-muted-foreground leading-relaxed">{desc}</p>
-                  <p className="mt-8 text-[11px] uppercase tracking-[0.3em] text-brand-mauve">{tags.join(" · ")}</p>
-                </motion.article>
-              ))}
+              {SERVICES.map((sv, i) => <ServiceColumn key={sv.title} {...sv} i={i} />)}
             </motion.div>
           </div>
         </section>
+        <Fade from="transparent" to={PLUM} />
 
-        <Quote variant="lux-band" cite="Procesos adaptados a tu momento vital, tu historia y tu camino personal.">
+        <Quote variant="lux-plum" cite="Procesos adaptados a tu momento vital, tu historia y tu camino personal.">
           Un espacio diseñado para ayudarte a cultivar mayor claridad, regulación interna, autoconocimiento, conexión espiritual y coherencia con tu esencia.
         </Quote>
+        <Fade from={PLUM} to={MAUVE_LIGHT} />
 
         {/* ¿Cómo funciona? */}
-        <section className={`${SECTION} bg-brand-cream border-t border-border`}>
+        <section className={`${SECTION} pt-10 md:pt-16`} style={{ background: MAUVE_LIGHT }}>
           <div className="max-w-5xl mx-auto">
             <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
               <h2 className={H2}>¿Cómo funciona?</h2>
@@ -358,10 +397,10 @@ const AcompanamientoIndividual = () => {
               <p className="text-muted-foreground text-lg">Un proceso simple, claro y completamente a tu medida.</p>
             </motion.div>
             <StepsLine />
-            <motion.dl {...inView} variants={stagger()} className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4">
+            <motion.dl {...inView} variants={stagger()} className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 border-y border-brand-gold/50" style={{ background: MAUVE_TINT }}>
               {KEY_INFO.map(({ label, value }, i) => (
                 <motion.div key={label} variants={fadeUp}
-                  className={`px-4 md:px-6 py-6 text-center border-border ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b md:border-b-0" : ""} ${i === 1 ? "md:border-r" : ""}`}>
+                  className={`px-4 md:px-6 py-7 text-center border-brand-gold/40 ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b md:border-b-0" : ""} ${i === 1 ? "md:border-r" : ""}`}>
                   <dt className={LABEL}>{label}</dt>
                   <dd className="mt-4 font-serif font-extralight uppercase tracking-[0.1em] text-base md:text-lg text-foreground leading-snug">{value}</dd>
                 </motion.div>
@@ -369,9 +408,10 @@ const AcompanamientoIndividual = () => {
             </motion.dl>
           </div>
         </section>
+        <Fade from={MAUVE_LIGHT} to="transparent" />
 
         {/* ¿Para quién es este espacio? */}
-        <section className={`${SECTION} bg-background`}>
+        <section className={`${SECTION} pt-10 md:pt-16`}>
           <div className="max-w-6xl mx-auto grid md:grid-cols-[4fr_7fr] gap-12 md:gap-20">
             <motion.div {...inView} variants={fadeUp}>
               <h2 className={H2}>¿Para quién es este espacio?</h2>
@@ -379,20 +419,23 @@ const AcompanamientoIndividual = () => {
             </motion.div>
             <motion.ul {...inView} variants={stagger(0.12)}>
               {FOR_WHOM.map((item) => (
-                <motion.li key={item} variants={fadeUp} className="relative flex items-center justify-between gap-6 py-7 md:py-8">
+                <motion.li key={item} variants={fadeUp}
+                  className="group relative flex items-center justify-between gap-6 py-7 md:py-8 px-4 -mx-4 transition-colors duration-500 hover:bg-[#795D64]/[0.08]">
                   <span className="text-base md:text-lg text-foreground leading-relaxed">{item}</span>
-                  <Diamond />
+                  <Diamond className="transition-transform duration-500 group-hover:rotate-90" />
                   <motion.span aria-hidden="true" variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.4, ease: [0.22, 1, 0.36, 1] } } }}
-                    className="absolute left-0 right-0 bottom-0 h-px bg-border origin-left" />
+                    className="absolute left-0 right-0 bottom-0 h-px bg-brand-gold/50 origin-left" />
                 </motion.li>
               ))}
             </motion.ul>
           </div>
         </section>
+        <Fade from="transparent" to="#FFFFFF" />
 
         {/* Tu inversión */}
-        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
-          <motion.div {...inView} variants={stagger(0.15)} className="max-w-4xl mx-auto">
+        <section id="precios" className={`scroll-mt-24 ${SECTION} relative overflow-hidden`} style={{ background: `linear-gradient(180deg, #FFFFFF 0%, ${MAUVE_DEEP} 100%)` }}>
+          <BreathingCircle className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 w-[140vw] h-[140vw] md:w-[60rem] md:h-[60rem] opacity-30" />
+          <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">
               <h2 className={H2}>Tu inversión</h2>
               <Rule className="mx-auto my-8" />
@@ -425,6 +468,8 @@ const AcompanamientoIndividual = () => {
             </div>
           </motion.div>
         </section>
+        </ColorZone>
+        <Fade from={MAUVE_DEEP} to="#FFFFFF" />
 
         {/* Preguntas frecuentes */}
         <section className={`${SECTION} bg-background`}>
