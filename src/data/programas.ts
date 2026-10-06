@@ -1,5 +1,5 @@
 import bannerAcompanamiento from "@/assets/fransury-sillon.webp";
-import paraQuienImage from "@/assets/para-quien-image.webp";
+import paraQuienImage from "@/assets/pareja-manos.webp";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
 
 /** «Mis programas y espacios»: se muestran en /programas. Editar aquí textos, enlaces e imágenes. */

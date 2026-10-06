@@ -9,6 +9,8 @@ import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
+import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
+import parejaManos from "@/assets/pareja-manos.webp";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
@@ -110,6 +112,8 @@ const ProcesoDePareja = () => {
             </motion.div>
           </motion.div>
         </section>
+
+        <FullBleedPhoto src={parejaManos} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1767} height={1920} position="object-[45%_40%]" />
 
         {/* Situaciones como diálogo */}
         <section className="px-6 py-14 md:py-20">
