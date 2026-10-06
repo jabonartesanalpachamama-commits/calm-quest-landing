@@ -326,16 +326,14 @@ const AcompanamientoIndividual = () => {
         </Quote>
 
         {/* ¿Cómo funciona? */}
-        <section className={`${SECTION} bg-background`}>
+        <section className={`${SECTION} bg-brand-cream border-t border-border`}>
           <div className="max-w-5xl mx-auto">
             <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
               <h2 className={H2}>¿Cómo funciona?</h2>
               <Rule className="mx-auto my-8" />
               <p className="text-muted-foreground text-lg">Un proceso simple, claro y completamente a tu medida.</p>
             </motion.div>
-            <div className="bg-brand-cream px-6 py-16 md:px-16 md:py-20">
-              <StepsLine />
-            </div>
+            <StepsLine />
             <motion.dl {...inView} variants={stagger()} className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4">
               {KEY_INFO.map(({ label, value }, i) => (
                 <motion.div key={label} variants={fadeUp}
@@ -349,7 +347,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* ¿Para quién es este espacio? */}
-        <section className={`${SECTION} bg-brand-cream`}>
+        <section className={`${SECTION} bg-background`}>
           <div className="max-w-6xl mx-auto grid md:grid-cols-[4fr_7fr] gap-12 md:gap-20">
             <motion.div {...inView} variants={fadeUp}>
               <h2 className={H2}>¿Para quién es este espacio?</h2>
@@ -369,7 +367,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Tu inversión */}
-        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-background`}>
+        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
           <motion.div {...inView} variants={stagger(0.15)} className="max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">
               <h2 className={H2}>Tu inversión</h2>
@@ -405,7 +403,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Preguntas frecuentes */}
-        <section className={`${SECTION} bg-brand-cream`}>
+        <section className={`${SECTION} bg-background`}>
           <div className="max-w-3xl mx-auto">
             <motion.div {...inView} variants={fadeUp} className="text-center mb-14">
               <h2 className={H2}>Preguntas frecuentes</h2>
@@ -416,7 +414,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Cierre */}
-        <section id="individual-contacto" className={`${SECTION} bg-background text-center`}>
+        <section id="individual-contacto" className={`${SECTION} bg-brand-cream text-center`}>
           <motion.div {...inView} variants={stagger(0.15)} className="max-w-2xl mx-auto">
             <motion.h2 variants={fadeUp} className={H2}>Reserva tu sesión</motion.h2>
             <Rule className="mx-auto my-10" />
