@@ -38,7 +38,7 @@ const HOME_JSONLD = [
   { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE}/#website`, name: "SantoSha", url: `${SITE}/`, inLanguage: "es-CO" },
   {
     "@context": "https://schema.org", "@type": ["Organization", "ProfessionalService"], "@id": `${SITE}/#organization`,
-    name: "SantoSha", url: `${SITE}/`, image: `${SITE}/fransury-acompana.webp`,
+    name: "SantoSha", url: `${SITE}/`, image: `${SITE}/fransury-retrato.webp`,
     description: "Psicoterapia, terapia de pareja, Kundalini Yoga y meditación 100 % online, desde Medellín para todo el mundo.",
     address: { "@type": "PostalAddress", addressLocality: "Medellín", addressRegion: "Antioquia", addressCountry: "CO" },
     areaServed: "Worldwide", availableLanguage: "es",
