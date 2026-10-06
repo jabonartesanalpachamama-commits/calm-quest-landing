@@ -8,12 +8,14 @@ interface SiteFooterProps {
 
 const COLUMNS: { title: string; links: { label: string; to: string }[] }[] = [
   { title: "Psicoterapia", links: [
+    { label: "Programas", to: "/programas" },
     { label: "Acompañamiento individual", to: "/mi-proceso-individual" },
     { label: "Proceso de pareja", to: "/proceso-de-pareja" },
   ] },
   { title: "Yoga y meditación", links: [
     { label: "Yoga y meditación 1:1", to: "/acompanamiento-individual" },
     { label: "Curso de iniciación", to: "/curso-iniciacion-yoga" },
+    { label: "Cultivar bienestar", to: "/cultivar-bienestar" },
     { label: "Sabiduría Cíclica", to: "/sabiduria-ciclica-esencia-femenina" },
     { label: "Clase gratuita", to: "/clase-gratuita" },
   ] },
@@ -26,14 +28,14 @@ const COLUMNS: { title: string; links: { label: string; to: string }[] }[] = [
 ];
 
 const LINK = "inline-flex min-h-[32px] items-center text-brand-cream/90 hover:text-brand-cream hover:underline underline-offset-4 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold";
-const TITLE = "font-serif text-lg font-semibold text-brand-cream mb-3";
+const TITLE = "text-brand-cream mb-4";
 
 const SiteFooter = (_props: SiteFooterProps) => (
   <footer className="bg-brand-ink text-brand-cream px-6 pt-14 pb-8">
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 pb-10 border-b border-brand-cream/15">
         <img src={santoshaLogo} alt="SantoSha Logo" className="h-14 w-auto self-start brightness-0 invert" loading="lazy" />
-        <p className="font-serif text-xl italic">Psicología, yoga y meditación</p>
+        <p className="font-serif uppercase tracking-[0.2em] text-sm">Psicología, yoga y meditación</p>
       </div>
       <nav aria-label="Mapa del sitio" className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 py-10 text-sm">
         {COLUMNS.map((c) => (

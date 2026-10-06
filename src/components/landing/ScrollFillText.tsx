@@ -24,10 +24,11 @@ const Word = ({ children, p, range, dim }: { children: string; p: MotionValue<nu
 };
 
 export const ScrollFillText = ({
-  text, as: Tag = "p", className = "", dim = 0.22, offset = ["start 85%", "end 50%"],
-}: { text: string; as?: ElementType; className?: string; dim?: number; offset?: [string, string] }) => {
+  text, as: Tag = "p", className = "", dim = 0.22, offset = ["start 85%", "end 50%"], animated = false,
+}: { text: string; as?: ElementType; className?: string; dim?: number; offset?: [string, string]; animated?: boolean }) => {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  // Lote I: estático por defecto; solo se ilumina con `animated` (reservado a «Mi filosofía de trabajo»).
+  const reduce = useReducedMotion() || !animated;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { scrollYProgress } = useScroll({ target: ref, offset: offset as any });
   const tokens = tokenize(text);

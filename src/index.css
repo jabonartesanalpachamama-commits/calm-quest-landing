@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400&family=Montserrat:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 @tailwind base;
@@ -286,6 +287,66 @@
 .logo-marquee { position: relative; overflow: hidden; outline: none;
   -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
-.logo-marquee-track { display: flex; width: max-content; animation: logo-marquee-ltr 40s linear infinite; }
+.logo-marquee-track { display: flex; width: max-content; animation: logo-marquee-ltr 70s linear infinite; }
 .logo-marquee:hover .logo-marquee-track, .logo-marquee:focus-within .logo-marquee-track { animation-play-state: paused; }
 @keyframes logo-marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+/* ───────────── Lenguaje editorial (Lote I): blanco + malva, display fino en mayúsculas, Montserrat ─────────────
+   Se aplica con la clase .lux (App.tsx la pone en todas las rutas salvo Sabiduría Cíclica, clase gratuita y admin).
+   Las variables se redefinen aquí para ganar a las que el CMS escribe en :root. */
+.lux {
+  --background: 0 0% 100%;
+  --foreground: 327 26% 22%;
+  --card: 0 0% 100%;
+  --card-foreground: 327 26% 22%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 327 26% 22%;
+  --primary: 344 13% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 20 23% 98%;
+  --secondary-foreground: 327 26% 22%;
+  --muted: 20 23% 98%;
+  --muted-foreground: 327 12% 36%;
+  --accent: 344 13% 42%;
+  --accent-foreground: 0 0% 100%;
+  --border: 20 14% 89%;
+  --input: 20 14% 89%;
+  --ring: 26 27% 61%;
+  --radius: 0px;
+  --brand-cream: 20 23% 98%;   /* blanco cálido #FBF9F8 para alternar secciones */
+  --warm-peach: 20 23% 98%;
+  --warm-mauve: 340 14% 97%;
+  --warm-gold: 26 30% 96%;
+  --font-heading: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-body);
+  font-weight: 400;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+.lux > div { background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
+.lux p { line-height: 1.8; }
+.lux h1, .lux h2, .lux h3 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+}
+.lux h1 { font-size: clamp(1.7rem, 4vw, 3.1rem); }
+.lux h2 { font-size: clamp(1.35rem, 2.8vw, 2.15rem); }
+.lux h3 { font-size: clamp(1.05rem, 1.7vw, 1.35rem); letter-spacing: 0.12em; }
+.lux footer h2, .lux footer h3 { font-size: 0.72rem; letter-spacing: 0.26em; font-weight: 400; }
+.lux .font-serif { font-weight: 300; }
+.lux .italic, .lux em, .lux i { font-style: normal; }
+/* Sin píldoras ni óvalos alrededor de palabras; esquinas rectas en tarjetas y fotos */
+.lux :is(a, button).rounded-full { border-radius: 0; box-shadow: none; }
+.lux :is(a, button)[class*="hover:scale"]:hover { transform: none; }
+.lux span.rounded-full:not(:empty):not([aria-hidden="true"]),
+.lux :is(li, div, p, span)[class*="px-"].rounded-full:not([aria-hidden="true"]):not(:empty) {
+  border-radius: 0; background: transparent !important; border-color: transparent !important;
+  box-shadow: none !important; padding-left: 0; padding-right: 0; letter-spacing: 0.18em; text-transform: uppercase;
+}
+.lux :is(.rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl),
+.lux [class*="rounded-["], .lux [class*="rounded-t-"], .lux [class*="rounded-b-"] { border-radius: 0; }

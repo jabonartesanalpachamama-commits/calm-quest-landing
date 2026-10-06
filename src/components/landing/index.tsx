@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 
 /** Kit visual compartido para landings (copiado del lenguaje de Sabiduría Cíclica). */
 
-export const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+export const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 1.2, ease: EASE } },
 };
 
 export const inView = {
@@ -18,48 +18,18 @@ export const inView = {
 
 export const HERO_IMAGE_FILTER = "saturate(0.85) brightness(1.04) contrast(0.95)";
 
-/** Título con revelado enmascarado: cada palabra sube desde detrás de una línea invisible. */
+/** Título que aparece con un fundido suave y 14 px de desplazamiento (lenguaje editorial). */
 export const RevealTitle = ({ text, as = "h2", className = "" }: { text: string; as?: "h1" | "h2"; className?: string }) => {
   const Tag = as === "h1" ? motion.h1 : motion.h2;
-  return (
-    <Tag
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-40px" }}
-      variants={{ show: { transition: { staggerChildren: 0.06 } } }}
-      aria-label={text}
-    >
-      {text.split(" ").map((w, i) => (
-        <span key={i} aria-hidden="true" className="inline-block overflow-hidden align-bottom pb-[0.08em] mr-[0.25em]">
-          <motion.span
-            className="inline-block"
-            variants={{ hidden: { y: "105%" }, show: { y: "0%", transition: { duration: 0.75, ease: EASE } } }}
-          >
-            {w}
-          </motion.span>
-        </span>
-      ))}
-    </Tag>
-  );
+  return <Tag className={className} {...inView} variants={fadeUp}>{text}</Tag>;
 };
 
-/** Texto que aparece palabra por palabra (opcional: desenfoque a nitidez) */
+/** Párrafo que aparece completo con un fundido suave (ya no palabra por palabra). */
 export const RevealWords = ({
-  text, className = "", blur = false, stagger = 0.06, as = "p",
+  text, className = "", as = "p",
 }: { text: string; className?: string; blur?: boolean; stagger?: number; as?: "p" | "h2" }) => {
   const Tag = as === "h2" ? motion.h2 : motion.p;
-  const hidden = blur ? { opacity: 0, filter: "blur(6px)", y: 6 } : { opacity: 0, y: 12 };
-  const show = blur ? { opacity: 1, filter: "blur(0px)", y: 0 } : { opacity: 1, y: 0 };
-  return (
-    <Tag className={className} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}
-      variants={{ show: { transition: { staggerChildren: stagger } } }} aria-label={text}>
-      {text.split(" ").map((w, i) => (
-        <motion.span key={i} aria-hidden="true" className="inline-block mr-[0.25em]"
-          variants={{ hidden, show: { ...show, transition: { duration: blur ? 0.9 : 0.5, ease: EASE } } }}>{w}</motion.span>
-      ))}
-    </Tag>
-  );
+  return <Tag className={className} {...inView} variants={fadeUp}>{text}</Tag>;
 };
 
 /** Círculos punteados dorado y malva que giran muy lento */
@@ -126,43 +96,36 @@ interface PriceCardProps {
 }
 
 export const PriceCard = ({ title, price, description, href, cta, badge }: PriceCardProps) => (
-  <motion.div variants={fadeUp} className="relative bg-[#795D64] text-white rounded-3xl p-6 md:p-7 shadow-lg flex flex-col text-center h-full">
+  <motion.div variants={fadeUp} className="relative bg-brand-mauve text-primary-foreground p-8 md:p-10 flex flex-col text-center h-full">
     {badge && (
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand-gold text-brand-ink text-[10px] font-bold uppercase tracking-widest shadow-sm whitespace-nowrap">
-        {badge}
-      </span>
+      <span aria-hidden="true" className="block text-[10px] uppercase tracking-[0.3em] text-primary-foreground/90 mb-2">{badge}</span>
     )}
-    <h3 className="font-serif text-2xl font-semibold mt-2">{title}</h3>
-    <p className="mt-3 flex items-baseline justify-center gap-1.5">
-      <span className="text-5xl font-bold">{price}</span>
-      <span className="text-sm font-semibold">USD</span>
+    {badge && <span className="sr-only">{badge}</span>}
+    <h3 className="mt-2">{title}</h3>
+    <span aria-hidden="true" className="block mx-auto w-10 h-px bg-brand-gold my-5" />
+    <p className="flex items-baseline justify-center gap-2">
+      <span className="font-serif text-5xl">{price}</span>
+      <span className="text-xs tracking-[0.2em]">USD</span>
     </p>
-    <div className="mt-4 text-sm leading-relaxed text-white flex-grow space-y-3">{description}</div>
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-6 block w-full py-3.5 px-4 text-center rounded-2xl font-bold text-sm transition-all hover:scale-[1.02] active:scale-[0.98] bg-brand-cream text-brand-ink hover:bg-brand-cream/90"
-    >
+    <div className="mt-5 text-sm leading-relaxed text-primary-foreground flex-grow space-y-3">{description}</div>
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className="mt-8 block w-full py-4 px-4 text-center border border-primary-foreground text-[11px] tracking-[0.28em] uppercase hover:bg-primary-foreground hover:text-brand-ink transition-colors duration-500">
       {cta}
     </a>
   </motion.div>
 );
 
 export const PriceCardLight = ({ title, price, description, href, cta }: PriceCardProps) => (
-  <motion.div variants={fadeUp} className="relative bg-card border border-border/40 rounded-3xl p-6 md:p-7 flex flex-col text-center h-full">
-    <h3 className="font-serif text-2xl font-semibold text-foreground mt-2">{title}</h3>
-    <p className="mt-3 flex items-baseline justify-center gap-1.5 text-foreground">
-      <span className="text-4xl font-bold">{price}</span>
-      <span className="text-sm font-semibold">USD</span>
+  <motion.div variants={fadeUp} className="relative bg-card border border-brand-mauve/40 p-8 md:p-10 flex flex-col text-center h-full">
+    <h3 className="mt-2 text-foreground">{title}</h3>
+    <span aria-hidden="true" className="block mx-auto w-10 h-px bg-brand-gold my-5" />
+    <p className="flex items-baseline justify-center gap-2 text-foreground">
+      <span className="font-serif text-5xl">{price}</span>
+      <span className="text-xs tracking-[0.2em]">USD</span>
     </p>
-    <div className="mt-4 text-sm leading-relaxed text-muted-foreground flex-grow space-y-3">{description}</div>
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-6 block w-full py-3.5 px-4 text-center rounded-2xl font-bold text-sm transition-all hover:scale-[1.02] active:scale-[0.98] bg-[#795D64] hover:bg-[#6A5057] text-white"
-    >
+    <div className="mt-5 text-sm leading-relaxed text-muted-foreground flex-grow space-y-3">{description}</div>
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className="mt-8 block w-full py-4 px-4 text-center border border-brand-ink text-brand-ink text-[11px] tracking-[0.28em] uppercase hover:bg-brand-ink hover:text-primary-foreground transition-colors duration-500">
       {cta}
     </a>
   </motion.div>
