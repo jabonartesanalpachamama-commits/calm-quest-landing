@@ -10,13 +10,14 @@ const Item = ({ p, wrap = false }: { p: Participacion; wrap?: boolean }) =>
   );
 
 /** Franja blanca de participaciones: desplazamiento lineal y lento de izquierda a derecha; estática con movimiento reducido. */
-export const LogoMarquee = ({ label = "Ha participado en" }: { label?: string }) => {
+export const LogoMarquee = () => {
   const reduce = useReducedMotion();
   const reps = Math.max(2, Math.ceil(8 / PARTICIPACIONES.length));
   const half = Array.from({ length: reps }, () => PARTICIPACIONES).flat();
   return (
-    <section aria-label={label} className="bg-background py-12 md:py-16 border-y border-border/60">
-      <p className="text-center text-[10px] tracking-[0.35em] uppercase text-muted-foreground mb-8">{label}</p>
+    <section aria-label="Participaciones" className="bg-background">
+      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.4), transparent)" }} />
+      <div className="py-14 md:py-[72px]">
       {reduce ? (
         <ul className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4 px-6">
           {PARTICIPACIONES.map((p) => <li key={p.name} className="max-w-full"><Item p={p} wrap /></li>)}
@@ -33,6 +34,7 @@ export const LogoMarquee = ({ label = "Ha participado en" }: { label?: string })
           </div>
         </div>
       )}
+      </div>
     </section>
   );
 };

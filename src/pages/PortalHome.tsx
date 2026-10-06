@@ -226,22 +226,36 @@ const StartSelector = () => (
   </section>
 );
 
-/* ───────────── 7. Filosofía: scroll narrativo ───────────── */
+/* ───────────── 7. Filosofía: dolor → transición → Santosha ───────────── */
+const PAIN = ["Despiertas con el pecho apretado antes de que empiece el día.", "Repasas la misma conversación a las tres de la mañana."];
 const PhaseOneText = () => (
   <>
     <h3 className="font-serif text-3xl md:text-5xl font-semibold">
       Salir del <span className="inline-block">modo</span> <span className="jitter-word inline-block">supervivencia</span>
     </h3>
-    <p className="text-base md:text-lg font-light leading-relaxed opacity-90 max-w-xl mx-auto">
-      Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Santosha propone restaurar el sistema nervioso para <Highlight>volver a habitar el presente</Highlight>.
+    <p className="text-base md:text-lg font-light leading-relaxed opacity-95 max-w-xl mx-auto">
+      Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo.
+    </p>
+    <p className="text-sm md:text-base font-light leading-relaxed opacity-85 max-w-xl mx-auto">
+      El cuerpo se queda en alerta aunque ya no haya peligro, y cuesta descansar, decidir y estar presente con quien tienes enfrente.
     </p>
   </>
 );
-const PhaseTwoText = () => (
+const TransitionText = () => (
+  <>
+    <h3 className="font-serif !text-[clamp(1.35rem,4.2vw,2.9rem)] text-foreground [overflow-wrap:normal] [hyphens:none]">
+      Una vida en calma donde <Highlight delay={0.2}>habitas el presente</Highlight>
+    </h3>
+    <p className="text-sm md:text-lg text-foreground/85 font-light leading-relaxed max-w-xl mx-auto">
+      Cuando el sistema nervioso se regula, <Highlight delay={0.4}>el cuerpo suelta la tensión</Highlight> y la mente deja de adelantarse. Puedes sentarte a comer, conversar o descansar sin estar pensando en otra cosa. Lo trabajamos con yoga, respiración y la comprensión de lo que viviste, para que la calma aparezca con más frecuencia y se quede más tiempo.
+    </p>
+  </>
+);
+const PhaseThreeText = () => (
   <>
     <h3 className="font-serif text-3xl md:text-5xl font-semibold text-foreground">¿Qué es Santosha?</h3>
     <p className="text-base md:text-lg text-foreground/80 font-light leading-relaxed max-w-xl mx-auto">
-      Santosha es un Niyama sánscrito que habla de contentamiento. Para mí, va más allá de conformarse: es cultivar una <Highlight>presencia profunda, calma consciente y equilibrio</Highlight> tanto en la expansión como en la incertidumbre.
+      Santosha es un Niyama sánscrito que habla de contentamiento. Para mí, va más allá de conformarse: es cultivar una presencia profunda, calma consciente y equilibrio tanto en la expansión como en la incertidumbre.
     </p>
   </>
 );
@@ -249,19 +263,35 @@ const ManifestoLink = () => (
   <Link to="/filosofia" className={`${BTN_SOLID} ${FOCUS}`}>Leer el manifiesto completo de Santosha →</Link>
 );
 
+const FLOAT_POS = [
+  "top-[13%] left-[5%]", "top-[19%] right-[5%]", "bottom-[17%] left-[7%]", "bottom-[11%] right-[6%]",
+  "hidden md:block top-[5%] left-1/2 -translate-x-1/2 max-w-sm text-center", "hidden md:block bottom-[4%] left-1/2 -translate-x-1/2 max-w-sm text-center",
+];
+
 const Philosophy = () => {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const p = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.4 });
-  const plum = useTransform(p, [0.3, 0.5], [1, 0]);
-  const one = useTransform(p, [0.28, 0.42], [1, 0]);
-  const oneY = useTransform(p, [0.28, 0.42], ["0px", "-40px"]);
-  const two = useTransform(p, [0.45, 0.6], [0, 1]);
-  const twoY = useTransform(p, [0.45, 0.6], ["40px", "0px"]);
-  const wordX = useTransform(p, [0, 1], ["10%", "-35%"]);
-  const calm = [useTransform(p, [0.55, 0.62], [0, 1]), useTransform(p, [0.6, 0.67], [0, 1]), useTransform(p, [0.65, 0.72], [0, 1]), useTransform(p, [0.7, 0.77], [0, 1])];
-  const cta = useTransform(p, [0.78, 0.88], [0, 1]);
+  const p = useSpring(scrollYProgress, { stiffness: 60, damping: 26, mass: 0.6 });
+  // Fondo: ciruela → #F7F3F0 de forma lenta durante la fase 2
+  const plum = useTransform(p, [0.28, 0.5], [1, 0]);
+  // Fase 1: el texto central se va primero; el temblor se calma (capa inquieta → capa quieta) antes de desaparecer
+  const one = useTransform(p, [0.24, 0.36], [1, 0]);
+  const oneY = useTransform(p, [0.24, 0.36], ["0px", "-30px"]);
+  const shaking = useTransform(p, [0.2, 0.32], [1, 0]);
+  const still = useTransform(p, [0.2, 0.3, 0.44], [0, 0.85, 0]);
+  // Fase 2
+  const two = useTransform(p, [0.44, 0.54, 0.68, 0.74], [0, 1, 1, 0]);
+  const twoY = useTransform(p, [0.44, 0.54, 0.68, 0.74], ["30px", "0px", "0px", "-24px"]);
+  const circle = useTransform(p, [0.36, 0.56], [0, 1]);
+  // Fase 3
+  const three = useTransform(p, [0.75, 0.83], [0, 1]);
+  const threeY = useTransform(p, [0.75, 0.83], ["30px", "0px"]);
+  const word = useTransform(p, [0.74, 0.84], [0, 0.6]);
+  const wordX = useTransform(p, [0.7, 1], ["8%", "-20%"]);
+  const calm = [useTransform(p, [0.82, 0.86], [0, 1]), useTransform(p, [0.84, 0.88], [0, 1]), useTransform(p, [0.86, 0.9], [0, 1]), useTransform(p, [0.88, 0.92], [0, 1])];
+  const cta = useTransform(p, [0.9, 0.95], [0, 1]);
+  const floating = [...RESTLESS, ...PAIN];
 
   if (reduce) {
     return (
@@ -269,10 +299,11 @@ const Philosophy = () => {
         <div className="bg-brand-ink text-brand-cream px-6 py-16 text-center space-y-5">
           <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
           <PhaseOneText />
-          <p className="text-sm text-brand-cream/85">{RESTLESS.join(" · ")}</p>
+          <ul className="space-y-2 text-sm text-brand-cream/90 font-light">{floating.map((w) => <li key={w}>{w}</li>)}</ul>
         </div>
-        <div className="bg-[#F7F3F0] px-6 py-16 text-center space-y-5">
-          <PhaseTwoText />
+        <div className="bg-[#F7F3F0] px-6 py-16 text-center space-y-5"><TransitionText /></div>
+        <div className="bg-[#F7F3F0] px-6 pb-16 text-center space-y-5">
+          <PhaseThreeText />
           <p className="text-sm text-foreground/75">{CALM.join(" · ")}</p>
           <ManifestoLink />
         </div>
@@ -280,39 +311,55 @@ const Philosophy = () => {
     );
   }
 
-  const restlessPos = ["top-[14%] left-[6%]", "top-[20%] right-[6%]", "bottom-[18%] left-[10%]", "bottom-[12%] right-[8%]"];
+  const Floaters = ({ shake }: { shake: boolean }) => (
+    <>
+      {floating.map((w, i) => (
+        <motion.span key={w} aria-hidden="true"
+          className={`absolute ${FLOAT_POS[i]} font-serif ${i < 4 ? "text-lg md:text-3xl" : "text-sm md:text-base tracking-[0.04em]"} text-brand-cream/70`}
+          animate={shake ? { x: [0, 6, -5, 3, 0], y: [0, -4, 5, -2, 0] } : undefined}
+          transition={{ duration: 2.6 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}>
+          {w}
+        </motion.span>
+      ))}
+    </>
+  );
+
   return (
-    <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[260vh] md:h-[320vh]">
+    <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[300vh] md:h-[340vh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#F7F3F0]">
         <motion.div aria-hidden="true" style={{ opacity: plum }} className="absolute inset-0 bg-brand-ink" />
-        <div aria-hidden="true" className="absolute inset-x-0 top-1/2 -translate-y-1/2 opacity-60">
+        <motion.div aria-hidden="true" style={{ opacity: word }} className="absolute inset-x-0 top-1/2 -translate-y-1/2">
           <OutlineWord word="SANTOSHA" x={wordX} className="block text-[clamp(8rem,30vw,26rem)]" />
-        </div>
+        </motion.div>
+        <motion.div aria-hidden="true" style={{ opacity: circle }} className="absolute inset-0 flex items-center justify-center">
+          <motion.div animate={{ scale: [0.96, 1.04, 0.96] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
+            <BreathingCircle className="relative w-[min(88vw,560px)] aspect-square" />
+          </motion.div>
+        </motion.div>
 
-        {/* Fase 1 */}
+        {/* Fase 1 · dolor */}
+        <motion.div style={{ opacity: shaking }} className="absolute inset-0"><Floaters shake /></motion.div>
+        <motion.div style={{ opacity: still }} className="absolute inset-0"><Floaters shake={false} /></motion.div>
         <motion.div style={{ opacity: one, y: oneY }} className="absolute inset-0 flex items-center justify-center px-6">
-          {RESTLESS.map((w, i) => (
-            <motion.span key={w} aria-hidden="true" className={`absolute ${restlessPos[i]} font-serif italic text-lg md:text-3xl text-brand-cream/60`}
-              animate={{ x: [0, 6, -5, 3, 0], y: [0, -4, 5, -2, 0] }} transition={{ duration: 2.6 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}>
-              {w}
-            </motion.span>
-          ))}
-          <div className="relative text-center space-y-5 text-brand-cream max-w-2xl">
+          <div className="relative text-center space-y-4 md:space-y-5 text-brand-cream max-w-2xl">
             <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
             <PhaseOneText />
-            <p className="sr-only">{RESTLESS.join(" · ")}</p>
+            <ul className="md:hidden space-y-1 pt-2 text-[13px] font-light text-brand-cream/80">{PAIN.map((w) => <li key={w}>{w}</li>)}</ul>
+            <p className="sr-only">{floating.join(" · ")}</p>
           </div>
         </motion.div>
 
-        {/* Fase 2 */}
+        {/* Fase 2 · transición */}
         <motion.div style={{ opacity: two, y: twoY }} className="absolute inset-0 flex items-center justify-center px-6">
-          <BreathingCircle className="absolute w-[min(88vw,560px)] aspect-square" />
+          <div className="relative text-center space-y-5 max-w-3xl"><TransitionText /></div>
+        </motion.div>
+
+        {/* Fase 3 · Santosha */}
+        <motion.div style={{ opacity: three, y: threeY }} className="absolute inset-0 flex items-center justify-center px-6">
           <div className="relative text-center space-y-4 md:space-y-5 max-w-2xl">
-            <PhaseTwoText />
-            <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-brand-mauve font-serif italic text-lg md:text-2xl">
-              {CALM.map((w, i) => (
-                <motion.li key={w} style={{ opacity: calm[i] }}>{w}</motion.li>
-              ))}
+            <PhaseThreeText />
+            <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-brand-mauve font-serif text-lg md:text-2xl">
+              {CALM.map((w, i) => <motion.li key={w} style={{ opacity: calm[i] }}>{w}</motion.li>)}
             </ul>
             <motion.div style={{ opacity: cta }} className="pt-2"><ManifestoLink /></motion.div>
           </div>
