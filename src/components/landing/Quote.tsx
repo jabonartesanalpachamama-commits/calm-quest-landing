@@ -5,11 +5,28 @@ import { fadeUp, inView } from "./index";
 /**
  * Cita sobria (lenguaje editorial): frase en mayúsculas de trazo fino, centrada, con filetes dorados.
  * `variant` se conserva por compatibilidad pero todas se ven igual, salvo "lux-band":
- * la banda de frase de la portada (más aire, trazo más fino, filete que se dibuja, firma pequeña).
+ * la banda de frase de la portada (más aire, trazo más fino, filete que se dibuja, firma pequeña), y "lux-plum":
+ * banda ciruela a todo lo ancho, texto crema que aparece línea por línea (corta en cada coma).
  */
 export const Quote = ({
   children, cite, variant,
-}: { variant?: "band" | "side" | "ornament" | "lux-band"; children: ReactNode; cite?: string }) => variant === "lux-band" ? (
+}: { variant?: "band" | "side" | "ornament" | "lux-band" | "lux-plum"; children: ReactNode; cite?: string }) => variant === "lux-plum" ? (
+  <section className="px-6 py-24 md:py-40 text-center text-brand-cream" style={{ background: "#482A3A" }}>
+    <motion.figure initial="hidden" whileInView="show" viewport={{ once: true, margin: "-15% 0px" }}
+      variants={{ show: { transition: { staggerChildren: 0.35 } } }} className="max-w-4xl mx-auto">
+      <motion.span aria-hidden="true" className="block mx-auto w-12 h-px bg-brand-gold mb-12 origin-left"
+        variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.6, ease: [0.22, 1, 0.36, 1] } } }} />
+      <blockquote className="font-serif font-extralight uppercase tracking-[0.2em] text-xl md:text-[1.75rem] leading-[1.6]">
+        {typeof children === "string"
+          ? children.split(/(?<=,)\s+/).map((line, i) => (
+              <motion.span key={i} variants={fadeUp} className="block">{line}</motion.span>
+            ))
+          : children}
+      </blockquote>
+      {cite && <motion.figcaption variants={fadeUp} className="mt-10 text-[11px] tracking-[0.3em] uppercase text-brand-cream/75 max-w-xl mx-auto leading-relaxed">{cite}</motion.figcaption>}
+    </motion.figure>
+  </section>
+) : variant === "lux-band" ? (
   <section className="bg-brand-cream px-6 py-24 md:py-40 text-center">
     <motion.figure {...inView} variants={fadeUp} className="max-w-4xl mx-auto">
       <motion.span aria-hidden="true" className="block mx-auto w-12 h-px bg-brand-gold mb-12 origin-left"
