@@ -1,7 +1,13 @@
+/**
+ * YOGA Y MEDITACIÓN 1:1 — lenguaje editorial de lujo (Lote Q), el mismo de la portada:
+ * blanco / #FBF9F8 alternados, display fino en mayúsculas, filetes dorados que se dibujan,
+ * fade + 14 px. Única animación firma: la franja de palabras en movimiento.
+ */
+import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, User, Leaf, Search, Sparkles, Zap, Sun, MessageCircle, Smartphone, Clock, Calendar, Users, Moon } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, ArrowRight, ChevronDown } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
@@ -9,37 +15,37 @@ import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
+import { Highlight } from "@/components/landing/Highlight";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
-import paraQuienImage from "@/assets/para-quien-image.webp";
 import yogaPhoto from "@/assets/fransury-yoga.webp";
 import yogaPhotoWide from "@/assets/fransury-yoga-ancha.webp";
-import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
-import { DrawLine, RevealImage } from "@/components/landing/ScrollReveal";
-import { fadeUp, inView, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
+import { fadeUp, inView, PriceCard, PriceCardLight } from "@/components/landing";
 
-// Estructura "recorrido": hero invertido con imagen en arco a la derecha.
-const HERO_IMAGE = paraQuienImage;
+// Foto del hero: vertical para móvil, recorte ancho para computador.
+const HERO_IMAGE = yogaPhoto;
+const HERO_IMAGE_WIDE = yogaPhotoWide;
 
-const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
-const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground";
+const FOCUS = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-4";
+const BTN_LINE = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-ink text-brand-ink text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:text-primary-foreground transition-colors duration-500 ${FOCUS}`;
+const BTN_SOLID = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-mauve bg-brand-mauve text-primary-foreground text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:border-brand-ink transition-colors duration-500 ${FOCUS}`;
+const LABEL = "block text-[10px] uppercase tracking-[0.35em] text-brand-mauve";
+const H2 = "!font-light text-foreground !leading-[1.35]";
+const SECTION = "px-6 py-24 md:py-36";
+const LINK_GOLD = `underline decoration-brand-gold decoration-1 underline-offset-[6px] hover:text-brand-ink transition-colors ${FOCUS}`;
 const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información sobre las sesiones 1 a 1 de yoga y meditación.");
 
 const SERVICES = [
   {
-    icon: User,
     title: "Clases Privadas de Kundalini Yoga y Meditación",
     desc: "Diseñadas según tu proceso personal, intención terapéutica o camino espiritual.",
     tags: ["1 a 1", "Personalizada", "Virtual"],
-    bg: "bg-gradient-to-br from-warm-mauve/70 via-warm-mauve/25 to-card",
   },
   {
-    icon: Leaf,
     title: "Procesos de Acompañamiento Integrativo",
     desc: "Programas de varias sesiones orientados a profundizar en objetivos específicos de regulación, autoconocimiento, integración emocional o transformación humana.",
     tags: ["Multi-sesión", "Integrativo", "Virtual"],
-    bg: "bg-gradient-to-br from-warm-peach/90 via-warm-peach/35 to-card",
   },
 ];
 
@@ -51,13 +57,7 @@ const FOR_WHOM = [
   "Vives en modo supervivencia y quieres una relación más coherente, presente y compasiva con tu vida.",
 ];
 
-const WHAT_CULTIVATES = [
-  { icon: Search, label: "Claridad" },
-  { icon: Zap, label: "Regulación interna" },
-  { icon: Sun, label: "Autoconocimiento" },
-  { icon: Sparkles, label: "Conexión espiritual" },
-  { icon: Leaf, label: "Coherencia con tu esencia" },
-];
+const WHAT_CULTIVATES = ["Claridad", "Regulación interna", "Autoconocimiento", "Conexión espiritual", "Coherencia con tu esencia"];
 
 const STEPS = [
   { title: "Conversación inicial", desc: "Nos conocemos, comprendes el espacio y evaluamos juntos qué proceso se adapta mejor a tu momento." },
@@ -66,10 +66,10 @@ const STEPS = [
 ];
 
 const KEY_INFO = [
-  { icon: Smartphone, label: "Modalidad", value: "100% Virtual" },
-  { icon: Clock, label: "Duración", value: "Por sesión acordada" },
-  { icon: Calendar, label: "Frecuencia", value: "Adaptable a ti" },
-  { icon: Users, label: "Formato", value: "1 a 1 exclusivo" },
+  { label: "Modalidad", value: "100% Virtual" },
+  { label: "Duración", value: "Por sesión acordada" },
+  { label: "Frecuencia", value: "Adaptable a ti" },
+  { label: "Formato", value: "1 a 1 exclusivo" },
 ];
 
 const FAQS = [
@@ -91,18 +91,179 @@ const SERVICE_JSONLD = {
   ],
 };
 
+const useMedia = (q: string) => {
+  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(q);
+    const on = () => setM(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, [q]);
+  return m;
+};
+
+/** Filete dorado que se dibuja lento al entrar. */
+const Rule = ({ className = "" }: { className?: string }) => (
+  <motion.span aria-hidden="true" className={`block h-px w-12 bg-brand-gold origin-left ${className}`}
+    initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }} />
+);
+
+/** Rombo dorado diminuto. */
+const Diamond = ({ className = "" }: { className?: string }) => (
+  <span aria-hidden="true" className={`inline-block w-1.5 h-1.5 rotate-45 bg-brand-gold shrink-0 ${className}`} />
+);
+
 const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
   <ul className="space-y-3 text-left">
     {items.map((b) => (
       <li key={b} className="flex items-start gap-3">
-        <Leaf className={`w-4 h-4 mt-0.5 shrink-0 ${light ? "text-primary" : "text-white"}`} />
+        <span aria-hidden="true" className={`mt-2 inline-block w-1.5 h-1.5 rotate-45 shrink-0 ${light ? "bg-brand-gold" : "bg-primary-foreground/80"}`} />
         <span>{b}</span>
       </li>
     ))}
   </ul>
 );
 
-const stagger = (s = 0.08) => ({ show: { transition: { staggerChildren: s } } });
+const stagger = (s = 0.12) => ({ show: { transition: { staggerChildren: s } } });
+
+/* ───────────── Hero ───────────── */
+const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const desktop = useMedia("(min-width: 768px)");
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+  const mask = desktop
+    ? "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)"
+    : "linear-gradient(to bottom, #000 0%, #000 84%, transparent 100%)";
+  return (
+    <section ref={ref} className="relative min-h-[calc(100svh-88px)] md:min-h-[calc(100svh-104px)] overflow-hidden flex flex-col md:flex-row md:items-center"
+      style={{ background: desktop ? "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" : "linear-gradient(180deg, #D9CCCD 0%, #CDBDBF 100%)" }}>
+      <div className="absolute inset-0 md:left-auto md:w-[62%] overflow-hidden"
+        style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
+        <motion.picture style={reduce || !desktop ? undefined : { y }} className="absolute inset-0 block will-change-transform">
+          <source media="(min-width: 768px)" srcSet={HERO_IMAGE_WIDE} />
+          <img src={HERO_IMAGE} alt="Fransury Gonzales en postura de cobra sobre un tapete de yoga, con los ojos cerrados" fetchPriority="high"
+            width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[72%_100%] md:object-[50%_60%] md:scale-[1.06]" />
+        </motion.picture>
+      </div>
+      <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
+        className="relative w-full max-w-6xl mx-auto px-6 pt-10 pb-[52svh] md:py-32">
+        <div className="max-w-[30rem] text-center md:text-left">
+          <motion.span variants={fadeUp} className={LABEL}>Sesiones 1 a 1 · Virtual</motion.span>
+          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
+            Yoga y meditación 1:1
+          </motion.h1>
+          <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-foreground">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
+          <Rule className="mx-auto md:mx-0 my-7 md:my-9" />
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center md:items-center gap-5 sm:gap-8">
+            <a href="#precios" onClick={onPrecios} className={`${BTN_SOLID} group`}>
+              Quiero saber más
+              <ArrowDown className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-y-0.5" strokeWidth={1.25} />
+            </a>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={`text-sm text-foreground ${LINK_GOLD}`}>
+              Escríbeme por WhatsApp
+            </a>
+          </motion.div>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+/* ───────────── Franja de palabras en movimiento ───────────── */
+const WordsMarquee = () => {
+  const reduce = useReducedMotion();
+  const word = (w: string, i: number) => (
+    <span className={`font-serif font-extralight uppercase tracking-[0.24em] text-xl md:text-3xl whitespace-nowrap ${i % 2 ? "text-brand-mauve" : "text-brand-ink"}`}>{w}</span>
+  );
+  const half = [...WHAT_CULTIVATES, ...WHAT_CULTIVATES];
+  return (
+    <section aria-label="Lo que cultivas" className="bg-background">
+      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.45), transparent)" }} />
+      <div className="py-14 md:py-20">
+        {reduce ? (
+          <ul className="flex flex-wrap justify-center items-center gap-x-8 gap-y-5 px-6 text-center">
+            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-8">{i > 0 && <Diamond />}{word(w, i)}</li>)}
+          </ul>
+        ) : (
+          <div className="logo-marquee" tabIndex={0}>
+            <ul className="sr-only">{WHAT_CULTIVATES.map((w) => <li key={w}>{w}</li>)}</ul>
+            <div className="logo-marquee-track" aria-hidden="true" style={{ animationDuration: "60s" }}>
+              {[0, 1].map((g) => (
+                <div key={g} className="flex shrink-0 items-center">
+                  {half.map((w, i) => (
+                    <div key={`${g}-${i}`} className="flex items-center gap-10 md:gap-16 pr-10 md:pr-16">{word(w, i)}<Diamond /></div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.45), transparent)" }} />
+    </section>
+  );
+};
+
+/* ───────────── Preguntas frecuentes (acordeón) ───────────── */
+const FaqAccordion = () => {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <motion.ul {...inView} variants={stagger()} className="border-t border-border">
+      {FAQS.map((f, i) => {
+        const isOpen = open === i;
+        return (
+          <motion.li key={f.q} variants={fadeUp} className="border-b border-border">
+            <h3 className="!text-base !tracking-normal !normal-case">
+              <button type="button" aria-expanded={isOpen} aria-controls={`faq-${i}`} id={`faq-btn-${i}`}
+                onClick={() => setOpen(isOpen ? null : i)}
+                className={`w-full flex items-center justify-between gap-6 py-7 text-left ${FOCUS}`}>
+                <span className="font-serif font-light uppercase tracking-[0.1em] text-[15px] md:text-lg leading-relaxed text-brand-ink">{f.q}</span>
+                <ChevronDown aria-hidden="true" strokeWidth={1}
+                  className={`shrink-0 w-5 h-5 text-brand-gold transition-transform duration-[400ms] ${isOpen ? "rotate-180" : ""}`} />
+              </button>
+            </h3>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div id={`faq-${i}`} role="region" aria-labelledby={`faq-btn-${i}`}
+                  initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
+                  <p className="pb-8 pr-10 text-base text-muted-foreground leading-relaxed">{f.a}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.li>
+        );
+      })}
+    </motion.ul>
+  );
+};
+
+/* ───────────── Línea de pasos que se dibuja con el scroll ───────────── */
+const StepsLine = () => {
+  const ref = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "end 60%"] });
+  return (
+    <motion.ol ref={ref} {...inView} variants={stagger(0.15)} className="relative max-w-3xl mx-auto">
+      <span aria-hidden="true" className="absolute left-[1.9rem] md:left-[2.6rem] top-3 bottom-3 w-px bg-brand-gold/20" />
+      <motion.span aria-hidden="true" style={reduce ? undefined : { scaleY: scrollYProgress }}
+        className="absolute left-[1.9rem] md:left-[2.6rem] top-3 bottom-3 w-px bg-brand-gold origin-top" />
+      {STEPS.map(({ title, desc }, i) => (
+        <motion.li key={title} variants={fadeUp} className="relative grid grid-cols-[3.8rem_1fr] md:grid-cols-[5.2rem_1fr] gap-6 md:gap-10 pb-14 md:pb-20 last:pb-0">
+          <span className="relative z-10 bg-brand-cream py-1 text-center font-serif font-extralight text-4xl md:text-5xl text-brand-mauve leading-none">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <div className="pt-1">
+            <h3 className="!text-lg md:!text-xl text-foreground">{title}</h3>
+            <p className="text-base text-muted-foreground leading-relaxed mt-3">{desc}</p>
+          </div>
+        </motion.li>
+      ))}
+    </motion.ol>
+  );
+};
 
 const AcompanamientoIndividual = () => {
   const { settings, palette } = useVisualSettings();
@@ -113,7 +274,7 @@ const AcompanamientoIndividual = () => {
   };
 
   return (
-    <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
+    <div className="min-h-screen bg-background text-foreground relative flex flex-col pb-20 md:pb-0">
       <Seo
         title="Yoga y meditación 1:1 online | SantoSha"
         description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury Gonzáles, por videollamada."
@@ -124,147 +285,100 @@ const AcompanamientoIndividual = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        {/* HERO invertido: texto izquierda, arco derecha */}
-        <section className="px-6 pt-10 pb-14 md:pt-16 md:pb-20 bg-gradient-to-b from-warm-peach/45 to-background overflow-hidden">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-14 items-center">
-            <motion.div initial="hidden" animate="show" variants={stagger(0.1)} className="space-y-6 order-2 md:order-1 min-w-0">
-              <motion.span variants={fadeUp} className="inline-flex px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card text-[#795D64]">
-                Sesiones 1 a 1 · Virtual
-              </motion.span>
-              <RevealTitle as="h1" text="Yoga y meditación 1:1" className="font-serif text-4xl md:text-6xl font-semibold leading-[1.05] text-foreground" />
-              <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
-                YogaTerapia, Kundalini Yoga y Meditación
-              </motion.p>
-              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5">
-                <a href="#precios" onClick={goPrecios} className={BTN_SOLID + " group"}>
-                  Quiero saber más
-                  <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
-                </a>
-                <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#795D64] underline decoration-brand-gold underline-offset-4 hover:opacity-80">
-                  Escríbeme por WhatsApp
-                </a>
-              </motion.div>
-              <motion.ul variants={fadeUp} className="-mx-6 px-6 md:mx-0 md:px-0 flex gap-2 overflow-x-auto md:flex-wrap snap-x pb-2 text-sm">
-                {WHAT_CULTIVATES.map(({ icon: Icon, label }) => (
-                  <li key={label} className="snap-start shrink-0 h-10 flex items-center gap-2 whitespace-nowrap bg-card border border-border/40 rounded-full px-3.5">
-                    <Icon className="w-4 h-4 text-primary" /> {label}
-                  </li>
-                ))}
-              </motion.ul>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="order-1 md:order-2">
-              <RevealImage src={HERO_IMAGE} alt="Postura de yoga durante una sesión de acompañamiento" eager imgClassName="object-cover object-center"
-                className="mx-auto w-full max-w-[22rem] md:max-w-md aspect-[4/5] rounded-t-full rounded-b-3xl shadow-xl ring-1 ring-brand-gold/40" />
-            </motion.div>
-          </div>
-        </section>
+        <Hero onPrecios={goPrecios} />
+        <WordsMarquee />
 
-        <FullBleedPhoto src={yogaPhoto} width={941} height={1672}
-          alt="Fransury Gonzales en postura de cobra sobre un tapete de yoga, con los ojos cerrados"
-          label="Fransury en práctica de yoga" position="object-[70%_88%]"
-          desktop={{ src: yogaPhotoWide, width: 941, height: 900, background: "linear-gradient(to right, #D3BFBE, #C3AFB1 50%, #AE9BA1)" }} />
-
-
-        {/* Qué es */}
-        <section className="px-6 py-12 md:py-14">
-          <motion.div {...inView} variants={stagger(0.1)} className="max-w-3xl mx-auto text-center space-y-5">
-            <RevealTitle text="¿Deseas un proceso personalizado?" className={H2} />
-            <motion.p variants={fadeUp} className="text-lg text-foreground/80 leading-relaxed font-light">
-              Te acompaño 1 a 1 en clases privadas donde el <strong className="text-foreground font-semibold">Kundalini Yoga</strong>, la <strong className="text-foreground font-semibold">meditación</strong> y la <strong className="text-foreground font-semibold">conciencia corporal</strong> se ponen al servicio de tu transformación humana.
+        {/* ¿Deseas un proceso personalizado? */}
+        <section className={`${SECTION} bg-background`}>
+          <motion.div {...inView} variants={stagger(0.15)} className="max-w-3xl mx-auto text-center">
+            <motion.h2 variants={fadeUp} className={H2}>¿Deseas un proceso personalizado?</motion.h2>
+            <Rule className="mx-auto my-10" />
+            <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/85 leading-[1.9]">
+              Te acompaño 1 a 1 en clases privadas donde el <Highlight>Kundalini Yoga</Highlight>, la meditación y la <Highlight delay={0.4}>conciencia corporal</Highlight> se ponen al servicio de tu transformación humana.
             </motion.p>
           </motion.div>
         </section>
 
-        {/* Qué ofrezco */}
-        <section className="px-6 py-12 md:py-16">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <div className="text-center space-y-3">
-              <RevealTitle text="¿Qué ofrezco?" className={H2} />
-              <p className="text-muted-foreground font-light text-lg">Dos modalidades de acompañamiento, ambas adaptadas a tu proceso.</p>
-            </div>
-            <motion.div {...inView} variants={stagger(0.12)} className="grid md:grid-cols-2 gap-6">
-              {SERVICES.map(({ icon: Icon, title, desc, tags, bg }) => (
-                <motion.div key={title} variants={fadeUp} className={`${bg} rounded-[2rem] p-8 md:p-10 min-h-[22rem] flex flex-col gap-5 border border-border/30`}>
-                  <span className="w-16 h-16 rounded-2xl bg-card/80 flex items-center justify-center">
-                    <Icon className="w-9 h-9 text-[#795D64]" strokeWidth={1.4} />
-                  </span>
-                  <h3 className="font-serif text-2xl md:text-3xl font-semibold text-foreground leading-snug">{title}</h3>
-                  <p className="text-base text-foreground/75 font-light leading-relaxed flex-grow">{desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {tags.map((t) => (
-                      <span key={t} className="text-xs font-medium px-3 py-1 rounded-full bg-card/80 text-[#795D64]">{t}</span>
-                    ))}
-                  </div>
-                </motion.div>
+        {/* ¿Qué ofrezco? */}
+        <section className={`${SECTION} bg-background pt-0 md:pt-0`}>
+          <div className="max-w-6xl mx-auto">
+            <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
+              <h2 className={H2}>¿Qué ofrezco?</h2>
+              <Rule className="mx-auto my-8" />
+              <p className="text-muted-foreground text-lg">Dos modalidades de acompañamiento, ambas adaptadas a tu proceso.</p>
+            </motion.div>
+            <motion.div {...inView} variants={stagger(0.15)} className="grid md:grid-cols-2 border-t border-border md:border-t-0">
+              {SERVICES.map(({ title, desc, tags }, i) => (
+                <motion.article key={title} variants={fadeUp}
+                  className={`py-12 md:py-4 md:px-14 ${i === 0 ? "md:pl-0 border-b border-border md:border-b-0 md:border-r" : "md:pr-0"}`}>
+                  <span className="block font-serif font-extralight text-5xl md:text-6xl text-brand-mauve leading-none">0{i + 1}</span>
+                  <h3 className="mt-8 !text-lg md:!text-xl text-foreground !leading-[1.5]">{title}</h3>
+                  <p className="mt-5 text-base text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="mt-8 text-[11px] uppercase tracking-[0.3em] text-brand-mauve">{tags.join(" · ")}</p>
+                </motion.article>
               ))}
             </motion.div>
           </div>
         </section>
 
-        <Quote variant="ornament" cite="Procesos adaptados a tu momento vital, tu historia y tu camino personal.">
+        <Quote variant="lux-band" cite="Procesos adaptados a tu momento vital, tu historia y tu camino personal.">
           Un espacio diseñado para ayudarte a cultivar mayor claridad, regulación interna, autoconocimiento, conexión espiritual y coherencia con tu esencia.
         </Quote>
 
-        {/* Cómo funciona: línea de tiempo vertical */}
-        <section className="px-6 py-14 md:py-16 bg-brand-cream/60">
-          <div className="max-w-4xl mx-auto space-y-10">
-            <div className="text-center space-y-3">
-              <RevealTitle text="¿Cómo funciona?" className={H2} />
-              <p className="text-muted-foreground font-light text-lg">Un proceso simple, claro y completamente a tu medida.</p>
+        {/* ¿Cómo funciona? */}
+        <section className={`${SECTION} bg-background`}>
+          <div className="max-w-5xl mx-auto">
+            <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
+              <h2 className={H2}>¿Cómo funciona?</h2>
+              <Rule className="mx-auto my-8" />
+              <p className="text-muted-foreground text-lg">Un proceso simple, claro y completamente a tu medida.</p>
+            </motion.div>
+            <div className="bg-brand-cream px-6 py-16 md:px-16 md:py-20">
+              <StepsLine />
             </div>
-            <motion.ol {...inView} variants={stagger(0.15)} className="relative max-w-2xl mx-auto">
-              <span aria-hidden="true" className="absolute left-[1.6rem] md:left-[2.1rem] top-4 bottom-4 w-px bg-brand-gold/20" />
-              <DrawLine vertical className="absolute left-[1.6rem] md:left-[2.1rem] top-4 bottom-4 w-px" />
-              {STEPS.map(({ title, desc }, i) => (
-                <motion.li key={title} variants={fadeUp} className="group/step relative grid grid-cols-[3.25rem_1fr] md:grid-cols-[4.25rem_1fr] gap-5 pb-10 last:pb-0">
-                  <motion.span initial={{ backgroundColor: "hsl(var(--brand-cream))", color: "#795D64" }}
-                    whileInView={{ backgroundColor: "#795D64", color: "hsl(var(--brand-cream))" }} viewport={{ margin: "0px 0px -45% 0px" }} transition={{ duration: 0.5 }}
-                    className="relative z-10 w-[3.25rem] h-[3.25rem] md:w-[4.25rem] md:h-[4.25rem] rounded-full bg-brand-cream border border-brand-gold flex items-center justify-center font-serif text-3xl md:text-4xl text-[#795D64]">
-                    {i + 1}
-                  </motion.span>
-                  <div className="pt-2 md:pt-3">
-                    <p className="font-serif text-2xl font-semibold text-foreground">{title}</p>
-                    <p className="text-base text-muted-foreground font-light leading-relaxed mt-1">{desc}</p>
-                  </div>
-                </motion.li>
+            <motion.dl {...inView} variants={stagger()} className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4">
+              {KEY_INFO.map(({ label, value }, i) => (
+                <motion.div key={label} variants={fadeUp}
+                  className={`px-4 md:px-6 py-6 text-center border-border ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b md:border-b-0" : ""} ${i === 1 ? "md:border-r" : ""}`}>
+                  <dt className={LABEL}>{label}</dt>
+                  <dd className="mt-4 font-serif font-extralight uppercase tracking-[0.1em] text-base md:text-lg text-foreground leading-snug">{value}</dd>
+                </motion.div>
               ))}
-            </motion.ol>
-            <motion.ul {...inView} variants={stagger()} className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              {KEY_INFO.map(({ icon: Icon, label, value }) => (
-                <motion.li key={label} variants={fadeUp} className="bg-card rounded-2xl p-5 text-center space-y-2 border border-border/40">
-                  <Icon className="w-6 h-6 text-[#795D64] mx-auto" />
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
-                  <p className="font-serif text-lg md:text-xl font-semibold text-foreground leading-tight">{value}</p>
-                </motion.li>
-              ))}
-            </motion.ul>
+            </motion.dl>
           </div>
         </section>
 
-        {/* Para quién: chips grandes */}
-        <section className="px-6 py-14 md:py-16">
-          <div className="max-w-5xl mx-auto space-y-8 text-center">
-            <RevealTitle text="¿Para quién es este espacio?" className={H2} />
-            <motion.ul {...inView} variants={stagger(0.07)} className="flex flex-wrap justify-center gap-3">
+        {/* ¿Para quién es este espacio? */}
+        <section className={`${SECTION} bg-brand-cream`}>
+          <div className="max-w-6xl mx-auto grid md:grid-cols-[4fr_7fr] gap-12 md:gap-20">
+            <motion.div {...inView} variants={fadeUp}>
+              <h2 className={H2}>¿Para quién es este espacio?</h2>
+              <Rule className="mt-8" />
+            </motion.div>
+            <motion.ul {...inView} variants={stagger(0.12)}>
               {FOR_WHOM.map((item) => (
-                <motion.li key={item} variants={fadeUp}
-                  className="px-6 py-4 rounded-full border border-[#795D64]/30 bg-warm-mauve/20 text-base md:text-lg text-foreground/90 leading-snug max-w-full">
-                  {item}
+                <motion.li key={item} variants={fadeUp} className="relative flex items-center justify-between gap-6 py-7 md:py-8">
+                  <span className="text-base md:text-lg text-foreground leading-relaxed">{item}</span>
+                  <Diamond />
+                  <motion.span aria-hidden="true" variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.4, ease: [0.22, 1, 0.36, 1] } } }}
+                    className="absolute left-0 right-0 bottom-0 h-px bg-border origin-left" />
                 </motion.li>
               ))}
             </motion.ul>
           </div>
         </section>
 
-        {/* Precios */}
-        <section id="precios" className="scroll-mt-24 px-6 py-14 md:py-16 bg-gradient-to-b from-background via-warm-peach/35 to-background">
-          <motion.div {...inView} variants={stagger(0.1)} className="max-w-4xl mx-auto space-y-8">
-            <div className="text-center space-y-3">
-              <RevealTitle text="Tu inversión" className={H2} />
-              <p className="text-muted-foreground font-light text-lg">Elige el plan que mejor acompañe tu proceso</p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6 pt-3">
+        {/* Tu inversión */}
+        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-background`}>
+          <motion.div {...inView} variants={stagger(0.15)} className="max-w-4xl mx-auto">
+            <motion.div variants={fadeUp} className="text-center mb-16">
+              <h2 className={H2}>Tu inversión</h2>
+              <Rule className="mx-auto my-8" />
+              <p className="text-muted-foreground text-lg">Elige el plan que mejor acompañe tu proceso</p>
+            </motion.div>
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               <PriceCardLight
+                variant="lux"
                 title="1 Sesión"
                 price="17"
                 href={getWhatsAppUrl("Hola, me gustaría agendar 1 Sesión de Acompañamiento.")}
@@ -275,6 +389,7 @@ const AcompanamientoIndividual = () => {
                 cta="Inscribirme a 1 Sesión"
               />
               <PriceCard
+                variant="lux"
                 badge="15% de descuento"
                 title="Mensualidad"
                 price="116"
@@ -289,42 +404,34 @@ const AcompanamientoIndividual = () => {
           </motion.div>
         </section>
 
-        {/* FAQ en tarjetas 2x2 */}
-        <section className="px-6 py-14 md:py-16">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <RevealTitle text="Preguntas frecuentes" className={H2 + " text-center"} />
-            <motion.dl {...inView} variants={stagger()} className="grid md:grid-cols-2 gap-5">
-              {FAQS.map((f) => (
-                <motion.div key={f.q} variants={fadeUp} className="rounded-3xl bg-card border border-border/50 p-6 md:p-7 space-y-2">
-                  <dt className="font-serif text-xl font-semibold text-foreground">{f.q}</dt>
-                  <dd className="text-base text-muted-foreground leading-relaxed">{f.a}</dd>
-                </motion.div>
-              ))}
-            </motion.dl>
+        {/* Preguntas frecuentes */}
+        <section className={`${SECTION} bg-brand-cream`}>
+          <div className="max-w-3xl mx-auto">
+            <motion.div {...inView} variants={fadeUp} className="text-center mb-14">
+              <h2 className={H2}>Preguntas frecuentes</h2>
+              <Rule className="mx-auto mt-8" />
+            </motion.div>
+            <FaqAccordion />
           </div>
         </section>
 
         {/* Cierre */}
-        <section id="individual-contacto" className="px-6 pb-4">
-          <motion.div {...inView} variants={stagger(0.1)}
-            className="max-w-5xl mx-auto rounded-[2.5rem] border border-brand-gold/50 bg-card grid md:grid-cols-[1.4fr_1fr] gap-8 p-8 md:p-12 items-center">
-            <div className="space-y-4 text-center md:text-left">
-              <RevealTitle text="Reserva tu sesión" className={H2} />
-              <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
-                Cuéntame qué necesitas y lo conversamos. El primer paso es simplemente llegar.
-              </motion.p>
-              <motion.div variants={fadeUp}>
-                <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_SOLID}>
-                  <MessageCircle className="w-5 h-5" /> Escríbeme por WhatsApp
-                </a>
-              </motion.div>
-              <p className="text-xs text-muted-foreground">Te respondo personalmente.</p>
-            </div>
-            <motion.div variants={fadeUp} className="md:border-l md:border-border/50 md:pl-8 space-y-3 text-center md:text-left">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">¿Buscas un programa grupal?</p>
-              <Link to="/curso-iniciacion-yoga" className="group inline-flex items-center gap-2 font-serif text-xl text-foreground hover:text-[#795D64] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold rounded-sm">
-                <Moon className="w-5 h-5 text-[#795D64]" /> Curso de Iniciación al Yoga
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        <section id="individual-contacto" className={`${SECTION} bg-background text-center`}>
+          <motion.div {...inView} variants={stagger(0.15)} className="max-w-2xl mx-auto">
+            <motion.h2 variants={fadeUp} className={H2}>Reserva tu sesión</motion.h2>
+            <Rule className="mx-auto my-10" />
+            <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
+              Cuéntame qué necesitas y lo conversamos. El primer paso es simplemente llegar.
+            </motion.p>
+            <motion.div variants={fadeUp} className="pt-10">
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_LINE}>Escríbeme por WhatsApp</a>
+            </motion.div>
+            <motion.p variants={fadeUp} className="mt-5 text-xs text-muted-foreground">Te respondo personalmente.</motion.p>
+            <motion.div variants={fadeUp} className="mt-16 pt-10 border-t border-border">
+              <p className={LABEL}>¿Buscas un programa grupal?</p>
+              <Link to="/curso-iniciacion-yoga" className={`group mt-5 inline-flex items-center gap-3 text-base md:text-lg text-foreground ${LINK_GOLD}`}>
+                Curso de Iniciación al Yoga
+                <ArrowRight aria-hidden="true" className="w-4 h-4 text-brand-gold transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1} />
               </Link>
             </motion.div>
           </motion.div>
