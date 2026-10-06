@@ -89,8 +89,7 @@ const Hero = () => {
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
         className="relative w-full max-w-6xl mx-auto px-6 -mt-6 pb-24 md:mt-0 md:py-32">
         <div className="max-w-[30rem] text-center md:text-left">
-          <motion.p variants={fadeUp} className={LABEL}>Psicoterapia · Kundalini Yoga</motion.p>
-          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(2rem,4.6vw,3.6rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
+          <motion.h1 variants={fadeUp} className="!text-[clamp(2rem,4.6vw,3.6rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
             Fransury<br />Gonzáles
           </motion.h1>
           <Rule className="mx-auto md:mx-0 mt-8 mb-8" />
