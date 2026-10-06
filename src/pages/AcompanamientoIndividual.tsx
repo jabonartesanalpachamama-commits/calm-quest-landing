@@ -3,7 +3,7 @@
  * hero con el color plano del telón de la foto, índice interno discreto, secciones planas
  * alternando blanco / #FBF9F8, titular + máx. 2 líneas por sección. Sin barra flotante.
  */
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-motion";
@@ -85,17 +85,6 @@ const SERVICE_JSONLD = {
     { "@type": "Offer", name: "1 sesión", price: "17", priceCurrency: "USD" },
     { "@type": "Offer", name: "8 sesiones", price: "116", priceCurrency: "USD" },
   ],
-};
-
-const useMedia = (q: string) => {
-  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(q);
-    const on = () => setM(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, [q]);
-  return m;
 };
 
 /** Filete dorado que se dibuja lento al entrar. */
@@ -256,7 +245,8 @@ const AcompanamientoIndividual = () => {
           <p>YogaTerapia, Kundalini Yoga y Meditación</p>
           <p>Clases privadas donde tu cuerpo, tu respiración y la meditación te devuelven a ti.</p>
         </ServiceHero>
-        <FullBleedPhoto src={yogaPhoto} label="Fransury en meditación" alt={HERO_ALT} width={1122} height={1402} position="object-[50%_22%] md:object-[50%_20%]" />
+        <FullBleedPhoto src={yogaPhoto} label="Fransury en meditación" alt={HERO_ALT} width={1122} height={1402} position="object-[50%_22%]"
+          desktop={{ src: yogaPhoto, width: 1122, height: 1402, background: "#B8A8AB" }} />
         <SituationsGrid title="¿Para quién es este espacio?" items={FOR_WHOM} />
         <SubNav />
         <WordsMarquee />
