@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
  * Se pinta como fondo del propio texto (background-size 0 → 100 %), así nunca aparece una caja
  * antes de animarse y funciona aunque la frase se parta en varias líneas.
  */
-export const Highlight = ({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) => {
+export const Highlight = ({ children, delay = 0, className = "", viewportMargin = "-40px" }: { children: ReactNode; delay?: number; className?: string; viewportMargin?: string }) => {
   const reduce = useReducedMotion();
   return (
     <motion.span
@@ -20,7 +20,7 @@ export const Highlight = ({ children, delay = 0, className = "" }: { children: R
       }}
       initial={reduce ? { backgroundSize: "100% 0.35em" } : { backgroundSize: "0% 0.35em" }}
       whileInView={{ backgroundSize: "100% 0.35em" }}
-      viewport={{ once: true, margin: "-40px" }}
+      viewport={{ once: true, margin: viewportMargin }}
       transition={{ duration: reduce ? 0 : 0.9, delay, ease: [0.65, 0, 0.35, 1] }}
     >
       {children}

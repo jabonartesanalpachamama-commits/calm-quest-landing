@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import santoshaLogo from "@/assets/santosha-logo-transparent.webp";
 import { getWhatsAppUrl } from "@/lib/utils";
+import ScrollProgress from "@/components/ScrollProgress";
 
 interface HeaderProps {
   borderless?: boolean;
@@ -40,6 +41,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
+const NO_PROGRESS = ["/sabiduria-ciclica-esencia-femenina", "/clase-gratuita"];
 const WHATSAPP_HREF = getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión.");
 const FOCUS = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 const ACTIVE_LINE = "after:absolute after:left-0 after:right-0 after:-bottom-1.5 after:h-0.5 after:bg-brand-gold after:rounded-full";
@@ -128,6 +130,7 @@ const Header = ({ borderless }: HeaderProps) => {
         scrolled ? "shadow-[0_4px_20px_-12px_hsl(var(--brand-ink)/0.35)]" : borderless ? "" : "border-b border-border/30"
       }`}
     >
+      {!NO_PROGRESS.includes(pathname) && <ScrollProgress />}
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
         <Link to="/" className={`flex items-center gap-3 shrink-0 rounded-lg ${FOCUS}`} aria-label="SantoSha, inicio">
           <img

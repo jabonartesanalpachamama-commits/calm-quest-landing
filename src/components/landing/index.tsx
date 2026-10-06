@@ -18,7 +18,7 @@ export const inView = {
 
 export const HERO_IMAGE_FILTER = "saturate(0.85) brightness(1.04) contrast(0.95)";
 
-/** Título que aparece palabra por palabra */
+/** Título con revelado enmascarado: cada palabra sube desde detrás de una línea invisible. */
 export const RevealTitle = ({ text, as = "h2", className = "" }: { text: string; as?: "h1" | "h2"; className?: string }) => {
   const Tag = as === "h1" ? motion.h1 : motion.h2;
   return (
@@ -31,14 +31,14 @@ export const RevealTitle = ({ text, as = "h2", className = "" }: { text: string;
       aria-label={text}
     >
       {text.split(" ").map((w, i) => (
-        <motion.span
-          key={i}
-          aria-hidden="true"
-          className="inline-block mr-[0.25em]"
-          variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } } }}
-        >
-          {w}
-        </motion.span>
+        <span key={i} aria-hidden="true" className="inline-block overflow-hidden align-bottom pb-[0.08em] mr-[0.25em]">
+          <motion.span
+            className="inline-block"
+            variants={{ hidden: { y: "105%" }, show: { y: "0%", transition: { duration: 0.75, ease: EASE } } }}
+          >
+            {w}
+          </motion.span>
+        </span>
       ))}
     </Tag>
   );

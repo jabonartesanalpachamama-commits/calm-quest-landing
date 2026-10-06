@@ -10,6 +10,7 @@ import Quote from "@/components/landing/Quote";
 import { SideToc, PillToc, useActiveSection } from "@/components/landing/StickyToc";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
+import { ScrollFillText } from "@/components/landing/ScrollFillText";
 import { fadeUp, inView, RevealTitle, RevealWords } from "@/components/landing";
 
 // Estructura "lectura larga": índice lateral + contenido.
@@ -182,7 +183,7 @@ const Filosofia = () => {
               <RevealTitle text="Creemos en" className={H2} />
               <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="divide-y divide-brand-gold/50 border-y border-brand-gold/50">
                 {BELIEFS.map((b) => (
-                  <motion.li key={b} variants={fadeUp} className="py-5 font-serif text-2xl md:text-3xl leading-snug text-foreground">{b}</motion.li>
+                  <motion.li key={b} variants={fadeUp} className="py-5"><ScrollFillText text={b} as="span" dim={0.2} offset={["start 85%", "start 50%"]} className="block font-serif text-2xl md:text-3xl leading-snug text-foreground" /></motion.li>
                 ))}
               </motion.ul>
             </section>

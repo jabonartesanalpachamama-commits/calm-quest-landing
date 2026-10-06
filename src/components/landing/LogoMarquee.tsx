@@ -1,12 +1,12 @@
 import { useReducedMotion } from "framer-motion";
 import { PARTICIPACIONES, type Participacion } from "@/data/participaciones";
 
-const Item = ({ p }: { p: Participacion }) =>
+const Item = ({ p, wrap = false }: { p: Participacion; wrap?: boolean }) =>
   p.logo ? (
     <img src={p.logo} alt={p.alt} loading="lazy"
       className="h-10 w-auto object-contain grayscale opacity-70 transition duration-300 hover:grayscale-0 hover:opacity-100" />
   ) : (
-    <span className="font-serif text-sm md:text-base tracking-[0.18em] uppercase whitespace-nowrap text-brand-mauve/80">{p.name}</span>
+    <span className={`font-serif text-sm md:text-base tracking-[0.18em] uppercase ${wrap ? "whitespace-normal text-center block" : "whitespace-nowrap"} text-brand-mauve/80`}>{p.name}</span>
   );
 
 /** Carrusel continuo de izquierda a derecha (~40 s por vuelta); estático con movimiento reducido. */
@@ -20,7 +20,7 @@ export const LogoMarquee = ({ label = "Ha participado en" }: { label?: string })
       <p className="text-center text-xs tracking-[0.3em] uppercase text-brand-mauve [font-variant:small-caps] mb-4">{label}</p>
       {reduce ? (
         <ul className="flex flex-wrap justify-center items-center gap-x-10 gap-y-3 px-6">
-          {PARTICIPACIONES.map((p) => <li key={p.name}><Item p={p} /></li>)}
+          {PARTICIPACIONES.map((p) => <li key={p.name} className="max-w-full"><Item p={p} wrap /></li>)}
         </ul>
       ) : (
         <div className="logo-marquee" tabIndex={0}>

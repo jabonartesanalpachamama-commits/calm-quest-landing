@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import {
-  AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform,
+  AnimatePresence, motion, useMotionTemplate, useReducedMotion, useScroll, useSpring, useTransform,
 } from "framer-motion";
 import { ArrowDown, ArrowRight, Gift, Leaf, MessageCircle, PlayCircle, X } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
@@ -18,6 +18,8 @@ import cursoHero from "@/assets/curso-hero.png.asset.json";
 import bannerAcompanamiento from "@/assets/banner-acompanamiento.webp";
 import paraQuienImage from "@/assets/para-quien-image.webp";
 import { EASE, fadeUp, inView, RotatingOrnament } from "@/components/landing";
+import { ScrollFillText } from "@/components/landing/ScrollFillText";
+import SectionTransition from "@/components/SectionTransition";
 import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
 import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
@@ -66,6 +68,17 @@ const START_OPTIONS = [
   { text: "Quiero comprender mi ciclo", to: "/sabiduria-ciclica-esencia-femenina" },
 ];
 
+const useMedia = (q: string) => {
+  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(q);
+    const on = () => setM(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, [q]);
+  return m;
+};
+
 const RESTLESS = ["Reaccionar", "Controlar", "Exigirse", "Desconectarse"];
 const CALM = ["Presencia", "Ecuanimidad", "Conexión", "Contentamiento consciente"];
 
@@ -85,6 +98,9 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "8%"]);
   const scale = useTransform(scrollYProgress, [0, 1], [1.08, 1]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const desktop = useMedia("(min-width: 768px)");
   const goProgramas = (e: React.MouseEvent) => {
     e.preventDefault();
     document.querySelector("#programas")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
@@ -100,6 +116,7 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
         <div aria-hidden="true" className="hidden md:block absolute inset-0 bg-gradient-to-r from-brand-cream from-25% via-brand-cream/75 via-45% to-transparent to-70%" />
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } }}
+        style={reduce || !desktop ? undefined : { y: textY, opacity: textOpacity }}
         className="relative w-full max-w-6xl mx-auto px-6 -mt-10 pb-12 md:mt-0 md:py-28">
         <div className="max-w-xl space-y-5 text-center md:text-left">
           <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/80 text-brand-mauve shadow-sm">
@@ -129,6 +146,14 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
           </motion.div>
         </div>
       </motion.div>
+      {!reduce && (
+        <div aria-hidden="true" className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-brand-mauve/80">
+          <span className="text-[10px] uppercase tracking-[0.35em]">Desliza</span>
+          <span className="relative block w-px h-10 overflow-hidden bg-brand-gold/25">
+            <motion.span className="absolute inset-x-0 top-0 h-1/2 bg-brand-gold" animate={{ y: ["-100%", "200%"] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />
+          </span>
+        </div>
+      )}
     </section>
   );
 };
@@ -181,6 +206,33 @@ const FreeClassPopup = ({ onStart }: { onStart: () => void }) => {
   );
 };
 
+const StartRow = ({ text, to, i }: { text: string; to: string; i: number }) => {
+  const ref = useRef<HTMLLIElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 95%", "start 55%"] });
+  return (
+    <li ref={ref} className="group relative">
+      <Link to={to} className={`flex items-center justify-between gap-5 py-6 md:py-7 min-h-[56px] rounded ${FOCUS}`}>
+        <span className="block overflow-hidden pb-[0.1em]">
+          <motion.span initial={reduce ? false : { y: "105%" }} whileInView={{ y: "0%" }} viewport={{ once: true, margin: "-30px" }}
+            transition={{ duration: 0.8, delay: 0.05 * i, ease: EASE }}
+            className="block font-serif font-normal text-[22px] md:text-[26px] leading-snug text-brand-ink">
+            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5">{text}</span>
+          </motion.span>
+        </span>
+        <motion.span aria-hidden="true" initial={reduce ? false : { rotate: -45, opacity: 0 }} whileInView={{ rotate: 0, opacity: 1 }}
+          viewport={{ once: true, margin: "-30px" }} transition={{ duration: 0.7, delay: 0.1 + 0.05 * i, ease: EASE }}
+          className="shrink-0 w-9 h-9 rounded-full border border-brand-gold inline-flex items-center justify-center text-brand-gold transition-colors duration-300 group-hover:bg-brand-mauve group-hover:border-brand-mauve group-hover:text-brand-cream group-focus-visible:bg-brand-mauve group-focus-visible:text-brand-cream">
+          <ArrowRight className="w-4 h-4" strokeWidth={1.25} />
+        </motion.span>
+      </Link>
+      <span aria-hidden="true" className="absolute left-0 right-0 bottom-0 h-px bg-brand-gold/20" />
+      <motion.span aria-hidden="true" style={reduce ? undefined : { scaleX: scrollYProgress }}
+        className="absolute left-0 right-0 bottom-0 h-px origin-left bg-brand-gold/50 group-hover:bg-brand-gold transition-colors duration-300" />
+    </li>
+  );
+};
+
 /* ───────────── 3. Selector "¿Por dónde empiezo?" ───────────── */
 const StartSelector = () => (
   <section aria-labelledby="empiezo-titulo" className="px-6 py-16 md:py-24">
@@ -190,21 +242,8 @@ const StartSelector = () => (
         <span aria-hidden="true" className="block w-14 h-px bg-brand-gold my-4" />
         <p className="font-serif italic text-xl md:text-2xl text-foreground/80 leading-snug">Elige lo que más se parece a tu momento.</p>
       </motion.div>
-      <ul className="border-t border-brand-gold/40">
-        {START_OPTIONS.map(({ text, to }, i) => (
-          <motion.li key={to} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
-            transition={{ duration: 0.7, delay: 0.08 * i, ease: EASE }}
-            className="group border-b border-brand-gold/40 hover:border-brand-gold focus-within:border-brand-gold transition-colors duration-300">
-            <Link to={to} className={`flex items-center justify-between gap-5 py-6 md:py-7 min-h-[56px] rounded ${FOCUS}`}>
-              <span className="font-serif font-normal text-[22px] md:text-[26px] leading-snug text-brand-ink transition-transform duration-300 group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5">
-                {text}
-              </span>
-              <span aria-hidden="true" className="shrink-0 w-9 h-9 rounded-full border border-brand-gold inline-flex items-center justify-center text-brand-gold transition-colors duration-300 group-hover:bg-brand-mauve group-hover:border-brand-mauve group-hover:text-brand-cream group-focus-visible:bg-brand-mauve group-focus-visible:text-brand-cream">
-                <ArrowRight className="w-4 h-4" strokeWidth={1.25} />
-              </span>
-            </Link>
-          </motion.li>
-        ))}
+      <ul>
+        {START_OPTIONS.map(({ text, to }, i) => <StartRow key={to} text={text} to={to} i={i} />)}
       </ul>
     </div>
   </section>
@@ -218,9 +257,9 @@ const ProgramBlock = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => 
   const imgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const flip = i % 2 === 1;
   return (
-    <div ref={ref} className={`relative grid md:grid-cols-2 gap-8 md:gap-16 items-center pl-8 md:pl-0`}>
+    <div ref={ref} className="relative grid md:grid-cols-2 gap-8 md:gap-16 items-center pl-8 md:pl-0">
       <motion.div initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, margin: "-60px" }}
-        className={`relative w-full max-w-[420px] mx-auto ${flip ? "md:order-2" : ""}`}>
+        className={`relative w-full max-w-[min(420px,52vh)] md:max-w-[min(420px,56vh)] mx-auto ${flip ? "md:order-2" : ""}`}>
         <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5 rounded-t-full rounded-b-2xl border border-brand-gold/70" />
         <motion.div className="relative aspect-[4/5] rounded-t-full rounded-b-2xl overflow-hidden"
           variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.2, ease: EASE } } }}>
@@ -247,7 +286,26 @@ const ProgramBlock = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => 
   );
 };
 
+/** Panel apilado (escritorio): queda fijo y se reduce cuando el siguiente lo cubre. */
+const StackPanel = ({ p, i, last }: { p: (typeof PROGRAMS)[number]; i: number; last: boolean }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 10vh", "end 10vh"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [1, last ? 1 : 0.94]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, last ? 1 : 0.5]);
+  return (
+    <div ref={ref} className={last ? "h-[85vh]" : "h-[100vh]"}>
+      <motion.div style={{ scale, opacity, zIndex: i + 1 }}
+        className="sticky top-[10vh] h-[85vh] flex items-center rounded-t-[3rem] rounded-b-3xl bg-brand-cream shadow-[0_-20px_40px_-30px_hsl(var(--brand-ink)/0.35)] px-10 lg:px-16 origin-top">
+        <div className="w-full"><ProgramBlock p={p} i={i} /></div>
+      </motion.div>
+    </div>
+  );
+};
+
 const Programs = () => {
+  const big = useMedia("(min-width: 1024px) and (min-height: 700px)");
+  const reduceStack = useReducedMotion();
+  const stacked = big && !reduceStack;
   const threadRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: threadRef, offset: ["start 70%", "end 60%"] });
@@ -261,12 +319,14 @@ const Programs = () => {
           <h2 id="programas-titulo" className="font-serif text-3xl md:text-5xl font-normal text-foreground mt-2"><MaskLine>Mis programas y espacios</MaskLine></h2>
           <p className="text-muted-foreground font-light text-sm italic mt-2">Recorridos para comprender lo que vives y recuperar tu equilibrio.</p>
         </div>
-        <div ref={threadRef} className="relative space-y-20 md:space-y-28">
-          <div aria-hidden="true" className="absolute top-0 bottom-0 left-2 md:left-1/2 w-px bg-brand-gold/15">
+        <div ref={threadRef} className={`relative ${stacked ? "" : "space-y-20 md:space-y-28"}`}>
+          <div aria-hidden="true" className={`absolute top-0 bottom-0 w-px bg-brand-gold/15 ${stacked ? "-left-4 z-20" : "left-2 md:left-1/2"}`}>
             <motion.div className="absolute inset-0 bg-brand-gold/70 origin-top" style={reduce ? undefined : { scaleY: line }} />
             {!reduce && <motion.span className="absolute -left-[3px] w-[7px] h-[7px] rounded-full bg-brand-gold" style={{ top: dotTop }} />}
           </div>
-          {PROGRAMS.map((p, i) => <ProgramBlock key={p.href} p={p} i={i} />)}
+          {stacked
+            ? PROGRAMS.map((p, i) => <StackPanel key={p.href} p={p} i={i} last={i === PROGRAMS.length - 1} />)
+            : PROGRAMS.map((p, i) => <ProgramBlock key={p.href} p={p} i={i} />)}
         </div>
       </div>
     </section>
@@ -282,9 +342,9 @@ const Companion = () => {
   const frameY = useTransform(scrollYProgress, [0, 1], ["30px", "-30px"]);
   const para = "text-foreground/80 leading-relaxed font-light text-lg";
   return (
-    <section ref={ref} aria-labelledby="acompana-titulo" className="relative overflow-hidden px-6 py-16 md:py-24">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-[5fr_6fr] gap-12 md:gap-16 items-center">
-        <div className="relative mx-auto w-full max-w-[340px] md:max-w-[400px]">
+    <section ref={ref} aria-labelledby="acompana-titulo" className="relative overflow-x-clip px-6 py-16 md:py-24">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-[5fr_6fr] gap-12 md:gap-16 items-start">
+        <div className="relative mx-auto w-full max-w-[340px] md:max-w-[400px] md:sticky md:top-[14vh]">
           <motion.div aria-hidden="true" className="absolute -inset-16 rounded-full"
             style={{ background: "radial-gradient(circle, hsl(var(--brand-mauve)/0.35) 0%, hsl(var(--warm-peach)/0.45) 40%, transparent 70%)" }}
             animate={reduce ? undefined : { scale: [1, 1.06, 1] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} />
@@ -299,15 +359,11 @@ const Companion = () => {
           </div>
           <RotatingOrnament className="w-24 h-24 -top-6 -right-6" />
         </div>
-        <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.2 } } }} className="space-y-5 text-center md:text-left">
+        <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.2 } } }} className="space-y-5 text-center md:text-left md:py-[10vh]">
           <motion.span variants={fadeUp} className="block text-xs font-semibold tracking-[0.3em] uppercase text-brand-mauve">Acompañamiento Humano</motion.span>
           <h2 id="acompana-titulo" className={H2}><MaskLine>Quién te acompaña</MaskLine></h2>
-          <motion.p variants={fadeUp} className={para}>
-            Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
-          </motion.p>
-          <motion.p variants={fadeUp} className={para}>
-            Mi propósito es acompañarte a <Highlight>sanar experiencias difíciles</Highlight>, a transformar el significado de lo que viviste y a <Highlight delay={0.3}>habitar una vida en mayor plenitud</Highlight>. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a <Highlight delay={0.6}>regular tu sistema nervioso</Highlight>.
-          </motion.p>
+          <ScrollFillText className={para} dim={0.3} text="Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana." />
+          <ScrollFillText className={para} dim={0.3} text="Mi propósito es acompañarte a [[sanar experiencias difíciles]], a transformar el significado de lo que viviste y a [[habitar una vida en mayor plenitud]]. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a [[regular tu sistema nervioso]]." />
           <motion.div variants={fadeUp}>
             <Link to="/quien-soy" className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border border-brand-mauve/50 text-brand-mauve hover:bg-brand-cream transition-colors ${FOCUS}`}>
               Conoce mi historia <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -416,10 +472,42 @@ const Philosophy = () => {
 };
 
 /* ───────────── Página ───────────── */
+const CREAM = "hsl(26 41% 92%)";
+const PEACH = "hsl(22 75% 90%)";
+const PLUM = "hsl(327 26% 22%)";
+
+/** Fondo continuo: interpola el color de la portada según el capítulo visible (scroll nativo). */
+const usePageBackground = (marks: React.RefObject<HTMLElement>[]) => {
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const [stops, setStops] = useState<number[]>([0, 1, 2, 3, 4, 5]);
+  useLayoutEffect(() => {
+    const measure = () => {
+      const vh = window.innerHeight;
+      const tops = marks.map((r) => (r.current ? r.current.getBoundingClientRect().top + window.scrollY : 0));
+      // [inicio peach, peach pleno, fin peach, vuelta a crema, inicio ciruela, ciruela]
+      const [start, programs, philo] = tops;
+      setStops([start - vh * 0.7, start - vh * 0.3, programs - vh * 0.6, programs - vh * 0.2, philo - vh * 0.5, philo]);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    return () => ro.disconnect();
+  }, [marks]);
+  const bg = useTransform(scrollY, stops, [CREAM, PEACH, PEACH, CREAM, CREAM, PLUM]);
+  const bgVar = useMotionTemplate`${bg}`;
+  return reduce ? CREAM : bgVar;
+};
+
 const PortalHome = () => {
   const { settings, palette } = useVisualSettings();
   const [freeClassOpen, setFreeClassOpen] = useState(false);
   const openFree = () => setFreeClassOpen(true);
+  const startRef = useRef<HTMLDivElement>(null);
+  const programsRef = useRef<HTMLDivElement>(null);
+  const philoRef = useRef<HTMLDivElement>(null);
+  const [marks] = useState(() => [startRef, programsRef, philoRef]);
+  const pageBg = usePageBackground(marks);
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
@@ -430,18 +518,20 @@ const PortalHome = () => {
       />
       <Header palette={palette} brandName={settings?.brandName} />
 
-      <main className="flex-grow">
+      <motion.main className="flex-grow" style={{ ["--page-bg" as string]: pageBg, backgroundColor: "var(--page-bg)" }}>
         <Hero onFreeClass={openFree} />
         <LogoMarquee />
         <Companion />
-        <StartSelector />
-        <Programs />
+        <div ref={startRef}><StartSelector /></div>
+        <div ref={programsRef}><Programs /></div>
+        <SectionTransition from="transparent" to={PLUM} />
+        <div ref={philoRef} />
         <Philosophy />
 
         {/* Cierre */}
-        <section className="px-6 py-16 md:py-24 bg-gradient-to-b from-brand-cream to-warm-mauve/50">
+        <section className="px-6 pt-16 md:pt-24 pb-32 md:pb-40" style={{ background: `linear-gradient(to bottom, ${CREAM} 0%, ${CREAM} 55%, hsl(var(--warm-mauve)) 75%, ${PLUM} 100%)` }}>
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-3xl mx-auto text-center space-y-6">
-            <motion.h2 variants={fadeUp} className={H2}>¿Quieres empezar? <Highlight delay={0.4}>Escríbeme.</Highlight></motion.h2>
+            <h2 className={H2}><ScrollFillText as="span" text="¿Quieres empezar? [[Escríbeme.]]" offset={["start 90%", "end 60%"]} /></h2>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
               Explora los programas o empieza con la clase gratuita de 30 minutos.
             </motion.p>
@@ -456,7 +546,7 @@ const PortalHome = () => {
             <p className="text-xs text-muted-foreground">Atención virtual desde cualquier lugar del mundo.</p>
           </motion.div>
         </section>
-      </main>
+      </motion.main>
 
       <SiteFooter palette={palette} />
       <FreeClassPopup onStart={openFree} />

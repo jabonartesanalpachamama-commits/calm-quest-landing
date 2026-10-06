@@ -13,6 +13,7 @@ import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import paraQuienImage from "@/assets/para-quien-image.webp";
+import { DrawLine, RevealImage } from "@/components/landing/ScrollReveal";
 import { fadeUp, inView, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
 
 // Estructura "recorrido": hero invertido con imagen en arco a la derecha.
@@ -149,9 +150,8 @@ const AcompanamientoIndividual = () => {
               </motion.ul>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="order-1 md:order-2">
-              <div className="mx-auto w-full max-w-[22rem] md:max-w-md aspect-[4/5] rounded-t-full rounded-b-3xl overflow-hidden shadow-xl ring-1 ring-brand-gold/40">
-                <img src={HERO_IMAGE} alt="Postura de yoga durante una sesión de acompañamiento" loading="eager" fetchPriority="high" className="w-full h-full object-cover object-center" />
-              </div>
+              <RevealImage src={HERO_IMAGE} alt="Postura de yoga durante una sesión de acompañamiento" eager imgClassName="object-cover object-center"
+                className="mx-auto w-full max-w-[22rem] md:max-w-md aspect-[4/5] rounded-t-full rounded-b-3xl shadow-xl ring-1 ring-brand-gold/40" />
             </motion.div>
           </div>
         </section>
@@ -204,12 +204,15 @@ const AcompanamientoIndividual = () => {
               <p className="text-muted-foreground font-light text-lg">Un proceso simple, claro y completamente a tu medida.</p>
             </div>
             <motion.ol {...inView} variants={stagger(0.15)} className="relative max-w-2xl mx-auto">
-              <span aria-hidden="true" className="absolute left-[1.6rem] md:left-[2.1rem] top-4 bottom-4 w-px bg-brand-gold" />
+              <span aria-hidden="true" className="absolute left-[1.6rem] md:left-[2.1rem] top-4 bottom-4 w-px bg-brand-gold/20" />
+              <DrawLine vertical className="absolute left-[1.6rem] md:left-[2.1rem] top-4 bottom-4 w-px" />
               {STEPS.map(({ title, desc }, i) => (
-                <motion.li key={title} variants={fadeUp} className="relative grid grid-cols-[3.25rem_1fr] md:grid-cols-[4.25rem_1fr] gap-5 pb-10 last:pb-0">
-                  <span className="relative z-10 w-[3.25rem] h-[3.25rem] md:w-[4.25rem] md:h-[4.25rem] rounded-full bg-brand-cream border border-brand-gold flex items-center justify-center font-serif text-3xl md:text-4xl text-[#795D64]">
+                <motion.li key={title} variants={fadeUp} className="group/step relative grid grid-cols-[3.25rem_1fr] md:grid-cols-[4.25rem_1fr] gap-5 pb-10 last:pb-0">
+                  <motion.span initial={{ backgroundColor: "hsl(var(--brand-cream))", color: "#795D64" }}
+                    whileInView={{ backgroundColor: "#795D64", color: "hsl(var(--brand-cream))" }} viewport={{ margin: "0px 0px -45% 0px" }} transition={{ duration: 0.5 }}
+                    className="relative z-10 w-[3.25rem] h-[3.25rem] md:w-[4.25rem] md:h-[4.25rem] rounded-full bg-brand-cream border border-brand-gold flex items-center justify-center font-serif text-3xl md:text-4xl text-[#795D64]">
                     {i + 1}
-                  </span>
+                  </motion.span>
                   <div className="pt-2 md:pt-3">
                     <p className="font-serif text-2xl font-semibold text-foreground">{title}</p>
                     <p className="text-base text-muted-foreground font-light leading-relaxed mt-1">{desc}</p>
