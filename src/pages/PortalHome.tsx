@@ -261,12 +261,12 @@ const CALM_BG = "linear-gradient(180deg, #F6F2F3 0%, #DDD3D6 100%)";
 
 /** Posición (bordes, centro libre), tamaño, deriva (s), dorado. Las 2 últimas solo en escritorio. */
 const FLOAT_POS = [
-  { pos: "top-[7%] left-[5%] md:top-[10%] md:left-[6%]", size: "text-3xl md:text-7xl", dur: 14, gold: false },
-  { pos: "top-[14%] right-[5%] md:top-[14%] md:right-[7%]", size: "text-xl md:text-4xl", dur: 18, gold: true },
+  { pos: "top-[11%] left-[5%] md:top-[10%] md:left-[6%]", size: "text-3xl md:text-7xl", dur: 14, gold: false },
+  { pos: "top-[16%] right-[5%] md:top-[14%] md:right-[7%]", size: "text-xl md:text-4xl", dur: 18, gold: true },
   { pos: "bottom-[16%] left-[5%] md:bottom-[14%] md:left-[8%]", size: "text-2xl md:text-6xl", dur: 16, gold: false },
   { pos: "bottom-[7%] right-[5%] md:bottom-[10%] md:right-[6%]", size: "text-3xl md:text-5xl", dur: 20, gold: false },
-  { pos: "top-[21%] left-[10%] md:top-[44%] md:left-[2%]", size: "text-xl md:text-4xl", dur: 15, gold: true },
-  { pos: "bottom-[24%] right-[8%] md:bottom-auto md:top-[46%] md:right-[2%]", size: "text-xl md:text-5xl", dur: 17, gold: false },
+  { pos: "top-[22%] left-[10%] lg:top-[44%] lg:left-[2%]", size: "text-xl md:text-4xl", dur: 15, gold: true },
+  { pos: "bottom-[24%] right-[8%] md:bottom-[28%] lg:bottom-auto lg:top-[46%] lg:right-[2%]", size: "text-xl md:text-5xl", dur: 17, gold: false },
   { pos: "hidden md:block top-[4%] left-[40%]", size: "md:text-4xl", dur: 19, gold: false },
   { pos: "hidden md:block bottom-[4%] left-[38%]", size: "md:text-6xl", dur: 13, gold: true },
 ];
