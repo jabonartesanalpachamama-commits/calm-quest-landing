@@ -333,14 +333,14 @@ const CALM_CLASS = "flex flex-wrap justify-center items-center gap-x-5 gap-y-3 t
  * Bandas de arriba y de abajo; el centro (título y línea) queda libre.
  */
 const CHAOS_WORDS = [
-  { m: [22, 11], d: [12, 12], rot: -7, size: "text-2xl md:text-6xl", op: 0.85, gold: false },
-  { m: [74, 15], d: [42, 7], rot: 6, size: "text-xl md:text-4xl", op: 0.6, gold: true },
-  { m: [70, 62], d: [82, 13], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
-  { m: [26, 70], d: [16, 74], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
-  { m: [72, 77], d: [46, 88], rot: -8, size: "text-xl md:text-3xl", op: 0.55, gold: true },
-  { m: [36, 84], d: [72, 70], rot: 5, size: "text-2xl md:text-5xl", op: 0.7, gold: false },
-  { m: [74, 91], d: [86, 87], rot: -6, size: "text-xl md:text-4xl", op: 0.5, gold: false },
-  { m: [24, 94], d: [26, 92], rot: 4, size: "text-2xl md:text-6xl", op: 0.8, gold: false },
+  { m: [22, 12], d: [11, 24], rot: -7, size: "text-2xl md:text-6xl", op: 0.85, gold: false },
+  { m: [76, 17], d: [88, 34], rot: 6, size: "text-xl md:text-4xl", op: 0.6, gold: true },
+  { m: [70, 64], d: [86, 18], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
+  { m: [26, 71], d: [16, 76], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
+  { m: [72, 78], d: [46, 90], rot: -8, size: "text-xl md:text-3xl", op: 0.55, gold: true },
+  { m: [34, 85], d: [72, 74], rot: 5, size: "text-2xl md:text-5xl", op: 0.7, gold: false },
+  { m: [76, 91], d: [86, 88], rot: -6, size: "text-xl md:text-4xl", op: 0.5, gold: false },
+  { m: [24, 95], d: [26, 92], rot: 4, size: "text-2xl md:text-6xl", op: 0.8, gold: false },
 ];
 
 const ChaosWord = ({ w, i, p, chaos, t, desktop }: { w: string; i: number; p: MotionValue<number>; chaos: MotionValue<number>; t: MotionValue<number>; desktop: boolean }) => {
@@ -348,7 +348,7 @@ const ChaosWord = ({ w, i, p, chaos, t, desktop }: { w: string; i: number; p: Mo
   const [sx, sy] = desktop ? c.d : c.m;
   // Hilera ordenada: escritorio una fila; móvil dos filas de 4.
   const rx = desktop ? 20 + (i % 4) * 20 : 14 + (i % 4) * 24;
-  const ry = desktop ? (i < 4 ? 72 : 82) : i < 4 ? 72 : 80;
+  const ry = desktop ? (i < 4 ? 76 : 86) : i < 4 ? 78 : 86;
   const appear = 0.08 + i * 0.026;
   const align = useTransform(p, [0.4, 0.5], [0, 1]);
   const ds = 0.5 + i * 0.012, de = ds + 0.05;
@@ -416,11 +416,11 @@ const Philosophy = () => {
         <div className="absolute inset-0">{RESTLESS.map((w, i) => <ChaosWord key={w} w={w} i={i} p={p} chaos={chaos} t={t} desktop={desktop} />)}</div>
 
         {/* Línea del pulso */}
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2"><PulseLine p={p} t={t} desktop={desktop} color={lineColor} /></div>
+        <div className="absolute inset-x-0 top-[58%] -translate-y-1/2"><PulseLine p={p} t={t} desktop={desktop} color={lineColor} /></div>
 
         {/* Fase 1 · arriba de la línea */}
         <motion.div style={{ opacity: one, y: oneY, color: oneColor }}
-          className="absolute inset-x-0 top-[18%] bottom-[54%] md:top-[18%] flex items-end justify-center px-5">
+          className="absolute inset-x-0 top-[20%] bottom-[46%] flex items-end justify-center px-5">
           <div className="text-center space-y-4 md:space-y-6 max-w-5xl">
             <h2 id="filo-titulo" className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-semibold text-[#B8977E]">Mi filosofía de trabajo</h2>
             <ChaosTitle chaos={chaos} t={t} />
@@ -430,10 +430,10 @@ const Philosophy = () => {
         </motion.div>
 
         {/* Fase 2 · calma */}
-        <motion.div style={{ opacity: two, y: twoY }} className="absolute inset-x-0 top-[12%] bottom-[56%] flex items-end justify-center px-6">
+        <motion.div style={{ opacity: two, y: twoY }} className="absolute inset-x-0 top-[12%] bottom-[48%] flex items-end justify-center px-6">
           <div className="text-center max-w-4xl"><CalmTitle /></div>
         </motion.div>
-        <motion.div style={{ opacity: two }} className="absolute inset-x-0 top-[58%] bottom-0 flex flex-col items-center px-6 gap-10 md:gap-12">
+        <motion.div style={{ opacity: two }} className="absolute inset-x-0 top-[66%] bottom-0 flex flex-col items-center px-6 gap-10 md:gap-12">
           <ul className={CALM_CLASS}>
             {CALM.map((w, i) => <motion.li key={w} style={{ opacity: calm[i] }} className="inline-flex items-center gap-5">{i > 0 && <CalmDiamond />}{w}</motion.li>)}
           </ul>
