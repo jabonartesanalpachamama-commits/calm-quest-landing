@@ -1,4 +1,4 @@
-import bannerAcompanamiento from "@/assets/banner-acompanamiento.webp";
+import bannerAcompanamiento from "@/assets/fransury-sillon.webp";
 import paraQuienImage from "@/assets/para-quien-image.webp";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
 

@@ -111,6 +111,9 @@ const MiProcesoIndividual = () => {
           </motion.div>
         </section>
 
+        <SessionPhoto />
+
+
         {/* Situaciones en masonry numerado */}
         <section className="px-6 py-14 md:py-16">
           <div className="max-w-5xl mx-auto space-y-10">
