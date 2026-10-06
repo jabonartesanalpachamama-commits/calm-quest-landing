@@ -229,53 +229,61 @@ const StartSelector = () => (
 /* ───────────── 7. Filosofía: dolor → calma ───────────── */
 const PhaseOneText = () => (
   <>
-    <h3 className="font-serif text-3xl md:text-5xl font-semibold">
+    <h3 className="font-serif !text-[clamp(2.4rem,7vw,5.2rem)] !font-extralight uppercase !tracking-[0.12em] !leading-[1.1] [overflow-wrap:normal] [hyphens:none]">
       Salir del <span className="inline-block">modo</span> <span className="jitter-word inline-block">supervivencia</span>
     </h3>
-    <p className="text-base md:text-lg font-light leading-relaxed opacity-95 max-w-xl mx-auto">
-      Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Cargamos con lo que ya pasó y con lo que podría pasar, y la mente casi nunca está donde estamos.
+    <p className="text-base md:text-xl font-light leading-relaxed opacity-95 max-w-xl mx-auto">
+      Reaccionamos, controlamos y nos desconectamos del cuerpo.
     </p>
   </>
 );
 const TransitionText = () => (
   <>
-    <h3 className="font-serif !text-[clamp(1.35rem,4.2vw,2.9rem)] text-foreground [overflow-wrap:normal] [hyphens:none]">
+    <h3 className="font-serif !text-[clamp(1.35rem,4.2vw,2.9rem)] text-[#482A3A] [overflow-wrap:normal] [hyphens:none]">
       A una vida en calma donde <Highlight delay={0.2}>habitas el presente</Highlight>
     </h3>
-    <p className="text-sm md:text-lg text-foreground/85 font-light leading-relaxed max-w-xl mx-auto">
-      Cuando el sistema nervioso se regula, <Highlight delay={0.4}>el cuerpo suelta la tensión</Highlight> y la mente deja de adelantarse. Puedes sentarte a comer, conversar o descansar sin estar pensando en otra cosa. Lo trabajamos con yoga, respiración y la comprensión de lo que viviste, para que la calma aparezca con más frecuencia y se quede más tiempo.
+    <p className="text-base md:text-lg text-[#482A3A]/85 font-light leading-relaxed max-w-xl mx-auto">
+      Con yoga, respiración y comprensión de lo vivido, la calma se queda más tiempo.
     </p>
   </>
 );
 const ManifestoLink = () => (
   <Link to="/filosofia" className={`${BTN_SOLID} ${FOCUS}`}>Qué es Santosha</Link>
 );
+const CalmWord = ({ w, i }: { w: string; i: number }) => (
+  <span className="inline-flex items-center gap-4">
+    {i > 0 && <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#B8977E]" />}
+    {w}
+  </span>
+);
+const CALM_CLASS = "flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-[#482A3A] font-serif font-light text-2xl md:text-4xl";
+const CALM_BG = "linear-gradient(180deg, #F6F2F3 0%, #DDD3D6 100%)";
 
-/** Posición, tamaño, deriva (s) y si se oculta en móvil. */
+/** Posición (bordes, centro libre), tamaño, deriva (s), dorado. Las 2 últimas solo en escritorio. */
 const FLOAT_POS = [
-  { pos: "top-[12%] left-[6%]", size: "text-2xl md:text-5xl", dur: 9 },
-  { pos: "top-[16%] right-[6%]", size: "text-base md:text-2xl", dur: 11 },
-  { pos: "bottom-[16%] left-[8%]", size: "text-xl md:text-4xl", dur: 8 },
-  { pos: "bottom-[10%] right-[7%]", size: "text-lg md:text-3xl", dur: 12 },
-  { pos: "top-[6%] left-1/2 -translate-x-1/2 md:top-[44%] md:left-[3%] md:translate-x-0", size: "text-sm md:text-xl", dur: 7 },
-  { pos: "bottom-[4%] left-1/2 -translate-x-1/2", size: "text-base md:text-2xl", dur: 10 },
-  { pos: "hidden md:block top-[42%] right-[3%]", size: "md:text-lg", dur: 8.5 },
-  { pos: "hidden md:block top-[8%] left-[38%]", size: "md:text-sm", dur: 11.5 },
+  { pos: "top-[7%] left-[5%] md:top-[10%] md:left-[6%]", size: "text-3xl md:text-7xl", dur: 14, gold: false },
+  { pos: "top-[14%] right-[5%] md:top-[14%] md:right-[7%]", size: "text-xl md:text-4xl", dur: 18, gold: true },
+  { pos: "bottom-[16%] left-[5%] md:bottom-[14%] md:left-[8%]", size: "text-2xl md:text-6xl", dur: 16, gold: false },
+  { pos: "bottom-[7%] right-[5%] md:bottom-[10%] md:right-[6%]", size: "text-3xl md:text-5xl", dur: 20, gold: false },
+  { pos: "top-[21%] left-[10%] md:top-[44%] md:left-[2%]", size: "text-xl md:text-4xl", dur: 15, gold: true },
+  { pos: "bottom-[24%] right-[8%] md:bottom-auto md:top-[46%] md:right-[2%]", size: "text-xl md:text-5xl", dur: 17, gold: false },
+  { pos: "hidden md:block top-[4%] left-[40%]", size: "md:text-4xl", dur: 19, gold: false },
+  { pos: "hidden md:block bottom-[4%] left-[38%]", size: "md:text-6xl", dur: 13, gold: true },
 ];
 
 const Floater = ({ w, i, p }: { w: string; i: number; p: MotionValue<number> }) => {
   const f = FLOAT_POS[i];
-  const s = 0.18 + i * 0.022, e = s + 0.1;
+  const s = 0.16 + i * 0.025, e = s + 0.1;
   const fade = useTransform(p, [s, e], [1, 0]);
   const spacing = useTransform(p, [s, e], ["0em", "0.6em"]);
   const blur = useTransform(p, [s, e], ["blur(0px)", "blur(8px)"]);
-  const dx = (i % 2 ? -1 : 1) * (8 + i * 2);
+  const dx = (i % 2 ? -1 : 1) * (18 + i * 3);
   return (
     <motion.span aria-hidden="true" style={{ opacity: fade, letterSpacing: spacing, filter: blur }}
-      className={`absolute ${f.pos} ${f.size} font-serif font-light whitespace-nowrap text-brand-cream`}>
+      className={`absolute ${f.pos} ${f.size} font-serif font-extralight whitespace-nowrap ${f.gold ? "text-[#B8977E]" : "text-[#F6F2F3]"}`}>
       <motion.span className="block"
-        animate={{ x: [0, dx, -dx / 2, 0], y: [0, -10, 6, 0], opacity: [0.25, 0.65, 0.4, 0.25] }}
-        transition={{ duration: f.dur, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}>
+        animate={{ x: [0, dx, -dx / 2, 0], y: [0, -16, 10, 0], opacity: [0.35, 0.85, 0.55, 0.35] }}
+        transition={{ duration: f.dur, repeat: Infinity, ease: "easeInOut", delay: i * 0.7 }}>
         {w}
       </motion.span>
     </motion.span>
@@ -287,26 +295,26 @@ const Philosophy = () => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const p = useSpring(scrollYProgress, { stiffness: 60, damping: 26, mass: 0.6 });
-  const plum = useTransform(p, [0.3, 0.55], [1, 0]);
-  const one = useTransform(p, [0.22, 0.34], [1, 0]);
-  const oneY = useTransform(p, [0.22, 0.34], ["0px", "-30px"]);
+  const plum = useTransform(p, [0.3, 0.6], [1, 0]);
+  const one = useTransform(p, [0.24, 0.36], [1, 0]);
+  const oneY = useTransform(p, [0.24, 0.36], ["0px", "-30px"]);
   const two = useTransform(p, [0.52, 0.64], [0, 1]);
   const twoY = useTransform(p, [0.52, 0.64], ["30px", "0px"]);
-  const circle = useTransform(p, [0.38, 0.6], [0, 1]);
+  const circle = useTransform(p, [0.4, 0.62], [0, 1]);
   const calm = [useTransform(p, [0.66, 0.71], [0, 1]), useTransform(p, [0.7, 0.75], [0, 1]), useTransform(p, [0.74, 0.79], [0, 1]), useTransform(p, [0.78, 0.83], [0, 1])];
   const cta = useTransform(p, [0.84, 0.92], [0, 1]);
 
   if (reduce) {
     return (
       <section aria-labelledby="filo-titulo">
-        <div className="bg-brand-ink text-brand-cream px-6 py-16 text-center space-y-5">
-          <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
+        <div className="bg-[#482A3A] text-[#F6F2F3] px-6 py-20 text-center space-y-6">
+          <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-[#B8977E]">Mi filosofía de trabajo</h2>
           <PhaseOneText />
-          <ul className="space-y-2 text-sm text-brand-cream/90 font-light">{RESTLESS.map((w) => <li key={w}>{w}</li>)}</ul>
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xl font-extralight text-[#F6F2F3]/85">{RESTLESS.map((w) => <li key={w}>{w}</li>)}</ul>
         </div>
-        <div className="bg-[#F7F3F0] px-6 py-16 text-center space-y-5">
+        <div className="px-6 py-20 text-center space-y-6" style={{ background: CALM_BG }}>
           <TransitionText />
-          <p className="text-brand-mauve font-serif text-lg">{CALM.join(" · ")}</p>
+          <p className={CALM_CLASS}>{CALM.map((w, i) => <CalmWord key={w} w={w} i={i} />)}</p>
           <ManifestoLink />
         </div>
       </section>
@@ -315,19 +323,19 @@ const Philosophy = () => {
 
   return (
     <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[260vh] md:h-[300vh]">
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#F7F3F0]">
-        <motion.div aria-hidden="true" style={{ opacity: plum }} className="absolute inset-0 bg-brand-ink" />
+      <div className="sticky top-0 h-[100svh] overflow-hidden" style={{ background: CALM_BG }}>
+        <motion.div aria-hidden="true" style={{ opacity: plum }} className="absolute inset-0 bg-[#482A3A]" />
         <motion.div aria-hidden="true" style={{ opacity: circle }} className="absolute inset-0 flex items-center justify-center">
-          <motion.div animate={{ scale: [0.96, 1.04, 0.96] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
-            <BreathingCircle className="relative w-[min(88vw,560px)] aspect-square" />
-          </motion.div>
+          <motion.div animate={{ scale: [0.94, 1.06, 0.94] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="w-[min(92vw,620px)] aspect-square rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(121,93,100,0.22) 0%, rgba(121,93,100,0.12) 45%, transparent 70%)" }} />
         </motion.div>
 
         {/* Fase 1 · dolor */}
         <div className="absolute inset-0">{RESTLESS.map((w, i) => <Floater key={w} w={w} i={i} p={p} />)}</div>
         <motion.div style={{ opacity: one, y: oneY }} className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="relative text-center space-y-4 md:space-y-5 text-brand-cream max-w-2xl">
-            <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
+          <div className="relative text-center space-y-5 md:space-y-7 text-[#F6F2F3] max-w-4xl">
+            <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-[#B8977E]">Mi filosofía de trabajo</h2>
             <PhaseOneText />
             <p className="sr-only">{RESTLESS.join(" · ")}</p>
           </div>
@@ -335,10 +343,10 @@ const Philosophy = () => {
 
         {/* Fase 2 · calma */}
         <motion.div style={{ opacity: two, y: twoY }} className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="relative text-center space-y-5 max-w-3xl">
+          <div className="relative text-center space-y-7 max-w-4xl">
             <TransitionText />
-            <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-brand-mauve font-serif text-lg md:text-2xl">
-              {CALM.map((w, i) => <motion.li key={w} style={{ opacity: calm[i] }}>{w}</motion.li>)}
+            <ul className={CALM_CLASS}>
+              {CALM.map((w, i) => <motion.li key={w} style={{ opacity: calm[i] }}><CalmWord w={w} i={i} /></motion.li>)}
             </ul>
             <motion.div style={{ opacity: cta }} className="pt-2"><ManifestoLink /></motion.div>
           </div>
