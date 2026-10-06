@@ -15,7 +15,8 @@ import {
   applyFontPair,
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
-import Header from "@/components/LegacyHeader";
+import Header from "@/components/Header";
+import SiteFooter from "@/components/SiteFooter";
 
 type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
@@ -469,9 +470,6 @@ const SabiduriaCiclica = () => {
   // Subtle scroll zoom (top-center origin) so the top of the image is never cropped.
   void heroParallax;
   const heroImgScale = useTransform(scrollY, [0, 600], [1, 1 + 0.06 * k], { clamp: true });
-  const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
-  const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
-  const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
 
   const photoRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: photoProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
@@ -493,24 +491,12 @@ const SabiduriaCiclica = () => {
           <script type="application/ld+json">{JSON.stringify(EVENT_JSONLD)}</script>
         </Helmet>
 
-        <Header palette={palette} brandName={settings?.brandName} borderless />
-
-        {/* Elementos decorativos con parallax */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-          <motion.div style={{ y: deco1Y }} className="absolute top-[38%] -left-24 w-72 h-72 rounded-full bg-warm-mauve/50 blur-3xl" />
-          <motion.div style={{ y: deco2Y }} className="absolute top-[55%] -right-20 w-80 h-80 rounded-full bg-warm-gold/50 blur-3xl" />
-          <motion.div style={{ y: deco3Y }} className="absolute top-[30%] right-[8%] text-primary/10 hidden md:block">
-            <MoonPhase phase="creciente" className="w-24 h-24" />
-          </motion.div>
-          <motion.div style={{ y: deco1Y }} className="absolute top-[72%] left-[6%] text-primary/10 hidden md:block">
-            <MoonPhase phase="menguante" className="w-16 h-16" />
-          </motion.div>
-        </div>
+        <Header palette={palette} brandName={settings?.brandName} />
 
         <main className="flex-grow relative">
 
           {/* (1) HERO */}
-          <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-gradient-to-b from-card via-card to-background">
+          <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-background">
             <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-16 md:gap-10 items-center">
               <div className="relative -mx-4 md:mx-0 md:self-start">
                 <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
@@ -621,7 +607,7 @@ const SabiduriaCiclica = () => {
           </section>
 
           {/* (3) POR QUÉ NACE + QUIÉN TE GUÍA */}
-          <section className="relative py-12 md:py-16 px-6 bg-gradient-to-b from-background via-warm-mauve/30 to-background">
+          <section className="relative py-12 md:py-16 px-6 bg-brand-cream">
             <div className="max-w-5xl mx-auto grid md:grid-cols-[0.9fr_1.1fr] gap-8 md:gap-14 items-center">
               <motion.div ref={photoRef} style={{ y: photoY }} className="max-w-[300px] md:max-w-[340px] mx-auto w-full">
                 <div className="relative">
@@ -656,7 +642,7 @@ const SabiduriaCiclica = () => {
           </section>
 
           {/* (5) PARA QUIÉN ES */}
-          <section className="relative py-12 md:py-16 px-6 bg-gradient-to-b from-background via-warm-peach/50 to-background">
+          <section className="relative py-12 md:py-16 px-6 bg-brand-cream">
             <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.08 } } }} className="max-w-3xl mx-auto text-center space-y-6">
               <RevealTitle text="Este taller es para todas las mujeres" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
@@ -699,7 +685,7 @@ const SabiduriaCiclica = () => {
           </section>
 
           {/* (7) PRECIO */}
-          <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-gradient-to-b from-background via-warm-mauve/30 to-background">
+          <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-brand-cream">
             <motion.div {...inView} variants={fadeUp} className="max-w-md mx-auto space-y-6">
               <RevealTitle text="Tu inversión" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
               <div className="bg-[#795D64] rounded-3xl p-6 md:p-7 shadow-lg">
@@ -765,7 +751,7 @@ const SabiduriaCiclica = () => {
           </section>
 
           {/* (9) CIERRE */}
-          <section id="ciclica-contacto" className="relative py-12 md:py-16 px-6 bg-gradient-to-b from-background via-warm-peach/50 to-background">
+          <section id="ciclica-contacto" className="relative py-12 md:py-16 px-6 bg-brand-cream">
             <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-2xl mx-auto text-center space-y-5">
               <RevealTitle text="¿Tienes alguna duda antes de inscribirte?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground" />
               <motion.p variants={fadeUp} className="text-muted-foreground font-light text-lg">Escríbeme y te respondo personalmente.</motion.p>
@@ -804,21 +790,7 @@ const SabiduriaCiclica = () => {
           </section>
         </main>
 
-        {/* ── FOOTER ── */}
-        <footer className={`relative py-12 px-6 border-t border-border/40 ${palette.cardBackground} text-center text-sm text-muted-foreground`}>
-          <div className="max-w-6xl mx-auto space-y-4">
-            <p className="font-serif font-semibold text-foreground">{settings?.brandName || "SantoSha"}</p>
-            <p className="font-light">{settings?.footerText || "Bienestar · Conciencia · Transformación"}</p>
-            <div className="pt-4 flex flex-wrap justify-center gap-6">
-              <Link to="/" className="hover:underline text-xs text-muted-foreground/70 transition-colors">← Inicio</Link>
-              <Link to="/quien-soy" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Quién Soy</Link>
-              <Link to="/filosofia" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Filosofía</Link>
-              <Link to="/curso-iniciacion-yoga" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Curso de Iniciación</Link>
-              <Link to="/acompanamiento-individual" className="hover:underline text-xs text-muted-foreground/70 transition-colors">Acompañamiento 1:1</Link>
-              <Link to="/terminos-y-condiciones" className="hover:underline text-xs text-muted-foreground/60 transition-colors">Términos y Condiciones</Link>
-            </div>
-          </div>
-        </footer>
+        <SiteFooter palette={palette} />
 
         <AiChatWidget pageSlug="sabiduria-ciclica" />
       </div>

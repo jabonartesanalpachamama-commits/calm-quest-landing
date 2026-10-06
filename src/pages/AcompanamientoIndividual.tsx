@@ -1,35 +1,30 @@
 /**
- * YOGA Y MEDITACIÓN 1:1 — lenguaje editorial de lujo (Lote Q), el mismo de la portada:
- * blanco / #FBF9F8 alternados, display fino en mayúsculas, filetes dorados que se dibujan,
- * fade + 14 px. Única animación firma: la franja de palabras en movimiento.
+ * YOGA Y MEDITACIÓN 1:1 — editorial, poco texto (Lote AA):
+ * hero con el color plano del telón de la foto, índice interno discreto, secciones planas
+ * alternando blanco / #FBF9F8, titular + máx. 2 líneas por sección. Sin barra flotante.
  */
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-motion";
 import { ArrowDown, ArrowRight, ChevronDown } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
-import FloatingCTA from "@/components/FloatingCTA";
 import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
-import Quote from "@/components/landing/Quote";
-import { Highlight } from "@/components/landing/Highlight";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
-import yogaPhoto from "@/assets/fransury-yoga.webp";
-import yogaPhotoWide from "@/assets/fransury-yoga-ancha.webp";
+import yogaPhoto from "@/assets/fransury-yoga-nueva.webp";
 import { fadeUp, inView, PriceCard, PriceCardLight } from "@/components/landing";
 
-// Foto del hero: vertical para móvil, recorte ancho para computador.
+// Foto del hero (misma en móvil y escritorio) y color plano de su telón.
 const HERO_IMAGE = yogaPhoto;
-const HERO_IMAGE_WIDE = yogaPhotoWide;
+const HERO_BG = "#B8A8AB";
 
 const FOCUS = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-4";
 const BTN_LINE = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-ink text-brand-ink text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:text-primary-foreground transition-colors duration-500 ${FOCUS}`;
-const BTN_SOLID = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-mauve bg-brand-mauve text-primary-foreground text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:border-brand-ink transition-colors duration-500 ${FOCUS}`;
 const LABEL = "block text-[10px] uppercase tracking-[0.35em] text-brand-mauve";
 const H2 = "!font-light text-foreground !leading-[1.35]";
 const SECTION = "px-6 py-24 md:py-36";
@@ -39,30 +34,29 @@ const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información sobre las sesi
 const SERVICES = [
   {
     title: "Clases Privadas de Kundalini Yoga y Meditación",
-    desc: "Diseñadas según tu proceso personal, intención terapéutica o camino espiritual.",
+    desc: "Diseñadas según tu proceso, tu intención y tu momento.",
     tags: ["1 a 1", "Personalizada", "Virtual"],
   },
   {
     title: "Procesos de Acompañamiento Integrativo",
-    desc: "Programas de varias sesiones orientados a profundizar en objetivos específicos de regulación, autoconocimiento, integración emocional o transformación humana.",
+    desc: "Varias sesiones para profundizar en regulación y autoconocimiento.",
     tags: ["Multi-sesión", "Integrativo", "Virtual"],
   },
 ];
 
 const FOR_WHOM = [
-  "Quieres profundizar en tu camino de autoconocimiento.",
-  "Necesitas fortalecer tus recursos internos y tu conciencia corporal.",
-  "Estás atravesando un proceso emocional o un momento de transición.",
-  "Buscas una práctica espiritual más consciente.",
-  "Vives en modo supervivencia y quieres una relación más coherente, presente y compasiva con tu vida.",
+  "Quieres conocerte más a fondo.",
+  "Atraviesas un momento de transición.",
+  "Buscas una práctica espiritual consciente.",
+  "Vives en modo supervivencia y quieres soltar.",
 ];
 
 const WHAT_CULTIVATES = ["Claridad", "Regulación interna", "Autoconocimiento", "Conexión espiritual", "Coherencia con tu esencia"];
 
 const STEPS = [
-  { title: "Conversación inicial", desc: "Nos conocemos, comprendes el espacio y evaluamos juntos qué proceso se adapta mejor a tu momento." },
-  { title: "Diseño personalizado", desc: "Adaptamos el formato, la frecuencia y la intención de cada sesión a tu historia y objetivos." },
-  { title: "Acompañamiento continuo", desc: "Sesiones 1:1 con seguimiento, recursos entre encuentros y ajustes según tu proceso." },
+  { title: "Conversación inicial", desc: "Nos conocemos y elegimos el proceso adecuado." },
+  { title: "Diseño personalizado", desc: "Formato y frecuencia a tu medida." },
+  { title: "Acompañamiento continuo", desc: "Sesiones 1:1 con seguimiento y recursos." },
 ];
 
 const KEY_INFO = [
@@ -125,57 +119,38 @@ const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
   </ul>
 );
 
-/** Círculo que respira (10 s) detrás de un título, sobre fondo plano; quieto con reduced-motion. */
-const LuxBreath = ({ top = "50%" }: { top?: string }) => {
-  const reduce = useReducedMotion();
-  return (
-    <div aria-hidden="true" className="pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(90vw,640px)] aspect-square" style={{ top }}>
-      <motion.div className="w-full h-full rounded-full border border-[#795D64]/35"
-        style={{ background: "radial-gradient(circle, rgba(121,93,100,0.38) 0%, rgba(121,93,100,0) 70%)" }}
-        animate={reduce ? undefined : { scale: [0.92, 1.08, 0.92], opacity: [0.7, 1, 0.7] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} />
-    </div>
-  );
-};
-
 const stagger = (s = 0.12) => ({ show: { transition: { staggerChildren: s } } });
 
 /* ───────────── Hero ───────────── */
+const HERO_ALT = "Fransury González en postura de meditación con las manos en el pecho y el abdomen";
 const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
-  const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
   const desktop = useMedia("(min-width: 768px)");
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+  // Bordes de la foto fundidos con el color plano del telón (sin marco).
   const mask = desktop
-    ? "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)"
-    : "linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%)";
+    ? "linear-gradient(to right, transparent 0%, #000 22%), linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)"
+    : "linear-gradient(to bottom, transparent 0%, #000 10%, #000 84%, transparent 100%)";
   return (
-    <section ref={ref} className="relative md:min-h-[calc(100svh-104px)] overflow-hidden flex flex-col md:flex-row md:items-center"
-      style={{ background: desktop ? "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" : "linear-gradient(180deg, #DCD0D1 0%, #CFC0C2 55%, #CFC0C2 82%, #FFFFFF 100%)" }}>
-      <div className="relative order-2 w-full aspect-[941/900] -mt-4 md:mt-0 md:order-none md:aspect-auto md:absolute md:inset-y-0 md:right-0 md:left-auto md:w-[62%] overflow-hidden"
+    <section className="relative md:min-h-[calc(100svh-150px)] overflow-hidden flex flex-col md:flex-row md:items-center" style={{ backgroundColor: HERO_BG }}>
+      <div className="relative order-2 w-full aspect-[1122/1402] max-h-[78svh] md:max-h-none md:order-none md:aspect-auto md:absolute md:inset-y-0 md:right-0 md:w-[min(52%,760px)] overflow-hidden"
         style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
-        <motion.picture style={reduce || !desktop ? undefined : { y }} className="absolute inset-0 block will-change-transform">
-          <source media="(min-width: 768px)" srcSet={HERO_IMAGE_WIDE} />
-          <img src={HERO_IMAGE} alt="Fransury González practicando yoga en postura de cobra sobre un tapete, con los ojos cerrados" fetchPriority="high"
-            width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[70%_70%] md:object-[50%_60%] md:scale-[1.06]" />
-        </motion.picture>
+        <img src={HERO_IMAGE} alt={HERO_ALT} fetchPriority="high" width={1122} height={1402}
+          className="absolute inset-0 w-full h-full object-cover object-[50%_22%] md:object-[50%_18%]" />
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
-        className="relative order-1 w-full max-w-6xl mx-auto px-6 pt-10 pb-2 md:py-32">
-        <div className="max-w-[30rem] text-center md:text-left">
-          <motion.span variants={fadeUp} className={LABEL}>Sesiones 1 a 1 · Virtual</motion.span>
-          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.5rem,7vw,2.2rem)] md:!text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.1em] md:!tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
+        className="relative order-1 w-full max-w-6xl mx-auto px-6 pt-12 pb-6 md:py-32">
+        <div className="max-w-[28rem] text-center md:text-left">
+          <motion.span variants={fadeUp} className="block text-[10px] uppercase tracking-[0.35em] text-brand-ink">Sesiones 1 a 1 · Virtual</motion.span>
+          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.5rem,7vw,2.2rem)] md:!text-[clamp(1.9rem,4vw,3.2rem)] !tracking-[0.1em] md:!tracking-[0.16em] !font-extralight !leading-[1.2] text-brand-ink">
             Yoga y meditación 1:1
           </motion.h1>
-          <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-foreground">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
+          <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-brand-ink">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
           <Rule className="mx-auto md:mx-0 my-7 md:my-9" />
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center md:items-center gap-5 sm:gap-8">
-            <a href="#precios" onClick={onPrecios} className={`${BTN_SOLID} group`}>
-              Quiero saber más
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8 justify-center md:justify-start">
+            <a href="#precios" onClick={onPrecios} className={`${BTN_LINE} group`}>
+              Reservar sesión
               <ArrowDown className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-y-0.5" strokeWidth={1.25} />
             </a>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={`text-sm text-foreground ${LINK_GOLD}`}>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={`text-sm text-brand-ink ${LINK_GOLD}`}>
               Escríbeme por WhatsApp
             </a>
           </motion.div>
@@ -185,20 +160,37 @@ const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
   );
 };
 
+/* ───────────── Índice interno ───────────── */
+const SUBNAV: [string, string][] = [["que-ofrezco", "Qué ofrezco"], ["como-funciona", "Cómo funciona"], ["precios", "Inversión"], ["preguntas", "Preguntas"]];
+const SubNav = () => (
+  <nav aria-label="En esta página" className="bg-background border-b border-border">
+    <ul className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-brand-ink">
+      {SUBNAV.map(([id, label], i) => (
+        <li key={id} className="flex items-center gap-3">
+          {i > 0 && <span aria-hidden="true" className="text-brand-gold">·</span>}
+          <a href={`#${id}`} className={`py-2 hover:text-brand-mauve transition-colors ${FOCUS}`}
+            onClick={(e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); history.replaceState(null, "", `#${id}`); }}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+);
+
 /* ───────────── Franja de palabras en movimiento ───────────── */
 const WordsMarquee = () => {
   const reduce = useReducedMotion();
   const word = (w: string, i: number) => (
-    <span className={`font-serif font-extralight uppercase tracking-[0.24em] text-xl md:text-3xl whitespace-nowrap ${i % 2 ? "text-brand-mauve" : "text-brand-ink"}`}>{w}</span>
+    <span className={`font-serif font-extralight uppercase tracking-[0.3em] text-xs md:text-sm whitespace-nowrap ${i % 2 ? "text-brand-mauve" : "text-brand-ink"}`}>{w}</span>
   );
   const half = [...WHAT_CULTIVATES, ...WHAT_CULTIVATES];
   return (
     <section aria-label="Lo que cultivas" className="bg-background">
-      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.45), transparent)" }} />
-      <div className="py-14 md:py-20">
+      <div className="py-5 md:py-6 border-b border-border">
         {reduce ? (
-          <ul className="flex flex-wrap justify-center items-center gap-x-8 gap-y-5 px-6 text-center">
-            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-8">{i > 0 && <Diamond />}{word(w, i)}</li>)}
+          <ul className="flex flex-nowrap overflow-hidden justify-center items-center gap-x-5 px-6 text-center">
+            {WHAT_CULTIVATES.map((w, i) => <li key={w} className="flex items-center gap-5">{i > 0 && <Diamond />}{word(w, i)}</li>)}
           </ul>
         ) : (
           <div className="logo-marquee" tabIndex={0}>
@@ -207,7 +199,7 @@ const WordsMarquee = () => {
               {[0, 1].map((g) => (
                 <div key={g} className="flex shrink-0 items-center">
                   {half.map((w, i) => (
-                    <div key={`${g}-${i}`} className="flex items-center gap-10 md:gap-16 pr-10 md:pr-16">{word(w, i)}<Diamond /></div>
+                    <div key={`${g}-${i}`} className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12">{word(w, i)}<Diamond /></div>
                   ))}
                 </div>
               ))}
@@ -215,7 +207,6 @@ const WordsMarquee = () => {
           </div>
         )}
       </div>
-      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.45), transparent)" }} />
     </section>
   );
 };
@@ -288,40 +279,34 @@ const AcompanamientoIndividual = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative flex flex-col pb-20 md:pb-0">
+    <div className="min-h-screen bg-background text-foreground relative flex flex-col">
       <Seo
         title="Yoga y meditación online 1:1 | Fransury González"
         description="Clases privadas de Kundalini Yoga y meditación 1 a 1 por videollamada con Fransury González, desde Medellín para todo el mundo. 60 min, desde 17 USD."
         path="/acompanamiento-individual"
         jsonLd={[SERVICE_JSONLD, faqJsonLd(FAQS)]}
       />
-      <FloatingCTA scrollTo="#precios" ctaText="Reservar sesión" subText="Yoga y meditación 1:1" />
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
         <Hero onPrecios={goPrecios} />
-        <p className="px-6 pt-10 md:pt-14 text-sm text-muted-foreground text-center">Clases virtuales de yoga y meditación desde Medellín, para quien esté en cualquier lugar del mundo.</p>
+        <SubNav />
         <WordsMarquee />
 
-        {/* ¿Deseas un proceso personalizado? */}
-        <section className={`${SECTION} bg-background relative overflow-hidden`}>
-          <LuxBreath />
-          <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-3xl mx-auto text-center">
-            <motion.h2 variants={fadeUp} className={H2}>¿Deseas un proceso personalizado?</motion.h2>
-            <Rule className="mx-auto my-10" />
-            <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/85 leading-[1.9]">
-              Te acompaño 1 a 1 en clases privadas donde el <Highlight>Kundalini Yoga</Highlight>, la meditación y la <Highlight delay={0.4}>conciencia corporal</Highlight> se ponen al servicio de tu transformación humana.
-            </motion.p>
-          </motion.div>
+        {/* Frase */}
+        <section className={`${SECTION} bg-brand-cream`}>
+          <motion.p {...inView} variants={fadeUp} className="max-w-3xl mx-auto text-center font-serif font-extralight uppercase tracking-[0.1em] text-xl md:text-3xl leading-[1.5] text-brand-ink">
+            Clases privadas donde tu cuerpo, tu respiración y la meditación te devuelven a ti.
+          </motion.p>
         </section>
 
         {/* ¿Qué ofrezco? */}
-        <section className={`${SECTION} bg-background pt-0 md:pt-0`}>
+        <section id="que-ofrezco" className={`scroll-mt-24 ${SECTION} bg-background`}>
           <div className="max-w-6xl mx-auto">
-            <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
+            <motion.div {...inView} variants={fadeUp} className="text-center mb-14 md:mb-20">
               <h2 className={H2}>¿Qué ofrezco?</h2>
               <Rule className="mx-auto my-8" />
-              <p className="text-muted-foreground text-lg">Dos modalidades de acompañamiento, ambas adaptadas a tu proceso.</p>
+              <p className="text-muted-foreground text-lg">Dos modalidades, ambas a tu medida.</p>
             </motion.div>
             <motion.div {...inView} variants={stagger(0.15)} className="grid md:grid-cols-2 border-t border-border md:border-t-0">
               {SERVICES.map(({ title, desc, tags }, i) => (
@@ -329,25 +314,21 @@ const AcompanamientoIndividual = () => {
                   className={`py-12 md:py-4 md:px-14 ${i === 0 ? "md:pl-0 border-b border-border md:border-b-0 md:border-r" : "md:pr-0"}`}>
                   <span className="block font-serif font-extralight text-5xl md:text-6xl text-brand-mauve leading-none">0{i + 1}</span>
                   <h3 className="mt-8 !text-lg md:!text-xl text-foreground !leading-[1.5]">{title}</h3>
-                  <p className="mt-5 text-base text-muted-foreground leading-relaxed">{desc}</p>
-                  <p className="mt-8 text-[11px] uppercase tracking-[0.3em] text-brand-mauve">{tags.join(" · ")}</p>
+                  <p className="mt-4 text-base text-muted-foreground leading-relaxed">{desc}</p>
+                  <p className="mt-6 text-[11px] uppercase tracking-[0.3em] text-brand-mauve">{tags.join(" · ")}</p>
                 </motion.article>
               ))}
             </motion.div>
           </div>
         </section>
 
-        <Quote variant="lux-band" cite="Procesos adaptados a tu momento vital, tu historia y tu camino personal.">
-          Un espacio diseñado para ayudarte a cultivar mayor claridad, regulación interna, autoconocimiento, conexión espiritual y coherencia con tu esencia.
-        </Quote>
-
         {/* ¿Cómo funciona? */}
-        <section className={`${SECTION} bg-brand-cream border-t border-border`}>
+        <section id="como-funciona" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
           <div className="max-w-5xl mx-auto">
             <motion.div {...inView} variants={fadeUp} className="text-center mb-16 md:mb-24">
               <h2 className={H2}>¿Cómo funciona?</h2>
               <Rule className="mx-auto my-8" />
-              <p className="text-muted-foreground text-lg">Un proceso simple, claro y completamente a tu medida.</p>
+              <p className="text-muted-foreground text-lg">Simple, claro y a tu medida.</p>
             </motion.div>
             <StepsLine />
             <motion.dl {...inView} variants={stagger()} className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4">
@@ -383,13 +364,12 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Tu inversión */}
-        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream relative overflow-hidden`}>
-          <LuxBreath top="22%" />
+        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
           <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">
               <h2 className={H2}>Tu inversión</h2>
               <Rule className="mx-auto my-8" />
-              <p className="text-foreground/90 text-lg">Elige el plan que mejor acompañe tu proceso</p>
+              <p className="text-muted-foreground text-lg">Elige el plan que acompañe tu proceso.</p>
             </motion.div>
             <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               <PriceCardLight
@@ -399,7 +379,7 @@ const AcompanamientoIndividual = () => {
                 href={getWhatsAppUrl("Hola, me gustaría agendar 1 Sesión de Acompañamiento.")}
                 description={<>
                   <p>Pago por cada sesión individual</p>
-                  <Benefits light items={["Clases de 60 minutos", "Atención 100% personalizada", "Sin compromisos a largo plazo", "Enfoque en temas específicos"]} />
+                  <Benefits light items={["Clases de 60 minutos", "Atención personalizada", "Sin compromisos"]} />
                 </>}
                 cta="Inscribirme a 1 Sesión"
               />
@@ -411,7 +391,7 @@ const AcompanamientoIndividual = () => {
                 href={getWhatsAppUrl("Hola, me gustaría inscribirme a la Mensualidad de Acompañamiento.")}
                 description={<>
                   <p>Paquete de 8 sesiones</p>
-                  <Benefits items={["8 Sesiones adaptables a tu ritmo", "Seguimiento constante de tu progreso", "Recursos y herramientas entre sesiones", "Ideal para procesos de transformación humana"]} />
+                  <Benefits items={["8 sesiones a tu ritmo", "Seguimiento de tu progreso", "Recursos entre sesiones"]} />
                 </>}
                 cta="Inscribirme a la Mensualidad"
               />
@@ -420,7 +400,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Preguntas frecuentes */}
-        <section className={`${SECTION} bg-background`}>
+        <section id="preguntas" className={`scroll-mt-24 ${SECTION} bg-background`}>
           <div className="max-w-3xl mx-auto">
             <motion.div {...inView} variants={fadeUp} className="text-center mb-14">
               <h2 className={H2}>Preguntas frecuentes</h2>
@@ -436,7 +416,7 @@ const AcompanamientoIndividual = () => {
             <motion.h2 variants={fadeUp} className={H2}>Reserva tu sesión</motion.h2>
             <Rule className="mx-auto my-10" />
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
-              Cuéntame qué necesitas y lo conversamos. El primer paso es simplemente llegar.
+              Cuéntame qué necesitas y lo conversamos.
             </motion.p>
             <motion.div variants={fadeUp} className="pt-10">
               <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={BTN_LINE}>Escríbeme por WhatsApp</a>

@@ -3,7 +3,7 @@
  *  - Títulos en display fino en mayúsculas (tokens globales en .lux), cuerpo en Montserrat.
  *  - Solo fundido + 14 px de desplazamiento al entrar, parallax mínimo en fotos, filetes que se dibujan.
  *  - Sin píldoras, óvalos ni marcos. Máximo 2 resaltados por sección (subrayado dorado fino).
- *  - «Mi filosofía de trabajo» conserva su experiencia de scroll (única con animación narrativa).
+ *  - «Mi filosofía de trabajo»: escenario sticky del caos a la calma (manchas difuminadas + 4 pares de palabras).
  */
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
@@ -69,8 +69,6 @@ const useMedia = (q: string) => {
   return m;
 };
 
-const RESTLESS = ["Prisa", "Ruido", "Exigencia", "Tensión", "Aguantar", "Anticipar", "Control", "Cansancio"];
-const CALM = ["Presencia", "Ecuanimidad", "Conexión", "Contentamiento consciente"];
 
 /** Filete dorado que se dibuja lento al entrar. */
 const Rule = ({ className = "" }: { className?: string }) => (
@@ -244,205 +242,151 @@ const StartSelector = () => (
   </section>
 );
 
-/* ───────────── 7. Filosofía: «El pulso» (caos → calma) ───────────── */
-const INK = "#482A3A", CREAM = "#F6F2F3", GOLD = "#B8977E";
+/* ───────────── 7. Filosofía: del caos a la calma (sticky stage) ───────────── */
+const INK = "#482A3A", CREAM = "#F6F2F3", GOLD = "#B8977E", MAUVE = "#795D64";
+const PAIRS = [
+  { from: "Prisa", to: "Presencia", line: "Bajar el ritmo para notar lo que de verdad está pasando." },
+  { from: "Ruido", to: "Ecuanimidad", line: "Escuchar lo que sientes sin dejar que te arrastre." },
+  { from: "Tensión", to: "Conexión", line: "Volver al cuerpo y a quienes te importan, con calma." },
+  { from: "Cansancio", to: "Contentamiento consciente", line: "Agradecer lo que hay y descansar en ello." },
+];
+/** Tramos de scroll de cada par; entre el 2.º y el 3.º el fondo se aclara (texto oculto en ese hueco). */
+const SEGS: [number, number][] = [[0.14, 0.31], [0.31, 0.47], [0.53, 0.7], [0.7, 0.87]];
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 const smooth = (v: number) => { const x = clamp01(v); return x * x * (3 - 2 * x); };
-/** Ruido determinista en [-1, 1]. */
-const hash = (n: number) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return (s - Math.floor(s)) * 2 - 1; };
-const vnoise = (x: number) => { const i = Math.floor(x), f = x - i; return hash(i) + (hash(i + 1) - hash(i)) * smooth(f); };
-/** Caos: sube 0–0.1, pleno 0.1–0.4, decae 0.4–0.66. */
-const chaosAt = (p: number) => (p < 0.1 ? p / 0.1 : p < 0.4 ? 1 : 1 - smooth((p - 0.4) / 0.26));
-const calmAt = (p: number) => smooth((p - 0.62) / 0.1);
+const BIG = "font-serif font-extralight uppercase !tracking-[0.1em] !leading-[1.1] text-[clamp(2.1rem,9vw,5.2rem)] [overflow-wrap:normal] [hyphens:none]";
 
-const PULSE_H = 200;
-const pulsePath = (p: number, t: number, w: number, amp: number) => {
-  const c = chaosAt(p), b = calmAt(p), N = 110;
-  const freq = 1.2 + 34 * c; // ciclos de ruido a lo ancho
-  const breathe = (7 + 3 * Math.sin((t * 2 * Math.PI) / 8)) * b;
-  let d = "";
-  for (let i = 0; i <= N; i++) {
-    const x = i / N;
-    const zig = c > 0.001 ? vnoise(x * freq + 3) * (0.75 + 0.25 * Math.sin(t * 7 + i * 1.3)) + 0.18 * Math.sin(t * 11 + i * 2.1) * c : 0;
-    const y = PULSE_H / 2 + zig * amp * c + breathe * Math.sin(x * Math.PI * 2.2 + (t * 2 * Math.PI) / 8);
-    d += `${i ? "L" : "M"}${(x * w).toFixed(1)} ${y.toFixed(1)}`;
-  }
-  return d;
-};
-
-const PulseLine = ({ p, t, desktop, still = false, color }: { p?: MotionValue<number>; t?: MotionValue<number>; desktop: boolean; still?: boolean; color?: MotionValue<string> | string }) => {
-  const ref = useRef<SVGSVGElement>(null);
-  const [w, setW] = useState(1280);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
-    const ro = new ResizeObserver(([e]) => setW(Math.max(320, e.contentRect.width)));
-    ro.observe(el); return () => ro.disconnect();
-  }, []);
-  const zero = useMotionValue(0);
-  const d = useTransform([p ?? zero, t ?? zero] as MotionValue<number>[], ([pv, tv]: number[]) =>
-    still ? `M0 ${PULSE_H / 2}L${w} ${PULSE_H / 2}` : pulsePath(pv, tv, w, desktop ? 70 : 45));
-  return (
-    <svg ref={ref} aria-hidden="true" className="block w-full h-[200px]" viewBox={`0 0 ${w} ${PULSE_H}`} preserveAspectRatio="none">
-      <motion.path d={d} fill="none" style={{ stroke: color ?? GOLD }} strokeWidth={1.5} vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
-    </svg>
-  );
-};
-
-/** Letra del título que tiembla en proporción al caos y se asienta en 0. */
-const ChaosLetter = ({ ch, i, chaos, t }: { ch: string; i: number; chaos: MotionValue<number>; t: MotionValue<number> }) => {
-  const x = useTransform([chaos, t] as MotionValue<number>[], ([c, tv]: number[]) => c * 2.4 * Math.sin(tv * 23 + i * 1.9));
-  const y = useTransform([chaos, t] as MotionValue<number>[], ([c, tv]: number[]) => c * 2.8 * Math.sin(tv * 19 + i * 2.7));
-  const rotate = useTransform([chaos, t] as MotionValue<number>[], ([c, tv]: number[]) => c * 5 * hash(i) * Math.sin(tv * 13 + i));
-  if (ch === " ") return <span> </span>;
-  return <motion.span aria-hidden="true" className="inline-block" style={{ x, y, rotate }}>{ch}</motion.span>;
-};
-
-const PHASE1_TITLE = "Salir del modo supervivencia";
-const ChaosTitle = ({ chaos, t }: { chaos: MotionValue<number>; t: MotionValue<number> }) => {
-  let k = 0;
-  return (
-    <h3 className={TITLE1_CLASS}>
-      <span className="sr-only">{PHASE1_TITLE}</span>
-      {PHASE1_TITLE.split(" ").map((word, wi) => (
-        <span key={wi} aria-hidden="true">
-          {wi > 0 && " "}
-          <span className="inline-block whitespace-nowrap">
-            {[...word].map((ch) => <ChaosLetter key={k} ch={ch} i={k++} chaos={chaos} t={t} />)}
-          </span>
-        </span>
-      ))}
-    </h3>
-  );
-};
-const TITLE1_CLASS = "font-serif !text-[clamp(2rem,6vw,4.6rem)] !font-extralight uppercase !tracking-[0.12em] !leading-[1.15] [overflow-wrap:normal] [hyphens:none]";
-const PHASE1_LINE = "Reaccionamos, controlamos y nos desconectamos del cuerpo.";
-
-const CalmTitle = () => (
-  <h3 className="font-serif !text-[clamp(1.4rem,4.2vw,2.9rem)] !font-extralight uppercase !tracking-[0.1em] !leading-[1.35] text-[#482A3A] [overflow-wrap:normal] [hyphens:none]">
-    A una vida en calma donde <Highlight delay={0.2}>habitas el presente</Highlight>
-  </h3>
+const ManifestoLink = ({ className = "" }: { className?: string }) => (
+  <Link to="/filosofia" className={`text-[11px] tracking-[0.3em] uppercase underline decoration-brand-gold decoration-1 underline-offset-[8px] hover:text-brand-mauve transition-colors duration-500 ${FOCUS} ${className}`}>
+    Qué es Santosha
+  </Link>
 );
-const ManifestoLink = () => (
-  <Link to="/filosofia" className={`${BTN_SOLID} ${FOCUS}`}>Qué es Santosha</Link>
-);
-const CalmDiamond = () => <span aria-hidden="true" className="inline-block w-1.5 h-1.5 rotate-45 bg-[#B8977E] shrink-0" />;
-const CALM_CLASS = "flex flex-wrap justify-center items-center gap-x-5 gap-y-3 text-[#482A3A] font-serif font-extralight uppercase tracking-[0.08em] text-2xl md:text-4xl";
 
-/**
- * Palabras del caos: posición dispersa (left/top en %, móvil | escritorio), rotación base, tamaño, opacidad y tono.
- * Bandas de arriba y de abajo; el centro (título y línea) queda libre.
- */
-const CHAOS_WORDS = [
-  { m: [22, 12], d: [11, 24], rot: -7, size: "text-2xl md:text-6xl", op: 0.85, gold: false },
-  { m: [76, 17], d: [88, 34], rot: 6, size: "text-xl md:text-4xl", op: 0.6, gold: true },
-  { m: [70, 64], d: [80, 18], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
-  { m: [26, 71], d: [21, 76], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
-  { m: [72, 78], d: [46, 90], rot: -8, size: "text-xl md:text-3xl", op: 0.55, gold: true },
-  { m: [34, 85], d: [72, 74], rot: 5, size: "text-2xl md:text-5xl", op: 0.7, gold: false },
-  { m: [76, 91], d: [86, 88], rot: -6, size: "text-xl md:text-4xl", op: 0.5, gold: false },
-  { m: [24, 95], d: [26, 92], rot: 4, size: "text-2xl md:text-6xl", op: 0.8, gold: false },
-];
-
-const ChaosWord = ({ w, i, p, chaos, t, desktop }: { w: string; i: number; p: MotionValue<number>; chaos: MotionValue<number>; t: MotionValue<number>; desktop: boolean }) => {
-  const c = CHAOS_WORDS[i];
-  const [sx, sy] = desktop ? c.d : c.m;
-  // Hilera ordenada: escritorio una fila; móvil dos filas de 4.
-  const rx = desktop ? 20 + (i % 4) * 20 : 14 + (i % 4) * 24;
-  const ry = desktop ? (i < 4 ? 76 : 86) : i < 4 ? 78 : 86;
-  const appear = 0.08 + i * 0.026;
-  const align = useTransform(p, [0.4, 0.5], [0, 1]);
-  const ds = 0.5 + i * 0.012, de = ds + 0.05;
-  const left = useTransform(align, (a) => `${sx + (rx - sx) * smooth(a)}%`);
-  const top = useTransform(align, (a) => `${sy + (ry - sy) * smooth(a)}%`);
-  const scale = useTransform(align, (a) => 1 - smooth(a) * (desktop ? 0.45 : 0.5));
-  const opacity = useTransform(p, [appear, appear + 0.05, ds, de], [0, c.op, c.op, 0]);
-  const letterSpacing = useTransform(p, [ds, de], ["0em", "0.5em"]);
-  const filter = useTransform(p, [ds, de], ["blur(0px)", "blur(6px)"]);
-  const x = useTransform([chaos, t] as MotionValue<number>[], ([cv, tv]: number[]) => cv * 5 * Math.sin(tv * 17 + i * 2.3));
-  const y = useTransform([chaos, t] as MotionValue<number>[], ([cv, tv]: number[]) => cv * 4 * Math.sin(tv * 21 + i * 1.7));
-  const rotate = useTransform([chaos, t, align] as MotionValue<number>[], ([cv, tv, a]: number[]) => c.rot * (1 - smooth(a)) + cv * 2.5 * Math.sin(tv * 15 + i));
+/** Mancha difuminada: rápida y dispersa al inicio, lenta y centrada al final. */
+const Blob = ({ i, phase, order, color, size }: { i: number; phase: MotionValue<number>; order: MotionValue<number>; color: string; size: string }) => {
+  const x = useTransform([phase, order] as MotionValue<number>[], ([ph, o]: number[]) =>
+    `${(1 - o) * 32 * Math.sin(ph * (1 + i * 0.37) + i * 2.1) + o * (i - 1) * 6}vw`);
+  const y = useTransform([phase, order] as MotionValue<number>[], ([ph, o]: number[]) =>
+    `${(1 - o) * 26 * Math.cos(ph * (0.8 + i * 0.29) + i * 1.3) + o * (i - 1) * 3}vh`);
+  const scale = useTransform([phase, order] as MotionValue<number>[], ([ph, o]: number[]) => 1 + (1 - o) * 0.25 * Math.sin(ph * 1.7 + i));
   return (
-    <motion.span aria-hidden="true" style={{ left, top, opacity }}
-      className={`absolute -translate-x-1/2 -translate-y-1/2 ${c.size} font-serif font-extralight uppercase whitespace-nowrap ${c.gold ? "text-[#B8977E]" : "text-[#F6F2F3]"}`}>
-      <motion.span className="block" style={{ x, y, rotate, scale, letterSpacing, filter }}>{w}</motion.span>
-    </motion.span>
+    <motion.div aria-hidden="true" style={{ x, y, scale, background: color, filter: "blur(100px)" }}
+      className={`absolute left-1/2 top-1/2 -ml-[calc(var(--s)/2)] -mt-[calc(var(--s)/2)] w-[var(--s)] h-[var(--s)] rounded-full will-change-transform ${size}`} />
   );
+};
+
+/** Palabra de caos: desenfocada y temblorosa; se enfoca y se aquieta según `r` (0→1). */
+const useJitter = (t: MotionValue<number>, r: MotionValue<number>, seed: number) => ({
+  x: useTransform([t, r] as MotionValue<number>[], ([tv, rv]: number[]) => (1 - rv) * 7 * Math.sin(tv * 23 + seed)),
+  y: useTransform([t, r] as MotionValue<number>[], ([tv, rv]: number[]) => (1 - rv) * 5 * Math.sin(tv * 19 + seed * 1.7)),
+  filter: useTransform(r, (rv) => `blur(${((1 - rv) * 9).toFixed(1)}px)`),
+});
+
+const Pair = ({ i, p, t }: { i: number; p: MotionValue<number>; t: MotionValue<number> }) => {
+  const [a, b] = SEGS[i];
+  const at = (f: number) => a + (b - a) * f;
+  const resolve = useTransform(p, [at(0.1), at(0.45)], [0, 1]);
+  const j = useJitter(t, resolve, i * 3.1);
+  const block = useTransform(p, [a, at(0.1), at(0.88), b], [0, 1, 1, 0]);
+  const fromOp = useTransform(p, [at(0.42), at(0.52)], [1, 0]);
+  const toOp = useTransform(p, [at(0.48), at(0.58)], [0, 1]);
+  const lineOp = useTransform(p, [at(0.56), at(0.7)], [0, 1]);
+  const lineY = useTransform(p, [at(0.56), at(0.7)], ["12px", "0px"]);
+  const { from, to, line } = PAIRS[i];
+  return (
+    <motion.div style={{ opacity: block }} className="absolute inset-0 flex flex-col items-center justify-center px-12 md:px-16 text-center">
+      <div className="relative w-full grid place-items-center">
+        <motion.p aria-hidden="true" style={{ opacity: fromOp, x: j.x, y: j.y, filter: j.filter }} className={`${BIG} [grid-area:1/1]`}>{from}</motion.p>
+        <motion.p style={{ opacity: toOp }} className={`${BIG} [grid-area:1/1] ${to.length > 12 ? "!text-[clamp(1.5rem,6.6vw,4.4rem)]" : ""}`}>{to}</motion.p>
+      </div>
+      <motion.p style={{ opacity: lineOp, y: lineY }} className="mt-6 md:mt-8 max-w-[34ch] text-base md:text-xl font-light leading-relaxed">{line}</motion.p>
+    </motion.div>
+  );
+};
+
+const Mark = ({ i, p }: { i: number; p: MotionValue<number> }) => {
+  const [a, b] = SEGS[i];
+  const scaleX = useTransform(p, [a - 0.01, a + 0.02, b - 0.02, b + 0.01], [0.4, 1, 1, 0.4]);
+  const opacity = useTransform(p, [a - 0.01, a + 0.02, b - 0.02, b + 0.01], [0.35, 1, 1, 0.35]);
+  return <motion.span style={{ scaleX, opacity }} className="block h-px w-6 bg-current origin-right" />;
 };
 
 const Philosophy = () => {
   const reduce = useReducedMotion();
-  const desktop = useMedia("(min-width: 768px)");
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const p = useSpring(scrollYProgress, { stiffness: 70, damping: 24, mass: 0.5 });
+  const p = useSpring(scrollYProgress, { stiffness: 80, damping: 26, mass: 0.4 });
   const t = useMotionValue(0);
-  useAnimationFrame((ms) => { if (!reduce) t.set(ms / 1000); });
-  const chaos = useTransform(p, chaosAt);
-  const bg = useTransform(p, [0, 0.16, 0.52, 0.74, 0.96, 1], ["#FFFFFF", INK, INK, CREAM, CREAM, "#FFFFFF"]);
-  const lineColor = useTransform(p, [0, 0.12, 0.5, 0.7], [INK, CREAM, CREAM, GOLD]);
-  const oneColor = useTransform(p, [0.08, 0.09], [INK, CREAM]);
-  const one = useTransform(p, [0.04, 0.1, 0.44, 0.5], [0, 1, 1, 0]);
-  const oneY = useTransform(p, [0.44, 0.5], ["0px", "-24px"]);
-  const two = useTransform(p, [0.66, 0.72], [0, 1]);
-  const twoY = useTransform(p, [0.66, 0.72], ["24px", "0px"]);
-  const calm = [0.74, 0.78, 0.82, 0.86].map((s) => useTransform(p, [s, s + 0.04], [0, 1])); // eslint-disable-line react-hooks/rules-of-hooks
-  const cta = useTransform(p, [0.89, 0.94], [0, 1]);
+  const phase = useMotionValue(0);
+  // Velocidad de las manchas: rápida en el caos, lenta en la calma (fase acumulada, sin saltos).
+  useAnimationFrame((ms, dt) => {
+    if (reduce) return;
+    t.set(ms / 1000);
+    const calm = smooth((p.get() - 0.1) / 0.75);
+    phase.set(phase.get() + (dt / 1000) * (2.6 - 2.35 * calm));
+  });
+  const order = useTransform(p, [0.1, 0.85], [0, 1]);
+  const bg = useTransform(p, [0.44, 0.56], [INK, CREAM]);
+  const fg = useTransform(p, [0.44, 0.56], [CREAM, INK]);
+  const introOp = useTransform(p, [0, 0.11, 0.14], [1, 1, 0]);
+  const caosR = useTransform(p, [0.01, 0.1], [0, 1]);
+  const caos = useJitter(t, caosR, 0.5);
+  const endOp = useTransform(p, [0.88, 0.93], [0, 1]);
+  const endY = useTransform(p, [0.88, 0.93], ["16px", "0px"]);
 
   if (reduce) {
     return (
-      <section aria-labelledby="filo-titulo">
-        <div className="bg-[#482A3A] text-[#F6F2F3] px-6 py-24 md:py-36 text-center space-y-8">
-          <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-[#B8977E]">Mi filosofía de trabajo</h2>
-          <h3 className={TITLE1_CLASS}>{PHASE1_TITLE}</h3>
-          <p className="text-base md:text-xl font-light leading-relaxed max-w-xl mx-auto">{PHASE1_LINE}</p>
-          <div className="-mx-6"><PulseLine desktop={desktop} still color={CREAM} /></div>
-          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xl md:text-2xl font-serif font-extralight uppercase">
-            {RESTLESS.map((w) => <li key={w}>{w}</li>)}
+      <section aria-labelledby="filo-titulo" className="bg-[#F6F2F3] text-[#482A3A] px-6 py-24 md:py-36">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] text-[#795D64]">Mi filosofía de trabajo</h2>
+          <ul className="mt-14 grid sm:grid-cols-2 border-t border-[#482A3A]/15">
+            {PAIRS.map((x, i) => (
+              <li key={x.to} className={`py-10 sm:px-8 border-b border-[#482A3A]/15 ${i % 2 === 0 ? "sm:border-r" : ""}`}>
+                <p className="text-[11px] uppercase tracking-[0.3em] text-[#795D64]">{x.from} →</p>
+                <h3 className="mt-3 font-serif font-extralight uppercase tracking-[0.1em] text-2xl md:text-3xl">{x.to}</h3>
+                <p className="mt-3 text-base font-light">{x.line}</p>
+              </li>
+            ))}
           </ul>
-        </div>
-        <div className="bg-[#F6F2F3] px-6 py-24 md:py-36 text-center space-y-10">
-          <CalmTitle />
-          <ul className={CALM_CLASS}>{CALM.map((w, i) => <li key={w} className="inline-flex items-center gap-5">{i > 0 && <CalmDiamond />}{w}</li>)}</ul>
-          <ManifestoLink />
+          <h3 className="mt-16 font-serif font-extralight uppercase tracking-[0.1em] text-2xl md:text-4xl leading-snug">A una vida en calma donde habitas el presente</h3>
+          <ManifestoLink className="inline-block mt-10" />
         </div>
       </section>
     );
   }
 
   return (
-    <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[340vh] md:h-[380vh]">
-      <motion.div className="sticky top-0 h-[100svh] overflow-hidden" style={{ backgroundColor: bg }}>
-        {/* Palabras del caos */}
-        <div className="absolute inset-0">{RESTLESS.map((w, i) => <ChaosWord key={w} w={w} i={i} p={p} chaos={chaos} t={t} desktop={desktop} />)}</div>
+    <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[300vh]">
+      <motion.div className="sticky top-0 h-[100svh] overflow-hidden" style={{ backgroundColor: bg, color: fg }}>
+        <div aria-hidden="true" className="absolute inset-0 opacity-60">
+          <Blob i={0} phase={phase} order={order} color={MAUVE} size="[--s:min(80vw,620px)]" />
+          <Blob i={1} phase={phase} order={order} color={GOLD} size="[--s:min(70vw,520px)] opacity-60" />
+          <Blob i={2} phase={phase} order={order} color="#9C7F88" size="[--s:min(75vw,560px)] opacity-80" />
+        </div>
 
-        {/* Línea del pulso */}
-        <div className="absolute inset-x-0 top-[58%] -translate-y-1/2"><PulseLine p={p} t={t} desktop={desktop} color={lineColor} /></div>
-
-        {/* Fase 1 · arriba de la línea */}
-        <motion.div style={{ opacity: one, y: oneY, color: oneColor }}
-          className="absolute inset-x-0 top-[20%] bottom-[46%] flex items-end justify-center px-5">
-          <div className="text-center space-y-4 md:space-y-6 max-w-5xl">
-            <h2 id="filo-titulo" className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-semibold text-[#B8977E]">Mi filosofía de trabajo</h2>
-            <ChaosTitle chaos={chaos} t={t} />
-            <p className="text-sm md:text-xl font-light leading-relaxed max-w-xl mx-auto">{PHASE1_LINE}</p>
-            <p className="sr-only">{RESTLESS.join(" · ")}</p>
-          </div>
+        {/* Intro */}
+        <motion.div style={{ opacity: introOp }} className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <h2 id="filo-titulo" className="text-[11px] md:text-xs uppercase tracking-[0.35em] font-normal">Mi filosofía de trabajo</h2>
+          <motion.p aria-hidden="true" style={{ x: caos.x, y: caos.y, filter: caos.filter }} className={`mt-8 ${BIG}`}>Caos</motion.p>
         </motion.div>
 
-        {/* Fase 2 · calma */}
-        <motion.div style={{ opacity: two, y: twoY }} className="absolute inset-x-0 top-[12%] bottom-[48%] flex items-end justify-center px-6">
-          <div className="text-center max-w-4xl"><CalmTitle /></div>
+        {PAIRS.map((_, i) => <Pair key={i} i={i} p={p} t={t} />)}
+
+        {/* Cierre */}
+        <motion.div style={{ opacity: endOp, y: endY }} className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <h3 className="max-w-[22ch] font-serif font-extralight uppercase !tracking-[0.1em] !leading-[1.3] text-[clamp(1.5rem,5vw,3rem)]">A una vida en calma donde habitas el presente</h3>
+          <ManifestoLink className="mt-10" />
         </motion.div>
-        <motion.div style={{ opacity: two }} className="absolute inset-x-0 top-[66%] bottom-0 flex flex-col items-center px-6 gap-10 md:gap-12">
-          <ul className={CALM_CLASS}>
-            {CALM.map((w, i) => <motion.li key={w} style={{ opacity: calm[i] }} className="inline-flex items-center gap-5">{i > 0 && <CalmDiamond />}{w}</motion.li>)}
-          </ul>
-          <motion.div style={{ opacity: cta }}><ManifestoLink /></motion.div>
-        </motion.div>
+
+        {/* Progreso: 4 marcas */}
+        <div aria-hidden="true" className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-end gap-4">
+          {SEGS.map((_, i) => <Mark key={i} i={i} p={p} />)}
+        </div>
       </motion.div>
     </section>
   );
 };
+
 
 /* ───────────── Página ───────────── */
 
