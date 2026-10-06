@@ -50,7 +50,7 @@ const SERVICE_JSONLD = {
   "@type": "Service",
   name: "Acompañamiento individual en psicoterapia",
   serviceType: "Acompañamiento individual en psicoterapia",
-  provider: { "@type": "Person", name: "Fransury Gonzáles", jobTitle: "Psicóloga" },
+  provider: { "@type": "Person", name: "Fransury González", jobTitle: "Psicóloga" },
   offers: [
     { "@type": "Offer", name: "1 sesión", price: "75", priceCurrency: "USD" },
     { "@type": "Offer", name: "3 sesiones", price: "203", priceCurrency: "USD" },
@@ -74,7 +74,7 @@ const MiProcesoIndividual = () => {
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
       <Seo
         title="Acompañamiento individual en psicoterapia online | SantoSha"
-        description="Psicoterapia individual virtual con la psicóloga Fransury Gonzáles. Sesiones por Google Meet de 60 a 75 minutos."
+        description="Psicoterapia individual virtual con la psicóloga Fransury González. Sesiones por Google Meet de 60 a 75 minutos."
         path="/mi-proceso-individual"
         jsonLd={[faqJsonLd(FAQS), SERVICE_JSONLD]}
       />
@@ -115,7 +115,7 @@ const MiProcesoIndividual = () => {
           </motion.div>
         </section>
 
-        <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury Gonzáles sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_24%]" />
+        <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury González sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_24%]" />
 
 
         {/* Situaciones en masonry numerado */}

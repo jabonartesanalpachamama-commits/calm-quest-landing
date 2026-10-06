@@ -48,7 +48,7 @@ const STATS = [
 const PERSON_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Fransury Gonzáles",
+  name: "Fransury González",
   jobTitle: "Psicóloga y maestra de Kundalini Yoga",
   url: "https://santoshayoga.com.co/quien-soy",
 };
@@ -76,12 +76,12 @@ const QuienSoy = () => {
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
       <Seo
-        title="Quién soy | Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga"
-        description="Soy Fransury Gonzáles, psicóloga, psicoterapeuta y maestra de Kundalini Yoga. Conoce mi historia y mi formación."
+        title="Quién soy | Fransury González, psicóloga y maestra de Kundalini Yoga"
+        description="Soy Fransury González, psicóloga, psicoterapeuta y maestra de Kundalini Yoga. Conoce mi historia y mi formación."
         path="/quien-soy"
         jsonLd={PERSON_JSONLD}
       />
-      <FloatingCTA scrollTo="#quien-soy-contacto" ctaText="Escríbeme" subText="Fransury Gonzáles" />
+      <FloatingCTA scrollTo="#quien-soy-contacto" ctaText="Escríbeme" subText="Fransury González" />
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
@@ -89,14 +89,14 @@ const QuienSoy = () => {
         <section className="md:px-6 md:pt-12 pb-14">
           <div className="max-w-6xl mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-8 md:gap-14 items-start">
             <div className="md:sticky md:top-28">
-              <RevealImage src={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga" eager imgClassName="object-cover object-top"
+              <RevealImage src={HERO_IMAGE} alt="Fransury González, psicóloga y maestra de Kundalini Yoga" eager imgClassName="object-cover object-top"
                 className="w-full aspect-[4/5] md:aspect-[3/4] md:rounded-[2rem] shadow-lg" />
             </div>
             <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="px-6 md:px-0 space-y-6 md:pt-6">
               <motion.span variants={fadeUp} className="inline-flex px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-brand-cream text-[#795D64]">
                 Quién soy
               </motion.span>
-              <RevealTitle as="h1" text="Hola, soy Fransury Gonzáles." className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.08] text-foreground" />
+              <RevealTitle as="h1" text="Hola, soy Fransury González." className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.08] text-foreground" />
               <motion.p variants={fadeUp} className="text-base text-foreground/70 font-light">
                 Aunque quienes han caminado conmigo desde hace años me llaman <strong className="text-foreground font-medium">Sury</strong>.
               </motion.p>

@@ -82,7 +82,7 @@ const Hero = () => {
           className="absolute left-[15%] top-[5%] w-[70%] aspect-square rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.45),transparent_68%)]"
           animate={reduce ? undefined : { scale: [1, 1.05, 1], opacity: [0.6, 0.9, 0.6] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.img src={HERO_IMAGE} alt="Fransury Gonzáles sentada en el suelo, sonriendo, con camisa blanca y jeans" fetchPriority="high"
+        <motion.img src={HERO_IMAGE} alt="Fransury González sentada en el suelo, sonriendo, con camisa blanca y jeans" fetchPriority="high"
           style={reduce || !desktop ? { scale: 1.04 } : { y, scale: 1.06 }}
           className="absolute inset-0 w-full h-full object-cover object-[40%_20%] md:object-[50%_22%] will-change-transform" />
       </div>
@@ -90,7 +90,7 @@ const Hero = () => {
         className="relative w-full max-w-6xl mx-auto px-6 -mt-6 pb-24 md:mt-0 md:py-32">
         <div className="max-w-[30rem] text-center md:text-left">
           <motion.h1 variants={fadeUp} className="!text-[clamp(2rem,4.6vw,3.6rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
-            Fransury<br />Gonzáles
+            Fransury<br />González
           </motion.h1>
           <Rule className="mx-auto md:mx-0 mt-8 mb-8" />
           <motion.p variants={fadeUp} className="text-base md:text-[17px] text-foreground max-w-[36ch] mx-auto md:mx-0">
@@ -111,7 +111,7 @@ const PhraseBand = () => (
     <motion.div {...inView} variants={fadeUp} className="max-w-4xl mx-auto">
       <Rule className="mx-auto mb-12" />
       <h2 className="text-foreground !leading-[1.6] !tracking-[0.2em]">Del modo supervivencia a la calma consciente</h2>
-      <p className="mt-10 text-[11px] tracking-[0.3em] uppercase text-muted-foreground">Fransury Gonzáles</p>
+      <p className="mt-10 text-[11px] tracking-[0.3em] uppercase text-muted-foreground">Fransury González</p>
     </motion.div>
   </section>
 );
@@ -175,7 +175,7 @@ const Companion = () => {
   return (
     <section ref={ref} aria-labelledby="acompana-titulo" className="grid md:grid-cols-2 bg-background">
       <div className="relative h-[110vw] max-h-[640px] md:h-auto md:max-h-none md:min-h-[100svh] overflow-hidden">
-        <motion.img src={fransuryImage} alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga" loading="lazy"
+        <motion.img src={fransuryImage} alt="Fransury González, psicóloga y maestra de Kundalini Yoga" loading="lazy"
           style={reduce ? { scale: 1.08 } : { y: photoY, scale: 1.08 }}
           className="absolute inset-0 w-full h-full object-cover object-top [filter:grayscale(1)_contrast(0.96)_brightness(1.04)]" />
       </div>
@@ -183,7 +183,7 @@ const Companion = () => {
         className="flex items-center px-6 py-24 md:px-16 lg:px-24 md:py-32">
         <div className="max-w-[31rem]">
           <motion.p variants={fadeUp} className={LABEL}>Quién te acompaña</motion.p>
-          <motion.h2 variants={fadeUp} id="acompana-titulo" className="mt-6 text-foreground">Soy Fransury Gonzáles,</motion.h2>
+          <motion.h2 variants={fadeUp} id="acompana-titulo" className="mt-6 text-foreground">Soy Fransury González,</motion.h2>
           <Rule className="my-8" />
           <motion.p variants={fadeUp} className="text-base text-foreground">
             Aunque quienes han caminado conmigo desde hace años me llaman Sury, soy psicóloga y maestra de Kundalini Yoga.
@@ -360,7 +360,7 @@ const PortalHome = () => {
     <div className="min-h-screen relative flex flex-col">
       <Seo
         title="SantoSha | Psicoterapia, yoga y meditación online"
-        description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury Gonzáles. Atención virtual desde cualquier lugar."
+        description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury González. Atención virtual desde cualquier lugar."
         path="/"
       />
       <Header palette={palette} brandName={settings?.brandName} />

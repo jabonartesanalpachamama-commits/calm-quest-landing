@@ -84,7 +84,7 @@ const SERVICE_JSONLD = {
   "@type": "Service",
   name: "Yoga y meditación 1:1",
   serviceType: "Clases privadas de Kundalini Yoga y meditación",
-  provider: { "@type": "Person", name: "Fransury Gonzáles" },
+  provider: { "@type": "Person", name: "Fransury González" },
   offers: [
     { "@type": "Offer", name: "1 sesión", price: "17", priceCurrency: "USD" },
     { "@type": "Offer", name: "8 sesiones", price: "116", priceCurrency: "USD" },
@@ -277,7 +277,7 @@ const AcompanamientoIndividual = () => {
     <div className="min-h-screen bg-background text-foreground relative flex flex-col pb-20 md:pb-0">
       <Seo
         title="Yoga y meditación 1:1 online | SantoSha"
-        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury Gonzáles, por videollamada."
+        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury González, por videollamada."
         path="/acompanamiento-individual"
         jsonLd={[SERVICE_JSONLD, faqJsonLd(FAQS)]}
       />

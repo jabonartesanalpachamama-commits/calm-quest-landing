@@ -55,7 +55,7 @@ const CultivarBienestar = () => {
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
       <Seo
         title="Programas de yoga y meditación | SantoSha"
-        description="Curso de iniciación al yoga, Sabiduría Cíclica y sesiones 1 a 1 de yoga y meditación con Fransury Gonzáles."
+        description="Curso de iniciación al yoga, Sabiduría Cíclica y sesiones 1 a 1 de yoga y meditación con Fransury González."
         path="/cultivar-bienestar"
       />
       <FloatingCTA scrollTo="#servicios" ctaText="Ver programas" subText="Yoga y meditación" />

@@ -82,7 +82,7 @@ const COURSE_JSONLD = {
   "@type": "Course",
   name: "Curso de Iniciación al Yoga",
   description: "Curso de iniciación al Kundalini Yoga: 6 módulos en un año con encuentros bimensuales, 100% virtual.",
-  provider: { "@type": "Person", name: "Fransury Gonzáles" },
+  provider: { "@type": "Person", name: "Fransury González" },
   offers: [
     { "@type": "Offer", name: "Pago por módulo", price: "220", priceCurrency: "USD" },
     { "@type": "Offer", name: "Anualidad", price: "990", priceCurrency: "USD" },
@@ -103,7 +103,7 @@ const CursoIniciacionYoga = () => {
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
       <Seo
         title="Curso de Iniciación al Yoga online | SantoSha"
-        description="Curso de iniciación al Kundalini Yoga con Fransury Gonzáles: 6 módulos en un año con encuentros bimensuales, 100% virtual."
+        description="Curso de iniciación al Kundalini Yoga con Fransury González: 6 módulos en un año con encuentros bimensuales, 100% virtual."
         path="/curso-iniciacion-yoga"
         jsonLd={COURSE_JSONLD}
       />
