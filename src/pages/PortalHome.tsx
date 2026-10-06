@@ -219,15 +219,14 @@ const ProgramBlock = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => 
   const flip = i % 2 === 1;
   return (
     <div ref={ref} className={`relative grid md:grid-cols-2 gap-8 md:gap-16 items-center pl-8 md:pl-0`}>
-      <div className={`relative w-full max-w-[420px] mx-auto ${flip ? "md:order-2" : ""}`}>
+      <motion.div initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, margin: "-60px" }}
+        className={`relative w-full max-w-[420px] mx-auto ${flip ? "md:order-2" : ""}`}>
         <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5 rounded-t-full rounded-b-2xl border border-brand-gold/70" />
         <motion.div className="relative aspect-[4/5] rounded-t-full rounded-b-2xl overflow-hidden"
-          initial={reduce ? false : { clipPath: "inset(100% 0% 0% 0%)" }}
-          whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }} viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 1.2, ease: EASE }}>
+          variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.2, ease: EASE } } }}>
           <motion.img src={p.image} alt="" loading="lazy" style={reduce ? undefined : { y: imgY, scale: 1.14 }} className="w-full h-full object-cover" />
         </motion.div>
-      </div>
+      </motion.div>
       <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-4">
         <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-brand-gold [font-variant:small-caps]">{p.subtitle}</motion.p>
         <motion.h3 variants={fadeUp} className="font-serif font-normal text-[32px] md:text-[44px] leading-tight text-foreground">{p.title}</motion.h3>
