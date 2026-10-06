@@ -7,7 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-motion";
-import { ArrowDown, ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Clock, Monitor, Video } from "lucide-react";
+import ServiceHero from "@/components/landing/ServiceHero";
+import SituationsGrid from "@/components/landing/SituationsGrid";
+import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import Seo from "@/components/Seo";
@@ -20,8 +23,6 @@ import yogaPhoto from "@/assets/fransury-yoga-nueva.webp";
 import { fadeUp, inView, PriceCard, PriceCardLight } from "@/components/landing";
 
 // Foto del hero (misma en móvil y escritorio) y color plano de su telón.
-const HERO_IMAGE = yogaPhoto;
-const HERO_BG = "#B8A8AB";
 
 const FOCUS = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-4";
 const BTN_LINE = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-ink text-brand-ink text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:text-primary-foreground transition-colors duration-500 ${FOCUS}`;
@@ -121,44 +122,7 @@ const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
 
 const stagger = (s = 0.12) => ({ show: { transition: { staggerChildren: s } } });
 
-/* ───────────── Hero ───────────── */
 const HERO_ALT = "Fransury González en postura de meditación con las manos en el pecho y el abdomen";
-const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
-  const desktop = useMedia("(min-width: 768px)");
-  // Bordes de la foto fundidos con el color plano del telón (sin marco).
-  const mask = desktop
-    ? "linear-gradient(to right, transparent 0%, #000 22%), linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%)"
-    : "linear-gradient(to bottom, transparent 0%, #000 10%, #000 84%, transparent 100%)";
-  return (
-    <section className="relative md:min-h-[calc(100svh-150px)] overflow-hidden flex flex-col md:flex-row md:items-center" style={{ backgroundColor: HERO_BG }}>
-      <div className="relative order-2 w-full aspect-[1122/1402] max-h-[78svh] md:max-h-none md:order-none md:aspect-auto md:absolute md:inset-y-0 md:right-0 md:w-[min(52%,760px)] overflow-hidden"
-        style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
-        <img src={HERO_IMAGE} alt={HERO_ALT} fetchPriority="high" width={1122} height={1402}
-          className="absolute inset-0 w-full h-full object-cover object-[50%_22%] md:object-[50%_18%]" />
-      </div>
-      <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
-        className="relative order-1 w-full max-w-6xl mx-auto px-6 pt-12 pb-6 md:py-32">
-        <div className="max-w-[28rem] text-center md:text-left">
-          <motion.span variants={fadeUp} className="block text-[10px] uppercase tracking-[0.35em] text-brand-ink">Sesiones 1 a 1 · Virtual</motion.span>
-          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.5rem,7vw,2.2rem)] md:!text-[clamp(1.9rem,4vw,3.2rem)] !tracking-[0.1em] md:!tracking-[0.16em] !font-extralight !leading-[1.2] text-brand-ink">
-            Yoga y meditación 1:1
-          </motion.h1>
-          <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-brand-ink">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
-          <Rule className="mx-auto md:mx-0 my-7 md:my-9" />
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center gap-5 sm:gap-8 justify-center md:justify-start">
-            <a href="#precios" onClick={onPrecios} className={`${BTN_LINE} group`}>
-              Reservar sesión
-              <ArrowDown className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-y-0.5" strokeWidth={1.25} />
-            </a>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={`text-sm text-brand-ink ${LINK_GOLD}`}>
-              Escríbeme por WhatsApp
-            </a>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-  );
-};
 
 /* ───────────── Índice interno ───────────── */
 const SUBNAV: [string, string][] = [["que-ofrezco", "Qué ofrezco"], ["como-funciona", "Cómo funciona"], ["precios", "Inversión"], ["preguntas", "Preguntas"]];
@@ -273,10 +237,6 @@ const StepsLine = () => {
 const AcompanamientoIndividual = () => {
   const { settings, palette } = useVisualSettings();
 
-  const goPrecios = (e: React.MouseEvent) => {
-    e.preventDefault();
-    document.querySelector("#precios")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground relative flex flex-col">
@@ -289,16 +249,17 @@ const AcompanamientoIndividual = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <Hero onPrecios={goPrecios} />
+        <ServiceHero label="Sesiones 1 a 1 · Virtual" title="Yoga y meditación 1:1"
+          meta={[[Monitor, "100% virtual"], [Video, "Google Meet"], [Clock, "60 minutos"]]}
+          primary={{ text: "Reservar sesión", target: "#precios" }}
+          secondary={{ text: "Escríbeme por WhatsApp", href: WA_URL }}>
+          <p>YogaTerapia, Kundalini Yoga y Meditación</p>
+          <p>Clases privadas donde tu cuerpo, tu respiración y la meditación te devuelven a ti.</p>
+        </ServiceHero>
+        <FullBleedPhoto src={yogaPhoto} label="Fransury en meditación" alt={HERO_ALT} width={1122} height={1402} position="object-[50%_22%] md:object-[50%_20%]" />
+        <SituationsGrid title="¿Para quién es este espacio?" items={FOR_WHOM} />
         <SubNav />
         <WordsMarquee />
-
-        {/* Frase */}
-        <section className={`${SECTION} bg-brand-cream`}>
-          <motion.p {...inView} variants={fadeUp} className="max-w-3xl mx-auto text-center font-serif font-extralight uppercase tracking-[0.1em] text-xl md:text-3xl leading-[1.5] text-brand-ink">
-            Clases privadas donde tu cuerpo, tu respiración y la meditación te devuelven a ti.
-          </motion.p>
-        </section>
 
         {/* ¿Qué ofrezco? */}
         <section id="que-ofrezco" className={`scroll-mt-24 ${SECTION} bg-background`}>
@@ -340,26 +301,6 @@ const AcompanamientoIndividual = () => {
                 </motion.div>
               ))}
             </motion.dl>
-          </div>
-        </section>
-
-        {/* ¿Para quién es este espacio? */}
-        <section className={`${SECTION} bg-background`}>
-          <div className="max-w-6xl mx-auto grid md:grid-cols-[4fr_7fr] gap-12 md:gap-20">
-            <motion.div {...inView} variants={fadeUp}>
-              <h2 className={H2}>¿Para quién es este espacio?</h2>
-              <Rule className="mt-8" />
-            </motion.div>
-            <motion.ul {...inView} variants={stagger(0.12)}>
-              {FOR_WHOM.map((item) => (
-                <motion.li key={item} variants={fadeUp} className="relative flex items-center justify-between gap-6 py-7 md:py-8">
-                  <span className="text-base md:text-lg text-foreground leading-relaxed">{item}</span>
-                  <Diamond />
-                  <motion.span aria-hidden="true" variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.4, ease: [0.22, 1, 0.36, 1] } } }}
-                    className="absolute left-0 right-0 bottom-0 h-px bg-border origin-left" />
-                </motion.li>
-              ))}
-            </motion.ul>
           </div>
         </section>
 
