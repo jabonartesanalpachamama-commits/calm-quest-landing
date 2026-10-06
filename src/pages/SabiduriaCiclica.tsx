@@ -15,7 +15,7 @@ import {
   applyFontPair,
 } from "@/lib/CmsFallbackData";
 import AiChatWidget from "@/components/AiChatWidget";
-import Header from "@/components/Header";
+import Header from "@/components/LegacyHeader";
 
 type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
