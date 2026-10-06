@@ -2,7 +2,9 @@ import type React from "react";
 import { motion } from "framer-motion";
 import sessionPhoto from "@/assets/fransury-individual.webp";
 import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
-import { ArrowDown, Clock, MessageCircle, Monitor, Video } from "lucide-react";
+import ServiceHero from "@/components/landing/ServiceHero";
+import SituationsGrid from "@/components/landing/SituationsGrid";
+import { Clock, MessageCircle, Monitor, Video } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import FloatingCTA from "@/components/FloatingCTA";
@@ -14,10 +16,9 @@ import Quote from "@/components/landing/Quote";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
-import { fadeUp, inView, RevealTitle, RevealWords, PriceCard, PriceCardLight } from "@/components/landing";
+import { fadeUp, inView, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
 
 // Estructura "tipográfica y calmada": sin foto en el hero.
-const PILL = "h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 border border-border/40 rounded-full px-3.5";
 const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
 const WA_URL = getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión de psicoterapia individual.");
 
@@ -62,10 +63,6 @@ const SERVICE_JSONLD = {
 const MiProcesoIndividual = () => {
   const { settings, palette } = useVisualSettings();
 
-  const goTarifas = (e: React.MouseEvent) => {
-    e.preventDefault();
-    document.querySelector("#tarifas")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   const cta1Session = "https://checkout.bold.co/payment/LNK_2BNPOWDQ8L";
   const cta3Sessions = "https://checkout.bold.co/payment/LNK_43NGG631N3";
@@ -82,61 +79,18 @@ const MiProcesoIndividual = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        {/* HERO tipográfico */}
-        <section className="relative overflow-hidden bg-brand-cream px-6 pt-16 pb-16 md:pt-24 md:pb-24">
-          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }}
-            className="relative max-w-5xl mx-auto text-center space-y-7">
-            <motion.h1 variants={fadeUp} className="text-sm md:text-base font-semibold tracking-[0.25em] uppercase text-[#795D64]" style={{ fontVariant: "small-caps" }}>
-              Acompañamiento individual
-            </motion.h1>
-            <RevealWords blur stagger={0.12} text="Comprende el para qué."
-              className="font-serif font-light italic leading-[1.02] text-brand-ink text-[clamp(3rem,10vw,7rem)]" />
-            <motion.p variants={fadeUp} className="mx-auto max-w-[62ch] text-lg md:text-xl text-foreground/85 leading-relaxed font-light">
-              Todo lo que atravesamos tiene un propósito y un aprendizaje, incluso cuando duele o incomoda. Entiende tu para qué y transítalo en paz, aunque hoy estés en medio de tu propio caos.
-            </motion.p>
-            <motion.p variants={fadeUp} className="mx-auto max-w-[62ch] text-base text-foreground/75 leading-relaxed font-light">
-              Un espacio terapéutico para comprender lo que estás viviendo, reconocer tus patrones emocionales y relacionales y desarrollar nuevas maneras de responder ante aquello que hoy genera malestar.
-            </motion.p>
-            <motion.ul variants={fadeUp} className="flex flex-wrap justify-center gap-2 text-sm">
-              <li className={PILL}><Monitor className="w-4 h-4 text-primary" /> 100% virtual</li>
-              <li className={PILL}><Video className="w-4 h-4 text-primary" /> Google Meet</li>
-              <li className={PILL}><Clock className="w-4 h-4 text-primary" /> 60 a 75 minutos</li>
-            </motion.ul>
-            <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-5 pt-1">
-              <a href="#tarifas" onClick={goTarifas} className={BTN_SOLID + " group"}>
-                Ver opciones de consulta
-                <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
-              </a>
-              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#795D64] underline decoration-brand-gold underline-offset-4 hover:opacity-80">
-                Escríbeme por WhatsApp
-              </a>
-            </motion.div>
-          </motion.div>
-        </section>
+        <ServiceHero label="Acompañamiento individual" title="Comprende el para qué."
+          meta={[[Monitor, "100% virtual"], [Video, "Google Meet"], [Clock, "60 a 75 minutos"]]}
+          primary={{ text: "Ver opciones de consulta", target: "#tarifas" }}
+          secondary={{ text: "Escríbeme por WhatsApp", href: WA_URL }}>
+          <p>Todo lo que atravesamos tiene un propósito y un aprendizaje, incluso cuando duele o incomoda. Entiende tu para qué y transítalo en paz, aunque hoy estés en medio de tu propio caos.</p>
+          <p>Un espacio terapéutico para comprender lo que estás viviendo, reconocer tus patrones emocionales y relacionales y desarrollar nuevas maneras de responder ante aquello que hoy genera malestar.</p>
+        </ServiceHero>
 
         <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury González sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_24%]" />
 
 
-        {/* Situaciones en masonry numerado */}
-        <section className="px-6 py-14 md:py-16">
-          <div className="max-w-5xl mx-auto space-y-10">
-            <div className="text-center space-y-3">
-              <RevealTitle text="¿Por qué siempre me pasa lo mismo?" className="font-serif text-3xl md:text-5xl font-semibold text-foreground" />
-              <p className="text-muted-foreground font-light text-lg">¿Te reconoces en alguna de estas situaciones?</p>
-            </div>
-            <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.05 } } }} className="columns-1 md:columns-2 gap-5">
-              {FOR_WHOM.map((item, i) => (
-                <motion.li key={item} variants={fadeUp}
-                  className="group break-inside-avoid mb-5 flex items-start gap-5 rounded-3xl bg-card border border-border/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                  <span className="font-serif text-4xl md:text-5xl leading-none text-brand-gold/50 transition-colors duration-300 group-hover:text-[#795D64]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-base md:text-lg text-foreground/90 leading-relaxed pt-1">{item}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </div>
-        </section>
+        <SituationsGrid title="¿Por qué siempre me pasa lo mismo?" subtitle="¿Te reconoces en alguna de estas situaciones?" items={FOR_WHOM} />
 
         <Quote variant="band">Entender el para qué es el comienzo. Aprender qué hacer con lo que comprendes es el proceso.</Quote>
 

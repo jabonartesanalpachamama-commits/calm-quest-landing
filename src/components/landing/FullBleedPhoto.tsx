@@ -26,10 +26,10 @@ const FullBleedPhoto = ({ src, alt, label, width, height, position, desktop }: {
       <motion.img src={src} alt={alt} loading="lazy" width={width} height={height} style={motionStyle}
         className={`absolute inset-x-0 -top-[30px] w-full h-[calc(100%+60px)] object-cover ${position} ${desktop ? "md:hidden" : ""}`} />
       {desktop && (
-        <div aria-hidden="true" className="hidden md:block absolute inset-0" style={{ background: desktop.background }}>
+        <div aria-hidden="true" className="hidden md:flex absolute inset-0 justify-center" style={{ background: desktop.background }}>
           <motion.img src={desktop.src} alt="" loading="lazy" width={desktop.width} height={desktop.height}
             style={{ ...motionStyle, WebkitMaskImage: SIDE_FADE, maskImage: SIDE_FADE }}
-            className="absolute left-1/2 -translate-x-1/2 -top-[30px] h-[calc(100%+60px)] w-auto max-w-none" />
+            className="relative -top-[30px] h-[calc(100%+60px)] w-auto max-w-none shrink-0" />
         </div>
       )}
     </motion.section>

@@ -9,6 +9,8 @@ import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
+import ServiceHero from "@/components/landing/ServiceHero";
+import SituationsGrid from "@/components/landing/SituationsGrid";
 import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import parejaManos from "@/assets/pareja-manos.webp";
 import { faqJsonLd } from "@/lib/seo";
@@ -56,10 +58,6 @@ const SERVICE_JSONLD = {
 const ProcesoDePareja = () => {
   const { settings, palette } = useVisualSettings();
 
-  const goTarifas = (e: React.MouseEvent) => {
-    e.preventDefault();
-    document.querySelector("#tarifas")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   const cta1Session = "https://checkout.bold.co/payment/LNK_F9YHBRBQLU";
   const cta3Sessions = "https://checkout.bold.co/payment/LNK_7IOCCI6CQ4";
@@ -77,67 +75,21 @@ const ProcesoDePareja = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        {/* HERO 50/50 */}
-        <section className="relative grid md:grid-cols-2">
-          <div aria-hidden="true" className="hidden md:block absolute left-1/2 top-10 bottom-10 w-px bg-brand-gold z-10" />
-          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-            className="bg-[#795D64] text-brand-cream px-6 py-14 md:px-12 lg:px-16 md:py-24 flex flex-col justify-center space-y-6">
-            <motion.span variants={fadeUp} className="self-start px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full border border-brand-cream/40 text-brand-cream">
-              Psicoterapia de pareja
-            </motion.span>
-            <RevealTitle as="h1" text="¿Por qué siempre discutimos por lo mismo?" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-brand-cream" />
-          </motion.div>
-          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } } }}
-            className="bg-brand-cream px-6 py-12 md:px-12 lg:px-16 md:py-24 flex flex-col justify-center space-y-6">
-            <motion.div variants={fadeUp} className="text-lg text-foreground/85 leading-relaxed font-light space-y-4">
-              <p>
-                Una relación no cambia únicamente cuando cambia el otro. En terapia de pareja trabajamos para comprender las dinámicas que se han construido entre ambos: la comunicación, los conflictos, las heridas emocionales, los patrones repetitivos, los límites, la confianza y la manera en que cada uno participa en la relación.
-              </p>
-              <p>
-                El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
-              </p>
-            </motion.div>
-            <motion.ul variants={fadeUp} className="flex flex-wrap gap-2 text-sm">
-              <li className={PILL}><Monitor className="w-4 h-4 text-primary" /> 100% virtual</li>
-              <li className={PILL}><Video className="w-4 h-4 text-primary" /> Google Meet</li>
-            </motion.ul>
-            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-5">
-              <a href="#tarifas" onClick={goTarifas} className={BTN_SOLID + " group"}>
-                Ver opciones de consulta
-                <ArrowDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
-              </a>
-              <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#795D64] underline decoration-brand-gold underline-offset-4 hover:opacity-80">
-                Escríbeme por WhatsApp
-              </a>
-            </motion.div>
-          </motion.div>
-        </section>
+        <ServiceHero label="Psicoterapia de pareja" title="¿Por qué siempre discutimos por lo mismo?"
+          meta={[[Monitor, "100% virtual"], [Video, "Google Meet"]]}
+          primary={{ text: "Ver opciones de consulta", target: "#tarifas" }}
+          secondary={{ text: "Escríbeme por WhatsApp", href: WA_URL }}>
+          <p>
+            Una relación no cambia únicamente cuando cambia el otro. En terapia de pareja trabajamos para comprender las dinámicas que se han construido entre ambos: la comunicación, los conflictos, las heridas emocionales, los patrones repetitivos, los límites, la confianza y la manera en que cada uno participa en la relación.
+          </p>
+          <p>
+            El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
+          </p>
+        </ServiceHero>
 
         <FullBleedPhoto src={parejaManos} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1657} height={1800} position="object-[45%_40%]" />
 
-        {/* Situaciones como diálogo */}
-        <section className="px-6 py-14 md:py-20">
-          <div className="max-w-3xl mx-auto space-y-10">
-            <RevealTitle text="¿Se reconocen en alguna de estas situaciones?" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-            <ul className="flex flex-col gap-4">
-              {FOR_WHOM.map((item, i) => {
-                const left = i % 2 === 0;
-                return (
-                  <motion.li key={item}
-                    initial={{ opacity: 0, x: left ? -32 : 32 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.6, ease: EASE }}
-                    className={`max-w-[85%] md:max-w-[70%] px-6 py-4 text-base md:text-lg leading-relaxed text-foreground/90 rounded-3xl ${
-                      left ? "self-start bg-warm-mauve/50 rounded-bl-md" : "self-end bg-warm-peach/70 rounded-br-md text-right"
-                    }`}>
-                    {item}
-                  </motion.li>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
+        <SituationsGrid title="¿Se reconocen en alguna de estas situaciones?" items={FOR_WHOM} />
 
         <Quote variant="side">Y cuando continuar juntos deja de ser el camino, la terapia también puede ayudar a transitar una separación de manera más consciente, especialmente cuando existen vínculos familiares que necesitan ser cuidados.</Quote>
         <Quote variant="side">La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no.</Quote>
