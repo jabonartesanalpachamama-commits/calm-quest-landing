@@ -350,3 +350,5 @@
 }
 .lux :is(.rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl),
 .lux [class*="rounded-["], .lux [class*="rounded-t-"], .lux [class*="rounded-b-"] { border-radius: 0; }
+/* Lote W: con foco de teclado en la franja, los logos recuperan su color. */
+.logo-marquee:focus-visible img { filter: none; opacity: 1; }

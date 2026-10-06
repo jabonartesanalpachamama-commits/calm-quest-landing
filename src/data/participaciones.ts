@@ -1,18 +1,25 @@
 /**
- * Participaciones de Fransury ("Ha participado en"), mostradas en la franja de la portada.
+ * Participaciones de Fransury, mostradas en la franja de logos de la portada.
  *
- * Cómo agregar logos:
- *  1. Guarda el archivo del logo en src/assets/participaciones/ (por ejemplo teleantioquia.webp).
- *  2. Impórtalo arriba:  import teleantioquia from "@/assets/participaciones/teleantioquia.webp";
- *  3. Asígnalo al campo `logo` de la entrada:  logo: teleantioquia
- *  Mientras `logo` no exista, se muestra el nombre como texto (wordmark).
- *
- * Leidy confirmará otras participaciones; agrégalas aquí, en este único arreglo.
+ * Los logos viven en src/assets/participaciones/ (webp, fondo transparente; uso autorizado).
+ * Para agregar uno: guarda el archivo allí, impórtalo abajo y añade una entrada con
+ * `logo`, `alt` y `h` (alto óptico en clases de Tailwind, para que todos pesen parecido).
+ * Sin `logo`, se muestra el nombre como texto.
  */
-export type Participacion = { name: string; logo?: string; alt: string };
+import teleantioquia from "@/assets/participaciones/teleantioquia.webp";
+import telemedellin from "@/assets/participaciones/telemedellin.webp";
+import caracolRadio from "@/assets/participaciones/caracol-radio.webp";
+import mariaElenaBadillo from "@/assets/participaciones/maria-elena-badillo.webp";
+import mindalia from "@/assets/participaciones/mindalia.webp";
+import televid from "@/assets/participaciones/televid.webp";
+
+export type Participacion = { name: string; logo?: string; alt: string; h?: string };
 
 export const PARTICIPACIONES: Participacion[] = [
-  { name: "Teleantioquia", alt: "Logo de Teleantioquia" },
-  { name: "Centro de Bienestar Emocional María Elena Badillo", alt: "Logo del Centro de Bienestar Emocional María Elena Badillo" },
-  { name: "Televid", alt: "Logo de Televid" },
+  { name: "Teleantioquia", logo: teleantioquia, alt: "Logo de Teleantioquia", h: "h-10 md:h-12" },
+  { name: "TeleMedellín", logo: telemedellin, alt: "Logo de TeleMedellín", h: "h-14 md:h-16" },
+  { name: "Caracol Radio", logo: caracolRadio, alt: "Logo de Caracol Radio", h: "h-12 md:h-14" },
+  { name: "Centro de Bienestar Emocional María Elena Badillo", logo: mariaElenaBadillo, alt: "Logo del Centro de Bienestar Emocional María Elena Badillo", h: "h-10 md:h-12" },
+  { name: "Mindalia", logo: mindalia, alt: "Logo de Mindalia", h: "h-7 md:h-8" },
+  { name: "Televid", logo: televid, alt: "Logo de Televid", h: "h-14 md:h-16" },
 ];
