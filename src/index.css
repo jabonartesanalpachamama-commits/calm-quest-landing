@@ -341,8 +341,10 @@
 .lux .font-serif { font-weight: 300; }
 .lux .italic, .lux em, .lux i { font-style: normal; }
 /* Sin píldoras ni óvalos alrededor de palabras; esquinas rectas en tarjetas y fotos */
-.lux :is(a, button).rounded-full { border-radius: 0; }
-.lux span.rounded-full:not(:empty):not([aria-hidden="true"]) {
+.lux :is(a, button).rounded-full { border-radius: 0; box-shadow: none; }
+.lux :is(a, button)[class*="hover:scale"]:hover { transform: none; }
+.lux span.rounded-full:not(:empty):not([aria-hidden="true"]),
+.lux :is(li, div, p, span)[class*="px-"].rounded-full:not([aria-hidden="true"]):not(:empty) {
   border-radius: 0; background: transparent !important; border-color: transparent !important;
   box-shadow: none !important; padding-left: 0; padding-right: 0; letter-spacing: 0.18em; text-transform: uppercase;
 }
