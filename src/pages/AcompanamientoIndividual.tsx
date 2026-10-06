@@ -67,7 +67,7 @@ const STEPS = [
 
 const KEY_INFO = [
   { label: "Modalidad", value: "100% Virtual" },
-  { label: "Duración", value: "Por sesión acordada" },
+  { label: "Duración", value: "60 minutos" },
   { label: "Frecuencia", value: "Adaptable a ti" },
   { label: "Formato", value: "1 a 1 exclusivo" },
 ];
@@ -75,7 +75,7 @@ const KEY_INFO = [
 const FAQS = [
   { q: "¿Las sesiones son presenciales?", a: "Todas mis sesiones son virtuales, por videollamada. Puedes conectarte desde tu casa o desde donde estés, en un lugar donde te sientas a gusto." },
   { q: "¿Necesito saber yoga o meditar?", a: "Puedes llegar sin haber practicado nunca. Adapto cada sesión a tu nivel, a tu cuerpo y a tu momento, y empezamos desde donde estás." },
-  { q: "¿Cuánto dura cada sesión?", a: "La acordamos antes de empezar, según lo que necesites y la forma en que quieras vivir la práctica." },
+  { q: "¿Cuánto dura cada sesión?", a: "Cada clase dura 60 minutos. Es un tiempo pensado para que llegues, te sueltes y salgas sintiéndote en calma." },
   { q: "¿Cómo pago?", a: "Escríbeme por WhatsApp y coordinamos el pago de la forma que te resulte más cómoda." },
 ];
 
@@ -84,6 +84,7 @@ const SERVICE_JSONLD = {
   "@type": "Service",
   name: "Yoga y meditación 1:1",
   serviceType: "Clases privadas de Kundalini Yoga y meditación",
+  description: "Clases privadas de Kundalini Yoga y meditación de 60 minutos.",
   provider: { "@type": "Person", name: "Fransury González" },
   offers: [
     { "@type": "Offer", name: "1 sesión", price: "17", priceCurrency: "USD" },
@@ -277,7 +278,7 @@ const AcompanamientoIndividual = () => {
     <div className="min-h-screen bg-background text-foreground relative flex flex-col pb-20 md:pb-0">
       <Seo
         title="Yoga y meditación 1:1 online | SantoSha"
-        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury González, por videollamada."
+        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury González, por videollamada. Clases de 60 minutos."
         path="/acompanamiento-individual"
         jsonLd={[SERVICE_JSONLD, faqJsonLd(FAQS)]}
       />
@@ -382,7 +383,7 @@ const AcompanamientoIndividual = () => {
                 href={getWhatsAppUrl("Hola, me gustaría agendar 1 Sesión de Acompañamiento.")}
                 description={<>
                   <p>Pago por cada sesión individual</p>
-                  <Benefits light items={["Duración según lo acordado", "Atención 100% personalizada", "Sin compromisos a largo plazo", "Enfoque en temas específicos"]} />
+                  <Benefits light items={["Clases de 60 minutos", "Atención 100% personalizada", "Sin compromisos a largo plazo", "Enfoque en temas específicos"]} />
                 </>}
                 cta="Inscribirme a 1 Sesión"
               />
