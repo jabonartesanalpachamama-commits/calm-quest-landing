@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform, MotionConfig, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Flower2, Leaf, MessageCircle, Moon, CalendarDays, Clock, Video, ArrowDown, Sparkles } from "lucide-react";
+import { Flower2, Leaf, MessageCircle, Moon, ArrowDown, Sparkles } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getWhatsAppUrl } from "@/lib/utils";
@@ -152,7 +152,7 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
 const PAGE_URL = "https://santoshayoga.com.co/sabiduria-ciclica-esencia-femenina";
 const SEO_TITLE = "Taller Sabiduría Cíclica | Ciclo femenino y yoga";
 const SEO_DESC = "Comprende tu naturaleza cíclica y vívela en tu cuerpo con el yoga, en cualquier etapa de tu vida. Taller en vivo, sábado 17 de octubre por Google Meet.";
-const SEO_IMAGE = "https://santoshayoga.com.co/sabiduria-ciclica-17oct-v4.webp";
+const SEO_IMAGE = "https://santoshayoga.com.co/sabiduria-ciclica-hero.webp";
 
 const FAQ_JSONLD = {
   "@context": "https://schema.org",
@@ -499,39 +499,31 @@ const SabiduriaCiclica = () => {
           <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-background">
             <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-16 md:gap-10 items-center">
               <div className="relative -mx-4 md:mx-0 md:self-start">
-                <div className="relative overflow-hidden aspect-square ciclica-hero-bleed">
+                <div className="relative overflow-hidden aspect-[4/5] md:aspect-auto md:h-[calc(100svh-104px)] md:max-h-[calc(100svh-104px)] md:[mask-image:linear-gradient(to_left,transparent_0,#000_48px)]">
                   <motion.img
-                    src="/sabiduria-ciclica-17oct-v4.webp"
-                    alt="Taller Sabiduría Cíclica sobre el ciclo femenino y el yoga, sábado 17 de octubre por Google Meet"
-                    width={1254}
-                    height={1254}
+                    src="/sabiduria-ciclica-hero.webp"
+                    alt="Fransury González con las manos en el pecho y los ojos cerrados, rodeada de follaje verde"
+                    width={973}
+                    height={1616}
                     loading="eager"
                     fetchPriority="high"
-                    style={{ scale: heroImgScale, transformOrigin: "top center", filter: "saturate(0.85) brightness(1.04) contrast(0.95)" }}
-                    className="absolute inset-0 w-full h-full object-cover object-left-top block"
+                    style={{ scale: heroImgScale, transformOrigin: "top center" }}
+                    className="absolute inset-0 w-full h-full object-cover object-[60%_22%] md:object-[60%_30%] block"
                   />
                 </div>
               </div>
 
               <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-5 text-center md:text-left md:pr-8 lg:pr-12 md:py-10 md:max-w-xl">
-                <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/70 text-primary">
-                  <Flower2 className="w-3.5 h-3.5" /> Taller en vivo · Virtual
+                <motion.span variants={fadeUp} className="block text-[11px] tracking-[0.3em] uppercase text-primary">
+                  Taller en vivo · Virtual
                 </motion.span>
                 <RevealTitle as="h1" text="Sabiduría Cíclica, Esencia Femenina" className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-foreground" />
                 <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/80 leading-relaxed font-light">
                   Comprende tu naturaleza cíclica e intégrala a tu cuerpo a través del yoga, en cualquier etapa de tu vida.
                 </motion.p>
-                <motion.ul variants={fadeUp} className="flex flex-wrap justify-center md:justify-start gap-2 text-sm">
-                  <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
-                    <CalendarDays className="w-4 h-4 text-primary" /> Sábado 17 de octubre
-                  </li>
-                  <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
-                    <Clock className="w-4 h-4 text-primary shrink-0" /> 10:00 a. m. a 2:00 p. m. hora Colombia
-                  </li>
-                  <li className="h-10 flex items-center gap-2 whitespace-nowrap bg-card/80 backdrop-blur-sm border border-border/40 rounded-full px-3.5">
-                    <Video className="w-4 h-4 text-primary" /> 4 horas en vivo por Google Meet
-                  </li>
-                </motion.ul>
+                <motion.p variants={fadeUp} className="text-[11px] md:text-xs uppercase tracking-[0.22em] leading-loose text-foreground/80 font-light">
+                  <span>Sábado 17 de octubre</span><span aria-hidden="true" className="mx-2 text-[#B8977E]">·</span><span>10:00 a. m. a 2:00 p. m. hora Colombia</span><span aria-hidden="true" className="mx-2 text-[#B8977E]">·</span><span>4 horas en vivo por Google Meet</span>
+                </motion.p>
                 <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center md:justify-start gap-5 pt-1">
                   <a
                     href="#que-es"
@@ -567,6 +559,9 @@ const SabiduriaCiclica = () => {
             <RevealWords stagger={0.035} className="relative max-w-3xl mx-auto text-center font-serif text-xl md:text-2xl font-light italic leading-relaxed text-foreground/95"
               text={'"¿Y si aquello que has interpretado como confusión, cansancio, sensibilidad intensa, desconexión o contradicción… fuera en realidad un lenguaje profundo de tu cuerpo intentando hablarte?"'} />
             <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.35, delayChildren: 0.2 } } }} className="relative max-w-3xl mx-auto space-y-6 text-center mt-6">
+              <motion.p variants={fadeUp} className="text-foreground/90 leading-relaxed font-light text-lg">
+                Durante años aprendiste a funcionar igual todos los días. Pero tu cuerpo siempre ha tenido su propio ritmo. En este encuentro vamos a escucharlo juntas.
+              </motion.p>
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                 Vivimos en una cultura que nos enseñó a funcionar de forma lineal, constante y productiva, desconectándonos de una verdad esencial: <strong className="relative inline-block text-foreground font-medium">
                   <motion.span aria-hidden="true" variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1, delay: 0.5, ease: EASE } } }}
