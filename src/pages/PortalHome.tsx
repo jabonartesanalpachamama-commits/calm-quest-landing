@@ -242,120 +242,147 @@ const StartSelector = () => (
   </section>
 );
 
-const RESTLESS = ["Prisa", "Ruido", "Exigencia", "Tensión", "Aguantar", "Anticipar", "Control", "Cansancio"];
-const CALM = ["Presencia", "Ecuanimidad", "Conexión", "Contentamiento consciente"];
+/* ───────────── 7. Filosofía: «De esto a esto» ───────────── */
+const WORDS_A = ["Prisa", "Ruido", "Exigencia", "Tensión", "Cansancio"];
+const WORDS_B = ["Presencia", "Serenidad", "Conexión", "Gratitud"];
+const PARA_A = "Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Cargamos con lo que ya pasó y con lo que podría pasar, y la mente casi nunca está donde estamos.";
+const PARA_B = "Cuando el sistema nervioso se regula, el cuerpo suelta la tensión y la mente deja de adelantarse. Puedes sentarte a comer, conversar o descansar sin estar pensando en otra cosa. Lo trabajamos con yoga, respiración y la comprensión de lo que viviste.";
+const JOSEFIN = { fontFamily: "'Josefin Sans', sans-serif" };
+const FILO_CSS = `
+@keyframes filo-jitter{0%{transform:translate(0,0)}12%{transform:translate(-7px,3px)}25%{transform:translate(5px,-6px)}37%{transform:translate(-3px,-2px)}50%{transform:translate(7px,4px)}62%{transform:translate(-6px,-5px)}75%{transform:translate(4px,6px)}87%{transform:translate(-5px,1px)}100%{transform:translate(0,0)}}
+.filo-jitter{display:inline-block;animation:filo-jitter .67s steps(8) infinite}
+@keyframes filo-breathe{0%,100%{transform:translate(-50%,-50%) scale(.9)}50%{transform:translate(-50%,-50%) scale(1.06)}}
+.filo-ring{position:absolute;left:50%;top:50%;border-radius:9999px;animation:filo-breathe 9s ease-in-out infinite;pointer-events:none}
+`;
 
-/* ───────────── 7. Filosofía: dolor → calma ───────────── */
-const PhaseOneText = () => (
-  <>
-    <h3 className="font-serif text-3xl md:text-5xl font-semibold">
-      Salir del <span className="inline-block">modo</span> <span className="jitter-word inline-block">supervivencia</span>
-    </h3>
-    <p className="text-base md:text-lg font-light leading-relaxed opacity-95 max-w-xl mx-auto">
-      Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo. Cargamos con lo que ya pasó y con lo que podría pasar, y la mente casi nunca está donde estamos.
-    </p>
-  </>
+const smooth = (a: number, b: number) => (v: number) => {
+  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+/** Progreso suavizado 0→1 en el tramo [a,b]. */
+const useSeg = (p: MotionValue<number>, a: number, b: number) => useTransform(p, smooth(a, b));
+
+const Big = ({ children, tone }: { children: string; tone: string }) => (
+  <p aria-hidden="true" style={JOSEFIN}
+    className={`flex items-center gap-[22px] font-light uppercase tracking-[0.3em] text-[clamp(34px,6vw,64px)] leading-none ${tone}`}>
+    <span className="block h-px w-[clamp(34px,6vw,70px)] bg-brand-gold" />
+    <span className="pl-[0.3em]">{children}</span>
+    <span className="block h-px w-[clamp(34px,6vw,70px)] bg-brand-gold" />
+  </p>
 );
-const TransitionText = () => (
-  <>
-    <h3 className="font-serif !text-[clamp(1.35rem,4.2vw,2.9rem)] text-foreground [overflow-wrap:normal] [hyphens:none]">
-      A una vida en calma donde <Highlight delay={0.2}>habitas el presente</Highlight>
-    </h3>
-    <p className="text-sm md:text-lg text-foreground/85 font-light leading-relaxed max-w-xl mx-auto">
-      Cuando el sistema nervioso se regula, <Highlight delay={0.4}>el cuerpo suelta la tensión</Highlight> y la mente deja de adelantarse. Puedes sentarte a comer, conversar o descansar sin estar pensando en otra cosa. Lo trabajamos con yoga, respiración y la comprensión de lo que viviste, para que la calma aparezca con más frecuencia y se quede más tiempo.
-    </p>
-  </>
+const KICKER = "text-[11px] tracking-[0.38em] uppercase font-light text-brand-gold";
+const TITLE = "font-light uppercase tracking-[0.16em] leading-[1.25] max-w-[900px] [text-wrap:balance] text-[clamp(22px,4.2vw,50px)]";
+const BODY = "text-[clamp(14px,1.5vw,17px)] leading-[1.75] font-light max-w-[560px]";
+const CHIPS = "flex flex-wrap justify-center gap-x-7 gap-y-2 text-[clamp(12px,1.5vw,15px)] tracking-[0.28em] uppercase font-light max-w-[760px]";
+const FILO_BTN = `inline-flex items-center justify-center px-[34px] py-[15px] border border-brand-mauve bg-brand-mauve text-primary-foreground text-[12px] tracking-[0.24em] uppercase hover:bg-brand-ink hover:border-brand-ink transition-colors duration-500 ${FOCUS}`;
+const FiloButton = () => <Link to="/filosofia" className={FILO_BTN}>¿Qué es Santosha?</Link>;
+const TitleB = () => (
+  <h3 style={JOSEFIN} className={`${TITLE} text-brand-ink`}>
+    Una vida en calma donde <span className="border-b border-brand-gold">habitas el presente</span>
+  </h3>
 );
-const ManifestoLink = () => (
-  <Link to="/filosofia" className={`${BTN_SOLID} ${FOCUS}`}>Qué es Santosha</Link>
+const Rings = ({ o1, o2 }: { o1: MotionValue<number> | number; o2: MotionValue<number> | number }) => (
+  <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <motion.span style={{ opacity: o1 }} className="filo-ring border border-brand-gold w-[min(86vw,640px)] h-[min(86vw,640px)]" />
+    <motion.span style={{ opacity: o2, animationDelay: "-3s" }} className="filo-ring border border-brand-mauve w-[min(68vw,500px)] h-[min(68vw,500px)]" />
+  </div>
 );
 
-/** Posición, tamaño, deriva (s) y si se oculta en móvil. */
-const FLOAT_POS = [
-  { pos: "top-[12%] left-[6%]", size: "text-2xl md:text-5xl", dur: 9 },
-  { pos: "top-[16%] right-[6%]", size: "text-base md:text-2xl", dur: 11 },
-  { pos: "bottom-[16%] left-[8%]", size: "text-xl md:text-4xl", dur: 8 },
-  { pos: "bottom-[10%] right-[7%]", size: "text-lg md:text-3xl", dur: 12 },
-  { pos: "top-[6%] left-1/2 -translate-x-1/2 md:top-[44%] md:left-[3%] md:translate-x-0", size: "text-sm md:text-xl", dur: 7 },
-  { pos: "bottom-[4%] left-1/2 -translate-x-1/2", size: "text-base md:text-2xl", dur: 10 },
-  { pos: "hidden md:block top-[42%] right-[3%]", size: "md:text-lg", dur: 8.5 },
-  { pos: "hidden md:block top-[8%] left-[38%]", size: "md:text-sm", dur: 11.5 },
-];
-
-const Floater = ({ w, i, p }: { w: string; i: number; p: MotionValue<number> }) => {
-  const f = FLOAT_POS[i];
-  const s = 0.18 + i * 0.022, e = s + 0.1;
-  const fade = useTransform(p, [s, e], [1, 0]);
-  const spacing = useTransform(p, [s, e], ["0em", "0.6em"]);
-  const blur = useTransform(p, [s, e], ["blur(0px)", "blur(8px)"]);
-  const dx = (i % 2 ? -1 : 1) * (8 + i * 2);
-  return (
-    <motion.span aria-hidden="true" style={{ opacity: fade, letterSpacing: spacing, filter: blur }}
-      className={`absolute ${f.pos} ${f.size} font-serif font-light whitespace-nowrap text-brand-cream`}>
-      <motion.span className="block"
-        animate={{ x: [0, dx, -dx / 2, 0], y: [0, -10, 6, 0], opacity: [0.25, 0.65, 0.4, 0.25] }}
-        transition={{ duration: f.dur, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}>
-        {w}
-      </motion.span>
-    </motion.span>
-  );
+/** Palabra que aparece en su tramo: fade + 10px + blur 6px → nítida. */
+const ScrollWord = ({ w, p, a, d, className }: { w: string; p: MotionValue<number>; a: number; d: number; className: string }) => {
+  const t = useSeg(p, a, a + d);
+  const y = useTransform(t, [0, 1], [10, 0]);
+  const filter = useTransform(t, (v) => `blur(${(1 - v) * 6}px)`);
+  return <motion.li style={{ opacity: t, y, filter }} className={className}>{w}</motion.li>;
+};
+const Stagger = ({ p, a, d, children }: { p: MotionValue<number>; a: number; d: number; children: React.ReactNode }) => {
+  const t = useSeg(p, a, a + d);
+  const y = useTransform(t, [0, 1], [14, 0]);
+  return <motion.div style={{ opacity: t, y }}>{children}</motion.div>;
 };
 
 const Philosophy = () => {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const p = useSpring(scrollYProgress, { stiffness: 60, damping: 26, mass: 0.6 });
-  const plum = useTransform(p, [0.3, 0.55], [1, 0]);
-  const one = useTransform(p, [0.22, 0.34], [1, 0]);
-  const oneY = useTransform(p, [0.22, 0.34], ["0px", "-30px"]);
-  const two = useTransform(p, [0.52, 0.64], [0, 1]);
-  const twoY = useTransform(p, [0.52, 0.64], ["30px", "0px"]);
-  const calm = [useTransform(p, [0.66, 0.71], [0, 1]), useTransform(p, [0.7, 0.75], [0, 1]), useTransform(p, [0.74, 0.79], [0, 1]), useTransform(p, [0.78, 0.83], [0, 1])];
-  const cta = useTransform(p, [0.84, 0.92], [0, 1]);
+  const p = useSpring(scrollYProgress, { stiffness: 70, damping: 24, mass: 0.5 });
+
+  const focus = useSeg(p, 0.03, 0.24);
+  const blurWord = useTransform(focus, (v) => `blur(${(1 - v) * 6}px)`);
+  const jitterO = useTransform(focus, (v) => 1 - v);
+  const paraA = useSeg(p, 0.05, 0.14);
+  const offA = useSeg(p, 0.4, 0.48);
+  const layerAO = useTransform(offA, (v) => 1 - v);
+  const curtain = useSeg(p, 0.46, 0.68);
+  const clip = useTransform(curtain, (v) => `inset(0 0 ${(1 - v) * 100}% 0)`);
+  const lineY = useTransform(curtain, (v) => `${v * 100}svh`);
+  const lineO = useTransform(curtain, (v) => (v > 0 && v < 1 ? 1 : 0));
+  const rings = useSeg(p, 0.66, 0.8);
+  const r1 = useTransform(rings, (v) => v * 0.55);
+  const r2 = useTransform(rings, (v) => v * 0.4);
+  const btn = useSeg(p, 0.9, 0.96);
 
   if (reduce) {
     return (
       <section aria-labelledby="filo-titulo">
-        <div className="bg-brand-ink text-brand-cream px-6 py-16 text-center space-y-5">
-          <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
-          <PhaseOneText />
-          <ul className="space-y-2 text-sm text-brand-cream/90 font-light">{RESTLESS.map((w) => <li key={w}>{w}</li>)}</ul>
+        <div className="bg-brand-ink text-brand-cream px-6 py-24 flex flex-col items-center text-center gap-5">
+          <h2 id="filo-titulo" className={KICKER}>Mi filosofía de trabajo</h2>
+          <Big tone="text-brand-gold">De</Big>
+          <h3 style={JOSEFIN} className={TITLE}>Salir del modo supervivencia</h3>
+          <p className={`${BODY} opacity-90`}>{PARA_A}</p>
+          <ul className={CHIPS}>{WORDS_A.map((w) => <li key={w}>{w}</li>)}</ul>
         </div>
-        <div className="bg-[#F7F3F0] px-6 py-16 text-center space-y-5">
-          <TransitionText />
-          <p className="text-brand-mauve font-serif text-lg">{CALM.join(" · ")}</p>
-          <ManifestoLink />
+        <div className="relative overflow-hidden bg-brand-cream px-6 py-28 flex flex-col items-center text-center gap-5">
+          <Rings o1={0.5} o2={0.5} />
+          <div className="relative z-10 flex flex-col items-center gap-5">
+            <Big tone="text-brand-mauve">A</Big>
+            <TitleB />
+            <p className={`${BODY} text-brand-ink/85`}>{PARA_B}</p>
+            <ul className={`${CHIPS} text-brand-mauve`}>{WORDS_B.map((w) => <li key={w}>{w}</li>)}</ul>
+            <div className="pt-2"><FiloButton /></div>
+          </div>
         </div>
       </section>
     );
   }
 
   return (
-    <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[260vh] md:h-[300vh]">
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#F7F3F0]">
-        <motion.div aria-hidden="true" style={{ opacity: plum }} className="absolute inset-0 bg-brand-ink" />
-
-        {/* Fase 1 · dolor */}
-        <div className="absolute inset-0">{RESTLESS.map((w, i) => <Floater key={w} w={w} i={i} p={p} />)}</div>
-        <motion.div style={{ opacity: one, y: oneY }} className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="relative text-center space-y-4 md:space-y-5 text-brand-cream max-w-2xl">
-            <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
-            <PhaseOneText />
-            <p className="sr-only">{RESTLESS.join(" · ")}</p>
-          </div>
+    <section ref={ref} aria-labelledby="filo-titulo" className="relative h-[460vh] md:h-[520vh]">
+      <style>{FILO_CSS}</style>
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-brand-ink">
+        {/* Capa A · ciruela */}
+        <motion.div style={{ opacity: layerAO }} className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 gap-5 text-brand-cream">
+          <h2 id="filo-titulo" className={KICKER}>Mi filosofía de trabajo</h2>
+          <Big tone="text-brand-gold">De</Big>
+          <h3 style={JOSEFIN} className={TITLE}>
+            Salir del modo{" "}
+            <span className="relative inline-block">
+              <motion.span style={{ opacity: focus }} className="inline-block">supervivencia</motion.span>
+              <motion.span aria-hidden="true" style={{ opacity: jitterO, filter: blurWord }} className="absolute inset-0">
+                <span className="filo-jitter">supervivencia</span>
+              </motion.span>
+            </span>
+          </h3>
+          <motion.p style={{ opacity: paraA }} className={`${BODY} opacity-90`}>{PARA_A}</motion.p>
+          <ul className={CHIPS}>
+            {WORDS_A.map((w, i) => <ScrollWord key={w} w={w} p={p} a={0.12 + i * 0.045} d={0.05} className="" />)}
+          </ul>
         </motion.div>
 
-        {/* Fase 2 · calma */}
-        <motion.div style={{ opacity: two, y: twoY }} className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="relative text-center space-y-5 max-w-3xl">
-            <TransitionText />
-            <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-brand-mauve font-serif text-lg md:text-2xl">
-              {CALM.map((w, i) => <motion.li key={w} style={{ opacity: calm[i] }}>{w}</motion.li>)}
+        {/* Capa B · crema, revelada por cortina */}
+        <motion.div style={{ clipPath: clip }} className="absolute inset-0 bg-brand-cream">
+          <Rings o1={r1} o2={r2} />
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 gap-5">
+            <Stagger p={p} a={0.58} d={0.12}><Big tone="text-brand-mauve">A</Big></Stagger>
+            <Stagger p={p} a={0.62} d={0.12}><TitleB /></Stagger>
+            <Stagger p={p} a={0.66} d={0.12}><p className={`${BODY} text-brand-ink/85`}>{PARA_B}</p></Stagger>
+            <ul className={`${CHIPS} text-brand-mauve`}>
+              {WORDS_B.map((w, i) => <ScrollWord key={w} w={w} p={p} a={0.72 + i * 0.04} d={0.05} className="" />)}
             </ul>
-            <motion.div style={{ opacity: cta }} className="pt-2"><ManifestoLink /></motion.div>
+            <motion.div style={{ opacity: btn }} className="pt-2"><FiloButton /></motion.div>
           </div>
         </motion.div>
+        <motion.span aria-hidden="true" style={{ y: lineY, opacity: lineO }} className="absolute left-0 right-0 top-0 h-px bg-brand-gold" />
       </div>
     </section>
   );
