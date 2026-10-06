@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
-import santoshaLogo from "@/assets/santosha-logo-transparent.webp";
+import santoshaLogo from "@/assets/santosha-logo-blanco.png";
 import { getWhatsAppUrl } from "@/lib/utils";
 import ScrollProgress from "@/components/ScrollProgress";
 
@@ -51,9 +51,10 @@ const Header = ({ borderless }: HeaderProps) => {
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [compact, setCompact] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => { setScrolled(window.scrollY > 8); setCompact(window.scrollY > 80); };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -74,14 +75,16 @@ const Header = ({ borderless }: HeaderProps) => {
     <header className={`sticky top-0 z-50 bg-background/95 backdrop-blur-sm transition-[border-color] duration-500 border-b ${
       scrolled ? "border-border" : borderless ? "border-transparent" : "border-transparent"}`}>
       {!NO_PROGRESS.includes(pathname) && <ScrollProgress />}
-      <div className="max-w-[86rem] mx-auto px-5 md:px-8 h-[76px] md:h-[96px] grid grid-cols-[1fr_auto_1fr] items-center gap-6">
+      <div className={`max-w-[86rem] mx-auto px-5 md:px-8 grid transition-[height] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${compact ? "h-[72px] md:h-[80px]" : "h-[88px] md:h-[104px]"} grid-cols-[1fr_auto_1fr] items-center gap-6`}>
         <nav aria-label="Principal" className="hidden xl:flex items-center gap-7 justify-start">
           {NAV_LEFT.map((i) => <NavItem key={i.to} item={i} pathname={pathname} />)}
         </nav>
         <span className="xl:hidden" />
 
-        <Link to="/" className={`justify-self-center ${FOCUS}`} aria-label="SantoSha, inicio">
-          <img src={santoshaLogo} alt="SantoSha Logo" className="h-12 md:h-16 w-auto" />
+        <Link to="/" className={`justify-self-center ${FOCUS}`} aria-label="SantoSha">
+          <div role="img" aria-hidden="true"
+            className={`bg-brand-ink aspect-[1892/2332] transition-[height] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${compact ? "h-14" : "h-16 md:h-[72px]"}`}
+            style={{ backgroundColor: "#482A3A", WebkitMaskImage: `url(${santoshaLogo})`, maskImage: `url(${santoshaLogo})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
         </Link>
 
         <div className="flex items-center justify-end gap-7">
@@ -101,7 +104,7 @@ const Header = ({ borderless }: HeaderProps) => {
       </div>
 
       {mobileOpen && createPortal(
-        <div id="menu-movil" className="lux xl:hidden fixed inset-x-0 bottom-0 top-[76px] md:top-[96px] z-50 bg-background flex flex-col">
+        <div id="menu-movil" className={`lux xl:hidden fixed inset-x-0 bottom-0 ${compact ? "top-[72px] md:top-[80px]" : "top-[88px] md:top-[104px]"} z-50 bg-background flex flex-col`}>
           <nav aria-label="Principal móvil" className="flex-1 overflow-y-auto px-8 py-10">
             <ul className="space-y-1">
               {[...NAV_LEFT, ...NAV_RIGHT].map((item) => {
