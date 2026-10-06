@@ -135,11 +135,11 @@ const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
   const mask = desktop
     ? "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)"
-    : "linear-gradient(to bottom, #000 0%, #000 84%, transparent 100%)";
+    : "linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%)";
   return (
     <section ref={ref} className="relative min-h-[calc(100svh-88px)] md:min-h-[calc(100svh-104px)] overflow-hidden flex flex-col md:flex-row md:items-center"
       style={{ background: desktop ? "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" : "linear-gradient(180deg, #D9CCCD 0%, #CDBDBF 100%)" }}>
-      <div className="absolute inset-0 md:left-auto md:w-[62%] overflow-hidden"
+      <div className="absolute inset-x-0 bottom-0 top-[44%] md:top-0 md:left-auto md:w-[62%] overflow-hidden"
         style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
         <motion.picture style={reduce || !desktop ? undefined : { y }} className="absolute inset-0 block will-change-transform">
           <source media="(min-width: 768px)" srcSet={HERO_IMAGE_WIDE} />
@@ -148,7 +148,7 @@ const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
         </motion.picture>
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
-        className="relative w-full max-w-6xl mx-auto px-6 pt-10 pb-[52svh] md:py-32">
+        className="relative w-full max-w-6xl mx-auto px-6 pt-10 pb-[60svh] md:py-32">
         <div className="max-w-[30rem] text-center md:text-left">
           <motion.span variants={fadeUp} className={LABEL}>Sesiones 1 a 1 · Virtual</motion.span>
           <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
