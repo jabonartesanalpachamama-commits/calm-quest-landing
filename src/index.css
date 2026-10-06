@@ -270,3 +270,14 @@
     mask-composite: intersect;
   }
 }
+
+/* Temblor sutil de "supervivencia" (portada, filosofía) */
+@keyframes santosha-jitter {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1.5px, -1px); }
+  60% { transform: translate(-1px, -1.5px); }
+  80% { transform: translate(1px, 1px); }
+}
+.jitter-word { animation: santosha-jitter 0.35s steps(2) infinite; }
+@media (prefers-reduced-motion: reduce) { .jitter-word { animation: none; } }

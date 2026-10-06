@@ -9,6 +9,7 @@ import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
 import { SideToc, PillToc, useActiveSection } from "@/components/landing/StickyToc";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
+import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
 import { fadeUp, inView, RevealTitle, RevealWords } from "@/components/landing";
 
 // Estructura "lectura larga": índice lateral + contenido.
@@ -62,7 +63,13 @@ const Filosofia = () => {
       <main className="flex-grow">
         {/* Hero tipográfico */}
         <section className="relative overflow-hidden px-6 pt-16 pb-14 md:pt-24 md:pb-20 text-center bg-gradient-to-b from-brand-cream to-background">
-          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-5xl mx-auto space-y-6">
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+            <BreathingCircle tone="gold" className="relative w-[min(80vw,460px)] aspect-square opacity-70" />
+          </div>
+          <div aria-hidden="true" className="absolute inset-x-0 bottom-2 flex justify-center opacity-50">
+            <OutlineWord word="SANTOSHA" className="text-[clamp(5rem,22vw,16rem)]" />
+          </div>
+          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="relative max-w-5xl mx-auto space-y-6">
             <motion.img variants={fadeUp} src="/santosha-logo-transparent.webp" alt="Logo Santosha" className="w-14 md:w-16 h-auto mx-auto" />
             <motion.p variants={fadeUp} className="text-xs font-semibold tracking-[0.3em] uppercase text-[#795D64]">Manifiesto Santosha</motion.p>
             <motion.h1 variants={fadeUp} className="font-serif font-semibold leading-none tracking-tight text-brand-ink text-[clamp(4rem,16vw,10rem)]">

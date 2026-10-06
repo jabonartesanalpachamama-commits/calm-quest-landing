@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
-import santoshaLogo from "@/assets/santosha-logo.webp";
+import santoshaLogo from "@/assets/santosha-logo-transparent.webp";
 import { getWhatsAppUrl } from "@/lib/utils";
 
 interface HeaderProps {
@@ -133,7 +133,7 @@ const Header = ({ borderless }: HeaderProps) => {
           <img
             src={santoshaLogo}
             alt="SantoSha Logo"
-            className="h-10 md:h-14 lg:h-16 w-auto rounded-lg border border-border/20"
+            className="h-10 md:h-14 lg:h-16 w-auto"
           />
         </Link>
 
