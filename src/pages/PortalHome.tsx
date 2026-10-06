@@ -259,7 +259,7 @@ const ProgramBlock = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => 
   return (
     <div ref={ref} className="relative grid md:grid-cols-2 gap-8 md:gap-16 items-center pl-8 md:pl-0">
       <motion.div initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, margin: "-60px" }}
-        className={`relative w-full max-w-[420px] mx-auto ${flip ? "md:order-2" : ""}`}>
+        className={`relative w-full max-w-[min(420px,52vh)] md:max-w-[min(420px,56vh)] mx-auto ${flip ? "md:order-2" : ""}`}>
         <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5 rounded-t-full rounded-b-2xl border border-brand-gold/70" />
         <motion.div className="relative aspect-[4/5] rounded-t-full rounded-b-2xl overflow-hidden"
           variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.2, ease: EASE } } }}>
@@ -303,7 +303,9 @@ const StackPanel = ({ p, i, last }: { p: (typeof PROGRAMS)[number]; i: number; l
 };
 
 const Programs = () => {
-  const stacked = useMedia("(min-width: 1024px) and (min-height: 700px)") && !useReducedMotion();
+  const big = useMedia("(min-width: 1024px) and (min-height: 700px)");
+  const reduceStack = useReducedMotion();
+  const stacked = big && !reduceStack;
   const threadRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: threadRef, offset: ["start 70%", "end 60%"] });
@@ -470,10 +472,42 @@ const Philosophy = () => {
 };
 
 /* ───────────── Página ───────────── */
+const CREAM = "hsl(26 41% 92%)";
+const PEACH = "hsl(22 75% 90%)";
+const PLUM = "hsl(327 26% 22%)";
+
+/** Fondo continuo: interpola el color de la portada según el capítulo visible (scroll nativo). */
+const usePageBackground = (marks: React.RefObject<HTMLElement>[]) => {
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const [stops, setStops] = useState<number[]>([0, 1, 2, 3, 4, 5]);
+  useLayoutEffect(() => {
+    const measure = () => {
+      const vh = window.innerHeight;
+      const tops = marks.map((r) => (r.current ? r.current.getBoundingClientRect().top + window.scrollY : 0));
+      // [inicio peach, peach pleno, fin peach, vuelta a crema, inicio ciruela, ciruela]
+      const [start, programs, philo] = tops;
+      setStops([start - vh * 0.7, start - vh * 0.3, programs - vh * 0.6, programs - vh * 0.2, philo - vh * 0.5, philo]);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    return () => ro.disconnect();
+  }, [marks]);
+  const bg = useTransform(scrollY, stops, [CREAM, PEACH, PEACH, CREAM, CREAM, PLUM]);
+  const bgVar = useMotionTemplate`${bg}`;
+  return reduce ? CREAM : bgVar;
+};
+
 const PortalHome = () => {
   const { settings, palette } = useVisualSettings();
   const [freeClassOpen, setFreeClassOpen] = useState(false);
   const openFree = () => setFreeClassOpen(true);
+  const startRef = useRef<HTMLDivElement>(null);
+  const programsRef = useRef<HTMLDivElement>(null);
+  const philoRef = useRef<HTMLDivElement>(null);
+  const [marks] = useState(() => [startRef, programsRef, philoRef]);
+  const pageBg = usePageBackground(marks);
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col`}>
@@ -484,18 +518,20 @@ const PortalHome = () => {
       />
       <Header palette={palette} brandName={settings?.brandName} />
 
-      <main className="flex-grow">
+      <motion.main className="flex-grow" style={{ ["--page-bg" as string]: pageBg, backgroundColor: "var(--page-bg)" }}>
         <Hero onFreeClass={openFree} />
         <LogoMarquee />
         <Companion />
-        <StartSelector />
-        <Programs />
+        <div ref={startRef}><StartSelector /></div>
+        <div ref={programsRef}><Programs /></div>
+        <SectionTransition from="transparent" to={PLUM} />
+        <div ref={philoRef} />
         <Philosophy />
 
         {/* Cierre */}
-        <section className="px-6 py-16 md:py-24 bg-gradient-to-b from-brand-cream to-warm-mauve/50">
+        <section className="px-6 pt-16 md:pt-24 pb-32 md:pb-40" style={{ background: `linear-gradient(to bottom, ${CREAM} 0%, ${CREAM} 55%, hsl(var(--warm-mauve)) 75%, ${PLUM} 100%)` }}>
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="max-w-3xl mx-auto text-center space-y-6">
-            <motion.h2 variants={fadeUp} className={H2}>¿Quieres empezar? <Highlight delay={0.4}>Escríbeme.</Highlight></motion.h2>
+            <h2 className={H2}><ScrollFillText as="span" text="¿Quieres empezar? [[Escríbeme.]]" offset={["start 90%", "end 60%"]} /></h2>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground font-light leading-relaxed">
               Explora los programas o empieza con la clase gratuita de 30 minutos.
             </motion.p>
@@ -510,7 +546,7 @@ const PortalHome = () => {
             <p className="text-xs text-muted-foreground">Atención virtual desde cualquier lugar del mundo.</p>
           </motion.div>
         </section>
-      </main>
+      </motion.main>
 
       <SiteFooter palette={palette} />
       <FreeClassPopup onStart={openFree} />
