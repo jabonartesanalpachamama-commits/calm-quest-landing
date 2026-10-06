@@ -1,6 +1,5 @@
 import type React from "react";
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import sessionPhoto from "@/assets/fransury-individual.webp";
 import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import { ArrowDown, Clock, MessageCircle, Monitor, Video } from "lucide-react";
