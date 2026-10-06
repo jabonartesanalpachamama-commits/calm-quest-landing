@@ -227,7 +227,6 @@ const StartSelector = () => (
 );
 
 /* ───────────── 7. Filosofía: dolor → transición → Santosha ───────────── */
-const PAIN = ["Despiertas con el pecho apretado antes de que empiece el día.", "Repasas la misma conversación a las tres de la mañana."];
 const PhaseOneText = () => (
   <>
     <h3 className="font-serif text-3xl md:text-5xl font-semibold">
@@ -235,6 +234,9 @@ const PhaseOneText = () => (
     </h3>
     <p className="text-base md:text-lg font-light leading-relaxed opacity-95 max-w-xl mx-auto">
       Gran parte del sufrimiento emerge cuando vivimos reaccionando, controlando y desconectados del cuerpo.
+    </p>
+    <p className="text-sm md:text-base font-light leading-relaxed opacity-90 max-w-xl mx-auto">
+      Despiertas con el pecho apretado antes de que empiece el día. Repasas la misma conversación a las tres de la mañana.
     </p>
     <p className="text-sm md:text-base font-light leading-relaxed opacity-85 max-w-xl mx-auto">
       El cuerpo se queda en alerta aunque ya no haya peligro, y cuesta descansar, decidir y estar presente con quien tienes enfrente.
@@ -265,7 +267,7 @@ const ManifestoLink = () => (
 
 const FLOAT_POS = [
   "top-[13%] left-[5%]", "top-[19%] right-[5%]", "bottom-[17%] left-[7%]", "bottom-[11%] right-[6%]",
-  "hidden md:block top-[5%] left-1/2 -translate-x-1/2 max-w-sm text-center", "hidden md:block bottom-[4%] left-1/2 -translate-x-1/2 max-w-sm text-center",
+  "top-[16%] left-1/2 -translate-x-1/2 md:top-1/2 md:left-[4%] md:translate-x-0", "bottom-[4%] left-1/2 -translate-x-1/2",
 ];
 
 const Philosophy = () => {
@@ -291,7 +293,7 @@ const Philosophy = () => {
   const wordX = useTransform(p, [0.7, 1], ["8%", "-20%"]);
   const calm = [useTransform(p, [0.82, 0.86], [0, 1]), useTransform(p, [0.84, 0.88], [0, 1]), useTransform(p, [0.86, 0.9], [0, 1]), useTransform(p, [0.88, 0.92], [0, 1])];
   const cta = useTransform(p, [0.9, 0.95], [0, 1]);
-  const floating = [...RESTLESS, ...PAIN];
+  const floating = [...RESTLESS, "Aguantar", "Anticipar"];
 
   if (reduce) {
     return (
@@ -315,7 +317,7 @@ const Philosophy = () => {
     <>
       {floating.map((w, i) => (
         <motion.span key={w} aria-hidden="true"
-          className={`absolute ${FLOAT_POS[i]} font-serif ${i < 4 ? "text-lg md:text-3xl" : "text-sm md:text-base tracking-[0.04em]"} text-brand-cream/70`}
+          className={`absolute ${FLOAT_POS[i]} font-serif text-base md:text-3xl whitespace-nowrap text-brand-cream/70`}
           animate={shake ? { x: [0, 6, -5, 3, 0], y: [0, -4, 5, -2, 0] } : undefined}
           transition={{ duration: 2.6 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}>
           {w}
@@ -344,7 +346,6 @@ const Philosophy = () => {
           <div className="relative text-center space-y-4 md:space-y-5 text-brand-cream max-w-2xl">
             <h2 id="filo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-gold">Mi filosofía de trabajo</h2>
             <PhaseOneText />
-            <ul className="md:hidden space-y-1 pt-2 text-[13px] font-light text-brand-cream/80">{PAIN.map((w) => <li key={w}>{w}</li>)}</ul>
             <p className="sr-only">{floating.join(" · ")}</p>
           </div>
         </motion.div>
