@@ -9,12 +9,12 @@ import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
-import fransuryRetrato from "@/assets/fransury-retrato.webp";
+import fransuryAcompana from "@/assets/fransury-acompana.webp";
 import { DrawLine, RevealImage } from "@/components/landing/ScrollReveal";
 import { fadeUp, inView, RevealTitle } from "@/components/landing";
 
 // Estructura "editorial": foto sticky + relato corrido.
-const HERO_IMAGE = fransuryRetrato;
+const HERO_IMAGE = fransuryAcompana;
 
 const H2 = "font-serif text-3xl md:text-4xl font-semibold text-foreground";
 const PROSE = "text-foreground/80 leading-relaxed font-light text-lg";
@@ -89,7 +89,7 @@ const QuienSoy = () => {
         <section className="md:px-6 md:pt-12 pb-14">
           <div className="max-w-6xl mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-8 md:gap-14 items-start">
             <div className="md:sticky md:top-28">
-              <RevealImage src={HERO_IMAGE} alt="Fransury González, psicóloga y maestra de Kundalini Yoga" eager imgClassName="object-cover object-top"
+              <RevealImage src={HERO_IMAGE} alt="Fransury González, psicóloga y maestra de Kundalini Yoga, sonriendo sentada en un sofá claro" eager imgClassName="object-cover object-top"
                 className="w-full aspect-[4/5] md:aspect-[3/4] md:rounded-[2rem] shadow-lg" />
             </div>
             <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="px-6 md:px-0 space-y-6 md:pt-6">
