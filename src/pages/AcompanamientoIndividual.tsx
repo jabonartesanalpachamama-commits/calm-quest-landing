@@ -14,6 +14,7 @@ import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import paraQuienImage from "@/assets/para-quien-image.webp";
 import yogaPhoto from "@/assets/fransury-yoga.webp";
+import yogaPhotoWide from "@/assets/fransury-yoga-ancha.webp";
 import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import { DrawLine, RevealImage } from "@/components/landing/ScrollReveal";
 import { fadeUp, inView, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
@@ -160,7 +161,8 @@ const AcompanamientoIndividual = () => {
 
         <FullBleedPhoto src={yogaPhoto} width={941} height={1672}
           alt="Fransury Gonzales en postura de cobra sobre un tapete de yoga, con los ojos cerrados"
-          label="Fransury en práctica de yoga" position="object-[70%_88%] md:object-[50%_82%]" />
+          label="Fransury en práctica de yoga" position="object-[70%_88%]"
+          desktop={{ src: yogaPhotoWide, width: 941, height: 900, background: "linear-gradient(to right, #D3BFBE, #C3AFB1 50%, #AE9BA1)" }} />
 
 
         {/* Qué es */}
