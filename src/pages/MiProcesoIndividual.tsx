@@ -84,7 +84,6 @@ const MiProcesoIndividual = () => {
       <main className="flex-grow">
         {/* HERO tipográfico */}
         <section className="relative overflow-hidden bg-brand-cream px-6 pt-16 pb-16 md:pt-24 md:pb-24">
-          <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] md:w-[52rem] md:h-[52rem] rounded-full bg-gradient-to-br from-warm-mauve/60 via-warm-peach/50 to-transparent blur-3xl opacity-70" />
           <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }}
             className="relative max-w-5xl mx-auto text-center space-y-7">
             <motion.h1 variants={fadeUp} className="text-sm md:text-base font-semibold tracking-[0.25em] uppercase text-[#795D64]" style={{ fontVariant: "small-caps" }}>
@@ -142,7 +141,7 @@ const MiProcesoIndividual = () => {
         <Quote variant="band">Entender el para qué es el comienzo. Aprender qué hacer con lo que comprendes es el proceso.</Quote>
 
         {/* Tarifas */}
-        <section id="tarifas" className="scroll-mt-24 px-6 py-14 md:py-20 bg-gradient-to-b from-background to-warm-peach/30">
+        <section id="tarifas" className="scroll-mt-24 px-6 py-24 md:py-36 bg-background border-t border-border">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }}
             className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.6fr] gap-10 lg:gap-14 items-start">
             <div className="lg:sticky lg:top-28 space-y-4 text-center lg:text-left">

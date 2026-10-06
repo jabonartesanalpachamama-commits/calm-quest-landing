@@ -19,7 +19,7 @@ const PROGRAMS = [
     desc: "Un viaje de un año dividido en 6 módulos, para integrar el yoga, la meditación y la conciencia en tu vida cotidiana.",
     features: ["100% Virtual", "Encuentros bimensuales", "Acompañamiento continuo"],
     href: "/curso-iniciacion-yoga",
-    bg: "bg-gradient-to-b from-warm-mauve/70 via-warm-mauve/25 to-card",
+    bg: "bg-brand-cream",
   },
   {
     id: "ciclica",
@@ -29,7 +29,7 @@ const PROGRAMS = [
     desc: "Experiencia grupal de reconexión profunda para mujeres que desean comprender su naturaleza cíclica, transformar su relación con la menstruación e intuición.",
     features: ["100% Virtual", "Comunidad de apoyo", "Sabiduría ancestral & corporal"],
     href: "/sabiduria-ciclica-esencia-femenina",
-    bg: "bg-gradient-to-b from-warm-peach/90 via-warm-peach/35 to-card",
+    bg: "bg-background",
   },
   {
     id: "individual",
@@ -39,7 +39,7 @@ const PROGRAMS = [
     desc: "Clases privadas y programas adaptados a tu momento vital, tu historia y tu camino personal. Es un espacio diseñado para cultivar claridad y regulación interna.",
     features: ["Sesiones personalizadas", "Formato 1 a 1", "100% Virtual"],
     href: "/acompanamiento-individual",
-    bg: "bg-gradient-to-b from-brand-gold/40 via-brand-cream to-card",
+    bg: "bg-brand-cream",
   },
 ];
 

@@ -190,7 +190,7 @@ const CursoIniciacionYoga = () => {
         </section>
 
         {/* Módulos: rejilla / carrusel */}
-        <section className="py-14 md:py-16 bg-gradient-to-b from-background via-warm-mauve/20 to-background">
+        <section className="py-24 md:py-36 bg-brand-cream">
           <div className="max-w-6xl mx-auto space-y-8">
             <div className="text-center space-y-3 px-6">
               <RevealTitle text="Los 6 Módulos del Curso" className={H2} />
@@ -261,7 +261,7 @@ const CursoIniciacionYoga = () => {
         </section>
 
         {/* Inversión: tabla comparativa */}
-        <section id="inversion" className="px-4 md:px-6 py-14 md:py-16 bg-gradient-to-b from-background via-warm-peach/40 to-background">
+        <section id="inversion" className="px-4 md:px-6 py-24 md:py-36 bg-background">
           <motion.div {...inView} variants={stagger(0.1)} className="max-w-4xl mx-auto space-y-8">
             <div className="text-center space-y-3">
               <RevealTitle text="Tu inversión" className={H2} />

@@ -5,3 +5,5 @@
 - Editable site lists (e.g. participaciones logos) live in src/data/*.ts; why: content changes in one place without touching components.
 - Site-wide editorial theme lives in the `.lux` CSS scope (index.css), applied by ThemeScope in App.tsx to an allow-list of routes; why: CMS writes vars on :root, and Sabiduría Cíclica / clase gratuita / admin must keep their own look (Sabiduría uses components/LegacyHeader).
 - ScrollFillText is static unless `animated` is passed; why: word-by-word lighting is reserved for one section.
+
+- Section breaks are flat background changes plus thin gold rules; no gradient transition strips (only photo masks use gradients). Why: client rejected gradient transitions.
