@@ -304,9 +304,11 @@ const ChaosTitle = ({ chaos, t }: { chaos: MotionValue<number>; t: MotionValue<n
     <h3 className={TITLE1_CLASS}>
       <span className="sr-only">{PHASE1_TITLE}</span>
       {PHASE1_TITLE.split(" ").map((word, wi) => (
-        <span key={wi} className="inline-block whitespace-nowrap" aria-hidden="true">
+        <span key={wi} aria-hidden="true">
           {wi > 0 && " "}
-          {[...word].map((ch) => <ChaosLetter key={k} ch={ch} i={k++} chaos={chaos} t={t} />)}
+          <span className="inline-block whitespace-nowrap">
+            {[...word].map((ch) => <ChaosLetter key={k} ch={ch} i={k++} chaos={chaos} t={t} />)}
+          </span>
         </span>
       ))}
     </h3>
@@ -331,22 +333,22 @@ const CALM_CLASS = "flex flex-wrap justify-center items-center gap-x-5 gap-y-3 t
  * Bandas de arriba y de abajo; el centro (título y línea) queda libre.
  */
 const CHAOS_WORDS = [
-  { m: [16, 9], d: [12, 12], rot: -7, size: "text-2xl md:text-6xl", op: 0.85, gold: false },
-  { m: [64, 6], d: [42, 7], rot: 6, size: "text-xl md:text-4xl", op: 0.6, gold: true },
-  { m: [80, 14], d: [80, 13], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
-  { m: [22, 74], d: [18, 76], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
-  { m: [70, 70], d: [46, 86], rot: -8, size: "text-xl md:text-3xl", op: 0.55, gold: true },
-  { m: [40, 82], d: [72, 72], rot: 5, size: "text-2xl md:text-5xl", op: 0.7, gold: false },
-  { m: [76, 88], d: [86, 88], rot: -6, size: "text-xl md:text-4xl", op: 0.5, gold: false },
-  { m: [28, 92], d: [30, 90], rot: 4, size: "text-2xl md:text-6xl", op: 0.8, gold: false },
+  { m: [22, 11], d: [12, 12], rot: -7, size: "text-2xl md:text-6xl", op: 0.85, gold: false },
+  { m: [74, 15], d: [42, 7], rot: 6, size: "text-xl md:text-4xl", op: 0.6, gold: true },
+  { m: [70, 62], d: [82, 13], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
+  { m: [26, 70], d: [16, 74], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
+  { m: [72, 77], d: [46, 88], rot: -8, size: "text-xl md:text-3xl", op: 0.55, gold: true },
+  { m: [36, 84], d: [72, 70], rot: 5, size: "text-2xl md:text-5xl", op: 0.7, gold: false },
+  { m: [74, 91], d: [86, 87], rot: -6, size: "text-xl md:text-4xl", op: 0.5, gold: false },
+  { m: [24, 94], d: [26, 92], rot: 4, size: "text-2xl md:text-6xl", op: 0.8, gold: false },
 ];
 
 const ChaosWord = ({ w, i, p, chaos, t, desktop }: { w: string; i: number; p: MotionValue<number>; chaos: MotionValue<number>; t: MotionValue<number>; desktop: boolean }) => {
   const c = CHAOS_WORDS[i];
   const [sx, sy] = desktop ? c.d : c.m;
   // Hilera ordenada: escritorio una fila; móvil dos filas de 4.
-  const rx = desktop ? 9 + i * 11.7 : 14 + (i % 4) * 24;
-  const ry = desktop ? 78 : i < 4 ? 72 : 80;
+  const rx = desktop ? 20 + (i % 4) * 20 : 14 + (i % 4) * 24;
+  const ry = desktop ? (i < 4 ? 72 : 82) : i < 4 ? 72 : 80;
   const appear = 0.08 + i * 0.026;
   const align = useTransform(p, [0.4, 0.5], [0, 1]);
   const ds = 0.5 + i * 0.012, de = ds + 0.05;
@@ -418,7 +420,7 @@ const Philosophy = () => {
 
         {/* Fase 1 · arriba de la línea */}
         <motion.div style={{ opacity: one, y: oneY, color: oneColor }}
-          className="absolute inset-x-0 top-[22%] bottom-[54%] md:top-[18%] flex items-end justify-center px-5">
+          className="absolute inset-x-0 top-[18%] bottom-[54%] md:top-[18%] flex items-end justify-center px-5">
           <div className="text-center space-y-4 md:space-y-6 max-w-5xl">
             <h2 id="filo-titulo" className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-semibold text-[#B8977E]">Mi filosofía de trabajo</h2>
             <ChaosTitle chaos={chaos} t={t} />
