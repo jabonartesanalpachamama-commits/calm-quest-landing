@@ -16,7 +16,7 @@ export const LogoMarquee = ({ label = "Ha participado en" }: { label?: string })
   const reps = Math.max(2, Math.ceil(8 / PARTICIPACIONES.length));
   const half = Array.from({ length: reps }, () => PARTICIPACIONES).flat();
   return (
-    <section aria-label={label} className="bg-brand-cream border-y border-brand-gold/30 py-6 md:py-7">
+    <section aria-label={label} className="bg-brand-cream py-6 md:py-7">
       <p className="text-center text-xs tracking-[0.3em] uppercase text-brand-mauve [font-variant:small-caps] mb-4">{label}</p>
       {reduce ? (
         <ul className="flex flex-wrap justify-center items-center gap-x-10 gap-y-3 px-6">
@@ -28,7 +28,7 @@ export const LogoMarquee = ({ label = "Ha participado en" }: { label?: string })
           <div className="logo-marquee-track" aria-hidden="true">
             {[0, 1].map((g) => (
               <div key={g} className="flex shrink-0 items-center">
-                {half.map((p, i) => <div key={`${g}-${i}`} className="px-8 md:px-12 flex items-center h-11"><Item p={p} /></div>)}
+                {half.map((p, i) => <div key={`${g}-${i}`} className="px-8 md:px-12 flex items-center gap-16 md:gap-24 h-11"><Item p={p} /><span className="text-brand-gold">·</span></div>)}
               </div>
             ))}
           </div>
