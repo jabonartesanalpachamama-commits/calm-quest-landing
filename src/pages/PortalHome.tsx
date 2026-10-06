@@ -81,12 +81,11 @@ const useMedia = (q: string) => {
 
 /** Revelado enmascarado: el contenido sube desde detrás de una línea invisible. */
 const MaskLine = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
-  <span className={`block overflow-hidden pb-[0.08em] ${className}`}>
-    <motion.span className="block" initial={{ y: "105%" }} whileInView={{ y: "0%" }} viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.9, delay, ease: EASE }}>
+  <motion.span className={`block overflow-hidden pb-[0.08em] ${className}`} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}>
+    <motion.span className="block" variants={{ hidden: { y: "105%" }, show: { y: "0%", transition: { duration: 0.9, delay, ease: EASE } } }}>
       {children}
     </motion.span>
-  </span>
+  </motion.span>
 );
 
 /* ───────────── 1. Hero ───────────── */
