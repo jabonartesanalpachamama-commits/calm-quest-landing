@@ -69,17 +69,6 @@ const START_OPTIONS = [
 const RESTLESS = ["Reaccionar", "Controlar", "Exigirse", "Desconectarse"];
 const CALM = ["Presencia", "Ecuanimidad", "Conexión", "Contentamiento consciente"];
 
-const useMedia = (q: string) => {
-  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(q);
-    const on = () => setM(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, [q]);
-  return m;
-};
-
 /** Revelado enmascarado: el contenido sube desde detrás de una línea invisible. */
 const MaskLine = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.span className={`block overflow-hidden pb-[0.08em] ${className}`} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}>
@@ -315,7 +304,7 @@ const Companion = () => {
           <motion.span variants={fadeUp} className="block text-xs font-semibold tracking-[0.3em] uppercase text-brand-mauve">Acompañamiento Humano</motion.span>
           <h2 id="acompana-titulo" className={H2}><MaskLine>Quién te acompaña</MaskLine></h2>
           <motion.p variants={fadeUp} className={para}>
-            alma humana.
+            Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
           </motion.p>
           <motion.p variants={fadeUp} className={para}>
             Mi propósito es acompañarte a <Highlight>sanar experiencias difíciles</Highlight>, a transformar el significado de lo que viviste y a <Highlight delay={0.3}>habitar una vida en mayor plenitud</Highlight>. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a <Highlight delay={0.6}>regular tu sistema nervioso</Highlight>.
