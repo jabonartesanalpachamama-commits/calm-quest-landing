@@ -274,15 +274,15 @@ const Philosophy = () => {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const p = useSpring(scrollYProgress, { stiffness: 60, damping: 26, mass: 0.6 });
   // Fondo: ciruela → #F7F3F0 de forma lenta durante la fase 2
-  const plum = useTransform(p, [0.28, 0.56], [1, 0]);
+  const plum = useTransform(p, [0.28, 0.5], [1, 0]);
   // Fase 1: el texto central se va primero; el temblor se calma (capa inquieta → capa quieta) antes de desaparecer
   const one = useTransform(p, [0.24, 0.36], [1, 0]);
   const oneY = useTransform(p, [0.24, 0.36], ["0px", "-30px"]);
   const shaking = useTransform(p, [0.2, 0.32], [1, 0]);
   const still = useTransform(p, [0.2, 0.3, 0.44], [0, 0.85, 0]);
   // Fase 2
-  const two = useTransform(p, [0.46, 0.56, 0.68, 0.74], [0, 1, 1, 0]);
-  const twoY = useTransform(p, [0.46, 0.56, 0.68, 0.74], ["30px", "0px", "0px", "-24px"]);
+  const two = useTransform(p, [0.44, 0.54, 0.68, 0.74], [0, 1, 1, 0]);
+  const twoY = useTransform(p, [0.44, 0.54, 0.68, 0.74], ["30px", "0px", "0px", "-24px"]);
   const circle = useTransform(p, [0.36, 0.56], [0, 1]);
   // Fase 3
   const three = useTransform(p, [0.75, 0.83], [0, 1]);
