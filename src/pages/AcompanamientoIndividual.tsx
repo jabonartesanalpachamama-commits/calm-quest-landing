@@ -125,6 +125,19 @@ const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
   </ul>
 );
 
+/** Círculo que respira (10 s) detrás de un título, sobre fondo plano; quieto con reduced-motion. */
+const LuxBreath = ({ top = "50%" }: { top?: string }) => {
+  const reduce = useReducedMotion();
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(90vw,640px)] aspect-square" style={{ top }}>
+      <motion.div className="w-full h-full rounded-full border border-[#795D64]/35"
+        style={{ background: "radial-gradient(circle, rgba(121,93,100,0.38) 0%, rgba(121,93,100,0) 70%)" }}
+        animate={reduce ? undefined : { scale: [0.92, 1.08, 0.92], opacity: [0.7, 1, 0.7] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} />
+    </div>
+  );
+};
+
 const stagger = (s = 0.12) => ({ show: { transition: { staggerChildren: s } } });
 
 /* ───────────── Hero ───────────── */
@@ -138,21 +151,21 @@ const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
     ? "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)"
     : "linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%)";
   return (
-    <section ref={ref} className="relative min-h-[calc(100svh-88px)] md:min-h-[calc(100svh-104px)] overflow-hidden flex flex-col md:flex-row md:items-center"
+    <section ref={ref} className="relative md:min-h-[calc(100svh-104px)] overflow-hidden flex flex-col md:flex-row md:items-center"
       style={{ background: desktop ? "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" : "linear-gradient(180deg, #DCD0D1 0%, #CFC0C2 55%, #CFC0C2 82%, #FFFFFF 100%)" }}>
-      <div className="absolute inset-x-0 bottom-0 top-[44%] md:top-0 md:left-auto md:w-[62%] overflow-hidden"
+      <div className="relative order-2 w-full aspect-[941/900] -mt-4 md:mt-0 md:order-none md:aspect-auto md:absolute md:inset-y-0 md:right-0 md:left-auto md:w-[62%] overflow-hidden"
         style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
         <motion.picture style={reduce || !desktop ? undefined : { y }} className="absolute inset-0 block will-change-transform">
           <source media="(min-width: 768px)" srcSet={HERO_IMAGE_WIDE} />
-          <img src={HERO_IMAGE} alt="Fransury González en postura de cobra sobre un tapete de yoga, con los ojos cerrados" fetchPriority="high"
-            width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[72%_100%] md:object-[50%_60%] md:scale-[1.06]" />
+          <img src={HERO_IMAGE} alt="Fransury González practicando yoga en postura de cobra sobre un tapete, con los ojos cerrados" fetchPriority="high"
+            width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[70%_70%] md:object-[50%_60%] md:scale-[1.06]" />
         </motion.picture>
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
-        className="relative w-full max-w-6xl mx-auto px-6 pt-10 pb-[56svh] md:py-32">
+        className="relative order-1 w-full max-w-6xl mx-auto px-6 pt-10 pb-2 md:py-32">
         <div className="max-w-[30rem] text-center md:text-left">
           <motion.span variants={fadeUp} className={LABEL}>Sesiones 1 a 1 · Virtual</motion.span>
-          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
+          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.5rem,7vw,2.2rem)] md:!text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.1em] md:!tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
             Yoga y meditación 1:1
           </motion.h1>
           <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-foreground">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
@@ -277,8 +290,8 @@ const AcompanamientoIndividual = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative flex flex-col pb-20 md:pb-0">
       <Seo
-        title="Yoga y meditación 1:1 online | SantoSha"
-        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 con Fransury González, por videollamada. Clases de 60 minutos."
+        title="Yoga y meditación online 1:1 | Fransury González"
+        description="Clases privadas de Kundalini Yoga y meditación 1 a 1 por videollamada con Fransury González, desde Medellín para todo el mundo. 60 min, desde 17 USD."
         path="/acompanamiento-individual"
         jsonLd={[SERVICE_JSONLD, faqJsonLd(FAQS)]}
       />
@@ -287,11 +300,13 @@ const AcompanamientoIndividual = () => {
 
       <main className="flex-grow">
         <Hero onPrecios={goPrecios} />
+        <p className="px-6 pt-10 md:pt-14 text-sm text-muted-foreground text-center">Clases virtuales de yoga y meditación desde Medellín, para quien esté en cualquier lugar del mundo.</p>
         <WordsMarquee />
 
         {/* ¿Deseas un proceso personalizado? */}
-        <section className={`${SECTION} bg-background`}>
-          <motion.div {...inView} variants={stagger(0.15)} className="max-w-3xl mx-auto text-center">
+        <section className={`${SECTION} bg-background relative overflow-hidden`}>
+          <LuxBreath />
+          <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-3xl mx-auto text-center">
             <motion.h2 variants={fadeUp} className={H2}>¿Deseas un proceso personalizado?</motion.h2>
             <Rule className="mx-auto my-10" />
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/85 leading-[1.9]">
@@ -368,12 +383,13 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Tu inversión */}
-        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
-          <motion.div {...inView} variants={stagger(0.15)} className="max-w-4xl mx-auto">
+        <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream relative overflow-hidden`}>
+          <LuxBreath top="22%" />
+          <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">
               <h2 className={H2}>Tu inversión</h2>
               <Rule className="mx-auto my-8" />
-              <p className="text-muted-foreground text-lg">Elige el plan que mejor acompañe tu proceso</p>
+              <p className="text-foreground/90 text-lg">Elige el plan que mejor acompañe tu proceso</p>
             </motion.div>
             <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               <PriceCardLight
