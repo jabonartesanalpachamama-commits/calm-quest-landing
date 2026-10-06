@@ -215,12 +215,12 @@ const RevealTitle = ({ text, as = "h2", className = "" }: { text: string; as?: "
         <motion.span
           key={i}
           aria-hidden="true"
-          className="inline-block mr-[0.25em]"
+          className="inline-block"
           variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } } }}
         >
           {w}
         </motion.span>
-      ))}
+      )).flatMap((el, i) => (i ? [" ", el] : [el]))}
     </Tag>
   );
 };
@@ -234,9 +234,9 @@ const RevealWords = ({ text, className = "", blur = false, stagger = 0.06, as = 
     <Tag className={className} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}
       variants={{ show: { transition: { staggerChildren: stagger } } }} aria-label={text}>
       {text.split(" ").map((w, i) => (
-        <motion.span key={i} aria-hidden="true" className="inline-block mr-[0.25em]"
+        <motion.span key={i} aria-hidden="true" className="inline-block"
           variants={{ hidden, show: { ...show, transition: { duration: blur ? 0.9 : 0.5, ease: EASE } } }}>{w}</motion.span>
-      ))}
+      )).flatMap((el, i) => (i ? [" ", el] : [el]))}
     </Tag>
   );
 };

@@ -76,7 +76,7 @@ const QuienSoy = () => {
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} relative flex flex-col pb-20 md:pb-0`}>
       <Seo
-        title="Quién soy | Fransury González, psicóloga y maestra de Kundalini Yoga"
+        title="Fransury González | Psicóloga y maestra de Kundalini Yoga"
         description="Soy Fransury González, psicóloga, psicoterapeuta y maestra de Kundalini Yoga. Conoce mi historia y mi formación."
         path="/quien-soy"
         jsonLd={PERSON_JSONLD}

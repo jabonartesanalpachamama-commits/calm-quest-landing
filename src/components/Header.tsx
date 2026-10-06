@@ -82,7 +82,7 @@ const Header = ({ borderless }: HeaderProps) => {
         <span className="xl:hidden" />
 
         <Link to="/" className={`justify-self-center ${FOCUS}`} aria-label="SantoSha">
-          <div role="img" aria-hidden="true"
+          <div aria-hidden="true"
             className={`bg-brand-ink aspect-[1892/2332] transition-[height] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${compact ? "h-14" : "h-16 md:h-[72px]"}`}
             style={{ backgroundColor: "#482A3A", WebkitMaskImage: `url(${santoshaLogo})`, maskImage: `url(${santoshaLogo})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
         </Link>
