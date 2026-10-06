@@ -10,6 +10,7 @@ import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import fransuryRetrato from "@/assets/fransury-retrato.webp";
+import { DrawLine, RevealImage } from "@/components/landing/ScrollReveal";
 import { fadeUp, inView, RevealTitle } from "@/components/landing";
 
 // Estructura "editorial": foto sticky + relato corrido.
@@ -53,7 +54,8 @@ const PERSON_JSONLD = {
 };
 
 const Timeline = ({ items }: { items: { year: string; title: string; sub: string; role?: string }[] }) => (
-  <motion.ol {...inView} variants={{ show: { transition: { staggerChildren: 0.07 } } }}>
+  <motion.ol {...inView} variants={{ show: { transition: { staggerChildren: 0.07 } } }} className="relative">
+    <DrawLine vertical className="absolute left-[calc(4.5rem+1rem)] top-2 bottom-0 w-px" />
     {items.map((it) => (
       <motion.li key={it.title} variants={fadeUp} className="grid grid-cols-[4.5rem_1fr] gap-4">
         <span className="font-serif text-3xl text-[#B8977E] leading-none pt-0.5">{it.year}</span>
@@ -87,8 +89,8 @@ const QuienSoy = () => {
         <section className="md:px-6 md:pt-12 pb-14">
           <div className="max-w-6xl mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-8 md:gap-14 items-start">
             <div className="md:sticky md:top-28">
-              <img src={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga" loading="eager" fetchPriority="high"
-                className="w-full aspect-[4/5] md:aspect-[3/4] object-cover object-top md:rounded-[2rem] shadow-lg" />
+              <RevealImage src={HERO_IMAGE} alt="Fransury Gonzáles, psicóloga y maestra de Kundalini Yoga" eager imgClassName="object-cover object-top"
+                className="w-full aspect-[4/5] md:aspect-[3/4] md:rounded-[2rem] shadow-lg" />
             </div>
             <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="px-6 md:px-0 space-y-6 md:pt-6">
               <motion.span variants={fadeUp} className="inline-flex px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-brand-cream text-[#795D64]">

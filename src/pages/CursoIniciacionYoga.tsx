@@ -11,9 +11,21 @@ import Quote from "@/components/landing/Quote";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
+import { RevealImage } from "@/components/landing/ScrollReveal";
+import { useRef } from "react";
+import { useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { fadeUp, inView, RevealTitle } from "@/components/landing";
 
 // Estructura "programa académico": hero de ancho completo con imagen de fondo.
+/** Número gigante de fondo con parallax suave. */
+const ModuleNumber = ({ num }: { num: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["30%", "-30%"]);
+  return <motion.span ref={ref} aria-hidden="true" style={reduce ? undefined : { y }} className="absolute -top-4 right-2 font-serif text-[8rem] leading-none text-brand-gold/20 select-none">{num}</motion.span>;
+};
+
 const HERO_IMAGE = cursoHero.url;
 
 const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
@@ -101,8 +113,8 @@ const CursoIniciacionYoga = () => {
       <main className="flex-grow">
         {/* HERO ancho completo */}
         <section className="relative overflow-hidden min-h-[560px] md:min-h-[620px] flex items-center">
-          <img src={HERO_IMAGE} alt="Espacio sereno de práctica de yoga con mat, cojín y velas" loading="eager" fetchPriority="high"
-            className="absolute inset-0 w-full h-full object-cover object-center" />
+          <RevealImage src={HERO_IMAGE} alt="Espacio sereno de práctica de yoga con mat, cojín y velas" eager
+            className="absolute inset-0" imgClassName="object-cover object-center" />
           <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-brand-ink via-brand-ink/85 to-brand-ink/50 md:via-brand-ink/70 md:to-brand-ink/5" />
           <motion.div initial="hidden" animate="show" variants={stagger(0.1)}
             className="relative w-full max-w-6xl mx-auto px-6 py-16 md:py-24 text-brand-cream">
@@ -189,7 +201,7 @@ const CursoIniciacionYoga = () => {
               {MODULES.map((m) => (
                 <motion.li key={m.num} variants={fadeUp}
                   className="relative snap-start shrink-0 w-[80%] sm:w-[55%] md:w-auto overflow-hidden rounded-3xl bg-card border border-border/50 p-7 min-h-[15rem] flex flex-col justify-end transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                  <span aria-hidden="true" className="absolute -top-4 right-2 font-serif text-[8rem] leading-none text-brand-gold/20 select-none">{m.num}</span>
+                  <ModuleNumber num={m.num} />
                   <p className="relative text-xs font-semibold tracking-widest uppercase text-[#795D64]">Módulo {m.num} · Bimensual</p>
                   <h3 className="relative mt-2 font-serif text-xl md:text-2xl font-semibold text-foreground leading-snug">{m.title}</h3>
                   <p className="relative mt-2 text-base text-muted-foreground font-light leading-relaxed">{m.theme}</p>
