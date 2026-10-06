@@ -335,8 +335,8 @@ const CALM_CLASS = "flex flex-wrap justify-center items-center gap-x-5 gap-y-3 t
 const CHAOS_WORDS = [
   { m: [22, 12], d: [11, 24], rot: -7, size: "text-2xl md:text-6xl", op: 0.85, gold: false },
   { m: [76, 17], d: [88, 34], rot: 6, size: "text-xl md:text-4xl", op: 0.6, gold: true },
-  { m: [70, 64], d: [86, 18], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
-  { m: [26, 71], d: [16, 76], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
+  { m: [70, 64], d: [80, 18], rot: -4, size: "text-3xl md:text-5xl", op: 0.75, gold: false },
+  { m: [26, 71], d: [21, 76], rot: 8, size: "text-3xl md:text-6xl", op: 0.9, gold: false },
   { m: [72, 78], d: [46, 90], rot: -8, size: "text-xl md:text-3xl", op: 0.55, gold: true },
   { m: [34, 85], d: [72, 74], rot: 5, size: "text-2xl md:text-5xl", op: 0.7, gold: false },
   { m: [76, 91], d: [86, 88], rot: -6, size: "text-xl md:text-4xl", op: 0.5, gold: false },
