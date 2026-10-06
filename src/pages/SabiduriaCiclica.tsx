@@ -470,9 +470,6 @@ const SabiduriaCiclica = () => {
   // Subtle scroll zoom (top-center origin) so the top of the image is never cropped.
   void heroParallax;
   const heroImgScale = useTransform(scrollY, [0, 600], [1, 1 + 0.06 * k], { clamp: true });
-  const deco1Y = useTransform(scrollY, [0, 3000], [0, -260 * k]);
-  const deco2Y = useTransform(scrollY, [0, 3000], [0, 180 * k]);
-  const deco3Y = useTransform(scrollY, [0, 4000], [0, -320 * k]);
 
   const photoRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: photoProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
