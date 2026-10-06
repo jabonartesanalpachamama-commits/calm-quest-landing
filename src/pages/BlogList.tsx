@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
+import Seo from "@/components/Seo";
 
 export const BlogList = () => {
   const [posts, setPosts] = useState<CmsPost[]>([]);
@@ -117,6 +118,7 @@ export const BlogList = () => {
 
   return (
     <div className={`min-h-screen flex flex-col ${palette.background} ${palette.foreground} font-${settings?.fontFamily || "serif"}`}>
+      <Seo title="Blog de bienestar y yoga | SantoSha" description="Lecturas sobre bienestar emocional, respiración, meditación y Kundalini Yoga, para leer a tu ritmo y practicar en casa." path="/blog" />
       {/* Header */}
       <Header palette={palette} brandName={settings?.brandName} />
 

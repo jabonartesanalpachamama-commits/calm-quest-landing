@@ -15,6 +15,21 @@ import {
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
+import Seo from "@/components/Seo";
+import { Helmet } from "react-helmet";
+
+/** Recorta en límite de palabra sin superar `max` caracteres. */
+const clampWords = (text: string, max: number) => {
+  const t = (text || "").replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max + 1);
+  const i = cut.lastIndexOf(" ");
+  return (i > 0 ? cut.slice(0, i) : t.slice(0, max)).replace(/[\s,;:.\-–—]+$/, "");
+};
+const postSeoTitle = (title: string) => {
+  const full = `${title} | SantoSha`;
+  return full.length <= 60 ? full : clampWords(title, 60);
+};
 import NextSteps from "@/components/NextSteps";
 import { getWhatsAppUrl } from "@/lib/utils";
 
@@ -244,6 +259,7 @@ export const BlogPostView = () => {
   if (error || !post || !settings) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4 text-center">
+        <Helmet><meta name="robots" content="noindex" /></Helmet>
         <BookOpen className="w-12 h-12 mb-6 text-muted-foreground" />
         <h1 className="font-serif text-3xl font-semibold mb-3">Lectura no disponible</h1>
         <p className="text-muted-foreground max-w-md mb-8">
@@ -262,6 +278,7 @@ export const BlogPostView = () => {
 
   return (
     <div className={`min-h-screen ${palette.background} ${palette.foreground} font-${settings.fontFamily} relative flex flex-col`}>
+      <Seo title={postSeoTitle(post.title)} description={clampWords(post.excerpt, 155)} path={`/blog/${post.slug}`} image={post.imageUrl || undefined} />
       
       {/* Floating admin quick edit button */}
       {isAdmin && (
