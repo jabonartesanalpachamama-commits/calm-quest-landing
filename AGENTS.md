@@ -2,3 +2,4 @@
 - Service pages load CMS palette/fonts via src/hooks/useVisualSettings; why: one copy of the loader instead of per-page duplicates.
 - Long-read pages (Filosofía, Términos) use landing/StickyToc (SideToc + PillToc + useActiveSection); why: one scroll-spy index pattern.
 - Brand logo: use the transparent-background asset (src/assets/santosha-logo-transparent.webp) in header/footer; why: the white-background version shows a white oval on cream.
+- Editable site lists (e.g. participaciones logos) live in src/data/*.ts; why: content changes in one place without touching components.

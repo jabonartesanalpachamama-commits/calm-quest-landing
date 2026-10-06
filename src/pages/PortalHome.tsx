@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import {
-  AnimatePresence, motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform,
+  AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform,
 } from "framer-motion";
 import { ArrowDown, ArrowRight, Gift, Leaf, MessageCircle, PlayCircle, X } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
@@ -18,6 +18,7 @@ import cursoHero from "@/assets/curso-hero.png.asset.json";
 import bannerAcompanamiento from "@/assets/banner-acompanamiento.webp";
 import paraQuienImage from "@/assets/para-quien-image.webp";
 import { EASE, fadeUp, inView, RotatingOrnament } from "@/components/landing";
+import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
 import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
 
@@ -27,7 +28,7 @@ const HERO_IMAGE = heroBackground.url;
 const BTN_SOLID = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-base font-semibold shadow-md justify-center hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-brand-mauve hover:bg-brand-mauve/90 text-primary-foreground";
 const BTN_OUTLINE = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-base font-semibold justify-center bg-card/80 backdrop-blur border border-brand-mauve/40 text-foreground hover:bg-card transition-all duration-300";
 const FOCUS = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
-const H2 = "font-serif text-3xl md:text-5xl font-semibold text-foreground";
+const H2 = "font-serif text-3xl md:text-5xl font-normal text-foreground";
 const POPUP_KEY = "santosha_free_popup_seen";
 
 const PROGRAMS = [
@@ -68,17 +69,6 @@ const START_OPTIONS = [
 const RESTLESS = ["Reaccionar", "Controlar", "Exigirse", "Desconectarse"];
 const CALM = ["Presencia", "Ecuanimidad", "Conexión", "Contentamiento consciente"];
 
-const useMedia = (q: string) => {
-  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(q);
-    const on = () => setM(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, [q]);
-  return m;
-};
-
 /** Revelado enmascarado: el contenido sube desde detrás de una línea invisible. */
 const MaskLine = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.span className={`block overflow-hidden pb-[0.08em] ${className}`} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-40px" }}>
@@ -93,30 +83,39 @@ const Hero = ({ onFreeClass }: { onFreeClass: () => void }) => {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "8%"]);
   const scale = useTransform(scrollYProgress, [0, 1], [1.08, 1]);
   const goProgramas = (e: React.MouseEvent) => {
     e.preventDefault();
     document.querySelector("#programas")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   };
   return (
-    <section ref={ref} className="relative min-h-[100svh] overflow-hidden flex items-end md:items-center">
-      <motion.img src={HERO_IMAGE} alt="Mujer meditando al amanecer sobre las montañas"
-        style={reduce ? undefined : { y, scale }}
-        className="absolute inset-0 w-full h-full object-cover object-[68%_15%] md:object-[70%_30%] will-change-transform" />
-      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-brand-cream from-35% via-brand-cream/70 via-55% to-transparent to-80% md:bg-gradient-to-r md:from-brand-cream md:from-25% md:via-brand-cream/75 md:via-45% md:to-transparent md:to-70%" />
+    <section ref={ref} className="relative md:min-h-[100svh] overflow-hidden flex flex-col md:flex-row md:items-center bg-brand-cream">
+      {/* Imagen: bloque superior en móvil (rostro completo), fondo completo en escritorio */}
+      <div className="relative h-[55svh] md:absolute md:inset-0 md:h-auto overflow-hidden">
+        <motion.img src={HERO_IMAGE} alt="Mujer meditando al amanecer sobre las montañas"
+          style={reduce ? undefined : { y, scale }}
+          className="absolute inset-0 w-full h-full object-cover object-[85%_30%] md:object-[70%_30%] will-change-transform" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-brand-cream to-transparent md:hidden" />
+        <div aria-hidden="true" className="hidden md:block absolute inset-0 bg-gradient-to-r from-brand-cream from-25% via-brand-cream/75 via-45% to-transparent to-70%" />
+      </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } }}
-        className="relative w-full max-w-6xl mx-auto px-6 pb-10 pt-24 md:py-24">
+        className="relative w-full max-w-6xl mx-auto px-6 -mt-10 pb-12 md:mt-0 md:py-28">
         <div className="max-w-xl space-y-5 text-center md:text-left">
           <motion.span variants={fadeUp} className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase rounded-full bg-card/80 text-brand-mauve shadow-sm">
             <Leaf className="w-3.5 h-3.5" /> Conciencia · Calma · Transformación humana
           </motion.span>
-          <motion.h1 variants={fadeUp} className="font-serif text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] text-foreground">
-            Del modo supervivencia a la <Highlight delay={0.9}><span className="text-brand-mauve">calma consciente</span></Highlight>
+          <motion.h1 variants={fadeUp} className="font-serif text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.05] text-foreground">
+            Del modo supervivencia a la <Highlight delay={0.9} className="text-brand-mauve">calma consciente</Highlight>
           </motion.h1>
           <motion.p variants={fadeUp} className="text-lg md:text-xl text-foreground/85 leading-relaxed font-light">
             Kundalini Yoga, regulación del sistema nervioso y sabiduría somática para recordar tu esencia y habitar tu vida.
           </motion.p>
+          <motion.div variants={fadeUp} className="space-y-2 border-l-0 md:border-l md:border-brand-gold/60 md:pl-5">
+            <span aria-hidden="true" className="block mx-auto w-12 h-px bg-brand-gold/70 mb-3 md:hidden" />
+            <p className="font-serif text-lg md:text-xl text-foreground">Hola, soy Fransury Gonzáles (Sury), psicóloga y maestra de Kundalini Yoga.</p>
+            <p className="font-serif italic text-base md:text-lg text-brand-mauve">Mi propósito es acompañarte a sanar experiencias difíciles y habitar una vida en mayor plenitud.</p>
+          </motion.div>
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-3 pt-1 [&>*]:w-full sm:[&>*]:w-auto">
             <a href="#programas" onClick={goProgramas} className={`${BTN_SOLID} ${FOCUS}`}>
               Ver programas formativos
@@ -185,140 +184,89 @@ const FreeClassPopup = ({ onStart }: { onStart: () => void }) => {
 /* ───────────── 3. Selector "¿Por dónde empiezo?" ───────────── */
 const StartSelector = () => (
   <section aria-labelledby="empiezo-titulo" className="px-6 py-16 md:py-24">
-    <div className="max-w-5xl mx-auto">
-      <h2 id="empiezo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-mauve">¿Por dónde empiezo?</h2>
-      <p className="text-muted-foreground font-light text-lg mt-2">Elige lo que más se parece a tu momento.</p>
-      <p className="font-serif italic text-brand-gold text-[clamp(2rem,6vw,4.5rem)] leading-none mt-8" aria-hidden="true">
-        <MaskLine>Hoy quiero…</MaskLine>
-      </p>
-      <ul className="mt-4 md:mt-6">
+    <div className="max-w-6xl mx-auto grid md:grid-cols-[4fr_7fr] gap-8 md:gap-16">
+      <motion.div {...inView} variants={fadeUp} className="md:pt-6">
+        <h2 id="empiezo-titulo" className="text-xs uppercase tracking-[0.3em] font-semibold text-brand-mauve">¿Por dónde empiezo?</h2>
+        <span aria-hidden="true" className="block w-14 h-px bg-brand-gold my-4" />
+        <p className="font-serif italic text-xl md:text-2xl text-foreground/80 leading-snug">Elige lo que más se parece a tu momento.</p>
+      </motion.div>
+      <ul className="border-t border-brand-gold/40">
         {START_OPTIONS.map(({ text, to }, i) => (
-          <li key={to}>
-            <Link to={to} className={`group flex items-center justify-between gap-4 py-3 md:py-4 min-h-[56px] rounded ${FOCUS}`}>
-              <MaskLine delay={0.08 * i} className="flex-1">
-                <span className="relative font-serif text-[clamp(1.5rem,4.2vw,3.25rem)] leading-tight text-foreground group-hover:text-brand-mauve group-focus-visible:text-brand-mauve transition-colors">
-                  {text}
-                  <span aria-hidden="true" className="absolute left-0 -bottom-1 h-[2px] w-full origin-left scale-x-0 bg-brand-gold transition-transform duration-500 group-hover:scale-x-100 group-focus-visible:scale-x-100" />
-                </span>
-              </MaskLine>
-              <ArrowRight aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8 shrink-0 text-brand-gold -translate-x-2 opacity-60 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100" />
+          <motion.li key={to} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
+            transition={{ duration: 0.7, delay: 0.08 * i, ease: EASE }}
+            className="group border-b border-brand-gold/40 hover:border-brand-gold focus-within:border-brand-gold transition-colors duration-300">
+            <Link to={to} className={`flex items-center justify-between gap-5 py-6 md:py-7 min-h-[56px] rounded ${FOCUS}`}>
+              <span className="font-serif font-normal text-[22px] md:text-[26px] leading-snug text-brand-ink transition-transform duration-300 group-hover:translate-x-1.5 group-focus-visible:translate-x-1.5">
+                {text}
+              </span>
+              <span aria-hidden="true" className="shrink-0 w-9 h-9 rounded-full border border-brand-gold inline-flex items-center justify-center text-brand-gold transition-colors duration-300 group-hover:bg-brand-mauve group-hover:border-brand-mauve group-hover:text-brand-cream group-focus-visible:bg-brand-mauve group-focus-visible:text-brand-cream">
+                <ArrowRight className="w-4 h-4" strokeWidth={1.25} />
+              </span>
             </Link>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>
   </section>
 );
 
-/* ───────────── 5. Programas ───────────── */
-const GoldRule = () => (
-  <motion.div aria-hidden="true" className="h-px bg-brand-gold/60 origin-left"
-    initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 1.2, ease: EASE }} />
-);
-
-const ProgramDetails = ({ p, showLink }: { p: (typeof PROGRAMS)[number]; showLink?: boolean }) => (
-  <div className="space-y-3 pb-6">
-    <p className="text-sm italic text-brand-mauve">{p.subtitle}</p>
-    <p className="text-base md:text-lg text-muted-foreground font-light leading-relaxed max-w-2xl">{p.desc}</p>
-    <div className="flex flex-wrap gap-2">
-      {p.features.map((f) => (
-        <span key={f} className="text-xs font-medium px-3 py-1 rounded-full border border-brand-gold/50 text-brand-mauve">{f}</span>
-      ))}
+/* ───────────── 5. Programas: recorrido editorial ───────────── */
+const ProgramBlock = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const flip = i % 2 === 1;
+  return (
+    <div ref={ref} className={`relative grid md:grid-cols-2 gap-8 md:gap-16 items-center pl-8 md:pl-0`}>
+      <motion.div initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, margin: "-60px" }}
+        className={`relative w-full max-w-[420px] mx-auto ${flip ? "md:order-2" : ""}`}>
+        <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5 rounded-t-full rounded-b-2xl border border-brand-gold/70" />
+        <motion.div className="relative aspect-[4/5] rounded-t-full rounded-b-2xl overflow-hidden"
+          variants={{ hidden: { clipPath: "inset(100% 0% 0% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.2, ease: EASE } } }}>
+          <motion.img src={p.image} alt="" loading="lazy" style={reduce ? undefined : { y: imgY, scale: 1.14 }} className="w-full h-full object-cover" />
+        </motion.div>
+      </motion.div>
+      <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="space-y-4">
+        <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.3em] text-brand-gold [font-variant:small-caps]">{p.subtitle}</motion.p>
+        <motion.h3 variants={fadeUp} className="font-serif font-normal text-[32px] md:text-[44px] leading-tight text-foreground">{p.title}</motion.h3>
+        <motion.p variants={fadeUp} className="text-base md:text-lg text-muted-foreground font-light leading-relaxed">{p.desc}</motion.p>
+        <motion.div variants={fadeUp} className="flex flex-wrap gap-2">
+          {p.features.map((f) => (
+            <span key={f} className="text-xs px-3 py-1 rounded-full border border-brand-gold/40 text-brand-mauve">{f}</span>
+          ))}
+        </motion.div>
+        <motion.div variants={fadeUp}>
+          <Link to={p.href} className={`group relative inline-flex items-center gap-2 py-1 text-sm font-medium text-brand-mauve rounded ${FOCUS}`} aria-label={`Ver detalles de ${p.title}`}>
+            Ver detalles <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <span aria-hidden="true" className="absolute left-0 bottom-0 h-px w-full bg-brand-gold origin-left scale-x-[0.35] transition-transform duration-500 group-hover:scale-x-100 group-focus-visible:scale-x-100" />
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
-    <span className={`inline-flex items-center gap-2 text-sm font-semibold text-brand-mauve ${showLink ? "" : "pt-1"}`}>
-      Ver detalles <ArrowRight className="w-4 h-4" aria-hidden="true" />
-    </span>
-  </div>
-);
+  );
+};
 
 const Programs = () => {
-  const desktop = useMedia("(hover: hover) and (min-width: 1024px)");
+  const threadRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const [active, setActive] = useState<number | null>(null);
-  const areaRef = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 120, damping: 20, mass: 0.6 });
-  const sy = useSpring(my, { stiffness: 120, damping: 20, mass: 0.6 });
-  const onMove = (e: React.MouseEvent) => {
-    const r = areaRef.current?.getBoundingClientRect();
-    if (!r) return;
-    mx.set(e.clientX - r.left - 150);
-    my.set(e.clientY - r.top - 110);
-  };
-
+  const { scrollYProgress } = useScroll({ target: threadRef, offset: ["start 70%", "end 60%"] });
+  const line = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const dotTop = useTransform(line, [0, 1], ["0%", "100%"]);
   return (
     <section id="programas" aria-labelledby="programas-titulo" className="px-6 py-16 md:py-24 scroll-mt-20">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-10 md:mb-14">
+        <div className="mb-12 md:mb-16 md:text-center">
           <span className="text-xs uppercase tracking-[0.3em] font-semibold text-muted-foreground">Formación & Acompañamiento</span>
-          <h2 id="programas-titulo" className={`${H2} mt-2`}><MaskLine>Mis programas y espacios</MaskLine></h2>
+          <h2 id="programas-titulo" className="font-serif text-3xl md:text-5xl font-normal text-foreground mt-2"><MaskLine>Mis programas y espacios</MaskLine></h2>
           <p className="text-muted-foreground font-light text-sm italic mt-2">Recorridos para comprender lo que vives y recuperar tu equilibrio.</p>
         </div>
-
-        <div ref={areaRef} className="relative" onMouseMove={desktop ? onMove : undefined} onMouseLeave={() => desktop && setActive(null)}>
-          {desktop && (
-            <motion.div aria-hidden="true" style={{ x: sx, y: sy }} className="pointer-events-none absolute left-0 top-0 z-20 w-[300px] h-[220px]">
-              <AnimatePresence>
-                {active !== null && (
-                  <motion.img key={active} src={PROGRAMS[active].image} alt=""
-                    initial={{ opacity: 0, scale: 0.85, rotate: -3 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.4, ease: EASE }}
-                    className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-2xl" />
-                )}
-              </AnimatePresence>
-            </motion.div>
-          )}
-
-          <GoldRule />
-          {PROGRAMS.map((p, i) => {
-            const isOpen = active === i;
-            const dim = active !== null && !isOpen;
-            const title = (
-              <MaskLine delay={0.1 * i}>
-                <span className={`font-serif font-semibold leading-[1.02] text-[clamp(2.5rem,8vw,7rem)] block transition-all duration-500 ${isOpen ? "text-brand-mauve translate-x-4 md:translate-x-10" : "text-foreground"}`}>
-                  {p.title}
-                </span>
-              </MaskLine>
-            );
-            return (
-              <div key={p.href} className={`transition-opacity duration-500 ${dim ? "opacity-35" : "opacity-100"}`}>
-                {desktop ? (
-                  <Link to={p.href} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}
-                    className={`block py-6 rounded ${FOCUS}`} aria-label={`${p.title}: ${p.subtitle}. Ver detalles`}>
-                    {title}
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: reduce ? 0 : 0.45, ease: EASE }} className="overflow-hidden pl-10 max-w-3xl">
-                          <div className="pt-4"><ProgramDetails p={p} /></div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </Link>
-                ) : (
-                  <div>
-                    <button type="button" onClick={() => setActive(isOpen ? null : i)} aria-expanded={isOpen} aria-controls={`prog-${i}`}
-                      className={`w-full text-left py-5 rounded ${FOCUS}`}>
-                      {title}
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div id={`prog-${i}`} initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: reduce ? 0 : 0.45, ease: EASE }} className="overflow-hidden">
-                          <Link to={p.href} className={`block rounded ${FOCUS}`}>
-                            <img src={p.image} alt="" loading="lazy" className="w-full h-36 object-cover rounded-2xl mb-4" />
-                            <ProgramDetails p={p} showLink />
-                          </Link>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                )}
-                <GoldRule />
-              </div>
-            );
-          })}
+        <div ref={threadRef} className="relative space-y-20 md:space-y-28">
+          <div aria-hidden="true" className="absolute top-0 bottom-0 left-2 md:left-1/2 w-px bg-brand-gold/15">
+            <motion.div className="absolute inset-0 bg-brand-gold/70 origin-top" style={reduce ? undefined : { scaleY: line }} />
+            {!reduce && <motion.span className="absolute -left-[3px] w-[7px] h-[7px] rounded-full bg-brand-gold" style={{ top: dotTop }} />}
+          </div>
+          {PROGRAMS.map((p, i) => <ProgramBlock key={p.href} p={p} i={i} />)}
         </div>
       </div>
     </section>
@@ -355,7 +303,7 @@ const Companion = () => {
           <motion.span variants={fadeUp} className="block text-xs font-semibold tracking-[0.3em] uppercase text-brand-mauve">Acompañamiento Humano</motion.span>
           <h2 id="acompana-titulo" className={H2}><MaskLine>Quién te acompaña</MaskLine></h2>
           <motion.p variants={fadeUp} className={para}>
-            Hola, soy <strong className="text-foreground font-medium">Fransury Gonzáles (Sury)</strong>. Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
+            Soy psicóloga, maestra de Kundalini Yoga, facilitadora de procesos de conciencia y una eterna estudiante de la psique y el alma humana.
           </motion.p>
           <motion.p variants={fadeUp} className={para}>
             Mi propósito es acompañarte a <Highlight>sanar experiencias difíciles</Highlight>, a transformar el significado de lo que viviste y a <Highlight delay={0.3}>habitar una vida en mayor plenitud</Highlight>. Lo haremos integrando el yoga, como medicina ancestral, con la comprensión de algunos factores psicológicos, para que aprendas a <Highlight delay={0.6}>regular tu sistema nervioso</Highlight>.
@@ -484,9 +432,10 @@ const PortalHome = () => {
 
       <main className="flex-grow">
         <Hero onFreeClass={openFree} />
+        <LogoMarquee />
+        <Companion />
         <StartSelector />
         <Programs />
-        <Companion />
         <Philosophy />
 
         {/* Cierre */}
