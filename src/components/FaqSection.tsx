@@ -8,7 +8,8 @@ interface FaqSectionProps {
 }
 
 const renderAnswer = (a: string) => {
-  const match = a.match(/^(\S+)(\s[\s\S]*)?$/);
+  // Negrita solo para respuestas que abren con «Sí» o «No» seguidos de punto o coma.
+  const match = a.match(/^(S[ií][.,]|No[.,])([\s\S]*)$/);
   if (!match) return a;
   return (
     <>
