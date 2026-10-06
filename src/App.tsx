@@ -28,9 +28,9 @@ import TerminosYCondiciones from "./pages/TerminosYCondiciones";
 import TrafficSplitter from "./components/TrafficSplitter";
 import Programas from "./pages/Programas";
 
-/** Rutas con el lenguaje editorial (.lux). Sabiduría Cíclica, clase gratuita, admin y páginas del CMS quedan fuera. */
+/** Rutas con el lenguaje editorial (.lux). Clase gratuita, admin y páginas del CMS quedan fuera. */
 const LUX_PATHS = ["/", "/programas", "/blog", "/curso-iniciacion-yoga", "/quien-soy", "/filosofia", "/acompanamiento-individual",
-  "/mi-proceso-individual", "/proceso-de-pareja", "/cultivar-bienestar", "/terminos-y-condiciones"];
+  "/mi-proceso-individual", "/proceso-de-pareja", "/cultivar-bienestar", "/terminos-y-condiciones", "/sabiduria-ciclica-esencia-femenina"];
 const ThemeScope = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
   const lux = LUX_PATHS.some((p) => pathname === p || (p !== "/" && pathname.startsWith(p + "/")));

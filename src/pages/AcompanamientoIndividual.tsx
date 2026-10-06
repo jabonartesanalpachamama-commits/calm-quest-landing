@@ -25,7 +25,6 @@ const HERO_BG = "#B8A8AB";
 
 const FOCUS = "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-gold focus-visible:ring-offset-4";
 const BTN_LINE = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-ink text-brand-ink text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:text-primary-foreground transition-colors duration-500 ${FOCUS}`;
-const BTN_SOLID = `inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-mauve bg-brand-mauve text-primary-foreground text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:border-brand-ink transition-colors duration-500 ${FOCUS}`;
 const LABEL = "block text-[10px] uppercase tracking-[0.35em] text-brand-mauve";
 const H2 = "!font-light text-foreground !leading-[1.35]";
 const SECTION = "px-6 py-24 md:py-36";
