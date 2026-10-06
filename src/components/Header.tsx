@@ -75,7 +75,7 @@ const Header = ({ borderless }: HeaderProps) => {
     <header className={`sticky top-0 z-50 bg-background/95 backdrop-blur-sm transition-[border-color] duration-500 border-b ${
       scrolled ? "border-border" : borderless ? "border-transparent" : "border-transparent"}`}>
       {!NO_PROGRESS.includes(pathname) && <ScrollProgress />}
-      <div className={`max-w-[86rem] mx-auto px-5 md:px-8 grid transition-[height] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${compact ? "h-[72px] md:h-[80px]" : "h-[88px] md:h-[104px]"} grid-cols-[1fr_auto_1fr] items-center gap-6">
+      <div className={`max-w-[86rem] mx-auto px-5 md:px-8 grid transition-[height] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${compact ? "h-[72px] md:h-[80px]" : "h-[88px] md:h-[104px]"} grid-cols-[1fr_auto_1fr] items-center gap-6`}>
         <nav aria-label="Principal" className="hidden xl:flex items-center gap-7 justify-start">
           {NAV_LEFT.map((i) => <NavItem key={i.to} item={i} pathname={pathname} />)}
         </nav>
