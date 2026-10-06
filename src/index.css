@@ -281,3 +281,11 @@
 }
 .jitter-word { animation: santosha-jitter 0.35s steps(2) infinite; }
 @media (prefers-reduced-motion: reduce) { .jitter-word { animation: none; } }
+
+/* Franja de participaciones: desplazamiento continuo de izquierda a derecha */
+.logo-marquee { position: relative; overflow: hidden; outline: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
+.logo-marquee-track { display: flex; width: max-content; animation: logo-marquee-ltr 40s linear infinite; }
+.logo-marquee:hover .logo-marquee-track, .logo-marquee:focus-within .logo-marquee-track { animation-play-state: paused; }
+@keyframes logo-marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
