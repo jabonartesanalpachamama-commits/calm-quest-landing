@@ -21,5 +21,5 @@ export const PARTICIPACIONES: Participacion[] = [
   { name: "Caracol Radio", logo: caracolRadio, alt: "Logo de Caracol Radio", h: "h-12 md:h-14" },
   { name: "Centro de Bienestar Emocional María Elena Badillo", logo: mariaElenaBadillo, alt: "Logo del Centro de Bienestar Emocional María Elena Badillo", h: "h-10 md:h-12" },
   { name: "Mindalia", logo: mindalia, alt: "Logo de Mindalia", h: "h-7 md:h-8" },
-  { name: "Televid", logo: televid, alt: "Logo de Televid", h: "h-14 md:h-16" },
+  { name: "Televid", logo: televid, alt: "Logo de Televid", h: "h-12 md:h-14" },
 ];
