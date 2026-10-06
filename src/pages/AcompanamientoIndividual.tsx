@@ -127,46 +127,69 @@ const Benefits = ({ items, light }: { items: string[]; light?: boolean }) => (
 
 const stagger = (s = 0.12) => ({ show: { transition: { staggerChildren: s } } });
 
-/* ───────────── Hero ───────────── */
+/* ───────────── Hero ─────────────
+   Móvil (<768 px): flujo normal — texto arriba y debajo la foto ancha completa (w-full, h-auto),
+   así la figura entera, cabeza incluida, se ve a cualquier ancho. Escritorio: diseño de dos zonas. */
+const HERO_ALT = "Fransury González practicando yoga en postura de cobra sobre un tapete, con los ojos cerrados";
+const HeroText = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => (
+  <div className="max-w-[30rem] mx-auto md:mx-0 text-center md:text-left">
+    <motion.span variants={fadeUp} className={LABEL}>Sesiones 1 a 1 · Virtual</motion.span>
+    <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.6rem,7.4vw,2.2rem)] md:!text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.08em] md:!tracking-[0.16em] !font-extralight !leading-[1.25] text-foreground [overflow-wrap:normal]">
+      Yoga y meditación 1:1
+    </motion.h1>
+    <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-foreground">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
+    <motion.p variants={fadeUp} className="mt-4 text-sm md:text-[15px] text-foreground/80 leading-relaxed">
+      Clases virtuales de yoga y meditación desde Medellín, para quien esté en cualquier lugar del mundo.
+    </motion.p>
+    <Rule className="mx-auto md:mx-0 my-7 md:my-9" />
+    <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-5 sm:gap-8">
+      <a href="#precios" onClick={onPrecios} className={`${BTN_SOLID} group`}>
+        Quiero saber más
+        <ArrowDown className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-y-0.5" strokeWidth={1.25} />
+      </a>
+      <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={`text-sm text-foreground ${LINK_GOLD}`}>
+        Escríbeme por WhatsApp
+      </a>
+    </motion.div>
+  </div>
+);
+
 const Hero = ({ onPrecios }: { onPrecios: (e: React.MouseEvent) => void }) => {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const desktop = useMedia("(min-width: 768px)");
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
-  const mask = desktop
-    ? "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)"
-    : "linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%)";
+  const stag = { show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } };
+
+  if (!desktop) {
+    const softMask = "linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)";
+    return (
+      <section ref={ref} className="relative overflow-hidden"
+        style={{ background: "linear-gradient(180deg, #F3ECEC 0%, #E2D3D3 38%, #D7C2C2 62%, #D7C2C2 88%, #FFFFFF 100%)" }}>
+        <motion.div initial="hidden" animate="show" variants={stag} className="relative px-6 pt-10 pb-4">
+          <HeroText onPrecios={onPrecios} />
+        </motion.div>
+        <img src={HERO_IMAGE_WIDE} alt={HERO_ALT} fetchPriority="high" width={941} height={900}
+          className="block w-full h-auto" style={{ WebkitMaskImage: softMask, maskImage: softMask }} />
+      </section>
+    );
+  }
+
+  const mask = "linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%)";
   return (
-    <section ref={ref} className="relative min-h-[calc(100svh-88px)] md:min-h-[calc(100svh-104px)] overflow-hidden flex flex-col md:flex-row md:items-center"
-      style={{ background: desktop ? "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" : "linear-gradient(180deg, #DCD0D1 0%, #CFC0C2 55%, #CFC0C2 82%, #FFFFFF 100%)" }}>
-      <div className="absolute inset-x-0 bottom-0 top-[44%] md:top-0 md:left-auto md:w-[62%] overflow-hidden"
-        style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: desktop ? "source-in" : undefined, maskComposite: desktop ? "intersect" : undefined } as React.CSSProperties}>
-        <motion.picture style={reduce || !desktop ? undefined : { y }} className="absolute inset-0 block will-change-transform">
+    <section ref={ref} className="relative min-h-[calc(100svh-104px)] overflow-hidden flex flex-row items-center"
+      style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #F6F2F3 32%, #DDD3D6 58%, #CEC3C6 100%)" }}>
+      <div className="absolute inset-y-0 right-0 w-[62%] overflow-hidden"
+        style={{ WebkitMaskImage: mask, maskImage: mask, WebkitMaskComposite: "source-in", maskComposite: "intersect" } as React.CSSProperties}>
+        <motion.picture style={reduce ? undefined : { y }} className="absolute inset-0 block will-change-transform">
           <source media="(min-width: 768px)" srcSet={HERO_IMAGE_WIDE} />
-          <img src={HERO_IMAGE} alt="Fransury González en postura de cobra sobre un tapete de yoga, con los ojos cerrados" fetchPriority="high"
-            width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[72%_100%] md:object-[50%_60%] md:scale-[1.06]" />
+          <img src={HERO_IMAGE} alt={HERO_ALT} fetchPriority="high"
+            width={941} height={1672} className="absolute inset-0 w-full h-full object-cover object-[50%_60%] scale-[1.06]" />
         </motion.picture>
       </div>
-      <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.2, delayChildren: 0.2 } } }}
-        className="relative w-full max-w-6xl mx-auto px-6 pt-10 pb-[56svh] md:py-32">
-        <div className="max-w-[30rem] text-center md:text-left">
-          <motion.span variants={fadeUp} className={LABEL}>Sesiones 1 a 1 · Virtual</motion.span>
-          <motion.h1 variants={fadeUp} className="mt-6 !text-[clamp(1.9rem,4.4vw,3.4rem)] !tracking-[0.16em] !font-extralight !leading-[1.2] text-foreground">
-            Yoga y meditación 1:1
-          </motion.h1>
-          <motion.p variants={fadeUp} className="mt-5 text-base md:text-[17px] text-foreground">YogaTerapia, Kundalini Yoga y Meditación</motion.p>
-          <Rule className="mx-auto md:mx-0 my-7 md:my-9" />
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center md:items-center gap-5 sm:gap-8">
-            <a href="#precios" onClick={onPrecios} className={`${BTN_SOLID} group`}>
-              Quiero saber más
-              <ArrowDown className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-y-0.5" strokeWidth={1.25} />
-            </a>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className={`text-sm text-foreground ${LINK_GOLD}`}>
-              Escríbeme por WhatsApp
-            </a>
-          </motion.div>
-        </div>
+      <motion.div initial="hidden" animate="show" variants={stag} className="relative w-full max-w-6xl mx-auto px-6 py-32">
+        <HeroText onPrecios={onPrecios} />
       </motion.div>
     </section>
   );
