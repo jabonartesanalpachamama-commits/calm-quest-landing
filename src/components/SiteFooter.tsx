@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import santoshaLogo from "@/assets/santosha-logo.webp";
+import santoshaLogo from "@/assets/santosha-logo-transparent.webp";
 import { WHATSAPP_URL } from "@/lib/utils";
 
 interface SiteFooterProps {
@@ -32,7 +32,7 @@ const SiteFooter = (_props: SiteFooterProps) => (
   <footer className="bg-brand-ink text-brand-cream px-6 pt-14 pb-8">
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 pb-10 border-b border-brand-cream/15">
-        <img src={santoshaLogo} alt="SantoSha Logo" className="h-14 w-auto rounded-lg self-start" loading="lazy" />
+        <img src={santoshaLogo} alt="SantoSha Logo" className="h-14 w-auto self-start brightness-0 invert" loading="lazy" />
         <p className="font-serif text-xl italic">Psicología, yoga y meditación</p>
       </div>
       <nav aria-label="Mapa del sitio" className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 py-10 text-sm">
