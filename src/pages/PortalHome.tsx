@@ -407,7 +407,7 @@ const Companion = () => {
       <div className="relative max-w-6xl mx-auto grid md:grid-cols-[6fr_5fr] gap-6 md:gap-16 items-start">
         <div className="relative mx-auto w-full max-w-[380px] md:max-w-none md:sticky md:top-[10vh]">
           <BreathingCircle className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 w-[120%] aspect-square" />
-          <div className="relative aspect-[4/5] overflow-hidden [mask-image:radial-gradient(ellipse_58%_62%_at_50%_42%,black_35%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_58%_62%_at_50%_42%,black_35%,transparent_100%)]">
+          <div className="relative aspect-[4/5] overflow-hidden [mask-image:radial-gradient(ellipse_50%_50%_at_50%_42%,black_40%,transparent_78%)] [-webkit-mask-image:radial-gradient(ellipse_50%_50%_at_50%_42%,black_40%,transparent_78%)]">
             <motion.img src={fransuryImage} alt="Fransury Gonzáles" loading="lazy" style={reduce ? undefined : { y: photoY, scale: 1.18 }}
               className="absolute inset-0 w-full h-full object-cover object-top" />
           </div>
