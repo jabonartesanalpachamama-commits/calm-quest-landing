@@ -190,7 +190,7 @@ const Companion = () => {
       <div className="relative h-[110vw] max-h-[640px] md:h-auto md:max-h-none md:min-h-[100svh] overflow-hidden">
         <motion.img src={fransuryAcompana} alt="Fransury González, psicóloga y maestra de Kundalini Yoga, sonriendo sentada en un sofá claro" loading="lazy"
           style={reduce ? { scale: 1.08 } : { y: photoY, scale: 1.08 }}
-          className="absolute inset-0 w-full h-full object-cover object-[50%_25%] [filter:grayscale(1)_contrast(0.96)_brightness(1.04)]" />
+          className="absolute inset-0 w-full h-full object-cover object-[50%_12%] [filter:grayscale(1)_contrast(0.96)_brightness(1.04)]" />
       </div>
       <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }}
         className="flex items-center px-6 py-24 md:px-16 lg:px-24 md:py-32">
