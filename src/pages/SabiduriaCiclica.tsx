@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform, MotionConfig, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Flower2, Leaf, MessageCircle, Moon, CalendarDays, Clock, Video, ArrowDown, Sparkles } from "lucide-react";
+import { Flower2, Leaf, MessageCircle, Moon, ArrowDown, Sparkles } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { getWhatsAppUrl } from "@/lib/utils";
