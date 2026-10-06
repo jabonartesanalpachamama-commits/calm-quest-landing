@@ -32,12 +32,12 @@ const FOR_WHOM = [
 ];
 
 const FAQS = [
-  { q: "¿La terapia de pareja es presencial?", a: "No. Todas mis sesiones son virtuales, por Google Meet. Cada uno puede conectarse desde donde esté." },
-  { q: "¿Tienen que asistir los dos?", a: "Las sesiones de pareja se hacen en una sesión virtual compartida. En el paquete de 4 sesiones, cada uno tiene además un espacio individual." },
-  { q: "¿Cuántas sesiones necesitamos?", a: "Para iniciar un proceso de pareja recomiendo mínimo 3 sesiones." },
-  { q: "¿Lo que contamos es confidencial?", a: "Sí. Todo lo que hablamos en sesión es confidencial y trato sus datos personales según la Ley 1581 de 2012." },
-  { q: "¿Atiendes crisis o emergencias?", a: "No. Mi consulta no es un servicio de urgencias. Si hay riesgo para alguno de los dos, llamen al 123 o acudan al servicio de urgencias más cercano." },
-  { q: "¿Cómo se paga?", a: "En línea con tarjeta débito o crédito, por transferencia o por PayPal. Desde Colombia el pago se hace en pesos a la TRM del día." },
+  { q: "¿La terapia de pareja es presencial?", a: "Mis sesiones son virtuales, por Google Meet. Cada uno puede conectarse desde donde esté." },
+  { q: "¿Tienen que asistir los dos?", a: "Las sesiones de pareja son una sesión virtual compartida, en la que están presentes los dos. En el paquete de 4 sesiones, cada uno tiene además un espacio individual conmigo." },
+  { q: "¿Cuántas sesiones necesitamos?", a: "Para iniciar un proceso de pareja recomiendo mínimo 3 sesiones, para tener tiempo de conocernos, mirar lo que está pasando entre ustedes y empezar a construir cambios juntos." },
+  { q: "¿Lo que contamos es confidencial?", a: "Todo lo que hablamos en sesión es confidencial. Cuidar lo que me confían es parte esencial de mi trabajo, y trato sus datos personales conforme a la Ley 1581 de 2012." },
+  { q: "¿Atiendes crisis o emergencias?", a: "Mi consulta no es un servicio de urgencias. Si hay riesgo para alguno de los dos, llamen al 123 o acudan al servicio de urgencias más cercano: la seguridad de ambos es lo primero." },
+  { q: "¿Cómo se paga?", a: "Pueden pagar en línea con tarjeta débito o crédito, por transferencia o por PayPal, como les quede mejor. Desde Colombia el pago se hace en pesos a la TRM del día." },
 ];
 
 const SERVICE_JSONLD = {

@@ -36,13 +36,13 @@ const FOR_WHOM = [
 ];
 
 const FAQS = [
-  { q: "¿La terapia es presencial?", a: "No. Todas mis sesiones son virtuales, por Google Meet. Puedes conectarte desde donde estés." },
-  { q: "¿Una sesión dura más de una hora?", a: "Sí. Dura entre 60 y 75 minutos." },
-  { q: "¿Necesito saber qué quiero trabajar antes de empezar?", a: "No. Puedes llegar con una sola frase y lo vamos aclarando durante la sesión." },
-  { q: "¿Lo que cuento es confidencial?", a: "Sí. Todo lo que hablamos en sesión es confidencial y trato tus datos personales según la Ley 1581 de 2012." },
-  { q: "¿Atiendes crisis o emergencias?", a: "No. Mi consulta no es un servicio de urgencias. Si sientes que estás en riesgo, llama al 123 o acude al servicio de urgencias más cercano." },
-  { q: "¿Puedo pagar con tarjeta?", a: "Sí. Puedes pagar en línea con tarjeta débito o crédito, por transferencia o por PayPal. Desde Colombia el pago se hace en pesos a la TRM del día." },
-  { q: "¿Hay descuento por paquete?", a: "Sí. El paquete de 3 sesiones cuesta 203 USD e incluye una sesión adicional de 30 minutos." },
+  { q: "¿La terapia es presencial?", a: "Mis sesiones son virtuales, por Google Meet. Puedes conectarte desde donde estés, en un lugar donde te sientas a gusto y puedas hablar con libertad." },
+  { q: "¿Una sesión dura más de una hora?", a: "Sí, cada sesión dura entre 60 y 75 minutos. Así tenemos tiempo para ir a fondo, sin afán." },
+  { q: "¿Necesito saber qué quiero trabajar antes de empezar?", a: "Puedes llegar con una sola frase, o solo con la sensación de que algo necesita atención. Lo vamos aclarando juntos durante la sesión." },
+  { q: "¿Lo que cuento es confidencial?", a: "Todo lo que hablamos en sesión es confidencial. Cuidar lo que me confías es parte esencial de mi trabajo, y trato tus datos personales conforme a la Ley 1581 de 2012." },
+  { q: "¿Atiendes crisis o emergencias?", a: "Mi consulta no es un servicio de urgencias. Si en algún momento sientes que estás en riesgo, llama al 123 o acude al servicio de urgencias más cercano: tu seguridad es lo primero." },
+  { q: "¿Puedo pagar con tarjeta?", a: "Sí. Puedes pagar en línea con tarjeta débito o crédito, por transferencia o por PayPal, la que te quede mejor. Desde Colombia el pago se hace en pesos a la TRM del día." },
+  { q: "¿Hay descuento por paquete?", a: "Sí. El paquete de 3 sesiones cuesta 203 USD e incluye una sesión adicional de 30 minutos para acompañar tu proceso." },
 ];
 
 const SERVICE_JSONLD = {

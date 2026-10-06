@@ -73,10 +73,10 @@ const KEY_INFO = [
 ];
 
 const FAQS = [
-  { q: "¿Las sesiones son presenciales?", a: "No. Todas son virtuales, por videollamada. Puedes conectarte desde donde estés." },
-  { q: "¿Necesito saber yoga o meditar?", a: "No. La práctica se adapta a tu nivel y a tu momento." },
-  { q: "¿Cuánto dura cada sesión?", a: "La duración se acuerda contigo antes de empezar." },
-  { q: "¿Cómo pago?", a: "Escríbeme por WhatsApp y coordinamos el pago." },
+  { q: "¿Las sesiones son presenciales?", a: "Todas mis sesiones son virtuales, por videollamada. Puedes conectarte desde tu casa o desde donde estés, en un lugar donde te sientas a gusto." },
+  { q: "¿Necesito saber yoga o meditar?", a: "Puedes llegar sin haber practicado nunca. Adapto cada sesión a tu nivel, a tu cuerpo y a tu momento, y empezamos desde donde estás." },
+  { q: "¿Cuánto dura cada sesión?", a: "La acordamos antes de empezar, según lo que necesites y la forma en que quieras vivir la práctica." },
+  { q: "¿Cómo pago?", a: "Escríbeme por WhatsApp y coordinamos el pago de la forma que te resulte más cómoda." },
 ];
 
 const SERVICE_JSONLD = {
