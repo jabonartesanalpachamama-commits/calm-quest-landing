@@ -30,7 +30,7 @@ import Header from "@/components/Header";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import fransuryImage from "@/assets/fransury-retrato.webp";
-import heroBackground from "@/assets/hero-sunrise.png.asset.json";
+import heroPhoto from "@/assets/fransury-hero.webp";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
 import bannerAcompanamiento from "@/assets/banner-acompanamiento.webp";
 import paraQuienImage from "@/assets/para-quien-image.webp";
@@ -42,7 +42,7 @@ import { Highlight } from "@/components/landing/Highlight";
 import { BreathingCircle, OutlineWord } from "@/components/landing/Breath";
 
 // Foto del hero: cambiar solo esta línea para usar otra imagen.
-const HERO_IMAGE = heroBackground.url;
+const HERO_IMAGE = heroPhoto;
 
 const BTN_SOLID = "inline-flex items-center gap-3 px-7 py-3.5 rounded-[3px] text-sm tracking-[0.12em] uppercase font-medium justify-center transition-colors duration-300 bg-brand-mauve hover:bg-brand-ink text-primary-foreground";
 const LINK_LINE = "group relative inline-flex items-center gap-2 py-1 text-sm tracking-[0.12em] uppercase font-medium text-brand-mauve";
@@ -179,7 +179,7 @@ const Hero = () => {
           maskComposite: desktop ? "intersect" : undefined,
         } as React.CSSProperties}>
         <motion.div aria-hidden="true"
-          className="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2 w-[70%] aspect-square rounded-full bg-[radial-gradient(circle,rgba(243,234,227,0.55),transparent_68%)]"
+          className="absolute left-[15%] top-[5%] w-[70%] aspect-square rounded-full bg-[radial-gradient(circle,rgba(243,234,227,0.55),transparent_68%)]"
           animate={reduce ? undefined : { scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} />
         <motion.img src={HERO_IMAGE} alt="Fransury Gonzáles sentada, sonriendo, con camisa blanca y jeans"
