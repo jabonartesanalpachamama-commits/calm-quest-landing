@@ -116,7 +116,7 @@ const MiProcesoIndividual = () => {
           </motion.div>
         </section>
 
-        <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury Gonzáles sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_35%]" />
+        <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury Gonzáles sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_24%]" />
 
 
         {/* Situaciones en masonry numerado */}
