@@ -113,7 +113,7 @@ const ProcesoDePareja = () => {
           </motion.div>
         </section>
 
-        <FullBleedPhoto src={parejaManos} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1767} height={1920} position="object-[45%_40%]" />
+        <FullBleedPhoto src={parejaManos} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1657} height={1800} position="object-[45%_40%]" />
 
         {/* Situaciones como diálogo */}
         <section className="px-6 py-14 md:py-20">

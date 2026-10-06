@@ -1,7 +1,8 @@
 import type React from "react";
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import sessionPhoto from "@/assets/fransury-sillon.webp";
+import sessionPhoto from "@/assets/fransury-individual.webp";
+import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import { ArrowDown, Clock, MessageCircle, Monitor, Video } from "lucide-react";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
@@ -57,24 +58,6 @@ const SERVICE_JSONLD = {
   ],
 };
 
-const SessionPhoto = () => {
-  const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [-30, 30]);
-  return (
-    <motion.section ref={ref} aria-label="Fransury en sesión"
-      initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      className="relative w-full h-[110vw] max-h-[640px] md:h-[78vh] md:max-h-[760px] overflow-hidden bg-background">
-      <motion.img src={sessionPhoto} alt="Fransury Gonzáles en sesión, sentada en un sillón con su libreta" loading="lazy"
-        width={1122} height={1402} style={reduce ? undefined : { y }}
-        className="absolute inset-x-0 -top-[30px] w-full h-[calc(100%+60px)] object-cover object-[62%_35%] md:object-[50%_22%]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-background to-transparent" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent" />
-    </motion.section>
-  );
-};
 
 
 const MiProcesoIndividual = () => {
@@ -133,7 +116,7 @@ const MiProcesoIndividual = () => {
           </motion.div>
         </section>
 
-        <SessionPhoto />
+        <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury Gonzáles sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_35%]" />
 
 
         {/* Situaciones en masonry numerado */}
