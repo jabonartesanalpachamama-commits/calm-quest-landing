@@ -69,7 +69,7 @@ const SessionPhoto = () => {
       className="relative w-full h-[110vw] max-h-[640px] md:h-[78vh] md:max-h-[760px] overflow-hidden bg-background">
       <motion.img src={sessionPhoto} alt="Fransury Gonzáles en sesión, sentada en un sillón con su libreta" loading="lazy"
         width={1122} height={1402} style={reduce ? undefined : { y }}
-        className="absolute inset-x-0 -top-[30px] w-full h-[calc(100%+60px)] object-cover object-[62%_35%] md:object-[50%_38%]" />
+        className="absolute inset-x-0 -top-[30px] w-full h-[calc(100%+60px)] object-cover object-[62%_35%] md:object-[50%_22%]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-background to-transparent" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-background to-transparent" />
     </motion.section>
