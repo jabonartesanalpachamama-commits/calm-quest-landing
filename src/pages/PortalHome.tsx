@@ -297,7 +297,7 @@ const Pair = ({ i, p, t }: { i: number; p: MotionValue<number>; t: MotionValue<n
     <motion.div style={{ opacity: block }} className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
       <div className="relative w-full grid place-items-center">
         <motion.p aria-hidden="true" style={{ opacity: fromOp, x: j.x, y: j.y, filter: j.filter }} className={`${BIG} [grid-area:1/1]`}>{from}</motion.p>
-        <motion.p style={{ opacity: toOp }} className={`${BIG} [grid-area:1/1] max-w-[14ch] md:max-w-none`}>{to}</motion.p>
+        <motion.p style={{ opacity: toOp }} className={`${BIG} [grid-area:1/1] ${to.length > 12 ? "!text-[clamp(1.5rem,6.6vw,4.4rem)]" : ""}`}>{to}</motion.p>
       </div>
       <motion.p style={{ opacity: lineOp, y: lineY }} className="mt-6 md:mt-8 max-w-[34ch] text-base md:text-xl font-light leading-relaxed">{line}</motion.p>
     </motion.div>
