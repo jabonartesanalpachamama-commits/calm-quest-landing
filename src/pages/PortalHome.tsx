@@ -267,7 +267,7 @@ const ManifestoLink = () => (
 
 const FLOAT_POS = [
   "top-[13%] left-[5%]", "top-[19%] right-[5%]", "bottom-[17%] left-[7%]", "bottom-[11%] right-[6%]",
-  "top-[6%] left-1/2 -translate-x-1/2", "bottom-[4%] left-1/2 -translate-x-1/2",
+  "top-[16%] left-1/2 -translate-x-1/2 md:top-1/2 md:left-[4%] md:translate-x-0", "bottom-[4%] left-1/2 -translate-x-1/2",
 ];
 
 const Philosophy = () => {
