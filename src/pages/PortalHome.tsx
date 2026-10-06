@@ -165,13 +165,27 @@ const Hero = () => {
   };
   const title = "Del modo supervivencia a la calma consciente";
   return (
-    <section ref={ref} className="relative md:min-h-[100svh] overflow-hidden flex flex-col md:flex-row md:items-center bg-brand-cream">
-      <div className="relative h-[55svh] md:absolute md:inset-0 md:h-auto overflow-hidden">
-        <motion.img src={HERO_IMAGE} alt="Mujer meditando al amanecer sobre las montañas"
-          style={reduce ? undefined : { y, scale }}
-          className="absolute inset-0 w-full h-full object-cover object-[85%_30%] md:object-[70%_30%] will-change-transform" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-brand-cream to-transparent md:hidden" />
-        <div aria-hidden="true" className="hidden md:block absolute inset-0 bg-gradient-to-r from-brand-cream from-25% via-brand-cream/75 via-45% to-transparent to-70%" />
+    <section ref={ref} className="relative md:min-h-[100svh] overflow-hidden flex flex-col md:flex-row md:items-center bg-brand-cream"
+      style={desktop ? { background: "linear-gradient(90deg, #F3EAE3 0%, #F3EAE3 38%, #DCC6B1 62%, #C9AE95 100%)" } : undefined}>
+      <div className="relative h-[62svh] md:absolute md:inset-y-0 md:right-0 md:left-auto md:w-[48%] md:h-auto overflow-hidden"
+        style={{
+          WebkitMaskImage: desktop
+            ? "linear-gradient(to right, transparent 0%, #000 32%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)"
+            : "linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%)",
+          maskImage: desktop
+            ? "linear-gradient(to right, transparent 0%, #000 32%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)"
+            : "linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%)",
+          WebkitMaskComposite: desktop ? "source-in" : undefined,
+          maskComposite: desktop ? "intersect" : undefined,
+        } as React.CSSProperties}>
+        <motion.div aria-hidden="true"
+          className="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2 w-[70%] aspect-square rounded-full bg-[radial-gradient(circle,rgba(243,234,227,0.55),transparent_68%)]"
+          animate={reduce ? undefined : { scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} />
+        <motion.img src={HERO_IMAGE} alt="Fransury Gonzáles sentada, sonriendo, con camisa blanca y jeans"
+          fetchPriority="high"
+          style={reduce || !desktop ? undefined : { y, scale }}
+          className="absolute inset-0 w-full h-full object-cover object-[50%_12%] md:object-[50%_18%] will-change-transform" />
       </div>
       <motion.div initial={reduce ? "show" : "hidden"} animate="show"
         style={reduce || !desktop ? undefined : { y: textY, opacity: textOpacity }}
