@@ -20,7 +20,7 @@ export const RevealImage = ({
   const shown = reduce || inView;
   return (
     // El disparador vive en el contenedor externo: el clip-path del hijo lo ocultaría al IntersectionObserver.
-    <div ref={ref} className={`relative overflow-hidden ${className}`}>
+    <div ref={ref} className={`${/\b(absolute|fixed|sticky)\b/.test(className) ? "" : "relative "}overflow-hidden ${className}`}>
       <motion.div className="absolute inset-0"
         initial={reduce ? false : { clipPath: hidden }}
         animate={shown ? { clipPath: "inset(0% 0% 0% 0%)" } : { clipPath: hidden }}
