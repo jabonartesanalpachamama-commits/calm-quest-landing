@@ -13,6 +13,7 @@ import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
 import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import parejaManos from "@/assets/pareja-manos.webp";
+import parejaManos900 from "@/assets/pareja-manos-900.webp";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
@@ -87,7 +88,7 @@ const ProcesoDePareja = () => {
           </p>
         </ServiceHero>
 
-        <FullBleedPhoto src={parejaManos} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1657} height={1800} position="object-[45%_40%]" />
+        <FullBleedPhoto src={parejaManos} srcSet={`${parejaManos900} 900w, ${parejaManos} 1657w`} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1657} height={1800} position="object-[45%_40%]" />
 
         <SituationsGrid title="¿Se reconocen en alguna de estas situaciones?" items={FOR_WHOM} />
 

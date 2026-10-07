@@ -32,7 +32,7 @@ export const LogoMarquee = () => {
 
   return (
     <section aria-label="Participaciones" className="bg-background">
-      <div aria-hidden="true" className="h-px w-full" style={{ background: "linear-gradient(to right, transparent, hsl(var(--brand-gold) / 0.4), transparent)" }} />
+      <div aria-hidden="true" className="h-px w-full" style={{ background: "hsl(var(--brand-gold) / 0.4)" }} />
       <div className="py-14 md:py-[72px]">
       {reduce ? (
         <ul className="flex flex-wrap justify-center items-center gap-x-12 md:gap-x-20 gap-y-8 px-6">

@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 
 export const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
+/** Con movimiento reducido el estado inicial ya es el final: nada queda invisible ni desplazado. */
+export const REDUCED_MOTION = typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
 export const fadeUp = {
-  hidden: { opacity: 0, y: 14 },
+  hidden: REDUCED_MOTION ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 },
   show: { opacity: 1, y: 0, transition: { duration: 1.2, ease: EASE } },
 };
 

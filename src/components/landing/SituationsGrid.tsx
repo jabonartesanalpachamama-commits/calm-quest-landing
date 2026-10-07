@@ -13,7 +13,7 @@ const SituationsGrid = ({ title, subtitle, items }: { title: string; subtitle?: 
         {items.map((item, i) => (
           <motion.li key={item} variants={fadeUp}
             className="group break-inside-avoid mb-5 flex items-start gap-5 rounded-3xl bg-card border border-border/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <span className="font-serif text-4xl md:text-5xl leading-none text-brand-gold/50 transition-colors duration-300 group-hover:text-[#795D64]">
+            <span className="font-serif text-4xl md:text-5xl leading-none text-brand-mauve">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span className="text-base md:text-lg text-foreground/90 leading-relaxed pt-1">{item}</span>
