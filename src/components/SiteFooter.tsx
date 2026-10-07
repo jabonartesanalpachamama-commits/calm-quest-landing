@@ -27,21 +27,21 @@ const COLUMNS: { title: string; links: { label: string; to: string }[] }[] = [
   ] },
 ];
 
-const LINK = "inline-flex min-h-[32px] items-center text-brand-cream/90 hover:text-brand-cream hover:underline underline-offset-4 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold";
+const LINK = "inline-flex min-h-[44px] md:min-h-[32px] items-center text-brand-cream/90 hover:text-brand-cream hover:underline underline-offset-4 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold";
 const TITLE = "text-brand-cream mb-4";
 
 const SiteFooter = (_props: SiteFooterProps) => (
   <footer className="bg-brand-ink text-brand-cream px-6 pt-14 pb-8">
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 pb-10 border-b border-brand-cream/15">
-        <a href="/" aria-label="SantoSha" className="self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"><img src={santoshaLogo} alt="" className="h-24 w-auto" loading="lazy" /></a>
+        <Link to="/" aria-label="SantoSha" className="self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"><img src={santoshaLogo} alt="" className="h-24 w-auto" loading="lazy" /></Link>
         <p className="font-serif uppercase tracking-[0.2em] text-sm">Psicología, yoga y meditación</p>
       </div>
       <nav aria-label="Mapa del sitio" className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 py-10 text-sm">
         {COLUMNS.map((c) => (
           <div key={c.title}>
             <h2 className={TITLE}>{c.title}</h2>
-            <ul className="space-y-1.5">
+            <ul className="space-y-0 md:space-y-1.5">
               {c.links.map((l) => <li key={l.to}><Link to={l.to} className={LINK}>{l.label}</Link></li>)}
             </ul>
           </div>

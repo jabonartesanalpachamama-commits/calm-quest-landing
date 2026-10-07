@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -83,6 +84,7 @@ export const CmsLogin = () => {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#2E1020] p-4 md:p-6">
+      <Helmet><title>Acceso | SantoSha</title><meta name="robots" content="noindex,nofollow" /></Helmet>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}

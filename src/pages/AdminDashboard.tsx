@@ -63,6 +63,7 @@ import {
   Save
 } from "lucide-react";
 import { AdminUsersPanel } from "@/components/AdminUsersPanel";
+import { Helmet } from "react-helmet";
 
 
 export const AdminDashboard = () => {
@@ -857,6 +858,7 @@ export const AdminDashboard = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#F7F4EF] text-[#2C3E2B]">
         <div className="w-10 h-10 border-t-2 border-r-2 border-[#7EA172] rounded-full animate-spin mb-4" />
+        <Helmet><title>Panel | SantoSha</title><meta name="robots" content="noindex,nofollow" /></Helmet>
         <p className="font-serif italic">Cargando panel de administrador...</p>
       </div>
     );
@@ -864,6 +866,7 @@ export const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F7F4] text-[#2C3E2B] flex flex-col font-sans">
+      <Helmet><title>Panel | SantoSha</title><meta name="robots" content="noindex,nofollow" /></Helmet>
       
       {/* Header Panel */}
       <header className="bg-white border-b border-[#EBE7DF] sticky top-0 z-30 px-6 py-4 shadow-sm">

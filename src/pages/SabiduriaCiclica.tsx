@@ -17,6 +17,8 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
+import { useReplaceStaticMeta } from "@/components/Seo";
+import { REDUCED_MOTION } from "@/components/landing";
 
 type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
@@ -197,7 +199,7 @@ const fadeUp = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
-const inView = { initial: "hidden" as const, whileInView: "show" as const, viewport: { once: true, margin: "-60px" } };
+const inView = { initial: (REDUCED_MOTION ? false : "hidden") as false | "hidden", whileInView: "show" as const, viewport: { once: true, margin: "-60px" } };
 
 /** Título que aparece palabra por palabra */
 const RevealTitle = ({ text, as = "h2", className = "" }: { text: string; as?: "h1" | "h2"; className?: string }) => {
@@ -362,9 +364,9 @@ const TestimonialsCarousel = () => {
               <figure className="h-full max-w-2xl mx-auto flex flex-col justify-center bg-card/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-border/40 text-center">
                 <blockquote className="font-serif text-lg md:text-xl text-foreground/90 leading-relaxed italic">"{t.quote}"</blockquote>
                 <figcaption className="mt-5 flex items-center justify-center gap-3">
-                  <span className="relative w-11 h-11 rounded-full bg-gradient-to-br from-warm-mauve to-warm-gold flex items-center justify-center">
+                  <span className="relative w-11 h-11 bg-warm-mauve flex items-center justify-center">
                     <span className="font-serif text-lg font-semibold text-primary">{t.name.charAt(0)}</span>
-                    <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-card flex items-center justify-center text-primary">
+                    <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-card flex items-center justify-center text-primary">
                       <MoonPhase phase="creciente" className="w-3.5 h-3.5" />
                     </span>
                   </span>
@@ -434,6 +436,7 @@ const LearningTimeline = () => {
 };
 
 const SabiduriaCiclica = () => {
+  useReplaceStaticMeta();
   const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const reduce = useReducedMotion();
 
@@ -486,6 +489,10 @@ const SabiduriaCiclica = () => {
           <meta property="og:type" content="website" />
           <meta property="og:image" content={SEO_IMAGE} />
           <meta property="og:url" content={PAGE_URL} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={SEO_TITLE} />
+          <meta name="twitter:description" content={SEO_DESC} />
+          <meta name="twitter:image" content={SEO_IMAGE} />
           <link rel="canonical" href={PAGE_URL} />
           <script type="application/ld+json">{JSON.stringify(FAQ_JSONLD)}</script>
           <script type="application/ld+json">{JSON.stringify(EVENT_JSONLD)}</script>
@@ -506,7 +513,7 @@ const SabiduriaCiclica = () => {
                     width={973}
                     height={1616}
                     loading="eager"
-                    fetchPriority="high"
+                    {...{ fetchpriority: "high" }}
                     style={{ scale: heroImgScale, transformOrigin: "top center" }}
                     className="absolute inset-0 w-full h-full object-cover object-[60%_22%] md:object-[60%_30%] block"
                   />
@@ -565,7 +572,7 @@ const SabiduriaCiclica = () => {
               <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed font-light">
                 Vivimos en una cultura que nos enseñó a funcionar de forma lineal, constante y productiva, desconectándonos de una verdad esencial: <strong className="relative inline-block text-foreground font-medium">
                   <motion.span aria-hidden="true" variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1, delay: 0.5, ease: EASE } } }}
-                    className="absolute left-0 right-0 bottom-0.5 h-[0.45em] -z-0 rounded-sm bg-gradient-to-r from-warm-mauve to-[#B8977E]/40 origin-left" />
+                    className="absolute left-0 right-0 -bottom-0.5 h-px -z-0 bg-[#B8977E] origin-left" />
                   <span className="relative">la mujer es cíclica por naturaleza.</span>
                 </strong>
               </motion.p>
@@ -577,7 +584,7 @@ const SabiduriaCiclica = () => {
             <motion.figure {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-2xl mx-auto mt-10 text-center">
               <motion.div
                 variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.8, ease: EASE } } }}
-                className="h-px w-24 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent origin-center"
+                className="h-px w-24 mx-auto bg-[#B8977E] origin-center"
               />
               <motion.blockquote variants={{ hidden: { opacity: 0, scale: 0.95 }, show: { opacity: 1, scale: 1, transition: { duration: 0.9, ease: EASE } } }} className="font-serif text-2xl md:text-3xl font-light italic text-foreground leading-snug py-5">
                 Tu ciclo no está en tu contra.<br />Tu cuerpo no es un problema que debas corregir.
@@ -596,7 +603,7 @@ const SabiduriaCiclica = () => {
               </motion.figcaption>
               <motion.div
                 variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.8, ease: EASE } } }}
-                className="h-px w-24 mx-auto mt-5 bg-gradient-to-r from-transparent via-primary to-transparent origin-center"
+                className="h-px w-24 mx-auto mt-5 bg-[#B8977E] origin-center"
               />
             </motion.figure>
           </section>
@@ -606,8 +613,7 @@ const SabiduriaCiclica = () => {
             <div className="max-w-5xl mx-auto grid md:grid-cols-[0.9fr_1.1fr] gap-8 md:gap-14 items-center">
               <motion.div ref={photoRef} style={{ y: photoY }} className="max-w-[300px] md:max-w-[340px] mx-auto w-full">
                 <div className="relative">
-                  <div className="absolute -inset-3 rounded-t-full rounded-b-3xl bg-gradient-to-b from-warm-gold via-warm-mauve to-transparent blur-md opacity-80" />
-                  <div className="relative rounded-t-full rounded-b-3xl overflow-hidden ring-1 ring-primary/20 [mask-image:linear-gradient(to_bottom,black_85%,transparent)]">
+                  <div className="relative overflow-hidden">
                     <img src="/fransury-sabiduria-ciclica.webp" alt="Fransury González, psicóloga y maestra de Kundalini Yoga" width={800} height={1394} loading="lazy" className="w-full h-auto block" />
                   </div>
                 </div>

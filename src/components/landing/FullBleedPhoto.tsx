@@ -9,8 +9,8 @@ const SIDE_FADE = "linear-gradient(to right, transparent 0%, #000 18%, #000 82%,
 
 type Desktop = { src: string; width: number; height: number; background: string };
 
-const FullBleedPhoto = ({ src, alt, label, width, height, position, desktop }: {
-  src: string; alt: string; label: string; width: number; height: number; position: string; desktop?: Desktop;
+const FullBleedPhoto = ({ src, srcSet, alt, label, width, height, position, desktop }: {
+  src: string; srcSet?: string; alt: string; label: string; width: number; height: number; position: string; desktop?: Desktop;
 }) => {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -23,7 +23,7 @@ const FullBleedPhoto = ({ src, alt, label, width, height, position, desktop }: {
       transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
       style={{ WebkitMaskImage: FADE, maskImage: FADE }}
       className="relative w-full h-[60svh] md:h-[70svh] overflow-hidden bg-background">
-      <motion.img src={src} alt={alt} loading="lazy" width={width} height={height} style={motionStyle}
+      <motion.img src={src} srcSet={srcSet} sizes={srcSet ? "100vw" : undefined} alt={alt} loading="lazy" width={width} height={height} style={motionStyle}
         className={`absolute inset-x-0 -top-[30px] w-full h-[calc(100%+60px)] object-cover ${position} ${desktop ? "md:hidden" : ""}`} />
       {desktop && (
         <div aria-hidden="true" className="hidden md:flex absolute inset-0 justify-center" style={{ background: desktop.background }}>
