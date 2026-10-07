@@ -82,7 +82,7 @@ const CultivarBienestar = () => {
                 {PROGRAMS.map((p, i) => (
                   <li key={p.id}>
                     <a href={`#${p.id}`} onClick={(e) => go(e, p.id)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#795D64]/30 text-sm text-[#795D64] hover:bg-warm-mauve/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
+                      className="inline-flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-full border border-[#795D64]/30 text-sm text-[#795D64] hover:bg-warm-mauve/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
                       <span className="font-serif text-brand-mauve">{String(i + 1).padStart(2, "0")}</span> {p.title.split(",")[0]}
                       <ArrowDown className="w-3.5 h-3.5" />
                     </a>
