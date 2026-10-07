@@ -1,5 +1,6 @@
 import bannerAcompanamiento from "@/assets/fransury-individual.webp";
 import paraQuienImage from "@/assets/pareja-manos.webp";
+import paraQuienImage900 from "@/assets/pareja-manos-900.webp";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
 
 /** «Mis programas y espacios»: se muestran en /programas. Editar aquí textos, enlaces e imágenes. */
@@ -19,6 +20,7 @@ export const PROGRAMS = [
     features: ["Mejorar la comunicación", "Gestión de conflictos", "100% Virtual"],
     href: "/proceso-de-pareja",
     image: paraQuienImage,
+    imageSrcSet: `${paraQuienImage900} 900w, ${paraQuienImage} 1657w`,
   },
   {
     title: "Cultivar Mi Bienestar",

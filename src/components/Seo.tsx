@@ -1,4 +1,13 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet";
+
+/** Quita las etiquetas sociales fijas de index.html para que las de cada página las reemplacen (no se sumen). */
+const STATIC_KEYS = ["og:image","og:title","og:description","og:type","og:locale","og:site_name","twitter:image","twitter:title","twitter:description","twitter:card"];
+export const useReplaceStaticMeta = () => {
+  useEffect(() => {
+    STATIC_KEYS.forEach((k) => document.head.querySelectorAll(`meta[property="${k}"]:not([data-react-helmet]), meta[name="${k}"]:not([data-react-helmet])`).forEach((m) => m.remove()));
+  }, []);
+};
 
 /**
  * SEO por página.
@@ -16,15 +25,18 @@ interface SeoProps {
   path: string;
   image?: string;
   jsonLd?: JsonLd;
+  robots?: string;
 }
 
-const Seo = ({ title, description, path, image, jsonLd }: SeoProps) => {
+const Seo = ({ title, description, path, image, jsonLd, robots }: SeoProps) => {
+  useReplaceStaticMeta();
   const url = `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
   const img = image || DEFAULT_IMAGE;
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {robots && <meta name="robots" content={robots} />}
       <link rel="canonical" href={url} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
