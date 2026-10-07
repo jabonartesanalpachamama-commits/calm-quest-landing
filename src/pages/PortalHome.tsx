@@ -95,7 +95,7 @@ const Hero = () => {
           className="absolute left-[15%] top-[5%] w-[70%] aspect-square rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.45),transparent_68%)]"
           animate={reduce ? undefined : { scale: [1, 1.05, 1], opacity: [0.6, 0.9, 0.6] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.img src={HERO_IMAGE} alt="Fransury González sentada en el suelo, sonriendo, con camisa blanca y jeans" fetchPriority="high"
+        <motion.img src={HERO_IMAGE} alt="Fransury González sentada en el suelo, sonriendo, con camisa blanca y jeans" {...{ fetchpriority: "high" }}
           style={reduce || !desktop ? { scale: 1.04 } : { y, scale: 1.06 }}
           className="absolute inset-0 w-full h-full object-cover object-[40%_20%] md:object-[50%_22%] will-change-transform" />
       </div>

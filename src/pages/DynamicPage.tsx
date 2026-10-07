@@ -163,7 +163,7 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
             .select("*")
             .eq("slug", pageSlug)
             .eq("published", true)
-            .single();
+            .maybeSingle();
 
           if (!pErr && data) {
             foundPage = {

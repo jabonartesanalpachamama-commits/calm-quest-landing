@@ -14,7 +14,7 @@ export const fadeUp = {
 };
 
 export const inView = {
-  initial: "hidden" as const,
+  initial: (REDUCED_MOTION ? false : "hidden") as false | "hidden",
   whileInView: "show" as const,
   viewport: { once: true, margin: "-60px" },
 };
@@ -71,7 +71,7 @@ export const SplitHero = ({ image, alt, children, imagePosition, imageClassName 
             src={image}
             alt={alt}
             loading="eager"
-            fetchPriority="high"
+            {...{ fetchpriority: "high" }}
             style={{ filter: HERO_IMAGE_FILTER }}
             className={`absolute inset-0 w-full h-full object-cover ${imagePosition ?? imageClassName} block`}
           />

@@ -18,6 +18,7 @@ import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
 import { useReplaceStaticMeta } from "@/components/Seo";
+import { REDUCED_MOTION } from "@/components/landing";
 
 type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
@@ -198,7 +199,7 @@ const fadeUp = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
-const inView = { initial: "hidden" as const, whileInView: "show" as const, viewport: { once: true, margin: "-60px" } };
+const inView = { initial: (REDUCED_MOTION ? false : "hidden") as false | "hidden", whileInView: "show" as const, viewport: { once: true, margin: "-60px" } };
 
 /** Título que aparece palabra por palabra */
 const RevealTitle = ({ text, as = "h2", className = "" }: { text: string; as?: "h1" | "h2"; className?: string }) => {
@@ -512,7 +513,7 @@ const SabiduriaCiclica = () => {
                     width={973}
                     height={1616}
                     loading="eager"
-                    fetchPriority="high"
+                    {...{ fetchpriority: "high" }}
                     style={{ scale: heroImgScale, transformOrigin: "top center" }}
                     className="absolute inset-0 w-full h-full object-cover object-[60%_22%] md:object-[60%_30%] block"
                   />

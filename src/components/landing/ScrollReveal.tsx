@@ -25,7 +25,7 @@ export const RevealImage = ({
         initial={reduce ? false : { clipPath: hidden }}
         animate={shown ? { clipPath: "inset(0% 0% 0% 0%)" } : { clipPath: hidden }}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}>
-        <motion.img src={src} alt={alt} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : undefined}
+        <motion.img src={src} alt={alt} loading={eager ? "eager" : "lazy"} {...(eager ? { fetchpriority: "high" } : {})}
           initial={colorize && !reduce ? { filter: GRAY } : false}
           animate={colorize && !reduce ? { filter: shown ? COLOR : GRAY } : undefined}
           transition={{ duration: 1.6, delay: 0.3, ease: "easeOut" }}
