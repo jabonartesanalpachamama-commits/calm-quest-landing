@@ -117,11 +117,11 @@ const HERO_ALT = "Fransury González en postura de meditación con las manos en 
 const SUBNAV: [string, string][] = [["que-ofrezco", "Qué ofrezco"], ["como-funciona", "Cómo funciona"], ["precios", "Inversión"], ["preguntas", "Preguntas"]];
 const SubNav = () => (
   <nav aria-label="En esta página" className="bg-background border-b border-border">
-    <ul className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-brand-ink">
+    <ul className="max-w-6xl mx-auto px-4 py-1 md:py-2 flex flex-wrap justify-center gap-x-3 gap-y-0 text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-brand-ink">
       {SUBNAV.map(([id, label], i) => (
         <li key={id} className="flex items-center gap-3">
           {i > 0 && <span aria-hidden="true" className="text-brand-gold">·</span>}
-          <a href={`#${id}`} className={`py-2 hover:text-brand-mauve transition-colors ${FOCUS}`}
+          <a href={`#${id}`} className={`inline-flex items-center min-h-[44px] hover:text-brand-mauve transition-colors ${FOCUS}`}
             onClick={(e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); history.replaceState(null, "", `#${id}`); }}>
             {label}
           </a>
