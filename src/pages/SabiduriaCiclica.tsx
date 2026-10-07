@@ -17,6 +17,7 @@ import {
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
+import { useReplaceStaticMeta } from "@/components/Seo";
 
 type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
@@ -434,6 +435,7 @@ const LearningTimeline = () => {
 };
 
 const SabiduriaCiclica = () => {
+  useReplaceStaticMeta();
   const [settings, setSettings] = useState<VisualIdentity>(() => getLocalSettings());
   const reduce = useReducedMotion();
 
@@ -486,6 +488,10 @@ const SabiduriaCiclica = () => {
           <meta property="og:type" content="website" />
           <meta property="og:image" content={SEO_IMAGE} />
           <meta property="og:url" content={PAGE_URL} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={SEO_TITLE} />
+          <meta name="twitter:description" content={SEO_DESC} />
+          <meta name="twitter:image" content={SEO_IMAGE} />
           <link rel="canonical" href={PAGE_URL} />
           <script type="application/ld+json">{JSON.stringify(FAQ_JSONLD)}</script>
           <script type="application/ld+json">{JSON.stringify(EVENT_JSONLD)}</script>

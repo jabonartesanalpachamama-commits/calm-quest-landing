@@ -238,6 +238,10 @@ export const DynamicPage = ({ overrideSlug }: { overrideSlug?: string } = {}) =>
   if (error || !page || !settings) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4 text-center">
+        <Helmet>
+          <title>Página no encontrada | SantoSha</title>
+          <meta name="robots" content="noindex,follow" />
+        </Helmet>
         <Leaf className="w-12 h-12 mb-6 text-muted-foreground" />
         <h1 className="font-serif text-3xl font-semibold mb-3">Página no encontrada</h1>
         <p className="text-muted-foreground max-w-md mb-8 font-light">
