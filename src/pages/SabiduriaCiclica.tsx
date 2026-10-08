@@ -505,25 +505,18 @@ const SabiduriaCiclica = () => {
           {/* (1) HERO */}
           <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-background">
             <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-2 gap-16 md:gap-10 items-center md:pl-8 lg:pl-12 md:py-10">
-              <div className="relative flex justify-center md:justify-end">
-                <div className="relative overflow-hidden aspect-[4/5] md:aspect-[3/2] w-[85%] md:w-full max-w-[560px] lg:max-w-[620px] bg-[#8E8F93]">
+              <div className="relative flex justify-center">
+                <div className="relative overflow-hidden aspect-[4/5] w-[85%] md:w-full max-w-[480px] md:max-w-[460px] lg:max-w-[480px] bg-[#D9DCE0]">
                   <img
                     src="/sabiduria-ciclica-hero.webp"
-                    alt="Fransury González con vestido blanco caminando en un campo con niebla, en tres momentos superpuestos"
-                    width={1536}
-                    height={1024}
+                    alt="Cuatro mujeres de distintas edades en perfil, de la abuela a la joven, mirando hacia el mismo lado"
+                    width={941}
+                    height={1176}
                     loading="eager"
                     {...{ fetchpriority: "high" }}
-                    className="absolute inset-0 w-full h-full object-cover object-[50%_40%] md:object-center block"
+                    className="absolute inset-0 w-full h-full object-cover object-center block"
                   />
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[#482A3A] opacity-[0.26]" />
-                  <svg aria-hidden="true" className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.07]">
-                    <filter id="sc-hero-grain">
-                      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
-                      <feColorMatrix type="saturate" values="0" />
-                    </filter>
-                    <rect width="100%" height="100%" filter="url(#sc-hero-grain)" />
-                  </svg>
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[#482A3A] opacity-[0.10]" />
                 </div>
               </div>
 
