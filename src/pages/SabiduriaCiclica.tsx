@@ -505,17 +505,17 @@ const SabiduriaCiclica = () => {
           {/* (1) HERO */}
           <section className="relative pt-0 pb-12 md:pb-0 px-4 md:px-0 bg-background">
             <div className="relative max-w-6xl md:max-w-none mx-auto grid md:grid-cols-[53%_1fr] gap-16 md:gap-10 items-center">
-              <div className="relative -mx-4 md:mx-0 md:self-start">
-                <div className="relative overflow-hidden aspect-[4/5] md:aspect-auto md:h-[calc(100svh-104px)] md:max-h-[calc(100svh-104px)] md:[mask-image:linear-gradient(to_left,transparent_0,#000_48px)]">
+              <div className="relative -mx-4 md:mx-0">
+                <div className="relative overflow-hidden aspect-[4/5] md:aspect-[3/2] bg-[#8E8F93]">
                   <motion.img
                     src="/sabiduria-ciclica-hero.webp"
-                    alt="Fransury González con las manos en el pecho y los ojos cerrados, rodeada de follaje verde"
-                    width={973}
-                    height={1616}
+                    alt="Fransury González con vestido blanco caminando en un campo con niebla, en tres momentos superpuestos"
+                    width={1536}
+                    height={1024}
                     loading="eager"
                     {...{ fetchpriority: "high" }}
                     style={{ scale: heroImgScale, transformOrigin: "top center" }}
-                    className="absolute inset-0 w-full h-full object-cover object-[60%_22%] md:object-[60%_30%] block"
+                    className="absolute inset-0 w-full h-full object-cover object-[50%_40%] md:object-center block"
                   />
                 </div>
               </div>
