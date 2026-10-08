@@ -352,3 +352,7 @@
 .lux [class*="rounded-["], .lux [class*="rounded-t-"], .lux [class*="rounded-b-"] { border-radius: 0; }
 /* Lote W: con foco de teclado en la franja, los logos recuperan su color. */
 .logo-marquee:focus-visible img { filter: none; opacity: 1; }
+
+/* Título del hero de servicio sobre foto (gana a `.lux h1`). */
+.lux h1.svc-hero-title, h1.svc-hero-title { font-size: 1.6rem; }
+@media (min-width: 768px) { .lux h1.svc-hero-title, h1.svc-hero-title { font-size: clamp(1.5rem, 3.2vw, 4.25rem); } }

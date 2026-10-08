@@ -36,7 +36,7 @@ const ServiceHero = ({ title, label, subtitle, image, children, meta, primary, s
         <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}
           className="absolute inset-x-0 bottom-0 px-6 pb-8 md:px-12 lg:px-16 md:pb-14 space-y-3">
           <RevealTitle as="h1" text={title}
-            className="font-serif text-[1.6rem] md:text-[clamp(1.5rem,3.2vw,4.25rem)] font-semibold leading-[1.1] text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.25)]" />
+            className="svc-hero-title font-serif font-semibold leading-[1.1] text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.25)]" />
           {label && (
             <motion.p variants={fadeUp} className="text-[11px] tracking-[0.3em] uppercase text-white/90">{label}</motion.p>
           )}
