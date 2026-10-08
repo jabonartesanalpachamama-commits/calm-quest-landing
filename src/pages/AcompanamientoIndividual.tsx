@@ -10,7 +10,6 @@ import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-mot
 import { ArrowRight, ChevronDown, Clock, Monitor, Video } from "lucide-react";
 import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
-import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import Seo from "@/components/Seo";

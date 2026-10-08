@@ -11,7 +11,6 @@ import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
 import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
-import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import parejaManos from "@/assets/pareja-manos.webp";
 import parejaManos900 from "@/assets/pareja-manos-900.webp";
 import { faqJsonLd } from "@/lib/seo";

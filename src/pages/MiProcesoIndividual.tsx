@@ -1,7 +1,6 @@
 import type React from "react";
 import { motion } from "framer-motion";
 import sessionPhoto from "@/assets/fransury-individual.webp";
-import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
 import { Clock, MessageCircle, Monitor, Video } from "lucide-react";
