@@ -10,7 +10,6 @@ import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-mot
 import { ArrowRight, ChevronDown, Clock, Monitor, Video } from "lucide-react";
 import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
-import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import AiChatWidget from "@/components/AiChatWidget";
 import Header from "@/components/Header";
 import Seo from "@/components/Seo";
@@ -238,15 +237,14 @@ const AcompanamientoIndividual = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <ServiceHero label="Sesiones 1 a 1 · Virtual" title="Yoga y meditación 1:1"
+        <ServiceHero label="Sesiones 1 a 1 · Virtual" title="Yoga y meditación"
+          subtitle="Clases privadas donde tu cuerpo, tu respiración y la meditación te devuelven a ti."
+          image={{ src: yogaPhoto, alt: HERO_ALT, width: 1122, height: 1402, position: "object-[50%_20%]" }}
           meta={[[Monitor, "100% virtual"], [Video, "Google Meet"], [Clock, "60 minutos"]]}
           primary={{ text: "Reservar sesión", target: "#precios" }}
           secondary={{ text: "Escríbeme por WhatsApp", href: WA_URL }}>
           <p>YogaTerapia, Kundalini Yoga y Meditación</p>
-          <p>Clases privadas donde tu cuerpo, tu respiración y la meditación te devuelven a ti.</p>
         </ServiceHero>
-        <FullBleedPhoto src={yogaPhoto} label="Fransury en meditación" alt={HERO_ALT} width={1122} height={1402} position="object-[50%_22%]"
-          desktop={{ src: yogaPhoto, width: 1122, height: 1402, background: "#B8A8AB" }} />
         <SituationsGrid title="¿Para quién es este espacio?" items={FOR_WHOM} />
         <SubNav />
         <WordsMarquee />

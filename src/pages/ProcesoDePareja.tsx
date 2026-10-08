@@ -11,7 +11,6 @@ import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
 import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
-import FullBleedPhoto from "@/components/landing/FullBleedPhoto";
 import parejaManos from "@/assets/pareja-manos.webp";
 import parejaManos900 from "@/assets/pareja-manos-900.webp";
 import { faqJsonLd } from "@/lib/seo";
@@ -32,6 +31,7 @@ const FOR_WHOM = [
   "Les cuesta poner límites que los cuiden a los dos.",
   "Quieren recuperar la cercanía, la confianza y la intimidad.",
   "Necesitan construir acuerdos y nuevas formas de relacionarse.",
+  "Quieren conocerse más a fondo, entender la esencia del otro y ser mejor pareja, sin que haya una crisis de por medio.",
 ];
 
 const FAQS = [
@@ -76,7 +76,8 @@ const ProcesoDePareja = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <ServiceHero label="Psicoterapia de pareja" title="¿Por qué siempre discutimos por lo mismo?"
+        <ServiceHero title="Terapia de pareja" subtitle="¿Por qué siempre discutimos por lo mismo?"
+          image={{ src: parejaManos, srcSet: `${parejaManos900} 900w, ${parejaManos} 1657w`, alt: "Dos manos entrelazadas sobre una sábana clara", width: 1657, height: 1800, position: "object-[45%_40%]" }}
           meta={[[Monitor, "100% virtual"], [Video, "Google Meet"]]}
           primary={{ text: "Ver opciones de consulta", target: "#tarifas" }}
           secondary={{ text: "Escríbeme por WhatsApp", href: WA_URL }}>
@@ -86,9 +87,8 @@ const ProcesoDePareja = () => {
           <p>
             El objetivo es crear un espacio donde ambos puedan observar lo que está ocurriendo y asumir responsabilidad sobre aquello que sí pueden transformar.
           </p>
+          <p>A terapia de pareja se llega en medio de un conflicto y también sin él: para conocer la esencia del otro, revisar el propio papel en la relación y aprender a ser mejor pareja.</p>
         </ServiceHero>
-
-        <FullBleedPhoto src={parejaManos} srcSet={`${parejaManos900} 900w, ${parejaManos} 1657w`} label="Manos entrelazadas" alt="Dos manos entrelazadas sobre una sábana clara" width={1657} height={1800} position="object-[45%_40%]" />
 
         <SituationsGrid title="¿Se reconocen en alguna de estas situaciones?" items={FOR_WHOM} />
 
