@@ -34,6 +34,7 @@ const FOR_WHOM = [
   "Sientes que te has desconectado de ti.",
   "Necesitas replantear tu proyecto de vida.",
   "Quieres sanar patrones que vienen de tu familia.",
+  "Quieres conocerte mejor y crecer como persona, aunque hoy no estés en crisis.",
 ];
 
 const FAQS = [
@@ -79,15 +80,15 @@ const MiProcesoIndividual = () => {
       <Header palette={palette} brandName={settings?.brandName} />
 
       <main className="flex-grow">
-        <ServiceHero label="Acompañamiento individual" title="Comprende el para qué."
+        <ServiceHero title="Acompañamiento individual" subtitle="Comprende el para qué."
+          image={{ src: sessionPhoto, alt: "Fransury González sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada", width: 1122, height: 1402, position: "object-[62%_30%]" }}
           meta={[[Monitor, "100% virtual"], [Video, "Google Meet"], [Clock, "60 a 75 minutos"]]}
           primary={{ text: "Ver opciones de consulta", target: "#tarifas" }}
           secondary={{ text: "Escríbeme por WhatsApp", href: WA_URL }}>
           <p>Todo lo que atravesamos tiene un propósito y un aprendizaje, incluso cuando duele o incomoda. Entiende tu para qué y transítalo en paz, aunque hoy estés en medio de tu propio caos.</p>
           <p>Un espacio terapéutico para comprender lo que estás viviendo, reconocer tus patrones emocionales y relacionales y desarrollar nuevas maneras de responder ante aquello que hoy genera malestar.</p>
+          <p>A terapia se llega en crisis y también en calma: para conocerte mejor, crecer como persona y vivir con mayor conciencia.</p>
         </ServiceHero>
-
-        <FullBleedPhoto src={sessionPhoto} label="Fransury en sesión" alt="Fransury González sonriendo en un sillón beige con su libreta, frente a una consultante desenfocada" width={1122} height={1402} position="object-[62%_45%] md:object-[50%_24%]" />
 
 
         <SituationsGrid title="¿Por qué siempre me pasa lo mismo?" subtitle="¿Te reconoces en alguna de estas situaciones?" items={FOR_WHOM} />
