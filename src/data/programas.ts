@@ -29,7 +29,7 @@ export const PROGRAMS = [
     features: ["Curso de Iniciación", "Sabiduría Cíclica", "Acompañamiento 1:1"],
     href: "/cultivar-bienestar",
     image: fransuryYogaHome,
-    position: "object-[50%_30%]",
+    position: "object-[50%_15%]",
     alt: "Fransury González practicando yoga, en una postura de torsión con el brazo extendido",
   },
 ];
