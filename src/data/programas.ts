@@ -30,5 +30,6 @@ export const PROGRAMS = [
     href: "/cultivar-bienestar",
     image: fransuryYogaHome,
     position: "object-[50%_30%]",
+    alt: "Fransury González practicando yoga, en una postura de torsión con el brazo extendido",
   },
 ];

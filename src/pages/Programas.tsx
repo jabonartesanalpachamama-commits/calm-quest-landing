@@ -26,7 +26,8 @@ const ProgramRow = ({ p, i }: { p: (typeof PROGRAMS)[number]; i: number }) => {
     <article ref={ref} className={`grid md:grid-cols-2 items-center gap-10 md:gap-20 ${i % 2 ? "bg-brand-cream" : "bg-background"}`}>
       <div className={`relative h-[70vw] max-h-[520px] md:h-[78vh] md:max-h-none overflow-hidden ${flip ? "md:order-2" : ""}
         [mask-image:linear-gradient(to_bottom,black_70%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,black_70%,transparent)] ${fade}`}>
-        <motion.img src={p.image} srcSet={(p as { imageSrcSet?: string }).imageSrcSet} sizes="(min-width: 768px) 50vw, 100vw" alt="" loading="lazy" style={reduce ? undefined : { y, scale: 1.08 }}
+        <motion.img src={p.image} srcSet={(p as { imageSrcSet?: string }).imageSrcSet} sizes="(min-width: 768px) 50vw, 100vw"
+          alt={(p as { alt?: string }).alt ?? ""} loading="lazy" style={reduce ? undefined : { y, scale: 1.08 }}
           className={`absolute inset-0 w-full h-full object-cover ${(p as { position?: string }).position ?? ""}`} />
       </div>
       <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }}
