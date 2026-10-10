@@ -1,7 +1,7 @@
 import bannerAcompanamiento from "@/assets/fransury-individual.webp";
 import paraQuienImage from "@/assets/pareja-manos.webp";
 import paraQuienImage900 from "@/assets/pareja-manos-900.webp";
-import cursoHero from "@/assets/curso-hero.png.asset.json";
+import fransuryYogaHome from "@/assets/fransury-yoga-home.webp";
 
 /** «Mis programas y espacios»: se muestran en /programas. Editar aquí textos, enlaces e imágenes. */
 export const PROGRAMS = [
@@ -28,6 +28,8 @@ export const PROGRAMS = [
     desc: "Espacios diseñados para habitar el cuerpo, encontrar equilibrio y conectar con tu verdadera esencia a través de la práctica constante.",
     features: ["Curso de Iniciación", "Sabiduría Cíclica", "Acompañamiento 1:1"],
     href: "/cultivar-bienestar",
-    image: cursoHero.url,
+    image: fransuryYogaHome,
+    position: "object-[50%_15%]",
+    alt: "Fransury González practicando yoga, en una postura de torsión con el brazo extendido",
   },
 ];
