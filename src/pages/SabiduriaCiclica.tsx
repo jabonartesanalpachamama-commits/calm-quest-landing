@@ -48,12 +48,10 @@ const LEARNING_POINTS: { phase: Phase; text: string; bold?: string }[] = [
 
 const ETAPAS = ["Menstrúo cada mes", "Mis ciclos son irregulares", "Uso anticonceptivos", "Estoy en la perimenopausia", "Ya viví la menopausia"];
 
-const CUPO_URL = "https://checkout.bold.co/payment/LNK_66A1LU2TZR";
+const CUPO_URL = "https://checkout.bold.co/payment/LNK_9RPF71YAI4";
+const AMIGA_URL = "https://checkout.bold.co/payment/LNK_K410L96K9Q";
 const DUDA_URL = getWhatsAppUrl("Hola Fransu, tengo una pregunta sobre el taller Sabiduría Cíclica");
 
-// Precio de lanzamiento vigente hasta el 10 de octubre de 2026 23:59 hora Colombia (UTC-5)
-const LAUNCH_DEADLINE = new Date("2026-10-11T00:00:00-05:00").getTime();
-const isLaunchPrice = () => Date.now() < LAUNCH_DEADLINE;
 
 const TESTIMONIOS = [
   { name: "Goretti", country: "México", quote: "Gracias por ser nuestra guía de amor y sanación. Estuvo intenso, pero muy mágico y de tanta conciencia. Gracias por hacer este tipo de talleres." },
@@ -142,7 +140,7 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
       ] },
       { q: "¿Cómo pago?", a: [
         "En línea y de forma segura a través de Bold, con el botón \"Quiero mi cupo\". El cobro se hace en la moneda local de tu tarjeta.",
-        "Si vienes con una amiga, cada una paga USD 60 con el enlace para amigas que encuentras en la sección \"Tu inversión\".",
+        "Si vienes con una amiga, cada una paga USD 60 con el enlace \"Inscribirnos juntas\" que encuentras en la sección \"Tu inversión\".",
       ] },
       { q: "¿Qué pasa después de inscribirme?", a: [
         "Te contactaremos a tu correo o WhatsApp registrado para confirmar tu participación.",
@@ -181,8 +179,9 @@ const EVENT_JSONLD = {
   performer: { "@type": "Person", name: "Fransury González" },
   inLanguage: "es",
   offers: [
-    { "@type": "Offer", price: "60", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL, validFrom: "2026-09-25", priceValidUntil: "2026-10-10" },
     { "@type": "Offer", price: "75", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL, validFrom: "2026-10-11" },
+    { "@type": "Offer", name: "Inscripción en pareja de amigas (precio por persona)", price: "60", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL },
+
   ],
 };
 
@@ -457,8 +456,8 @@ const SabiduriaCiclica = () => {
     loadSettings();
   }, []);
 
-  const launch = isLaunchPrice();
   const palette = COLOR_PALETTES[settings?.palette] || COLOR_PALETTES.menta;
+
 
   // Parallax
   const { scrollY } = useScroll();
@@ -693,16 +692,23 @@ const SabiduriaCiclica = () => {
               <div className="bg-[#795D64] rounded-3xl p-6 md:p-7 shadow-lg">
                 <div className="space-y-2 text-center text-white">
                   <h3 className="font-serif text-2xl font-semibold">Taller Sabiduría Cíclica</h3>
-                  {launch && <p className="text-xs font-semibold uppercase tracking-wider text-white">Precio de lanzamiento hasta el 10 de octubre</p>}
                   <div className="flex justify-center items-baseline gap-3">
-                    <span className="text-5xl font-bold">USD {launch ? 60 : 75}</span>
-                    {launch && <span className="text-xl line-through text-brand-cream">USD 75</span>}
+                    <span className="text-5xl font-bold">USD 75</span>
                   </div>
                 </div>
                 <div className="mt-4 rounded-2xl bg-white/10 border border-brand-gold/70 px-4 py-3 text-white text-center">
                   <p className="font-serif text-xl font-bold text-brand-cream">¿Vienes con una amiga?</p>
-                  <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD 60, incluso después del 10 de octubre.</p>
+                  <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD 60.</p>
+                  <a
+                    href={AMIGA_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-block w-full py-2.5 text-center rounded-2xl text-sm font-semibold border border-brand-cream text-brand-cream bg-transparent transition-colors hover:bg-white/10"
+                  >
+                    Inscribirnos juntas
+                  </a>
                 </div>
+
                 <ul className="mt-5 space-y-3 border-t border-white/20 pt-5">
                   {INCLUYE.map((b) => (
                     <li key={b} className="flex items-start gap-3 text-white">
