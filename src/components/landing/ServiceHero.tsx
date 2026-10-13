@@ -1,5 +1,6 @@
 import type React from "react";
 import type { ReactNode } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, type LucideIcon } from "lucide-react";
 import { fadeUp, RevealTitle } from "@/components/landing";
@@ -22,35 +23,46 @@ type Props = {
 };
 
 const ServiceHero = ({ title, label, subtitle, image, children, meta, primary, secondary }: Props) => {
+  const heroRef = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const hero = heroRef.current;
+    const header = document.querySelector("header");
+    if (!hero || !header) return;
+    const measure = () => hero.style.setProperty("--svc-header-height", `${header.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
   const go = (e: React.MouseEvent) => {
     e.preventDefault();
     document.querySelector(primary.target)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   return (
-    <section className="relative grid md:grid-cols-2">
+    <section ref={heroRef} className="svc-hero relative grid md:grid-cols-2">
       <div className="relative overflow-hidden aspect-[4/5] md:aspect-auto md:min-h-[560px] bg-[#482A3A]">
         <img src={image.src} srcSet={image.srcSet} sizes={image.srcSet ? "(min-width: 768px) 50vw, 100vw" : undefined}
           alt={image.alt} width={image.width} height={image.height} loading="eager"
           className={`absolute inset-0 w-full h-full object-cover ${image.position}`} />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[#482A3A] opacity-[0.35]" />
+        <div aria-hidden="true" className="svc-hero-veil pointer-events-none absolute inset-0" />
         <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-          className="absolute inset-x-0 bottom-0 px-6 pb-8 md:px-12 lg:px-16 md:pb-14 space-y-3">
+          className="svc-hero-heading absolute inset-x-0 bottom-0 px-6 pb-8 md:px-12 lg:px-16 md:pb-0 space-y-3">
           <RevealTitle as="h1" text={title}
-            className="svc-hero-title font-serif font-semibold leading-[1.1] text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.25)]" />
+            className="svc-hero-title font-serif font-semibold leading-[1.1] text-primary-foreground" />
           {label && (
-            <motion.p variants={fadeUp} className="text-[11px] tracking-[0.3em] uppercase text-white/90">{label}</motion.p>
+            <motion.p variants={fadeUp} className="svc-hero-label text-xs tracking-[0.3em] uppercase text-primary-foreground">{label}</motion.p>
           )}
         </motion.div>
       </div>
       <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } } }}
-        className="bg-brand-cream px-6 py-12 md:px-12 lg:px-16 md:py-20 flex flex-col justify-center space-y-6">
+        className="svc-hero-summary bg-brand-cream px-6 py-12 md:px-10 md:py-6 flex flex-col justify-center space-y-6 md:space-y-3">
         {subtitle && (
-          <motion.div variants={fadeUp} className="space-y-4">
+          <motion.div variants={fadeUp} className="space-y-4 md:space-y-3">
             <p className="font-serif font-light text-[clamp(1.35rem,2vw,1.9rem)] leading-snug text-[#482A3A]">{subtitle}</p>
             <span aria-hidden="true" className="block w-12 h-px bg-brand-gold" />
           </motion.div>
         )}
-        <motion.div variants={fadeUp} className="text-lg text-foreground/85 leading-relaxed font-light space-y-4">
+        <motion.div variants={fadeUp} className="svc-hero-copy text-lg text-foreground/85 leading-relaxed font-light space-y-4 md:space-y-2">
           {children}
         </motion.div>
         <motion.ul variants={fadeUp} className="flex flex-wrap gap-2 text-sm">

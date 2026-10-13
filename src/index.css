@@ -354,5 +354,15 @@
 .logo-marquee:focus-visible img { filter: none; opacity: 1; }
 
 /* Título del hero de servicio sobre foto (gana a `.lux h1`). */
+.svc-hero {
+  --svc-veil-opacity: 0.60;
+  --svc-title-shadow: 0 1px 14px rgba(72, 42, 58, 0.55);
+}
+.svc-hero-veil { background: hsl(var(--brand-ink)); opacity: var(--svc-veil-opacity); }
+.svc-hero-title, .svc-hero-label { text-shadow: var(--svc-title-shadow); }
 .lux h1.svc-hero-title, h1.svc-hero-title { font-size: 1.6rem; }
-@media (min-width: 768px) { .lux h1.svc-hero-title, h1.svc-hero-title { font-size: clamp(1.5rem, 3.2vw, 4.25rem); } }
+@media (min-width: 768px) {
+  .lux h1.svc-hero-title, h1.svc-hero-title { font-size: clamp(1.5rem, 3.2vw, 4.25rem); }
+  .svc-hero-heading { bottom: max(56px, calc(100% - (100svh - var(--svc-header-height, 105px) - 32px))); }
+  .lux .svc-hero-copy p { line-height: 1.5; }
+}
