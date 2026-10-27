@@ -398,8 +398,8 @@ const PortalHome = () => {
   return (
     <div className="min-h-screen relative flex flex-col">
       <Seo
-        title="SantoSha | Psicoterapia, yoga y meditación online"
-        description="Psicoterapia individual y de pareja, Kundalini Yoga y meditación con Fransury González. Atención virtual desde cualquier lugar."
+        title="Psicoterapia y yoga con Fransury González | SantoSha"
+        description="Psicoterapia individual y de pareja online con Fransury González, psicóloga y maestra de Kundalini Yoga. Yoga y meditación 1:1 en SantoSha."
         path="/"
         jsonLd={HOME_JSONLD}
       />
