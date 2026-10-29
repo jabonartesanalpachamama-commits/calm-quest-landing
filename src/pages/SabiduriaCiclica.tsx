@@ -19,6 +19,20 @@ import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
 import { useReplaceStaticMeta } from "@/components/Seo";
 import { REDUCED_MOTION } from "@/components/landing";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
+import { z } from "zod";
+
+/** Datos editables de la edición actual del taller. */
+const TALLER = {
+  fechaISO: "2027-01-23",
+  fechaTexto: "Sábado 23 de enero de 2027",
+  horaTexto: null as string | null,       // ej. "10:00 a. m. a 2:00 p. m. hora Colombia" cuando se confirme
+  duracionHoras: null as number | null,   // número cuando se confirme
+  precioUSD: null as number | null,
+  precioAmigaUSD: null as number | null,
+  inscripcionesAbiertas: false,
+};
+const MOSTRAR_PRECIO = TALLER.inscripcionesAbiertas && TALLER.precioUSD !== null;
 
 type Phase = "nueva" | "creciente" | "media" | "llena" | "menguante" | "completa";
 
@@ -136,11 +150,12 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
         "Además, un celular o computador con internet, un espacio tranquilo donde puedas moverte, un tapete de yoga, mat o aquello con lo que te sientas cómoda, y un cuaderno. No necesitas experiencia en yoga ni conocimientos previos sobre el ciclo femenino.",
       ] },
       { q: "¿A qué hora es en mi país?", a: [
-        "El taller es de 10:00 a. m. a 2:00 p. m., hora Colombia. Equivale a 9:00 a. m. a 1:00 p. m. en Ciudad de México, y a 11:00 a. m. a 3:00 p. m. en Miami y Nueva York. Si estás en otro país, escríbeme y te confirmo tu horario.",
+        TALLER.horaTexto
+          ? `El taller es de ${TALLER.horaTexto}. Si estás en otro país, escríbeme y te confirmo tu horario.`
+          : "La hora del taller está por confirmar. Apenas la tengamos, la publico aquí con su equivalencia para México, Miami y Nueva York. Si te dejas en la lista de espera, te la envío directamente.",
       ] },
       { q: "¿Cómo pago?", a: [
-        "En línea y de forma segura a través de Bold, con el botón \"Quiero mi cupo\". El cobro se hace en la moneda local de tu tarjeta.",
-        "Si vienes con una amiga, cada una paga USD 60 con el enlace \"Inscribirnos juntas\" que encuentras en la sección \"Tu inversión\".",
+        "Las inscripciones aún no están abiertas. Cuando abran, el pago será en línea a través de Bold y el cobro se hará en la moneda local de tu tarjeta.",
       ] },
       { q: "¿Qué pasa después de inscribirme?", a: [
         "Te contactaremos a tu correo o WhatsApp registrado para confirmar tu participación.",
@@ -151,7 +166,7 @@ const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
 
 const PAGE_URL = "https://santoshayoga.com.co/sabiduria-ciclica-esencia-femenina";
 const SEO_TITLE = "Taller Sabiduría Cíclica | Ciclo femenino y yoga";
-const SEO_DESC = "Comprende tu naturaleza cíclica y vívela en tu cuerpo con el yoga, en cualquier etapa de tu vida. Taller en vivo, sábado 17 de octubre por Google Meet.";
+const SEO_DESC = "Comprende tu naturaleza cíclica y vívela en tu cuerpo con el yoga, en cualquier etapa de tu vida. Taller en vivo, sábado 23 de enero de 2027 por Google Meet.";
 const SEO_IMAGE = "https://santoshayoga.com.co/sabiduria-ciclica-hero.webp";
 
 const FAQ_JSONLD = {
@@ -169,8 +184,7 @@ const EVENT_JSONLD = {
   "@type": "Event",
   name: "Sabiduría Cíclica, Esencia Femenina",
   description: SEO_DESC,
-  startDate: "2026-10-17T10:00:00-05:00",
-  endDate: "2026-10-17T14:00:00-05:00",
+  startDate: TALLER.fechaISO,
   eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: { "@type": "VirtualLocation", url: PAGE_URL },
@@ -178,15 +192,20 @@ const EVENT_JSONLD = {
   organizer: { "@type": "Person", name: "Fransury González", url: "https://santoshayoga.com.co" },
   performer: { "@type": "Person", name: "Fransury González" },
   inLanguage: "es",
-  offers: [
-    { "@type": "Offer", price: "75", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL, validFrom: "2026-10-11" },
-    { "@type": "Offer", name: "Inscripción en pareja de amigas (precio por persona)", price: "60", priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL },
-
-  ],
+  ...(TALLER.precioUSD !== null
+    ? {
+        offers: [
+          { "@type": "Offer", price: String(TALLER.precioUSD), priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL },
+          ...(TALLER.precioAmigaUSD !== null
+            ? [{ "@type": "Offer", name: "Inscripción en pareja de amigas (precio por persona)", price: String(TALLER.precioAmigaUSD), priceCurrency: "USD", availability: "https://schema.org/InStock", url: PAGE_URL }]
+            : []),
+        ],
+      }
+    : {}),
 };
 
 const INCLUYE = [
-  "Taller en vivo de 4 horas por Google Meet",
+  TALLER.duracionHoras ? `Taller en vivo de ${TALLER.duracionHoras} horas por Google Meet` : "Taller en vivo por Google Meet",
   "Práctica de yoga, respiración y meditación para habitar cada fase de tu ciclo",
   "Las fases de tu ciclo y cómo se expresan en tu cuerpo, tu energía y tus emociones",
   "Herramientas prácticas para observar tu ciclo en tu día a día",
@@ -318,14 +337,131 @@ const RotatingPhrases = () => {
 const CupoLink = () => {
   const reduce = useReducedMotion();
   return (
-    <a href="#ciclica-precio" onClick={scrollTo("#ciclica-precio")} className="group relative inline-flex items-center gap-1.5 text-sm font-semibold text-primary pb-1">
+    <a href={MOSTRAR_PRECIO ? "#ciclica-precio" : "#lista-de-espera"} onClick={scrollTo(MOSTRAR_PRECIO ? "#ciclica-precio" : "#lista-de-espera")} className="group relative inline-flex items-center gap-1.5 text-sm font-semibold text-primary pb-1">
       <motion.span aria-hidden="true" animate={reduce ? {} : { opacity: [0.5, 1, 0.5], scale: [0.9, 1.1, 0.9] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} className="inline-flex">
         <Sparkles className="w-3.5 h-3.5 text-[#B8977E]" />
       </motion.span>
-      Quiero mi cupo
+      {MOSTRAR_PRECIO ? "Quiero mi cupo" : "Quiero que me avises"}
       <motion.span aria-hidden="true" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.9, delay: 1.1, ease: EASE }}
         className="absolute left-0 right-0 bottom-0 h-px group-hover:h-[2.5px] bg-[#B8977E] origin-left transition-[height] duration-300" />
     </a>
+  );
+};
+
+const CONSENT_TEXT = "Autorizo a Fransury Gonzáles a usar mis datos para avisarme sobre este taller. Puedo pedir que me borre de la lista en cualquier momento.";
+
+const waitlistSchema = z.object({
+  nombre: z.string().trim().min(1, "Escribe tu nombre.").max(120, "Máximo 120 caracteres."),
+  correo: z.string().trim().min(1, "Escribe tu correo.").max(254, "Máximo 254 caracteres.").email("Revisa el formato del correo."),
+  whatsapp: z.string().trim().max(30, "Máximo 30 caracteres.").regex(/^[+\d ]*$/, "Usa solo +, dígitos y espacios."),
+  pais: z.string().trim().max(80, "Máximo 80 caracteres."),
+  consent: z.literal(true, { errorMap: () => ({ message: "Debes aceptar para continuar." }) }),
+});
+
+type WaitlistErrors = Partial<Record<"nombre" | "correo" | "whatsapp" | "pais" | "consent", string>>;
+
+const WaitlistForm = () => {
+  const [values, setValues] = useState({ nombre: "", correo: "", whatsapp: "", pais: "" });
+  const [consent, setConsent] = useState(false);
+  const [honey, setHoney] = useState("");
+  const [errors, setErrors] = useState<WaitlistErrors>({});
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "ok" || status === "error") resultRef.current?.focus();
+  }, [status]);
+
+  const set = (k: keyof typeof values) => (e: React.ChangeEvent<HTMLInputElement>) => setValues((v) => ({ ...v, [k]: e.target.value }));
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    const parsed = waitlistSchema.safeParse({ ...values, consent });
+    if (!parsed.success) {
+      const errs: WaitlistErrors = {};
+      parsed.error.issues.forEach((i) => { const k = i.path[0] as keyof WaitlistErrors; if (!errs[k]) errs[k] = i.message; });
+      setErrors(errs);
+      return;
+    }
+    setErrors({});
+    if (honey) { setStatus("ok"); return; }
+    setStatus("sending");
+    const d = parsed.data;
+    const { error } = await supabase.from("waitlist_sabiduria_ciclica").insert({
+      nombre: d.nombre,
+      correo: d.correo.toLowerCase().replace(/\s+/g, ""),
+      whatsapp: d.whatsapp || null,
+      pais: d.pais || null,
+      consentimiento: true,
+      consentimiento_texto: CONSENT_TEXT,
+    });
+    setStatus(!error || error.code === "23505" ? "ok" : "error");
+  };
+
+  if (status === "ok") {
+    return (
+      <div ref={resultRef} tabIndex={-1} role="status" className="text-center text-white font-serif text-xl outline-none py-4">
+        Listo. Te escribo apenas abramos inscripciones.
+      </div>
+    );
+  }
+
+  const field = "w-full rounded-xl bg-white/95 text-brand-ink px-4 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-brand-cream";
+  const lbl = "block text-sm font-medium text-white mb-1.5";
+  const err = (k: keyof WaitlistErrors) => errors[k] && <p id={`wl-${k}-err`} className="mt-1 text-sm text-brand-cream font-semibold">{errors[k]}</p>;
+
+  return (
+    <form onSubmit={onSubmit} noValidate className="space-y-4">
+      <div>
+        <label htmlFor="wl-nombre" className={lbl}>Nombre <span aria-hidden="true">*</span></label>
+        <input id="wl-nombre" required maxLength={120} autoComplete="name" value={values.nombre} onChange={set("nombre")} aria-invalid={!!errors.nombre} aria-describedby={errors.nombre ? "wl-nombre-err" : undefined} className={field} />
+        {err("nombre")}
+      </div>
+      <div>
+        <label htmlFor="wl-correo" className={lbl}>Correo <span aria-hidden="true">*</span></label>
+        <input id="wl-correo" type="email" required maxLength={254} autoComplete="email" value={values.correo} onChange={set("correo")} aria-invalid={!!errors.correo} aria-describedby={errors.correo ? "wl-correo-err" : undefined} className={field} />
+        {err("correo")}
+      </div>
+      <div>
+        <label htmlFor="wl-whatsapp" className={lbl}>WhatsApp con código de país (opcional)</label>
+        <input id="wl-whatsapp" type="tel" inputMode="tel" maxLength={30} autoComplete="tel" placeholder="+57 300 000 0000" value={values.whatsapp} onChange={set("whatsapp")} aria-invalid={!!errors.whatsapp} aria-describedby={errors.whatsapp ? "wl-whatsapp-err" : undefined} className={field} />
+        {err("whatsapp")}
+      </div>
+      <div>
+        <label htmlFor="wl-pais" className={lbl}>País (opcional)</label>
+        <input id="wl-pais" maxLength={80} autoComplete="country-name" value={values.pais} onChange={set("pais")} aria-invalid={!!errors.pais} aria-describedby={errors.pais ? "wl-pais-err" : undefined} className={field} />
+        {err("pais")}
+      </div>
+      <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="wl-website">No llenar</label>
+        <input id="wl-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={honey} onChange={(e) => setHoney(e.target.value)} />
+      </div>
+      <div>
+        <ConsentCheckbox
+          id="wl-consent"
+          checked={consent}
+          onChange={setConsent}
+          required
+          describedBy={errors.consent ? "wl-consent-err" : undefined}
+          checkboxClassName="mt-1 border-brand-cream data-[state=checked]:bg-brand-cream data-[state=checked]:text-brand-ink"
+          labelClassName="text-sm leading-snug text-white cursor-pointer"
+        >
+          {CONSENT_TEXT}{" "}
+          <a href="/terminos-y-condiciones#datos" className="underline underline-offset-2 text-brand-cream hover:text-white">Ver política de datos</a>
+        </ConsentCheckbox>
+        {err("consent")}
+      </div>
+      <button type="submit" disabled={status === "sending"} className="block w-full py-3.5 text-center rounded-2xl font-bold transition-all bg-brand-cream text-brand-ink hover:bg-brand-cream/90 disabled:opacity-60 disabled:cursor-not-allowed">
+        {status === "sending" ? "Enviando…" : "Quiero que me avises"}
+      </button>
+      {status === "error" && (
+        <div ref={resultRef} tabIndex={-1} role="alert" className="text-sm text-white text-center outline-none">
+          No pudimos guardar tus datos. Intenta de nuevo en un momento o{" "}
+          <a href={DUDA_URL} target="_blank" rel="noopener noreferrer" className="underline text-brand-cream">escríbeme por WhatsApp</a>.
+        </div>
+      )}
+    </form>
   );
 };
 
@@ -529,7 +665,7 @@ const SabiduriaCiclica = () => {
                   Comprende tu naturaleza cíclica e intégrala a tu cuerpo a través del yoga, en cualquier etapa de tu vida.
                 </motion.p>
                 <motion.p variants={fadeUp} className="text-[11px] md:text-xs uppercase tracking-[0.22em] leading-loose text-foreground/80 font-light">
-                  <span>Sábado 17 de octubre</span><span aria-hidden="true" className="mx-2 text-[#B8977E]">·</span><span>10:00 a. m. a 2:00 p. m. hora Colombia</span><span aria-hidden="true" className="mx-2 text-[#B8977E]">·</span><span>4 horas en vivo por Google Meet</span>
+                  <span>{TALLER.fechaTexto}</span><span aria-hidden="true" className="mx-2 text-[#B8977E]">·</span><span>{TALLER.horaTexto ?? "Hora por confirmar"}</span><span aria-hidden="true" className="mx-2 text-[#B8977E]">·</span><span>{TALLER.duracionHoras ? `${TALLER.duracionHoras} horas en vivo por Google Meet` : "En vivo por Google Meet"}</span>
                 </motion.p>
                 <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center md:justify-start gap-5 pt-1">
                   <a
@@ -686,6 +822,7 @@ const SabiduriaCiclica = () => {
           </section>
 
           {/* (7) PRECIO */}
+          {MOSTRAR_PRECIO ? (
           <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-brand-cream">
             <motion.div {...inView} variants={fadeUp} className="max-w-md mx-auto space-y-6">
               <RevealTitle text="Tu inversión" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
@@ -693,12 +830,13 @@ const SabiduriaCiclica = () => {
                 <div className="space-y-2 text-center text-white">
                   <h3 className="font-serif text-2xl font-semibold">Taller Sabiduría Cíclica</h3>
                   <div className="flex justify-center items-baseline gap-3">
-                    <span className="text-5xl font-bold">USD 75</span>
+                    <span className="text-5xl font-bold">USD {TALLER.precioUSD}</span>
                   </div>
                 </div>
+                {TALLER.precioAmigaUSD !== null && (
                 <div className="mt-4 rounded-2xl bg-white/10 border border-brand-gold/70 px-4 py-3 text-white text-center">
                   <p className="font-serif text-xl font-bold text-brand-cream">¿Vienes con una amiga?</p>
-                  <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD 60.</p>
+                  <p className="text-sm text-white">Inscríbanse juntas y cada una paga USD {TALLER.precioAmigaUSD}.</p>
                   <a
                     href={AMIGA_URL}
                     target="_blank"
@@ -708,6 +846,7 @@ const SabiduriaCiclica = () => {
                     Inscribirnos juntas
                   </a>
                 </div>
+                )}
 
                 <ul className="mt-5 space-y-3 border-t border-white/20 pt-5">
                   {INCLUYE.map((b) => (
@@ -729,6 +868,27 @@ const SabiduriaCiclica = () => {
               </div>
             </motion.div>
           </section>
+          ) : (
+          <section id="ciclica-precio" className="relative py-12 md:py-16 px-6 scroll-mt-20 bg-brand-cream">
+            <div id="lista-de-espera" className="max-w-md mx-auto space-y-6 scroll-mt-24">
+              <RevealTitle text="Las inscripciones abren pronto." className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
+              <p className="text-center text-muted-foreground leading-relaxed font-light">
+                Déjame tus datos y te escribo primero cuando abramos inscripciones al taller del 23 de enero.
+              </p>
+              <div className="bg-[#795D64] rounded-3xl p-6 md:p-7 shadow-lg">
+                <WaitlistForm />
+                <ul className="mt-6 space-y-3 border-t border-white/20 pt-5">
+                  {INCLUYE.map((b) => (
+                    <li key={b} className="flex items-start gap-3 text-white">
+                      <Flower2 className="w-4 h-4 mt-0.5 shrink-0" />
+                      <span className="text-sm leading-relaxed font-medium">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+          )}
 
           {/* (8) PREGUNTAS FRECUENTES */}
           <section className="relative py-12 md:py-16 px-6">
