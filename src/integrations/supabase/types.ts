@@ -235,6 +235,48 @@ export type Database = {
         }
         Relationships: []
       }
+      waitlist_sabiduria_ciclica: {
+        Row: {
+          consentimiento: boolean
+          consentimiento_fecha: string
+          consentimiento_texto: string
+          correo: string
+          created_at: string
+          estado: string
+          id: string
+          nombre: string
+          origen: string
+          pais: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          consentimiento: boolean
+          consentimiento_fecha?: string
+          consentimiento_texto: string
+          correo: string
+          created_at?: string
+          estado?: string
+          id?: string
+          nombre: string
+          origen?: string
+          pais?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          consentimiento?: boolean
+          consentimiento_fecha?: string
+          consentimiento_texto?: string
+          correo?: string
+          created_at?: string
+          estado?: string
+          id?: string
+          nombre?: string
+          origen?: string
+          pais?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

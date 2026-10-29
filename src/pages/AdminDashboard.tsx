@@ -63,6 +63,7 @@ import {
   Save
 } from "lucide-react";
 import { AdminUsersPanel } from "@/components/AdminUsersPanel";
+import { AdminWaitlistPanel } from "@/components/AdminWaitlistPanel";
 import { Helmet } from "react-helmet";
 
 
@@ -948,6 +949,12 @@ export const AdminDashboard = () => {
                   className="rounded-full px-5 py-2 data-[state=active]:bg-[#7EA172] data-[state=active]:text-white transition-all text-xs font-semibold"
                 >
                   <Users className="w-3.5 h-3.5 mr-1.5 inline-block" /> Usuarios
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="waitlist" 
+                  className="rounded-full px-5 py-2 data-[state=active]:bg-[#7EA172] data-[state=active]:text-white transition-all text-xs font-semibold"
+                >
+                  Lista de espera · Sabiduría Cíclica
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -1908,6 +1915,11 @@ export const AdminDashboard = () => {
             {/* TABS CONTENT: USERS */}
             <TabsContent value="users" className="space-y-4">
               <AdminUsersPanel />
+            </TabsContent>
+
+            {/* TABS CONTENT: WAITLIST SABIDURÍA CÍCLICA */}
+            <TabsContent value="waitlist" className="space-y-4">
+              <AdminWaitlistPanel />
             </TabsContent>
           </Tabs>
         )}
