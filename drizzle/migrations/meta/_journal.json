@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793278633266,
+      "tag": "0000_waitlist_sabiduria_ciclica",
+      "breakpoints": true
+    }
+  ]
+}
