@@ -353,6 +353,19 @@
 /* Lote W: con foco de teclado en la franja, los logos recuperan su color. */
 .logo-marquee:focus-visible img { filter: none; opacity: 1; }
 
+/* Colores locales: no altera el botón ni los tonos de otras secciones. */
+.free-class-popup {
+  --brand-mauve: 345 13.084112% 41.960784%; /* #795D64 */
+  --brand-gold: 26.315789 28.358209% 60.588235%; /* #B8977E */
+  --free-class-popup-foreground: #F6F2F3;
+  --free-class-popup-shadow: 0 12px 32px rgba(72, 42, 58, 0.35);
+  color: var(--free-class-popup-foreground);
+  box-shadow: var(--free-class-popup-shadow);
+}
+.free-class-popup > :is(span, p), .free-class-popup > button[aria-label="Cerrar"] {
+  color: var(--free-class-popup-foreground);
+}
+
 /* Título del hero de servicio sobre foto (gana a `.lux h1`). */
 .svc-hero {
   --svc-veil-opacity: 0.60;
