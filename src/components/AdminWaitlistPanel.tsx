@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Download } from "lucide-react";
 
 type Row = {
@@ -23,6 +24,32 @@ export const AdminWaitlistPanel = () => {
   const [rows, setRows] = useState<Row[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState<Record<string, boolean>>({});
+  const [statusMessages, setStatusMessages] = useState<Record<string, { error: boolean; text: string }>>({});
+
+  const updateStatus = async (row: Row, estado: string) => {
+    if (saving[row.id] || estado === row.estado) return;
+    const previous = row.estado;
+    setSaving((current) => ({ ...current, [row.id]: true }));
+    setStatusMessages((current) => ({ ...current, [row.id]: { error: false, text: "Guardando…" } }));
+    setRows((current) => current.map((r) => r.id === row.id ? { ...r, estado } : r));
+    try {
+      const { data, error } = await supabase
+        .from("waitlist_sabiduria_ciclica")
+        .update({ estado })
+        .eq("id", row.id)
+        .select("id,estado")
+        .single();
+      if (error || !data) throw new Error("No se pudo guardar");
+      setRows((current) => current.map((r) => r.id === row.id ? { ...r, estado: data.estado } : r));
+      setStatusMessages((current) => ({ ...current, [row.id]: { error: false, text: "Guardado" } }));
+    } catch {
+      setRows((current) => current.map((r) => r.id === row.id ? { ...r, estado: previous } : r));
+      setStatusMessages((current) => ({ ...current, [row.id]: { error: true, text: "No se pudo guardar. Intenta de nuevo." } }));
+    } finally {
+      setSaving((current) => ({ ...current, [row.id]: false }));
+    }
+  };
 
   useEffect(() => {
     supabase
@@ -90,7 +117,21 @@ export const AdminWaitlistPanel = () => {
                   <td className="px-3 py-2 whitespace-nowrap">{r.whatsapp ?? "—"}</td>
                   <td className="px-3 py-2">{r.pais ?? "—"}</td>
                   <td className="px-3 py-2 whitespace-nowrap">{fmt(r.consentimiento_fecha)}</td>
-                  <td className="px-3 py-2 whitespace-nowrap">{r.estado}</td>
+                  <td className="px-3 py-2 whitespace-nowrap">
+                    <Select value={r.estado} onValueChange={(value) => updateStatus(r, value)} disabled={saving[r.id]}>
+                      <SelectTrigger aria-label={`Estado de ${r.nombre}`} className="min-w-[140px]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["en lista", "avisada", "inscrita", "dada de baja"].map((estado) => (
+                          <SelectItem key={estado} value={estado}>{estado}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <span role="status" className={`block text-xs ${statusMessages[r.id]?.error ? "text-destructive" : "text-muted-foreground"}`}>
+                      {statusMessages[r.id]?.text}
+                    </span>
+                  </td>
                   <td className="px-3 py-2 whitespace-nowrap">{fmt(r.created_at)}</td>
                 </tr>
               ))}

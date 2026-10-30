@@ -8,3 +8,4 @@
 - ScrollFillText is static unless `animated` is passed; why: word-by-word lighting is reserved for one section.
 
 - Section breaks are flat background changes plus thin gold rules; no gradient transition strips (only photo masks use gradients). Why: client rejected gradient transitions.
+- Waitlist admin edits update only estado and verify the returned row before confirming success; why: column grants protect all other registration fields and failed saves must roll back locally.

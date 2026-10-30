@@ -348,7 +348,7 @@ const CupoLink = () => {
   );
 };
 
-const CONSENT_TEXT = "Autorizo a Fransury Gonzáles a usar mis datos para avisarme sobre este taller. Puedo pedir que me borre de la lista en cualquier momento.";
+const CONSENT_TEXT = "Autorizo a Fransury González a usar mis datos para avisarme sobre este taller. Puedo pedir que me borre de la lista en cualquier momento.";
 
 const waitlistSchema = z.object({
   nombre: z.string().trim().min(1, "Escribe tu nombre.").max(120, "Máximo 120 caracteres."),
