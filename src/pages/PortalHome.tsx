@@ -159,14 +159,14 @@ const FreeClassPopup = ({ onStart }: { onStart: () => void }) => {
         <motion.aside role="dialog" aria-modal="false" aria-labelledby="popup-clase-titulo"
           initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }}
           transition={{ type: "spring", stiffness: 220, damping: 24 }}
-          className="fixed z-[45] inset-x-3 bottom-[5.5rem] md:inset-x-auto md:right-6 md:bottom-24 md:w-[360px] bg-brand-ink text-brand-cream shadow-2xl p-5 md:p-6">
+          className="free-class-popup fixed z-[45] inset-x-3 bottom-[5.5rem] md:inset-x-auto md:right-6 md:bottom-24 md:w-[360px] bg-brand-mauve border border-brand-gold text-brand-cream p-5 md:p-6">
           <button type="button" onClick={() => setOpen(false)} aria-label="Cerrar"
-            className={`absolute top-2.5 right-2.5 w-11 h-11 inline-flex items-center justify-center text-brand-cream/80 hover:text-brand-cream ${FOCUS}`}>
+            className={`absolute top-2.5 right-2.5 w-11 h-11 inline-flex items-center justify-center text-brand-cream hover:text-brand-cream ${FOCUS}`}>
             <X className="w-5 h-5" />
           </button>
-          <span className="block text-[10px] uppercase tracking-[0.35em] text-brand-gold">Entrada Gratuita</span>
+          <span className="block text-[10px] uppercase tracking-[0.35em] text-brand-cream">Entrada Gratuita</span>
           <p id="popup-clase-titulo" className="font-serif text-xl md:text-2xl font-normal mt-3 pr-8 leading-snug">¿Sufres de ansiedad o agotamiento mental?</p>
-          <p className="text-sm text-brand-cream/90 font-light mt-2 leading-relaxed">Una clase online de 30 minutos donde aprendes una técnica somática para ayudar a calmar tu sistema nervioso.</p>
+          <p className="text-sm text-brand-cream font-light mt-2 leading-relaxed">Una clase online de 30 minutos donde aprendes una técnica somática para ayudar a calmar tu sistema nervioso.</p>
           <button type="button" onClick={() => { setOpen(false); onStart(); }}
             className={`mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-sm tracking-[0.1em] uppercase font-medium bg-brand-cream text-brand-ink hover:bg-card transition-colors ${FOCUS}`}>
             <PlayCircle className="w-5 h-5" strokeWidth={1.5} /> Comenzar Clase Maestra
