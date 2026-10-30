@@ -1,0 +1,3 @@
+- [x] Correct surname variants throughout repository (one occurrence).
+- [x] Apply admin-only, estado-only waitlist update permission.
+- [ ] Verify status saving, rollback and updated CSV through tests and authenticated admin flow.
