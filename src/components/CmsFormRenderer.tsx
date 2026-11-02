@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Honeypot, { isTrapped } from "@/components/Honeypot";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,8 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
     }));
   };
 
+  const hpRef = useRef<HTMLInputElement>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -54,6 +57,15 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
         description: `Por favor completa los siguientes campos: ${missingFields.map((f) => f.label).join(", ")}`,
         variant: "destructive",
       });
+      return;
+    }
+
+    if (isTrapped(hpRef.current)) {
+      toast({
+        title: "¡Formulario enviado!",
+        description: "Tus datos se registraron correctamente. Nos comunicaremos contigo a la brevedad.",
+      });
+      handleSuccessRedirect();
       return;
     }
 
@@ -130,7 +142,8 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 text-left">
+    <form onSubmit={handleSubmit} className="space-y-5 text-left relative">
+      <Honeypot ref={hpRef} />
       {form.fields.map((field) => {
         const value = formData[field.id] || "";
         return (

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, MessageCircle, Minimize2, Bot, CheckCircle, Leaf } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import Honeypot, { isTrapped } from "@/components/Honeypot";
 import { AiAgentConfig, getLocalAgentConfig } from "@/lib/CmsFallbackData";
 import { createGeminiChat, extractLeadFromText, ChatMessage } from "@/lib/geminiChat";
 
@@ -39,6 +40,7 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
   const chatRef = useRef<ReturnType<typeof createGeminiChat> | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const hpRef = useRef<HTMLInputElement>(null);
   const leadRef = useRef<CapturedLead>({});
 
   // ── Cargar configuración ──────────────────────────────────────────────────
@@ -92,6 +94,7 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
     if (!lead.name && !lead.contact) return;
     if (leadSaved) return;
     setLeadSaved(true);
+    if (isTrapped(hpRef.current)) return;
     const payload = {
       page_slug: pageSlug,
       name: lead.name || null,
@@ -328,6 +331,7 @@ export const AiChatWidget = ({ pageSlug = "home" }: AiChatWidgetProps) => {
               {/* Input area */}
               <div className="px-4 py-3 bg-white border-t border-[#EBE7DF] shrink-0">
                 <div className="flex gap-2 items-end">
+                  <Honeypot ref={hpRef} />
                   <input
                     ref={inputRef}
                     type="text"
