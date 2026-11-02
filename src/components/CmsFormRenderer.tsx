@@ -87,6 +87,15 @@ export const CmsFormRenderer = ({ form, pageSlug, buttonClassName }: CmsFormRend
       });
       handleSuccessRedirect();
     } catch (dbError) {
+      // Rate limit (DB trigger) → show the existing generic error, no local fallback
+      if ((dbError as { code?: string })?.code === "P0001") {
+        toast({
+          title: "Error de conexión",
+          description: "No se pudieron guardar los datos. Por favor inténtalo más tarde.",
+          variant: "destructive",
+        });
+        return;
+      }
       console.warn("Could not save submission to Supabase, backing up to LocalStorage:", dbError);
 
       // 2. Local fallback if Supabase table is not configured or offline
