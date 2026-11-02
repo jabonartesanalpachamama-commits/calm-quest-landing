@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Honeypot, { isTrapped } from "@/components/Honeypot";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,8 @@ const RegistrationForm = () => {
   const { toast } = useToast();
 
 
+  const hpRef = useRef<HTMLInputElement>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -23,6 +26,11 @@ const RegistrationForm = () => {
         description: "Por favor completa todos los campos.",
         variant: "destructive",
       });
+      return;
+    }
+
+    if (isTrapped(hpRef.current)) {
+      window.location.href = WHATSAPP_URL;
       return;
     }
 
@@ -68,7 +76,8 @@ const RegistrationForm = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5 relative">
+        <Honeypot ref={hpRef} />
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-2">
             Nombre

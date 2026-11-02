@@ -9,3 +9,4 @@
 
 - Section breaks are flat background changes plus thin gold rules; no gradient transition strips (only photo masks use gradients). Why: client rejected gradient transitions.
 - Waitlist admin edits update only estado and verify the returned row before confirming success; why: column grants protect all other registration fields and failed saves must roll back locally.
+- Public insert forms use components/Honeypot and DB rate-limit trigger enforce_public_insert_rate_limit (20/min per table); why: no IP available client-side, spam protection lives in the database.

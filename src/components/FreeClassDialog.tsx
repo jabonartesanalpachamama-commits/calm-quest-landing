@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Honeypot, { isTrapped } from "@/components/Honeypot";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import {
@@ -27,6 +28,7 @@ const FreeClassDialog = ({ open, onOpenChange }: FreeClassDialogProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const hpRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -39,6 +41,12 @@ const FreeClassDialog = ({ open, onOpenChange }: FreeClassDialogProps) => {
         description: parsed.error.issues[0].message,
         variant: "destructive",
       });
+      return;
+    }
+
+    if (isTrapped(hpRef.current)) {
+      onOpenChange(false);
+      navigate("/clase-gratuita");
       return;
     }
 
@@ -72,7 +80,8 @@ const FreeClassDialog = ({ open, onOpenChange }: FreeClassDialogProps) => {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 mt-2">
+        <form onSubmit={handleSubmit} className="space-y-4 mt-2 relative">
+          <Honeypot ref={hpRef} />
           <div>
             <label htmlFor="fc-name" className="block text-sm font-medium mb-2">Nombre</label>
             <Input
