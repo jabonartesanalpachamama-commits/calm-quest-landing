@@ -89,7 +89,7 @@ const QuienSoy = () => {
         <section className="md:px-6 md:pt-12 pb-14">
           <div className="max-w-6xl mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-8 md:gap-14 items-start">
             <div className="md:sticky md:top-28">
-              <RevealImage src={HERO_IMAGE} alt="Fransury González, psicóloga y maestra de Kundalini Yoga, sonriendo sentada en un sofá claro" eager colorize imgClassName="object-cover object-[50%_12%]"
+              <RevealImage src={HERO_IMAGE} alt="Fransury González, psicóloga y maestra de Kundalini Yoga, sentada en un sofá" eager colorize imgClassName="object-cover object-[50%_12%]"
                 className="w-full aspect-[4/5] md:aspect-[3/4] md:rounded-[2rem] shadow-lg" />
             </div>
             <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }} className="px-6 md:px-0 space-y-6 md:pt-6">
