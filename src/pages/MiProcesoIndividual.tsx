@@ -96,7 +96,7 @@ const MiProcesoIndividual = () => {
         <Quote variant="band">Entender el para qué es el comienzo. Aprender qué hacer con lo que comprendes es el proceso.</Quote>
 
         {/* Tarifas */}
-        <TestimoniosBlock ids={["roxana-hernandez", "marcos-jesus", "sonia-bohorquez"]} verMas />
+        <TestimoniosBlock destacado="marcos-jesus" ids={["roxana-hernandez", "sonia-bohorquez", "ana-preciado"]} verMas />
         <section id="tarifas" className="scroll-mt-24 px-6 py-24 md:py-36 bg-background border-t border-border">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }}
             className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.6fr] gap-10 lg:gap-14 items-start">

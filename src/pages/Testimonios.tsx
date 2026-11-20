@@ -13,10 +13,10 @@ import { useVisualSettings } from "@/hooks/useVisualSettings";
 import { getWhatsAppUrl } from "@/lib/utils";
 
 const WHATSAPP_HREF = getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión.");
-const SECCIONES: { id: string; titulo: string; servicio: Testimonio["servicio"] }[] = [
-  { id: "psicoterapia", titulo: "Psicoterapia", servicio: "psicoterapia" },
-  { id: "kundalini-yoga", titulo: "Kundalini Yoga", servicio: "yoga" },
-  { id: "sabiduria-ciclica", titulo: "Sabiduría Cíclica", servicio: "ciclica" },
+const SECCIONES: { id: string; titulo: string; servicio: Testimonio["servicio"]; destacado: string }[] = [
+  { id: "psicoterapia", titulo: "Psicoterapia", servicio: "psicoterapia", destacado: "angela-posada" },
+  { id: "kundalini-yoga", titulo: "Kundalini Yoga", servicio: "yoga", destacado: "martha-gaitan-yoga" },
+  { id: "sabiduria-ciclica", titulo: "Sabiduría Cíclica", servicio: "ciclica", destacado: "goretti" },
 ];
 
 const Testimonios = () => {
@@ -33,6 +33,7 @@ const Testimonios = () => {
           <motion.div {...inView} variants={fadeUp} className="max-w-5xl mx-auto">
             <p className={TESTIMONIOS_LABEL}>Testimonios</p>
             <h1 className="mt-6 text-foreground">En sus palabras</h1>
+            <p className="mt-5 text-sm text-brand-mauve">Personas de Colombia, Estados Unidos, México y Dubái.</p>
             <Rule className="my-8" />
             <p className="text-base text-muted-foreground">Personas que vivieron su proceso conmigo.</p>
             <nav aria-label="Testimonios por proceso" className="flex flex-wrap items-center gap-x-6 gap-y-4 mt-10">
@@ -40,9 +41,9 @@ const Testimonios = () => {
             </nav>
           </motion.div>
         </section>
-        {SECCIONES.map(({ id, titulo, servicio }) => (
-          <TestimoniosBlock key={id} id={id} titulo={titulo} etiqueta=""
-            ids={TESTIMONIOS.filter((t) => t.servicio === servicio).map((t) => t.id)} />
+        {SECCIONES.map(({ id, titulo, servicio, destacado }) => (
+          <TestimoniosBlock key={id} id={id} titulo={titulo} etiqueta="" destacado={destacado}
+            ids={TESTIMONIOS.filter((t) => t.servicio === servicio && t.id !== destacado).map((t) => t.id)} />
         ))}
         <section className="bg-background px-6 py-28 md:py-44">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-3xl mx-auto text-center">

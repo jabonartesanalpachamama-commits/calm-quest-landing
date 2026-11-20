@@ -97,7 +97,7 @@ const ProcesoDePareja = () => {
         <Quote variant="side">La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no.</Quote>
 
         {/* Tarifas */}
-        <TestimoniosBlock ids={["alejandra-murialdo"]} verMas />
+        <TestimoniosBlock destacado="alejandra-murialdo" ids={[]} verMas />
         <section id="tarifas" className="scroll-mt-24 px-6 py-14 md:py-20 bg-brand-cream/70">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-6xl mx-auto space-y-10">
             <div className="text-center space-y-3">
