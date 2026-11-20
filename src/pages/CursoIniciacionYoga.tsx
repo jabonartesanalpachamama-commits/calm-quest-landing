@@ -8,6 +8,7 @@ import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
+import { TestimoniosBlock } from "@/components/landing/Testimonios";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import cursoHero from "@/assets/curso-hero.png.asset.json";
@@ -261,6 +262,7 @@ const CursoIniciacionYoga = () => {
         </section>
 
         {/* Inversión: tabla comparativa */}
+        <TestimoniosBlock ids={["martha-gaitan-yoga", "sonia-arieta"]} verMas />
         <section id="inversion" className="px-4 md:px-6 py-24 md:py-36 bg-background">
           <motion.div {...inView} variants={stagger(0.1)} className="max-w-4xl mx-auto space-y-8">
             <div className="text-center space-y-3">

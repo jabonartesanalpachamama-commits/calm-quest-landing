@@ -15,6 +15,7 @@ import Header from "@/components/Header";
 import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
+import { TestimoniosBlock } from "@/components/landing/Testimonios";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
@@ -293,6 +294,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Tu inversión */}
+        <TestimoniosBlock ids={["martha-gaitan-yoga", "sonia-arieta"]} verMas />
         <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
           <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">

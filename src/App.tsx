@@ -27,10 +27,11 @@ import CultivarBienestar from "./pages/CultivarBienestar";
 import TerminosYCondiciones from "./pages/TerminosYCondiciones";
 import TrafficSplitter from "./components/TrafficSplitter";
 import Programas from "./pages/Programas";
+import Testimonios from "./pages/Testimonios";
 
 /** Rutas con el lenguaje editorial (.lux). Clase gratuita, admin y páginas del CMS quedan fuera. */
 const LUX_PATHS = ["/", "/programas", "/blog", "/curso-iniciacion-yoga", "/quien-soy", "/filosofia", "/acompanamiento-individual",
-  "/mi-proceso-individual", "/proceso-de-pareja", "/cultivar-bienestar", "/terminos-y-condiciones", "/sabiduria-ciclica-esencia-femenina"];
+  "/mi-proceso-individual", "/proceso-de-pareja", "/cultivar-bienestar", "/terminos-y-condiciones", "/sabiduria-ciclica-esencia-femenina", "/testimonios"];
 const ThemeScope = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
   const lux = LUX_PATHS.some((p) => pathname === p || (p !== "/" && pathname.startsWith(p + "/")));
@@ -73,6 +74,7 @@ const App = () => (
           <Route path="/admin" element={<AdminDashboard />} />
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/testimonios" element={<Testimonios />} />
           <Route path="*" element={<DynamicPage />} />
         </Routes>
         </ThemeScope>

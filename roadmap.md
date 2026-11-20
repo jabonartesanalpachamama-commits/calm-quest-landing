@@ -1,3 +1,6 @@
 - [x] Correct surname variants throughout repository (one occurrence).
 - [x] Apply admin-only, estado-only waitlist update permission.
 - [x] Verify status saving, rollback and updated CSV through tests and authenticated admin flow.
+- [x] Add verbatim testimonial data, reusable editorial rows and the five requested blocks.
+- [x] Add the testimonial page, footer link, route and sitemap entry without publishing.
+- [x] Verify exact text, layout, contrast, focus and motion at the requested widths.

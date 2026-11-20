@@ -23,6 +23,7 @@ const COLUMNS: { title: string; links: { label: string; to: string }[] }[] = [
     { label: "Quién soy", to: "/quien-soy" },
     { label: "Filosofía", to: "/filosofia" },
     { label: "Blog", to: "/blog" },
+    { label: "Testimonios", to: "/testimonios" },
     { label: "Términos y política de datos", to: "/terminos-y-condiciones" },
   ] },
 ];

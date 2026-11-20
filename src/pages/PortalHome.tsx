@@ -22,6 +22,7 @@ import heroPhoto from "@/assets/fransury-hero.webp";
 import { fadeUp, inView } from "@/components/landing";
 import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
+import { TestimoniosBlock } from "@/components/landing/Testimonios";
 
 // Foto del hero: cambiar solo esta línea para usar otra imagen (retrato vertical sobre fondo malva).
 const HERO_IMAGE = heroPhoto;
@@ -412,6 +413,7 @@ const PortalHome = () => {
         <Companion />
         <StartSelector />
         <Philosophy />
+        <TestimoniosBlock ids={["angela-posada", "luisa-fernanda-gomez", "ana-preciado"]} verMas />
 
         <section className="bg-background px-6 py-28 md:py-44">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-3xl mx-auto text-center">
