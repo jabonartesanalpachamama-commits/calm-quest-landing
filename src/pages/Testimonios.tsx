@@ -7,7 +7,7 @@ import Seo from "@/components/Seo";
 import FreeClassDialog from "@/components/FreeClassDialog";
 import { Button } from "@/components/ui/button";
 import { ResenaScroll, resenaReveal, RESENA_LINK } from "@/components/landing/Resenas";
-import { RESENAS } from "@/data/resenas";
+import { agruparResenas } from "@/data/resenas";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import { getWhatsAppUrl } from "@/lib/utils";
 import fransury from "@/assets/fransury-acompana.webp";
@@ -21,26 +21,38 @@ const Testimonios = () => {
   return (
     <div className="min-h-screen relative flex flex-col bg-background text-foreground">
       <Seo title="Reseñas de Google | Fransury González · SantoSha"
-        description="Reseñas reales de Google sobre Fransury González en sus capturas originales, tal como las escribieron."
+        description="Reseñas de Google sobre Fransury González."
         path="/testimonios" />
       <Header palette={palette} brandName={settings?.brandName} />
       <main className="flex-grow">
-        <section aria-labelledby="resenas-titulo" className="resenas-scene relative isolate overflow-clip bg-brand-ink text-brand-cream">
+        <section aria-labelledby="resenas-titulo" className="resenas-scene relative isolate overflow-clip bg-brand-cream text-brand-ink">
           <div data-resenas-sticky aria-hidden="true" className="sticky top-0 h-screen overflow-hidden pointer-events-none -mb-[100vh]">
             <img src={fransury} alt="" width={1029} height={1529} loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover object-[50%_20%] opacity-[0.09] grayscale" />
+              className="absolute inset-0 w-full h-full object-cover object-[50%_20%] opacity-[0.12] grayscale" />
           </div>
           <div className="relative max-w-6xl mx-auto px-6 [perspective:1200px]">
-            <div className="min-h-[65svh] flex items-center justify-center pt-24 pb-16 text-center">
-              <motion.h1 id="resenas-titulo" className="resenas-title text-brand-cream !leading-relaxed"
+            <div className="min-h-[40svh] flex items-center justify-center pt-16 pb-8 text-center">
+              <motion.h1 id="resenas-titulo" className="resenas-title text-brand-ink !leading-relaxed"
                 initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true }}
                 variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>
-                Reseñas reales de Google, tal como las escribieron.
+                Reseñas de Google sobre Fransury
               </motion.h1>
             </div>
-            <ol className="list-none p-0 m-0 pb-24">
-              {RESENAS.map((resena, index) => <ResenaScroll key={resena.id} resena={resena} index={index} />)}
-            </ol>
+            <div className="pb-8">
+              {agruparResenas().map(({ id, titulo, resenas }) => (
+                <section key={id} data-categoria={id} aria-labelledby={`resenas-${id}`} className="pt-8">
+                  <motion.div className="mb-4"
+                    initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, amount: 0.15 }}
+                    variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>
+                    <h2 id={`resenas-${id}`} className="bg-brand-cream !text-sm !font-light !tracking-[0.2em] text-brand-mauve">{titulo}</h2>
+                    <span aria-hidden="true" className="block h-px w-12 bg-brand-gold mt-4" />
+                  </motion.div>
+                  <ol className="list-none p-0 m-0">
+                    {resenas.map((resena, index) => <ResenaScroll key={resena.id} resena={resena} index={index} />)}
+                  </ol>
+                </section>
+              ))}
+            </div>
           </div>
         </section>
         <section className="bg-background px-6 py-20 md:py-28">

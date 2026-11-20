@@ -14,25 +14,36 @@ import img12 from "@/assets/resenas/johanna-torres.webp";
 import img13 from "@/assets/resenas/ana-ma-cedeno.webp";
 import img14 from "@/assets/resenas/angie-echeverri.webp";
 
-export type Resena = { id: string; nombre: string; antiguedad: string; img: string };
+export type Resena = { id: string; nombre: string; categoria: "individual" | "pareja" | "yoga"; img: string };
 
 export const RESENAS: Resena[] = [
-  { id: "marcos-jesus", nombre: "Marcos Jesus", antiguedad: "hace 2 años", img: img0 },
-  { id: "luii-gomez", nombre: "Luii Gomez", antiguedad: "hace 6 meses", img: img1 },
-  { id: "angie-garzon", nombre: "Angie Garzón", antiguedad: "Editado hace 2 meses", img: img2 },
-  { id: "roxana-hernandez", nombre: "Roxana Hernandez", antiguedad: "editado hace un año", img: img3 },
-  { id: "paula-jaramillo", nombre: "Paula Jaramillo", antiguedad: "hace un año", img: img4 },
-  { id: "ana-preciado", nombre: "Ana Preciado", antiguedad: "hace un año", img: img5 },
-  { id: "heal-u-fitness", nombre: "Heal U Fitness", antiguedad: "hace 3 meses", img: img6 },
-  { id: "martha-gaitan", nombre: "Martha Gaitan", antiguedad: "editado hace 2 años", img: img7 },
-  { id: "jessika-florez", nombre: "Jessika Florez", antiguedad: "hace 2 años", img: img8 },
-  { id: "wanda-helguero", nombre: "wanda helguero", antiguedad: "hace 2 años", img: img9 },
-  { id: "estefania-cespedes", nombre: "Estefania Céspedes", antiguedad: "hace 2 años", img: img10 },
-  { id: "milena-val", nombre: "Milena Val", antiguedad: "hace 2 años", img: img11 },
-  { id: "johanna-torres", nombre: "Johanna Torres Almonacid", antiguedad: "editado hace un año", img: img12 },
-  { id: "ana-ma-cedeno", nombre: "Ana Ma Cedeño", antiguedad: "hace un año", img: img13 },
-  { id: "angie-echeverri", nombre: "Angie Echeverri", antiguedad: "hace 3 años", img: img14 },
+  { id: "marcos-jesus", nombre: "Marcos Jesus", categoria: "individual", img: img0 },
+  { id: "luii-gomez", nombre: "Luii Gomez", categoria: "individual", img: img1 },
+  { id: "angie-garzon", nombre: "Angie Garzón", categoria: "pareja", img: img2 },
+  { id: "roxana-hernandez", nombre: "Roxana Hernandez", categoria: "individual", img: img3 },
+  { id: "paula-jaramillo", nombre: "Paula Jaramillo", categoria: "individual", img: img4 },
+  { id: "ana-preciado", nombre: "Ana Preciado", categoria: "individual", img: img5 },
+  { id: "heal-u-fitness", nombre: "Heal U Fitness", categoria: "yoga", img: img6 },
+  { id: "martha-gaitan", nombre: "Martha Gaitan", categoria: "individual", img: img7 },
+  { id: "jessika-florez", nombre: "Jessika Florez", categoria: "individual", img: img8 },
+  { id: "wanda-helguero", nombre: "wanda helguero", categoria: "individual", img: img9 },
+  { id: "estefania-cespedes", nombre: "Estefania Céspedes", categoria: "individual", img: img10 },
+  { id: "milena-val", nombre: "Milena Val", categoria: "individual", img: img11 },
+  { id: "johanna-torres", nombre: "Johanna Torres Almonacid", categoria: "yoga", img: img12 },
+  { id: "ana-ma-cedeno", nombre: "Ana Ma Cedeño", categoria: "individual", img: img13 },
+  { id: "angie-echeverri", nombre: "Angie Echeverri", categoria: "individual", img: img14 },
 ];
+
+export const CATEGORIAS_RESENAS: { id: Resena["categoria"]; titulo: string }[] = [
+  { id: "individual", titulo: "Terapia individual" },
+  { id: "pareja", titulo: "Terapia de pareja" },
+  { id: "yoga", titulo: "Yoga y meditación" },
+];
+
+export const agruparResenas = (resenas: Resena[] = RESENAS) => CATEGORIAS_RESENAS.map((categoria) => ({
+  ...categoria,
+  resenas: resenas.filter((resena) => resena.categoria === categoria.id),
+}));
 
 export const porIdsResena = (ids: string[]): Resena[] => ids.map((id) => RESENAS.find((r) => r.id === id)).filter((r): r is Resena => r !== undefined);
 

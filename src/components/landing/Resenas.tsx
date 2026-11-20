@@ -32,14 +32,11 @@ export const ResenaStatic = ({ id }: { id: string }) => {
 
 export const ResenaScroll = ({ resena, index }: { resena: Resena; index: number }) => {
   const reduce = useReducedMotion();
-  return <li data-resena={resena.id} className={`min-h-[70svh] flex items-center py-16 ${index % 2 ? "md:justify-end" : "md:justify-start"}`}>
+  return <li data-resena={resena.id} className={`flex items-center py-3 md:py-4 ${index % 2 ? "md:justify-end" : "md:justify-start"}`}>
     <motion.figure className="w-full max-w-[560px] mx-auto md:mx-0 m-0"
       initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, amount: 0.15 }}
       variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>
       <ResenaImage resena={resena} framed />
-      <figcaption className="mt-4 text-brand-cream text-xs leading-relaxed">
-        {resena.nombre}<span aria-hidden="true"> · </span>{resena.antiguedad}
-      </figcaption>
     </motion.figure>
   </li>;
 };

@@ -353,10 +353,11 @@
 
 /* Original review screenshots: locally scoped, no changes to other site imagery. */
 .resenas-scene {
-  --resena-shadow: 0 12px 32px hsl(var(--brand-ink) / 0.25);
+  --brand-cream: 345 18.181818% 95.686275%; /* #F6F2F3, only this scene */
+  --resena-shadow: 0 4px 12px hsl(var(--brand-ink) / 0.06);
 }
 .resenas-scene .resena-capture {
-  border: 1px solid hsl(var(--brand-gold) / 0.65);
+  border: 1px solid hsl(var(--brand-mauve) / 0.25);
   border-radius: 4px;
   box-shadow: var(--resena-shadow);
 }
