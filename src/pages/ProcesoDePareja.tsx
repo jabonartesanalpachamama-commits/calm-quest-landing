@@ -9,7 +9,7 @@ import Seo from "@/components/Seo";
 import SiteFooter from "@/components/SiteFooter";
 import NextSteps from "@/components/NextSteps";
 import Quote from "@/components/landing/Quote";
-import { TestimoniosBlock } from "@/components/landing/Testimonios";
+import { ResenaStatic } from "@/components/landing/Resenas";
 import ServiceHero from "@/components/landing/ServiceHero";
 import SituationsGrid from "@/components/landing/SituationsGrid";
 import parejaManos from "@/assets/pareja-manos.webp";
@@ -97,7 +97,7 @@ const ProcesoDePareja = () => {
         <Quote variant="side">La terapia de pareja los acompaña a relacionarse desde mayor conciencia, responsabilidad y respeto, sigan juntos o no.</Quote>
 
         {/* Tarifas */}
-        <TestimoniosBlock ids={["alejandra-murialdo"]} verMas />
+        <ResenaStatic id="angie-garzon" />
         <section id="tarifas" className="scroll-mt-24 px-6 py-14 md:py-20 bg-brand-cream/70">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="max-w-6xl mx-auto space-y-10">
             <div className="text-center space-y-3">

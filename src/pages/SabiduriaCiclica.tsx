@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform, MotionConfig, AnimatePresence } from "framer-motion";
-import useEmblaCarousel from "embla-carousel-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Flower2, Leaf, MessageCircle, Moon, ArrowDown, Sparkles } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -66,12 +65,6 @@ const CUPO_URL = "https://checkout.bold.co/payment/LNK_9RPF71YAI4";
 const AMIGA_URL = "https://checkout.bold.co/payment/LNK_K410L96K9Q";
 const DUDA_URL = getWhatsAppUrl("Hola Fransu, tengo una pregunta sobre el taller Sabiduría Cíclica");
 
-
-const TESTIMONIOS = [
-  { name: "Goretti", country: "México", quote: "Gracias por ser nuestra guía de amor y sanación. Estuvo intenso, pero muy mágico y de tanta conciencia. Gracias por hacer este tipo de talleres." },
-  { name: "Martha G.", country: "Estados Unidos", quote: "Nunca me había puesto a pensar en mi periodo de esa manera. Es mucha información para entender, procesar e integrar, y me di cuenta de lo descuidada que había sido conmigo misma. Gracias." },
-  { name: "Verónica I.", country: "México", quote: "Terminamos cansadas, pero felices. Aprendí mucho sobre un tema que no tenía tan presente y del que hoy tomo conciencia. Gracias por ser mi guía." },
-];
 
 const FAQ_GROUPS: { title: string; items: { q: string; a: string[] }[] }[] = [
   {
@@ -470,65 +463,6 @@ const scrollTo = (id: string) => (e: React.MouseEvent) => {
   document.querySelector(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-/** Carrusel de testimonios con avance automático */
-const TestimonialsCarousel = () => {
-  const reduce = useReducedMotion();
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", duration: 32 });
-  const [selected, setSelected] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  const onSelect = useCallback(() => emblaApi && setSelected(emblaApi.selectedScrollSnap()), [emblaApi]);
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    return () => { emblaApi.off("select", onSelect); };
-  }, [emblaApi, onSelect]);
-
-  useEffect(() => {
-    if (!emblaApi || paused || reduce) return;
-    const id = window.setInterval(() => emblaApi.scrollNext(), 5500);
-    return () => window.clearInterval(id);
-  }, [emblaApi, paused, reduce]);
-
-  return (
-    <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex">
-          {TESTIMONIOS.map((t) => (
-            <div key={t.name} className="flex-[0_0_100%] min-w-0 px-2">
-              <figure className="h-full max-w-2xl mx-auto flex flex-col justify-center bg-card/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-border/40 text-center">
-                <blockquote className="font-serif text-lg md:text-xl text-foreground/90 leading-relaxed italic">"{t.quote}"</blockquote>
-                <figcaption className="mt-5 flex items-center justify-center gap-3">
-                  <span className="relative w-11 h-11 bg-warm-mauve flex items-center justify-center">
-                    <span className="font-serif text-lg font-semibold text-primary">{t.name.charAt(0)}</span>
-                    <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-card flex items-center justify-center text-primary">
-                      <MoonPhase phase="creciente" className="w-3.5 h-3.5" />
-                    </span>
-                  </span>
-                  <span className="text-left text-sm">
-                    <span className="block font-semibold text-foreground">{t.name}</span>
-                    <span className="block text-muted-foreground">{t.country}</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex justify-center gap-2 mt-5">
-        {TESTIMONIOS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => emblaApi?.scrollTo(i)}
-            aria-label={`Ir al testimonio ${i + 1}`}
-            className={`h-2 rounded-full transition-all duration-300 ${i === selected ? "w-6 bg-primary" : "w-2 bg-border hover:bg-primary/50"}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
 /** Línea de tiempo que se dibuja con el scroll */
 const LearningTimeline = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -811,14 +745,6 @@ const SabiduriaCiclica = () => {
                 ¿Estás lista para volver a escucharte?
               </motion.p>
             </motion.div>
-          </section>
-
-          {/* (6) TESTIMONIOS */}
-          <section className="relative py-12 md:py-16 px-4">
-            <div className="max-w-4xl mx-auto space-y-8">
-              <RevealTitle text="Lo que dicen quienes ya vivieron el taller" className="font-serif text-3xl md:text-4xl font-semibold text-foreground text-center" />
-              <TestimonialsCarousel />
-            </div>
           </section>
 
           {/* (7) PRECIO */}

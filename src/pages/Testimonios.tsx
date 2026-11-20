@@ -1,63 +1,63 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
 import AiChatWidget from "@/components/AiChatWidget";
 import Seo from "@/components/Seo";
 import FreeClassDialog from "@/components/FreeClassDialog";
 import { Button } from "@/components/ui/button";
-import { TestimoniosBlock, Rule, TESTIMONIOS_LABEL, EDITORIAL_LINK, EDITORIAL_FOCUS } from "@/components/landing/Testimonios";
-import { fadeUp, inView } from "@/components/landing";
-import { TESTIMONIOS, type Testimonio } from "@/data/testimonios";
+import { ResenaScroll, resenaReveal, RESENA_LINK } from "@/components/landing/Resenas";
+import { RESENAS } from "@/data/resenas";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import { getWhatsAppUrl } from "@/lib/utils";
+import fransury from "@/assets/fransury-acompana.webp";
 
 const WHATSAPP_HREF = getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión.");
-const SECCIONES: { id: string; titulo: string; servicio: Testimonio["servicio"] }[] = [
-  { id: "psicoterapia", titulo: "Psicoterapia", servicio: "psicoterapia" },
-  { id: "kundalini-yoga", titulo: "Kundalini Yoga", servicio: "yoga" },
-  { id: "sabiduria-ciclica", titulo: "Sabiduría Cíclica", servicio: "ciclica" },
-];
 
 const Testimonios = () => {
   const { settings, palette } = useVisualSettings();
   const [freeClassOpen, setFreeClassOpen] = useState(false);
+  const reduce = useReducedMotion();
   return (
     <div className="min-h-screen relative flex flex-col bg-background text-foreground">
-      <Seo title="Testimonios | Fransury González · SantoSha"
-        description="Lo que dicen quienes han vivido su proceso con Fransury González: psicoterapia, Kundalini Yoga y el taller Sabiduría Cíclica."
+      <Seo title="Reseñas de Google | Fransury González · SantoSha"
+        description="Reseñas reales de Google sobre Fransury González en sus capturas originales, tal como las escribieron."
         path="/testimonios" />
       <Header palette={palette} brandName={settings?.brandName} />
       <main className="flex-grow">
-        <section className="px-6 pt-24 md:pt-40 pb-12 md:pb-20">
-          <motion.div {...inView} variants={fadeUp} className="max-w-5xl mx-auto">
-            <p className={TESTIMONIOS_LABEL}>Testimonios</p>
-            <h1 className="mt-6 text-foreground">En sus palabras</h1>
-            <Rule className="my-8" />
-            <p className="text-base text-muted-foreground">Personas que vivieron su proceso conmigo.</p>
-            <nav aria-label="Testimonios por proceso" className="flex flex-wrap items-center gap-x-6 gap-y-4 mt-10">
-              {SECCIONES.map(({ id, titulo }) => <a key={id} href={`#${id}`} className={EDITORIAL_LINK}>{titulo}</a>)}
-            </nav>
-          </motion.div>
+        <section aria-labelledby="resenas-titulo" className="resenas-scene relative isolate overflow-clip bg-brand-ink text-brand-cream">
+          <div data-resenas-sticky aria-hidden="true" className="sticky top-0 h-screen overflow-hidden pointer-events-none -mb-[100vh]">
+            <img src={fransury} alt="" width={1029} height={1529} loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover object-[50%_20%] opacity-[0.09] grayscale" />
+          </div>
+          <div className="relative max-w-6xl mx-auto px-6 [perspective:1200px]">
+            <div className="min-h-[65svh] flex items-center justify-center pt-24 pb-16 text-center">
+              <motion.h1 id="resenas-titulo" className="resenas-title text-brand-cream !leading-relaxed"
+                initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true }}
+                variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>
+                Reseñas reales de Google, tal como las escribieron.
+              </motion.h1>
+            </div>
+            <ol className="list-none p-0 m-0 pb-24">
+              {RESENAS.map((resena, index) => <ResenaScroll key={resena.id} resena={resena} index={index} />)}
+            </ol>
+          </div>
         </section>
-        {SECCIONES.map(({ id, titulo, servicio }) => (
-          <TestimoniosBlock key={id} id={id} titulo={titulo} etiqueta=""
-            ids={TESTIMONIOS.filter((t) => t.servicio === servicio).map((t) => t.id)} />
-        ))}
-        <section className="bg-background px-6 py-28 md:py-44">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-3xl mx-auto text-center">
-            <motion.h2 variants={fadeUp} className="text-foreground">¿Quieres empezar? Escríbeme.</motion.h2>
-            <Rule className="mx-auto my-9" />
-            <motion.p variants={fadeUp} className="text-base text-muted-foreground max-w-[44ch] mx-auto">
+        <section className="bg-background px-6 py-20 md:py-28">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-foreground">¿Quieres empezar? Escríbeme.</h2>
+            <span aria-hidden="true" className="block h-px w-12 bg-brand-gold mx-auto my-9" />
+            <p className="text-base text-muted-foreground max-w-[44ch] mx-auto">
               Explora los programas o empieza con la clase gratuita de 30 minutos.
-            </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-12">
-              <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer"
-                className={`inline-flex items-center justify-center gap-3 px-9 py-4 border border-brand-ink text-brand-ink text-[11px] tracking-[0.3em] uppercase hover:bg-brand-ink hover:text-primary-foreground transition-colors duration-500 ${EDITORIAL_FOCUS}`}>Escríbeme</a>
-              <Button variant="link" onClick={() => setFreeClassOpen(true)} className={`${EDITORIAL_LINK} rounded-none px-0 font-normal hover:no-underline`}>Acceder a la Clase Gratis</Button>
-            </motion.div>
-            <motion.p variants={fadeUp} className="mt-14 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Atención virtual desde cualquier lugar del mundo.</motion.p>
-          </motion.div>
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-12">
+              <Button asChild variant="outline" className="h-auto rounded-none border-brand-ink text-brand-ink px-9 py-4 text-xs uppercase tracking-normal hover:bg-brand-ink hover:text-primary-foreground">
+                <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer">Escríbeme</a>
+              </Button>
+              <Button variant="link" onClick={() => setFreeClassOpen(true)} className={`${RESENA_LINK} rounded-none px-0 font-normal hover:no-underline`}>Acceder a la Clase Gratis</Button>
+            </div>
+            <p className="mt-14 text-[10px] uppercase tracking-normal text-muted-foreground">Atención virtual desde cualquier lugar del mundo.</p>
+          </div>
         </section>
       </main>
       <SiteFooter palette={palette} />

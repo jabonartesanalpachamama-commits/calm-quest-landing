@@ -350,6 +350,24 @@
 }
 .lux :is(.rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl),
 .lux [class*="rounded-["], .lux [class*="rounded-t-"], .lux [class*="rounded-b-"] { border-radius: 0; }
+
+/* Original review screenshots: locally scoped, no changes to other site imagery. */
+.resenas-scene {
+  --resena-shadow: 0 12px 32px hsl(var(--brand-ink) / 0.25);
+}
+.resenas-scene .resena-capture {
+  border: 1px solid hsl(var(--brand-gold) / 0.65);
+  border-radius: 4px;
+  box-shadow: var(--resena-shadow);
+}
+.lux h1.resenas-title {
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+@media (min-width: 768px) {
+  .lux h1.resenas-title { font-size: 2rem; }
+}
 /* Lote W: con foco de teclado en la franja, los logos recuperan su color. */
 .logo-marquee:focus-visible img { filter: none; opacity: 1; }
 

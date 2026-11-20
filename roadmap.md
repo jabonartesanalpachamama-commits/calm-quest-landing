@@ -4,3 +4,6 @@
 - [x] Add verbatim testimonial data, reusable editorial rows and the five requested blocks.
 - [x] Add the testimonial page, footer link, route and sitemap entry without publishing.
 - [x] Verify exact text, layout, contrast, focus and motion at the requested widths.
+- [x] Store the five remaining original review screenshots without alteration.
+- [x] Replace text testimonials with static screenshots and the dedicated scrolling review page; remove the cyclic workshop text block.
+- [x] Verify images, sticky scene, reduced motion and page heights at 360/768/1280; commit without publishing.
