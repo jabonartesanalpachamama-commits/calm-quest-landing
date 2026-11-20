@@ -357,7 +357,7 @@
   --resena-shadow: 0 4px 12px hsl(var(--brand-ink) / 0.06);
 }
 .resenas-scene .resena-capture {
-  border: 1px solid hsl(var(--brand-mauve) / 0.25);
+  border: 1px solid hsl(var(--brand-cream) / 0.20);
   border-radius: 4px;
   box-shadow: var(--resena-shadow);
 }
