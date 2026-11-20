@@ -294,7 +294,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Tu inversión */}
-        <TestimoniosBlock destacado="martha-gaitan-yoga" ids={["sonia-arieta"]} verMas />
+        <TestimoniosBlock ids={["martha-gaitan-yoga", "sonia-arieta"]} verMas />
         <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
           <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">

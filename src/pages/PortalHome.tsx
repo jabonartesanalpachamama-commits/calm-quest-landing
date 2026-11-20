@@ -413,7 +413,7 @@ const PortalHome = () => {
         <Companion />
         <StartSelector />
         <Philosophy />
-        <TestimoniosBlock destacado="angela-posada" ids={["luisa-fernanda-gomez", "ana-preciado", "ana-maria-cedeno"]} verMas />
+        <TestimoniosBlock ids={["angela-posada", "luisa-fernanda-gomez", "ana-preciado"]} verMas />
 
         <section className="bg-background px-6 py-28 md:py-44">
           <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-3xl mx-auto text-center">

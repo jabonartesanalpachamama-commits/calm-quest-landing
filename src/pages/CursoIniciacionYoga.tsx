@@ -262,7 +262,7 @@ const CursoIniciacionYoga = () => {
         </section>
 
         {/* Inversión: tabla comparativa */}
-        <TestimoniosBlock destacado="martha-gaitan-yoga" ids={["sonia-arieta"]} verMas />
+        <TestimoniosBlock ids={["martha-gaitan-yoga", "sonia-arieta"]} verMas />
         <section id="inversion" className="px-4 md:px-6 py-24 md:py-36 bg-background">
           <motion.div {...inView} variants={stagger(0.1)} className="max-w-4xl mx-auto space-y-8">
             <div className="text-center space-y-3">
