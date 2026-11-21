@@ -1,7 +1,7 @@
 - Landing pages build on the shared kit in src/components/landing (RevealTitle, LandingSection, SplitHero, PriceCard); copy patterns there instead of importing from SabiduriaCiclica.tsx, which stays standalone.
 - Service pages load CMS palette/fonts via src/hooks/useVisualSettings; why: one copy of the loader instead of per-page duplicates.
 - Long-read pages (Filosofía, Términos) use landing/StickyToc (SideToc + PillToc + useActiveSection); why: one scroll-spy index pattern.
-- Brand logo: use the transparent-background asset (src/assets/santosha-logo-transparent.webp) in header/footer; why: the white-background version shows a white oval on cream.
+- Brand logo: header/footer use src/assets/santosha-logo-blanco.png (Header paints it as a mask); why: the white-background version shows a white oval on cream.
 - Editable site lists (e.g. participaciones logos) live in src/data/*.ts; why: content changes in one place without touching components.
 - Google review screenshots use data/resenas and landing/Resenas; /testimonios alone mounts landing/ResenasExperience, deriving track order and active background from category data with a non-sticky reduced-motion list; why: original screenshots and service-page selections remain independent of the scroll experience.
 - Framed reviews share ResenaImage's fixed-aspect contain wrapper; static bands derive photos from review categories and disable parallax under reduced motion; why: uniform framing preserves original screenshot bytes across both experiences.
@@ -11,4 +11,4 @@
 
 - Section breaks are flat background changes plus thin gold rules; no gradient transition strips (only photo masks use gradients). Why: client rejected gradient transitions.
 - Waitlist admin edits update only estado and verify the returned row before confirming success; why: column grants protect all other registration fields and failed saves must roll back locally.
-- Public insert forms use components/Honeypot and DB rate-limit trigger enforce_public_insert_rate_limit (20/min per table); why: no IP available client-side, spam protection lives in the database.
+- Public insert forms use components/Honeypot and DB rate-limit trigger enforce_public_insert_rate_limit (60/min per table); why: no IP available client-side, spam protection lives in the database.
