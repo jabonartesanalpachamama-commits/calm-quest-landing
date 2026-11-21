@@ -66,7 +66,7 @@ const ReducedReviews = () => <section className="reviews-theme bg-brand-ink px-4
   {groups.map((group) => <section key={group.id} aria-labelledby={`reviews-${group.id}`} className="mx-auto max-w-6xl py-8">
     <h2 id={`reviews-${group.id}`} className="reviews-category text-center text-brand-cream">{group.titulo}</h2>
     <span aria-hidden="true" className="mx-auto my-5 block h-px w-16 bg-brand-gold" />
-    <ol className="m-0 list-none space-y-6 p-0">{group.resenas.map((resena) => <li key={resena.id} data-resena={resena.id} className="mx-auto max-w-[560px]"><ResenaImage resena={resena} framed /></li>)}</ol>
+    <ol className="m-0 list-none space-y-6 p-0">{group.resenas.map((resena) => <li key={resena.id} data-resena={resena.id} className="mx-auto w-[86vw] max-w-[560px]"><ResenaImage resena={resena} framed /></li>)}</ol>
   </section>)}
 </section>;
 
@@ -76,7 +76,7 @@ const HorizontalReviews = () => {
   const [width, setWidth] = useState(360);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
-  const cardWidth = Math.min(560, width - 32);
+  const cardWidth = Math.min(560, width * 0.86);
   const gap = width < 768 ? 24 : 48;
   const step = cardWidth + gap;
   const x = useTransform(scrollYProgress, [0, 1], [0, -(reviews.length - 1) * step]);

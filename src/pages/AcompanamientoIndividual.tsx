@@ -294,7 +294,7 @@ const AcompanamientoIndividual = () => {
         </section>
 
         {/* Tu inversión */}
-        <ResenaStatic id="marcos-jesus" />
+        <ResenaStatic id="johanna-torres" />
         <section id="precios" className={`scroll-mt-24 ${SECTION} bg-brand-cream`}>
           <motion.div {...inView} variants={stagger(0.15)} className="relative max-w-4xl mx-auto">
             <motion.div variants={fadeUp} className="text-center mb-16">

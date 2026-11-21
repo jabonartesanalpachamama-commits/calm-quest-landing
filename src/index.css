@@ -357,9 +357,12 @@
   --reviews-shadow: 0 4px 12px hsl(var(--brand-ink) / 0.12);
   --reviews-title-font: var(--font-heading);
 }
-.reviews-theme .reviews-capture {
+.reviews-capture {
+  width: 100%;
+  aspect-ratio: 1200 / 760;
+  background: hsl(var(--card));
   border: 1px solid hsl(var(--brand-cream) / 0.20);
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: var(--reviews-shadow);
 }
 .reviews-cover { background-color: hsl(var(--brand-ink) / 0.12); }
@@ -385,12 +388,18 @@
 .reviews-stage-heading { padding-top: 112px; }
 .reviews-stage .reviews-track { padding-top: 144px; }
 .lux h2.reviews-category { font-size: 1.125rem; letter-spacing: 0.22em; line-height: 1.5; }
-.lux h2.reviews-static-title { font-size: 0.75rem; letter-spacing: 0.2em; line-height: 1.5; }
+.lux h2.reviews-static-title { font-size: 1.5rem; letter-spacing: 0.14em; line-height: 1.4; }
+.reviews-static-ornament svg circle { stroke: hsl(var(--brand-cream)); }
+.reviews-static-ornament svg circle:first-child { stroke-width: 0.5; }
+.reviews-static-ornament svg circle:not(:first-child) { display: none; }
 .reviews-static { --brand-cream: 345 18.181818% 95.686275%; }
+.reviews-static .reviews-veil { background: hsl(var(--brand-ink) / 0.92); }
+.reviews-static .reviews-veil-pareja { background: hsl(var(--brand-ink) / 0.90); }
 .reviews-transition { height: 64px; }
 @media (min-width: 768px) {
   .reviews-cover-title { font-size: 3.75rem; }
   .lux h2.reviews-category { font-size: 1.5rem; }
+  .lux h2.reviews-static-title { font-size: 2.75rem; }
   .reviews-transition { height: 80px; }
 }
 @media (min-width: 1200px) {
