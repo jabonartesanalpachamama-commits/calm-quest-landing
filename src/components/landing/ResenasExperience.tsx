@@ -34,10 +34,10 @@ export const ResenasCover = ({ href, onFreeClass }: { href: string; onFreeClass:
           variants={{ hidden: resenaReveal.hidden, show: { ...resenaReveal.show, transition: { duration: 1.2, delay: index * 0.16, ease: EASE } } }}>{line}</motion.span>)}
       </div>
       <span aria-hidden="true" className="mx-auto my-7 block h-px w-16 bg-brand-gold" />
-      <motion.div className="reviews-intro mx-auto max-w-[52ch] space-y-4 text-base md:text-lg text-brand-cream [font-family:var(--reviews-title-font)] [perspective:1200px]"
+      <motion.div className="reviews-intro mx-auto max-w-[52ch] space-y-4 text-base md:text-lg text-brand-cream [perspective:1200px]"
         initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, amount: 0.15 }}
         variants={{ show: { transition: { staggerChildren: reduce ? 0 : 0.2 } } }}>
-        {intro.map((paragraph) => <motion.p key={paragraph} className="!leading-relaxed font-normal"
+        {intro.map((paragraph) => <motion.p key={paragraph} className="font-normal"
           variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>{paragraph}</motion.p>)}
       </motion.div>
       <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-8">

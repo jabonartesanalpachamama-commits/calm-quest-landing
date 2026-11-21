@@ -10,3 +10,5 @@
 - [x] Redesign the review cover and horizontal sticky experience with category photos and a reduced-motion alternative.
 - [x] Restyle only the shared static review band, preserving screenshots and limiting its added height.
 - [x] Verify desktop/tablet/mobile flow, contrast, mobile screenshot text size and commit without publishing.
+- [ ] Redesign the immersive static band, uniform frames and yoga selection; blocked on the user's choice between frame width and the added-height limit.
+- [x] Align review typography with the editorial heading/body tokens and verify at 360/1280 without publishing.

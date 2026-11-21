@@ -355,7 +355,7 @@
 .reviews-theme {
   --brand-cream: 345 18.181818% 95.686275%; /* #F6F2F3, only this scene */
   --reviews-shadow: 0 4px 12px hsl(var(--brand-ink) / 0.12);
-  --reviews-title-font: 'Lora', Georgia, serif;
+  --reviews-title-font: var(--font-heading);
 }
 .reviews-theme .reviews-capture {
   border: 1px solid hsl(var(--brand-cream) / 0.20);
@@ -364,13 +364,17 @@
 }
 .reviews-cover { background-color: hsl(var(--brand-ink) / 0.12); }
 .reviews-cover-title {
-  font-family: var(--reviews-title-font);
-  font-size: 2.25rem;
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 300;
   line-height: 1.4;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
 }
+.reviews-theme, .reviews-static { font-family: var(--font-body); }
+.reviews-theme :is(p, a, button), .reviews-static :is(p, a, button) { font-family: var(--font-body); font-weight: 400; }
+.reviews-theme .reviews-intro p { line-height: 1.8; text-transform: none; }
+.reviews-category, .reviews-static-title { font-family: var(--font-heading); font-weight: 300; }
 .reviews-ornament svg circle:first-child { stroke-dasharray: none; }
 .reviews-ornament svg circle:not(:first-child) { display: none; }
 .reviews-veil { background: hsl(var(--brand-ink) / 0.70); }
