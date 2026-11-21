@@ -16,7 +16,7 @@ const reviews = groups.flatMap((group) => group.resenas);
 const photos = { individual, pareja, yoga };
 const intro = [
   "Elegir con quién hacer un proceso es una decisión grande, y es natural llegar con dudas. Por eso quiero que escuches primero a quienes ya lo vivieron.",
-  "Estas reseñas las escribieron algunos de mis pacientes, personas a quienes he tenido el privilegio de acompañar y guiar en procesos individuales, de pareja, de yoga y de meditación. Agradezco de corazón que hayan querido compartir su experiencia. Las dejo tal como las publicaron en Google, con sus nombres y sin cambiar una palabra, para que puedas comprobarlas allí.",
+  "Estas reseñas las escribieron algunos de mis pacientes, personas a quienes he tenido el privilegio de acompañar y guiar en procesos individuales, de pareja, de yoga y de meditación. Agradezco de corazón que hayan querido compartir su experiencia, y te invito a ti, que hoy estás aquí, a que, como ellos, te atrevas a mirar hacia ti. Las dejo tal como las publicaron en Google, con sus nombres y sin cambiar una palabra, para que puedas comprobarlas allí.",
   "Cada proceso es distinto y yo acompaño el tuyo a tu ritmo, siempre en línea, desde donde estés. Si leyendo sientes que quieres empezar, escríbeme y lo hablamos. Si prefieres conocerme antes, tienes la clase gratuita de 30 minutos.",
 ];
 
