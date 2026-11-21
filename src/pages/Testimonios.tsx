@@ -1,23 +1,20 @@
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import Header from "@/components/Header";
 import SiteFooter from "@/components/SiteFooter";
 import AiChatWidget from "@/components/AiChatWidget";
 import Seo from "@/components/Seo";
 import FreeClassDialog from "@/components/FreeClassDialog";
 import { Button } from "@/components/ui/button";
-import { ResenaScroll, resenaReveal, RESENA_LINK } from "@/components/landing/Resenas";
-import { agruparResenas } from "@/data/resenas";
+import { RESENA_LINK } from "@/components/landing/Resenas";
+import { ResenasCover, ResenasExperience } from "@/components/landing/ResenasExperience";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
 import { getWhatsAppUrl } from "@/lib/utils";
-import fransury from "@/assets/fransury-acompana.webp";
 
 const WHATSAPP_HREF = getWhatsAppUrl("Hola Fransury, quiero información para agendar una sesión.");
 
 const Testimonios = () => {
   const { settings, palette } = useVisualSettings();
   const [freeClassOpen, setFreeClassOpen] = useState(false);
-  const reduce = useReducedMotion();
   return (
     <div className="min-h-screen relative flex flex-col bg-background text-foreground">
       <Seo title="Lo que dicen mis pacientes | Fransury González · SantoSha"
@@ -25,37 +22,9 @@ const Testimonios = () => {
         path="/testimonios" />
       <Header palette={palette} brandName={settings?.brandName} />
       <main className="flex-grow">
-        <section aria-labelledby="resenas-titulo" className="resenas-scene relative isolate overflow-clip bg-background text-brand-cream">
-          <div data-resenas-sticky aria-hidden="true" className="sticky top-0 h-screen overflow-hidden pointer-events-none -mb-[100vh] bg-brand-cream">
-            <img src={fransury} alt="" width={1029} height={1529} loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover object-[50%_20%] opacity-[0.22] grayscale" />
-            <div className="absolute inset-0 bg-brand-ink/75" />
-          </div>
-          <div className="relative max-w-6xl mx-auto px-6 [perspective:1200px]">
-            <div className="min-h-[40svh] flex items-center justify-center pt-16 pb-8 text-center">
-              <motion.h1 id="resenas-titulo" className="resenas-title text-brand-cream !leading-relaxed"
-                initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true }}
-                variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>
-                ¿Qué dicen mis pacientes?
-              </motion.h1>
-            </div>
-            <div className="pb-8">
-              {agruparResenas().map(({ id, titulo, resenas }) => (
-                <section key={id} data-categoria={id} aria-labelledby={`resenas-${id}`} className="pt-8">
-                  <motion.div className="mb-4"
-                    initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, amount: 0.15 }}
-                    variants={reduce ? { show: { opacity: 1 } } : resenaReveal}>
-                    <h2 id={`resenas-${id}`} className="!text-sm !font-light !tracking-[0.2em] text-brand-cream">{titulo}</h2>
-                    <span aria-hidden="true" className="block h-px w-12 bg-brand-gold mt-4" />
-                  </motion.div>
-                  <ol className="list-none p-0 m-0">
-                    {resenas.map((resena, index) => <ResenaScroll key={resena.id} resena={resena} index={index} />)}
-                  </ol>
-                </section>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ResenasCover href={WHATSAPP_HREF} />
+        <ResenasExperience />
+        <div aria-hidden="true" className="reviews-transition bg-background"><span className="block h-px bg-brand-gold" /></div>
         <section className="bg-background px-6 py-20 md:py-28">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-foreground">¿Quieres empezar? Escríbeme.</h2>

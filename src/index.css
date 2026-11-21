@@ -352,22 +352,46 @@
 .lux [class*="rounded-["], .lux [class*="rounded-t-"], .lux [class*="rounded-b-"] { border-radius: 0; }
 
 /* Original review screenshots: locally scoped, no changes to other site imagery. */
-.resenas-scene {
+.reviews-theme {
   --brand-cream: 345 18.181818% 95.686275%; /* #F6F2F3, only this scene */
-  --resena-shadow: 0 4px 12px hsl(var(--brand-ink) / 0.06);
+  --reviews-shadow: 0 4px 12px hsl(var(--brand-ink) / 0.12);
+  --reviews-title-font: 'Lora', Georgia, serif;
 }
-.resenas-scene .resena-capture {
+.reviews-theme .reviews-capture {
   border: 1px solid hsl(var(--brand-cream) / 0.20);
   border-radius: 4px;
-  box-shadow: var(--resena-shadow);
+  box-shadow: var(--reviews-shadow);
 }
-.lux h1.resenas-title {
-  font-size: 1.5rem;
-  letter-spacing: 0;
-  text-transform: none;
+.reviews-cover { background-color: hsl(var(--brand-ink) / 0.12); }
+.reviews-cover-title {
+  font-family: var(--reviews-title-font);
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
+.reviews-ornament svg circle:first-child { stroke-dasharray: none; }
+.reviews-ornament svg circle:not(:first-child) { display: none; }
+.reviews-veil { background: hsl(var(--brand-ink) / 0.70); }
+.reviews-veil-pareja { background: hsl(var(--brand-ink) / 0.55); }
+.reviews-perspective { perspective: 1200px; }
+.reviews-track { transform-style: preserve-3d; will-change: transform; }
+.reviews-page { transform-style: preserve-3d; transform-origin: left center; }
+.reviews-stage-heading { padding-top: 112px; }
+.reviews-stage .reviews-track { padding-top: 144px; }
+.lux h2.reviews-category { font-size: 1.125rem; letter-spacing: 0.22em; line-height: 1.5; }
+.lux h2.reviews-static-title { font-size: 0.75rem; letter-spacing: 0.2em; line-height: 1.5; }
+.reviews-static { --brand-cream: 345 18.181818% 95.686275%; }
+.reviews-transition { height: 64px; }
 @media (min-width: 768px) {
-  .lux h1.resenas-title { font-size: 2rem; }
+  .reviews-cover-title { font-size: 3.75rem; }
+  .lux h2.reviews-category { font-size: 1.5rem; }
+  .reviews-transition { height: 80px; }
+}
+@media (min-width: 1200px) {
+  .reviews-cover-title { font-size: 5.5rem; }
+  .lux h2.reviews-category { font-size: 1.75rem; }
 }
 /* Lote W: con foco de teclado en la franja, los logos recuperan su color. */
 .logo-marquee:focus-visible img { filter: none; opacity: 1; }

@@ -7,3 +7,6 @@
 - [x] Store the five remaining original review screenshots without alteration.
 - [x] Replace text testimonials with static screenshots and the dedicated scrolling review page; remove the cyclic workshop text block.
 - [x] Verify images, sticky scene, reduced motion and page heights at 360/768/1280; commit without publishing.
+- [x] Redesign the review cover and horizontal sticky experience with category photos and a reduced-motion alternative.
+- [x] Restyle only the shared static review band, preserving screenshots and limiting its added height.
+- [x] Verify desktop/tablet/mobile flow, contrast, mobile screenshot text size and commit without publishing.
