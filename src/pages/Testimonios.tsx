@@ -22,7 +22,7 @@ const Testimonios = () => {
         path="/testimonios" />
       <Header palette={palette} brandName={settings?.brandName} />
       <main className="flex-grow">
-        <ResenasCover href={WHATSAPP_HREF} />
+        <ResenasCover href={WHATSAPP_HREF} onFreeClass={() => setFreeClassOpen(true)} />
         <ResenasExperience />
         <div aria-hidden="true" className="reviews-transition bg-background"><span className="block h-px bg-brand-gold" /></div>
         <section className="bg-background px-6 py-20 md:py-28">
