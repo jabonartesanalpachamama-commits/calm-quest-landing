@@ -20,3 +20,4 @@
 - IndividualPriceCards derives original package price and savings from data/individualPrices; why: discount amounts cannot drift from session prices.
 
 - Home and Testimonios share NewsletterSection; newsletter-subscribe validates consent and inserts only, while database normalization and serialized duplicate suppression prevent membership disclosure; why: subscriptions stay private and no email is sent.
+- NewsletterSection keeps copy left and the portrait bottom-right at every width; preserve the complete portrait with contain when narrow, never stack it; why: the banner composition must not obscure the consent or form.

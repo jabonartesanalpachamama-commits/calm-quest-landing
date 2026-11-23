@@ -35,33 +35,33 @@ export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' |
     } catch { setError('No pudimos guardar tu suscripción. Intenta de nuevo más tarde.'); setStatus('error'); }
     finally { sending.current = false; }
   }
-  return <section aria-label="Newsletter" className="lux newsletter-section bg-background px-6 py-20 md:py-16">
-    <motion.div initial={reduce ? false : 'hidden'} whileInView="show" viewport={{ once: true, amount: .15 }} variants={fadeUp} className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1.2fr_1fr] md:gap-16">
-      <div className="min-w-0">
+  return <section aria-label="Newsletter" className="lux newsletter-section bg-background">
+    <div className="newsletter-banner">
+      <motion.div initial={reduce ? false : 'hidden'} whileInView="show" viewport={{ once: true, amount: .15 }} variants={fadeUp} className="newsletter-copy min-w-0">
         <RevealTitle text="CONECTEMOS" className="newsletter-title text-brand-ink" />
-        <p className="mt-6 max-w-[48ch] text-base text-brand-mauve">Suscríbete a mi newsletter y recibe reflexiones y herramientas para cuidar de ti, directamente en tu correo.</p>
-        <form onSubmit={submit} noValidate className="mt-8" aria-busy={status === 'sending'}>
+        <p className="newsletter-description text-brand-mauve"><span className="hidden md:inline">Suscríbete a mi newsletter y recibe reflexiones y herramientas para cuidar de ti, directamente en tu correo.</span><span className="md:hidden">Reflexiones y herramientas para cuidar de ti, en tu correo.</span></p>
+        <form onSubmit={submit} noValidate className="newsletter-form" aria-busy={status === 'sending'}>
           <Honeypot ref={trap} />
-          <label htmlFor={`${id}-email`} className="mb-2 block text-sm text-brand-ink">Correo electrónico</label>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <label htmlFor={`${id}-email`} className="sr-only">Correo electrónico</label>
+          <div className="newsletter-controls">
             <Input id={`${id}-email`} type="email" autoComplete="email" required maxLength={255} value={email} onChange={e => setEmail(e.target.value)} placeholder="Correo electrónico" disabled={status === 'sending' || status === 'success'} aria-describedby={`${id}-status`} className="h-12 min-w-0 rounded-none border-brand-mauve bg-card text-base focus-visible:ring-brand-ink md:text-base" />
             <Button type="submit" disabled={status === 'sending' || status === 'success'} className="h-12 shrink-0 rounded-none bg-brand-ink px-5 text-xs font-normal text-primary-foreground hover:bg-brand-mauve focus-visible:ring-brand-ink">
               {status === 'sending' && <Loader2 aria-hidden="true" className="mr-2 h-4 w-4 motion-safe:animate-spin" />}{status === 'sending' ? 'ENVIANDO…' : 'QUIERO RECIBIRLO'}
             </Button>
           </div>
-          <p className="mt-3 text-xs text-brand-mauve">Puedes darte de baja cuando quieras.</p>
-          <div className="mt-5 flex items-start gap-3">
+          <div className="newsletter-consent flex items-start gap-2">
             <Checkbox id={`${id}-consent`} required checked={consent} onCheckedChange={value => setConsent(value === true)} disabled={status === 'sending' || status === 'success'} className="mt-1 border-brand-ink focus-visible:ring-brand-ink" />
             <label htmlFor={`${id}-consent`} className="text-xs leading-relaxed text-brand-mauve">Autorizo el tratamiento de mi correo para recibir el newsletter, según la <Link to="/terminos-y-condiciones#datos" className="border-b border-brand-gold text-brand-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ink">política de tratamiento de datos.</Link></label>
           </div>
-          <p id={`${id}-status`} role="status" aria-live="polite" aria-atomic="true" className="mt-4 min-h-6 text-sm text-brand-ink">
+          <p className="newsletter-unsubscribe text-brand-mauve">Puedes darte de baja cuando quieras.</p>
+          <p id={`${id}-status`} role="status" aria-live="polite" aria-atomic="true" className="newsletter-status text-sm text-brand-ink">
             {status === 'sending' ? 'Guardando tu suscripción…' : status === 'success' ? 'Listo, ya estás suscrito/a. Gracias por conectar.' : error}
           </p>
         </form>
+      </motion.div>
+      <div className="newsletter-portrait">
+        <img src={portrait.url} srcSet={`${portraitMobile.url} 800w, ${portrait.url} 1024w`} sizes="(max-width: 767px) 42vw, (max-width: 1023px) 38vw, 35vw" width={1024} height={1536} alt="Fransury González sentada, sonriendo, con las manos sobre la rodilla" loading="lazy" className="newsletter-photo" />
       </div>
-      <div className="newsletter-portrait relative mx-auto w-full max-w-sm overflow-hidden md:max-w-none">
-        <img src={portrait.url} srcSet={`${portraitMobile.url} 800w, ${portrait.url} 1024w`} sizes="(max-width: 767px) 227px, 320px" width={1024} height={1536} alt="Fransury González sentada, sonriendo, con las manos sobre la rodilla" loading="lazy" className="newsletter-photo mx-auto block h-auto max-h-[340px] w-auto max-w-full object-contain object-[50%_25%] md:max-h-[480px]" />
-      </div>
-    </motion.div>
+    </div>
   </section>;
 }

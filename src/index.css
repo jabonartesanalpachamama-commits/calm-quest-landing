@@ -400,14 +400,48 @@
 .lux .newsletter-section { background: hsl(var(--background)); font-family: var(--font-body); }
 .lux.reviews-static > div, .lux.newsletter-section > div { background-color: transparent; }
 .newsletter-section :is(input, button, label, p, a) { font-family: var(--font-body); }
+.newsletter-banner { position: relative; display: flex; align-items: center; min-height: 480px; overflow: hidden; }
+.newsletter-copy { position: relative; z-index: 1; margin-left: 4%; width: 56%; padding-block: 24px; }
+.lux h2.newsletter-title { font-size: 36px; line-height: 1.15; overflow-wrap: anywhere; letter-spacing: .14em; }
+.lux .newsletter-description { font-size: 15px; line-height: 1.8; margin-top: 16px; }
+.newsletter-form { margin-top: 20px; }
+.newsletter-controls { display: grid; gap: 8px; }
+.newsletter-controls :is(input, button) { height: 48px; width: 100%; }
+.newsletter-controls button { white-space: normal; padding-inline: 8px; }
+.newsletter-consent { margin-top: 12px; }
+.newsletter-consent label { font-size: 11px; line-height: 1.5; }
+.lux .newsletter-unsubscribe { margin-top: 10px; font-size: 11px; line-height: 1.5; }
+.newsletter-status:empty { display: none; }
+.newsletter-status:not(:empty) { margin-top: 10px; }
+.newsletter-portrait { position: absolute; bottom: 0; right: -2%; width: 40%; height: 100%; pointer-events: none; }
 .newsletter-photo {
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  position: absolute; bottom: 0; display: block; width: 100%; height: auto; object-fit: contain; object-position: 50% 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%);
   mask-composite: intersect;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%);
   -webkit-mask-composite: source-in;
 }
 @media (min-width: 768px) {
   .lux .reviews-static .review-literal { font-size: 18px; }
+  .newsletter-banner { min-height: 540px; }
+  .newsletter-copy { margin-left: 4%; width: 54%; }
+  .lux h2.newsletter-title { font-size: 40px; }
+  .lux .newsletter-description { font-size: 16px; }
+  .newsletter-controls { grid-template-columns: 3fr 2fr; gap: 0; }
+  .newsletter-controls :is(input, button) { height: 56px; }
+  .newsletter-portrait { right: 0; width: 38%; }
+}
+@media (min-width: 1024px) {
+  .newsletter-banner { height: 52vw; min-height: 520px; }
+  .newsletter-copy { margin-left: 6%; width: 49%; }
+  .lux h2.newsletter-title { font-size: 64px; }
+  .lux .newsletter-description { font-size: 20px; }
+  .newsletter-portrait { right: 8%; width: auto; aspect-ratio: 2 / 3; }
+  .newsletter-photo { height: 100%; }
+  .newsletter-consent label, .lux .newsletter-unsubscribe { font-size: 12px; }
+}
+@media (min-width: 1440px) {
+  .lux h2.newsletter-title { font-size: 72px; }
 }
 .depth-carousel { width: 100%; max-width: 960px; margin-inline: auto; }
 .depth-stage { position: relative; perspective: 1400px; transform-style: preserve-3d; height: 230px; touch-action: pan-y; cursor: grab; }
