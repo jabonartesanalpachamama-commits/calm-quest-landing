@@ -36,6 +36,20 @@
       "when": 1794952169510,
       "tag": "0004_tighten_public_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795466098401,
+      "tag": "0005_private_newsletter_subscribers",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795466508184,
+      "tag": "0006_newsletter_insert_only_browser_grants",
+      "breakpoints": true
     }
   ]
 }

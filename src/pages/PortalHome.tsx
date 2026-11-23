@@ -23,6 +23,7 @@ import { fadeUp, inView } from "@/components/landing";
 import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
 import { ResenaStatic } from "@/components/landing/Resenas";
+import NewsletterSection from "@/components/landing/NewsletterSection";
 import LineSidebar from "@/components/reactbits/LineSidebar";
 import { START_OPTIONS } from "@/data/caminos";
 
@@ -398,23 +399,7 @@ const PortalHome = () => {
         <Philosophy />
         <ResenaStatic id="luii-gomez" />
 
-        <section className="bg-background px-6 py-28 md:py-44">
-          <motion.div {...inView} variants={{ show: { transition: { staggerChildren: 0.15 } } }} className="max-w-3xl mx-auto text-center">
-            <motion.h2 variants={fadeUp} className="text-foreground">¿Quieres empezar? Escríbeme.</motion.h2>
-            <Rule className="mx-auto my-9" />
-            <motion.p variants={fadeUp} className="text-base text-muted-foreground max-w-[44ch] mx-auto">
-              Explora los programas o empieza con la clase gratuita de 30 minutos.
-            </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-12">
-              <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className={BTN_LINE}>Escríbeme</a>
-              <button type="button" onClick={openFree}
-                className={`text-[11px] tracking-[0.3em] uppercase text-brand-mauve border-b border-brand-gold/60 pb-1 hover:border-brand-mauve transition-colors duration-500 ${FOCUS}`}>
-                Acceder a la Clase Gratis
-              </button>
-            </motion.div>
-            <motion.p variants={fadeUp} className="mt-14 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Atención virtual desde cualquier lugar del mundo.</motion.p>
-          </motion.div>
-        </section>
+        <NewsletterSection sourcePage="home" />
       </main>
 
       <SiteFooter palette={palette} />

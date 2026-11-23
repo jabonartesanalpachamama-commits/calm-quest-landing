@@ -392,15 +392,19 @@
 .reviews-static-ornament svg circle { stroke: hsl(var(--brand-cream)); }
 .reviews-static-ornament svg circle:first-child { stroke-width: 0.5; }
 .reviews-static-ornament svg circle:not(:first-child) { display: none; }
-.reviews-static { --brand-cream: 345 18.181818% 95.686275%; }
-.reviews-static { --reviews-band-tone: 345 9% 43%; --reviews-band-veil: 345 9% 29%; }
-/* Explicit exception: gradual transitions belong only to shared review bands. */
-.lux .reviews-soft-transition { height: 200px; background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--reviews-band-tone))); }
-.lux .reviews-home-transition { background: linear-gradient(to bottom, hsl(var(--brand-cream)), hsl(var(--reviews-band-tone))); }
-.reviews-static { background: hsl(var(--reviews-band-tone)); }
-.reviews-band-photo { filter: saturate(.5); }
-.reviews-band-veil { background: hsl(var(--reviews-band-veil) / .82); }
-.reviews-band-top { background: linear-gradient(to bottom, hsl(var(--reviews-band-tone)), transparent); }
+.lux .reviews-static { background: hsl(var(--brand-cream)); font-family: var(--font-body); }
+.lux .reviews-static .review-literal { font-family: var(--font-body); font-size: 16px; font-weight: 400; line-height: 1.8; }
+.reviews-text-stage { touch-action: pan-y; }
+.lux .reviews-static .review-arrow { width: 48px; height: 48px; border-radius: 50%; border-color: hsl(var(--brand-ink)); background: hsl(var(--brand-cream)); color: hsl(var(--brand-ink)); }
+.lux .reviews-static .review-arrow:hover { background: hsl(var(--brand-ink)); color: hsl(var(--brand-cream)); }
+.lux .newsletter-section { background: hsl(var(--brand-cream)); font-family: var(--font-body); }
+.lux.reviews-static > div, .lux.newsletter-section > div { background-color: transparent; }
+.newsletter-section :is(input, button, label, p, a) { font-family: var(--font-body); }
+.newsletter-portrait::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, hsl(var(--brand-cream)), transparent 24%); }
+@media (min-width: 768px) {
+  .lux .reviews-static .review-literal { font-size: 18px; }
+  .newsletter-portrait::after { background: linear-gradient(to right, hsl(var(--brand-cream)), transparent 25%), linear-gradient(to top, hsl(var(--brand-cream)), transparent 20%); }
+}
 .depth-carousel { width: 100%; max-width: 960px; margin-inline: auto; }
 .depth-stage { position: relative; perspective: 1400px; transform-style: preserve-3d; height: 230px; touch-action: pan-y; cursor: grab; }
 .depth-card { position: absolute; top: 50%; left: 50%; width: calc(100% - 8px); max-width: 640px; transform: translate(-50%, -50%); }

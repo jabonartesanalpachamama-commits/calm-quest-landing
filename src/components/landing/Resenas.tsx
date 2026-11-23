@@ -1,18 +1,11 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import { EASE, fadeUp, RevealTitle } from "@/components/landing";
 import { Button } from "@/components/ui/button";
-import { RESENAS, CATEGORIAS_RESENAS, RESENA_DIMENSIONS, type Resena } from "@/data/resenas";
-import individual from "@/assets/fransury-individual.webp";
-import pareja from "@/assets/pareja-manos.webp";
-import parejaMobile from "@/assets/pareja-manos-900.webp";
-import yoga from "@/assets/fransury-yoga-nueva.webp";
+import { RESENAS, RESENA_DIMENSIONS, type Resena } from "@/data/resenas";
 
-import DepthCarousel from "@/components/reactbits/DepthCarousel";
-import GradualBlur from "@/components/reactbits/GradualBlur";
-
-const photos = { individual, pareja, yoga };
 export const RESENA_LINK = "inline-flex min-h-11 items-center border-b border-brand-gold text-brand-mauve text-xs uppercase tracking-normal hover:text-brand-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-mauve focus-visible:ring-offset-4";
 
 export const resenaReveal = {
@@ -29,33 +22,56 @@ export const ResenaImage = ({ resena, framed = false, loading = "lazy" }: { rese
   return framed ? <div className="reviews-capture">{image}</div> : image;
 };
 
-/** Shared depth review band; initial review selection stays page-specific. */
+/** One literal text review at a time; no autoplay, photos, depth or hidden side cards. */
 export const ResenaStatic = ({ id }: { id: string }) => {
   const reduce = useReducedMotion();
-  const initialIndex = Math.max(0, RESENAS.findIndex(r => r.id === id));
-  const [active, setActive] = useState(initialIndex);
-  const category = RESENAS[active]?.categoria ?? "individual";
-  return <section aria-label="Reseñas de Google" data-resena-static={id} data-review-category={category} className="reviews-static reviews-theme relative isolate overflow-hidden text-brand-cream">
-    <div className={`reviews-soft-transition relative ${id === "luii-gomez" ? "reviews-home-transition" : ""}`} aria-hidden="true">
-      {!reduce && <GradualBlur height="100%" strength={.25} layers={4} zIndex={1} />}
-    </div>
-    <div className="relative isolate px-3 py-12 md:px-6 md:py-16">
-      <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
-        {CATEGORIAS_RESENAS.map(({ id: key }) => <motion.picture key={key} data-band-background={key} className="absolute inset-0" initial={false} animate={{ opacity: category === key ? 1 : 0 }} transition={{ duration: reduce ? 0 : 1.2, ease: EASE }}>
-          {key === "pareja" && <source media="(max-width: 767px)" srcSet={parejaMobile} />}
-          <img src={photos[key]} alt="" loading="lazy" className="reviews-band-photo h-full w-full object-cover object-[50%_30%]" />
-        </motion.picture>)}
-        <div className="reviews-band-veil absolute inset-0" />
-        <div className="reviews-band-top absolute inset-x-0 top-0 h-32" />
-      </div>
-      <div className="relative mx-auto max-w-[960px] text-center">
-        <RevealTitle text="LO QUE DICEN MIS PACIENTES" className="reviews-static-title mx-auto max-w-[26ch] text-brand-cream" />
-        <p className="reviews-static-subtitle mx-auto mt-6 max-w-[52ch] text-sm text-brand-cream md:text-base">Reseñas de Google de pacientes que ya hicieron su proceso conmigo.</p>
-        <motion.div className="mt-8 md:mt-10" initial={reduce ? false : "hidden"} whileInView="show" viewport={{ once: true, amount: .15 }} variants={fadeUp}>
-          <DepthCarousel initialIndex={initialIndex} onChange={setActive} items={RESENAS.map((resena, index) => ({ id: resena.id, label: `Reseña de ${resena.nombre}`, content: <ResenaImage resena={resena} framed loading={index === initialIndex ? "eager" : "lazy"} /> }))} />
-        </motion.div>
-        {id !== "all" && <div className="mt-8 md:mt-10"><Button asChild variant="outline" className="h-auto rounded-none border-brand-cream bg-transparent px-9 py-4 text-xs uppercase tracking-normal text-brand-cream hover:bg-brand-cream hover:text-brand-ink focus-visible:ring-brand-cream"><Link to="/testimonios">Ver más reseñas</Link></Button></div>}
-      </div>
+  const [active, setActive] = useState(Math.max(0, RESENAS.findIndex(r => r.id === id)));
+  const pointer = useRef<{ x: number; y: number } | null>(null);
+  const review = RESENAS[active];
+  if (!review) return null;
+  const move = (delta: number) => setActive(index => (index + delta + RESENAS.length) % RESENAS.length);
+  return <section aria-label="Reseñas de Google" data-resena-static={id} className="lux reviews-static px-5 py-20 md:px-6 md:py-28">
+    <div className="mx-auto max-w-[720px]">
+      <span aria-hidden="true" className="mx-auto mb-12 block h-px w-16 bg-brand-gold" />
+      <RevealTitle text="LO QUE DICEN MIS PACIENTES" className="reviews-static-title text-center text-brand-ink" />
+      <p className="mt-5 text-center text-sm text-brand-mauve">Experiencias compartidas en Google.</p>
+      <motion.div initial={reduce ? false : 'hidden'} whileInView="show" viewport={{ once: true, amount: .15 }} variants={fadeUp} className="mt-10">
+        <div role="region" aria-roledescription="carrusel" aria-label="Opiniones de pacientes" tabIndex={0}
+          className="reviews-text-stage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ink focus-visible:ring-offset-4"
+          onKeyDown={event => {
+            if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+            if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
+            if (event.key === 'Home') { event.preventDefault(); setActive(0); }
+            if (event.key === 'End') { event.preventDefault(); setActive(RESENAS.length - 1); }
+          }}
+          onPointerDown={event => { if (event.pointerType === 'touch') pointer.current = { x: event.clientX, y: event.clientY }; }}
+          onPointerCancel={() => { pointer.current = null; }}
+          onPointerUp={event => {
+            const start = pointer.current; pointer.current = null;
+            if (!start) return;
+            const dx = event.clientX - start.x, dy = event.clientY - start.y;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
+          }}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.article key={review.id} aria-roledescription="diapositiva" aria-label={`${active + 1} de ${RESENAS.length}: ${review.nombre}`}
+              initial={reduce ? false : { opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={reduce ? { opacity: 1 } : { opacity: 0, x: -12 }} transition={{ duration: reduce ? 0 : .35, ease: EASE }}
+              className="reviews-text-card border border-border bg-card p-6 text-brand-ink md:p-10">
+              <div aria-label={`${review.estrellas} de 5 estrellas`} className="mb-6 flex gap-1 text-brand-gold">
+                {Array.from({ length: review.estrellas }, (_, index) => <Star key={index} aria-hidden="true" className="h-5 w-5 fill-current" />)}
+              </div>
+              <p className="review-literal whitespace-pre-line break-words">{review.texto}</p>
+              <p className="mt-8 text-sm font-medium">{review.nombre}</p>
+              <p className="mt-1 text-xs text-brand-mauve">Reseña de Google, hace {review.antiguedad}</p>
+            </motion.article>
+          </AnimatePresence>
+        </div>
+        <div className="mt-6 flex items-center justify-center gap-6">
+          <Button type="button" variant="outline" size="icon" aria-label="Reseña anterior" className="review-arrow" onClick={() => move(-1)}><ArrowLeft aria-hidden="true" className="h-5 w-5" /></Button>
+          <span role="status" aria-live="polite" aria-atomic="true" className="min-w-16 text-center text-sm tabular-nums text-brand-mauve">{active + 1} / {RESENAS.length}</span>
+          <Button type="button" variant="outline" size="icon" aria-label="Reseña siguiente" className="review-arrow" onClick={() => move(1)}><ArrowRight aria-hidden="true" className="h-5 w-5" /></Button>
+        </div>
+      </motion.div>
+      {id !== 'all' && <div className="mt-8 text-center"><Link to="/testimonios" className={RESENA_LINK}>Ver más reseñas</Link></div>}
     </div>
   </section>;
 };
