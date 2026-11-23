@@ -6,8 +6,9 @@
 }
 .rb-tilted-glare { background: var(--tc-glare-background); opacity: var(--tc-glare, 0); }
 .conoceme-video-track { scrollbar-width: thin; scrollbar-color: hsl(var(--brand-mauve)) hsl(var(--brand-cream)); }
-.conoceme-video-section .conoceme-video-title { font-family: var(--font-heading); font-weight: 300; font-size: 17px; line-height: 1.5; letter-spacing: .08em; }
-.conoceme-video-section :is(p, a) { font-family: var(--font-body); }
+.conoceme-video-section :is(h2, .conoceme-video-title), .conoceme-video-dialog h2 { font-family: var(--font-heading); font-weight: 300; text-transform: uppercase; letter-spacing: .14em; }
+.conoceme-video-section .conoceme-video-title { font-size: 17px; line-height: 1.5; }
+.conoceme-video-section :is(p, a, button), .conoceme-video-dialog button { font-family: var(--font-body); font-weight: 400; }
 .conoceme-play svg { width: 28px; height: 28px; }
 .conoceme-video-dialog { font-family: var(--font-body); }
 .conoceme-video-dialog, .conoceme-video-dialog > div { border-radius: 2px; }

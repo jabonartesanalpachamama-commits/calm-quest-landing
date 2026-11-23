@@ -43,7 +43,7 @@ export default function ConocemeVideos({ headingClassName }: { headingClassName:
         </div>
       </div>
       <Dialog open={video !== undefined} onOpenChange={open => { if (!open) setActive(null); }}>
-        <DialogContent aria-describedby={undefined} className="conoceme-video-dialog w-[calc(100%-32px)] max-w-4xl rounded-sm border-brand-mauve bg-brand-cream px-3 pt-14 pb-3 gap-0"
+        <DialogContent aria-describedby={undefined} className="lux conoceme-video-dialog w-[calc(100%-32px)] max-w-4xl rounded-sm border-brand-mauve bg-brand-cream px-3 pt-14 pb-3 gap-0"
           onCloseAutoFocus={event => { event.preventDefault(); trigger.current?.focus({ preventScroll: true }); }}>
           <DialogTitle className="sr-only">{video?.title ?? "Conóceme en video"}</DialogTitle>
           {video && <VideoEmbed key={video.youtubeId} youtubeId={video.youtubeId} title={video.title} autoplay />}

@@ -17,7 +17,7 @@ const Programas = () => {
     <div className="min-h-screen relative flex flex-col pb-20 md:pb-0">
       <Seo
         title="Mis programas y espacios | SantoSha"
-        description="Psicoterapia individual, proceso de pareja y Kundalini Yoga con Fransury González. Atención virtual desde cualquier lugar."
+        description="Curso de iniciación al yoga, Sabiduría Cíclica y acompañamiento 1:1 de yoga y meditación con Fransury González. Atención virtual."
         path="/programas"
       />
       <FloatingCTA scrollTo="#lista-programas" ctaText="Ver programas" subText="Formación & Acompañamiento" />
