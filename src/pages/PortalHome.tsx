@@ -219,7 +219,7 @@ const StartSelector = () => (
       <motion.div {...inView} variants={fadeUp} className="text-center">
         <h2 id="empiezo-titulo" className="text-foreground">¿Por dónde empiezo?</h2>
         <Rule className="my-8 mx-auto" />
-        <p className="text-base text-muted-foreground max-w-[26ch] mx-auto">Elige lo que más se parece a tu momento.</p>
+        <p className="text-base text-muted-foreground max-w-[26ch] mx-auto">Elige la opción que más se parece a lo que estás atravesando en este  momento.</p>
 
       </motion.div>
       <div className="mt-12"><LineSidebar items={START_OPTIONS} /></div>
