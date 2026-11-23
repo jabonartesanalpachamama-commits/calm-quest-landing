@@ -1,4 +1,5 @@
-import type React from "react";
+import IndividualPriceCards from "@/components/landing/IndividualPriceCards";
+import { INDIVIDUAL_PRICES } from "@/data/individualPrices";
 import { motion } from "framer-motion";
 import sessionPhoto from "@/assets/fransury-individual.webp";
 import ServiceHero from "@/components/landing/ServiceHero";
@@ -16,7 +17,7 @@ import { ResenaStatic } from "@/components/landing/Resenas";
 import { faqJsonLd } from "@/lib/seo";
 import { getWhatsAppUrl } from "@/lib/utils";
 import { useVisualSettings } from "@/hooks/useVisualSettings";
-import { fadeUp, inView, RevealTitle, PriceCard, PriceCardLight } from "@/components/landing";
+import { fadeUp, inView, RevealTitle } from "@/components/landing";
 
 // Estructura "tipográfica y calmada": sin foto en el hero.
 const BTN_SOLID = "inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-semibold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 bg-[#795D64] hover:bg-[#6A5057] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2";
@@ -54,8 +55,8 @@ const SERVICE_JSONLD = {
   serviceType: "Acompañamiento individual en psicoterapia",
   provider: { "@type": "Person", name: "Fransury González", jobTitle: "Psicóloga" },
   offers: [
-    { "@type": "Offer", name: "1 sesión", price: "75", priceCurrency: "USD" },
-    { "@type": "Offer", name: "3 sesiones", price: "203", priceCurrency: "USD" },
+    { "@type": "Offer", name: "1 sesión", price: String(INDIVIDUAL_PRICES.single), priceCurrency: "USD" },
+    { "@type": "Offer", name: "3 sesiones", price: String(INDIVIDUAL_PRICES.package), priceCurrency: "USD" },
   ],
 };
 
@@ -91,7 +92,7 @@ const MiProcesoIndividual = () => {
         </ServiceHero>
 
 
-        <SituationsGrid title="¿Por qué siempre me pasa lo mismo?" subtitle="¿Te reconoces en alguna de estas situaciones?" items={FOR_WHOM} />
+        <SituationsGrid title="¿Por qué siempre me pasa lo mismo?" subtitle="¿Te reconoces en alguna de estas situaciones?" items={FOR_WHOM} compact />
 
         <Quote variant="band">Entender el para qué es el comienzo. Aprender qué hacer con lo que comprendes es el proceso.</Quote>
 
@@ -116,30 +117,7 @@ const MiProcesoIndividual = () => {
               </motion.div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <PriceCardLight
-                title="1 Sesión"
-                price="75"
-                href={cta1Session}
-                description={<p>Ideal para explorar una situación puntual, tener un primer acercamiento o abordar un bloqueo específico.</p>}
-                cta={<>Quiero 1 sesión <span className="font-bold border-l border-white/30 pl-2 ml-1">75 USD</span></>}
-              />
-              <div className="relative md:scale-[1.06] md:-translate-y-2">
-                <span className="absolute -top-3 right-5 z-10 px-3 py-1 rounded-full bg-brand-gold text-brand-ink text-[10px] font-bold uppercase tracking-widest shadow-sm">
-                  Recomendado
-                </span>
-                <PriceCard
-                  title="3 Sesiones"
-                  price="203"
-                  href={cta3Sessions}
-                  description={<>
-                    <p>Proceso de acompañamiento más profundo para trabajar patrones y generar verdaderas herramientas de cambio.</p>
-                    <p>Incluye una sesión adicional de 30 minutos, de psicoterapia o de yoga y meditación. Precio válido hasta el 31 de diciembre de 2026.</p>
-                  </>}
-                  cta={<>Quiero 3 sesiones <span className="font-bold border-l border-brand-ink/20 pl-2 ml-1">203 USD</span></>}
-                />
-              </div>
-            </div>
+            <IndividualPriceCards singleHref={cta1Session} packageHref={cta3Sessions} />
           </motion.div>
         </section>
 

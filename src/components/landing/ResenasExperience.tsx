@@ -1,19 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { EASE, REDUCED_MOTION, RevealTitle, RotatingOrnament } from "@/components/landing";
 import { Button } from "@/components/ui/button";
-import { ResenaImage, resenaReveal, RESENA_LINK } from "./Resenas";
-import { agruparResenas, type Resena } from "@/data/resenas";
-import individual from "@/assets/fransury-individual.webp";
-import pareja from "@/assets/pareja-manos.webp";
-import parejaMobile from "@/assets/pareja-manos-900.webp";
-import yoga from "@/assets/fransury-yoga-nueva.webp";
+import { ResenaStatic, resenaReveal, RESENA_LINK } from "./Resenas";
 import cover from "@/assets/fransury-acompana.webp";
 
-const groups = agruparResenas();
-const reviews = groups.flatMap((group) => group.resenas);
-const photos = { individual, pareja, yoga };
 const intro = [
   "Elegir con quién hacer un proceso es una decisión grande, y es natural llegar con dudas. Por eso quiero que escuches primero a quienes ya lo vivieron.",
   "Estas reseñas las escribieron algunos de mis pacientes, personas a quienes he tenido el privilegio de acompañar y guiar en procesos individuales, de pareja, de yoga y de meditación. Agradezco de corazón que hayan querido compartir su experiencia, y te invito a ti, que hoy estás aquí, a que, como ellos, te atrevas a mirar hacia ti. Las dejo tal como las publicaron en Google, con sus nombres y sin cambiar una palabra, para que puedas comprobarlas allí.",
@@ -51,85 +42,4 @@ export const ResenasCover = ({ href, onFreeClass }: { href: string; onFreeClass:
   </section>;
 };
 
-const ReviewPage = ({ resena, index, progress, stride }: { resena: Resena; index: number; progress: MotionValue<number>; stride: number }) => {
-  const distance = useTransform(progress, (value) => index - value * (reviews.length - 1));
-  const rotateY = useTransform(distance, (value) => -Math.max(-1, Math.min(1, value)) * 28);
-  const z = useTransform(distance, (value) => -Math.min(Math.abs(value), 1) * 140);
-  const scale = useTransform(distance, (value) => 1 - Math.min(Math.abs(value), 1) * 0.08);
-  const opacity = useTransform(distance, (value) => Math.max(0, 1 - Math.abs(value) * 0.65));
-  return <motion.li data-resena={resena.id} className="reviews-page shrink-0" style={{ rotateY, z, scale, opacity, width: stride }}>
-    <figure className="m-0"><ResenaImage resena={resena} framed loading={index < 3 ? "eager" : "lazy"} /></figure>
-  </motion.li>;
-};
-
-const ReducedReviews = () => <section className="reviews-theme bg-brand-ink px-4 py-12 text-brand-cream" data-reviews-reduced>
-  {groups.map((group) => <section key={group.id} aria-labelledby={`reviews-${group.id}`} className="mx-auto max-w-6xl py-8">
-    <h2 id={`reviews-${group.id}`} className="reviews-category text-center text-brand-cream">{group.titulo}</h2>
-    <span aria-hidden="true" className="mx-auto my-5 block h-px w-16 bg-brand-gold" />
-    <ol className="m-0 list-none space-y-6 p-0">{group.resenas.map((resena) => <li key={resena.id} data-resena={resena.id} className="mx-auto w-[86vw] max-w-[560px]"><ResenaImage resena={resena} framed /></li>)}</ol>
-  </section>)}
-</section>;
-
-const HorizontalReviews = () => {
-  const section = useRef<HTMLElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(360);
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
-  const cardWidth = Math.min(560, width * 0.86);
-  const gap = width < 768 ? 24 : 48;
-  const step = cardWidth + gap;
-  const x = useTransform(scrollYProgress, [0, 1], [0, -(reviews.length - 1) * step]);
-  const y = useTransform(scrollYProgress, [0, 1], [-25, 25]);
-  const category = reviews[active]?.categoria ?? "individual";
-  const group = groups.find((item) => item.id === category);
-
-  useMotionValueEvent(scrollYProgress, "change", (value) => setActive(Math.max(0, Math.min(reviews.length - 1, Math.round(value * (reviews.length - 1))))));
-  useEffect(() => {
-    const element = stage.current;
-    if (!element) return;
-    const observer = new ResizeObserver(([entry]) => { if (entry) setWidth(entry.contentRect.width); });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-  useEffect(() => {
-    const images = [individual, pareja, parejaMobile, yoga].map((src) => { const image = new Image(); image.src = src; return image; });
-    return () => { images.forEach((image) => { image.onload = null; }); };
-  }, []);
-
-  return <section ref={section} className="reviews-horizontal reviews-theme relative" aria-label="Reseñas de Google" style={{ height: `${reviews.length * 40 + 100}vh` }}>
-    <div ref={stage} data-resenas-sticky data-active-category={category} data-active-index={active} className="reviews-stage sticky top-0 h-screen overflow-hidden bg-brand-ink text-brand-cream">
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-        {groups.map(({ id }) => <motion.div key={id} data-review-background={id} className="absolute inset-0" initial={false} animate={{ opacity: category === id ? 1 : 0 }} transition={{ duration: 0.75, ease: EASE }}>
-          <motion.picture className="absolute -inset-y-8 inset-x-0" style={{ y }}>
-            {id === "pareja" && <source media="(max-width: 767px)" srcSet={parejaMobile} />}
-            <img src={photos[id]} alt="" loading="eager" className="h-full w-full object-cover object-[50%_30%]" />
-          </motion.picture>
-          <div className={`absolute inset-0 ${id === "pareja" ? "reviews-veil-pareja" : "reviews-veil"}`} />
-        </motion.div>)}
-      </div>
-      <div className="reviews-stage-heading absolute inset-x-0 top-0 z-10 px-4 text-center">
-        <div className="relative h-16 md:h-20">
-          {groups.map(({ id, titulo }) => <motion.div key={id} className="absolute inset-0" initial={false} animate={{ opacity: category === id ? 1 : 0 }} transition={{ duration: 0.75, ease: EASE }} aria-hidden={category !== id}>
-            <h2 className="reviews-category text-brand-cream">{titulo}</h2>
-            <span aria-hidden="true" className="mx-auto mt-4 block h-px w-16 bg-brand-gold" />
-          </motion.div>)}
-        </div>
-        <div className="flex items-center justify-center gap-3" aria-label={`Categoría: ${group?.titulo}`}>
-          {groups.map(({ id }) => <span key={id} aria-hidden="true" className={`block h-px w-8 bg-brand-cream ${id === category ? "opacity-100" : "opacity-40"}`} />)}
-        </div>
-        <p className="mt-3 text-xs text-brand-cream tabular-nums">{String(active + 1).padStart(2, "0")} / {reviews.length}</p>
-      </div>
-      <div className="absolute inset-0 flex items-center reviews-perspective">
-        <motion.ol className="reviews-track m-0 flex list-none items-center p-0" style={{ x, gap, marginLeft: (width - cardWidth) / 2 }}>
-          {reviews.map((resena, index) => <ReviewPage key={resena.id} resena={resena} index={index} progress={scrollYProgress} stride={cardWidth} />)}
-        </motion.ol>
-      </div>
-    </div>
-  </section>;
-};
-
-export const ResenasExperience = () => {
-  const reduce = useReducedMotion() || REDUCED_MOTION;
-  return reduce ? <ReducedReviews /> : <HorizontalReviews />;
-};
+export const ResenasExperience = () => <ResenaStatic id="all" />;

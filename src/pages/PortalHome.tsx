@@ -215,13 +215,11 @@ const Companion = () => {
 const StartSelector = () => (
   <section aria-labelledby="empiezo-titulo" className="bg-background px-6 py-24 md:py-40">
     <div className="max-w-6xl mx-auto">
-      <motion.div {...inView} variants={fadeUp}>
+      <motion.div {...inView} variants={fadeUp} className="text-center">
         <h2 id="empiezo-titulo" className="text-foreground">¿Por dónde empiezo?</h2>
-        <Rule className="my-8" />
-        <p className="text-base text-muted-foreground max-w-[26ch]">Elige lo que más se parece a tu momento.</p>
-        <p className="mt-6 text-sm text-muted-foreground">
-          ¿Buscas clases de yoga? <Link to="/acompanamiento-individual" className={`text-foreground underline decoration-brand-gold decoration-1 underline-offset-[6px] hover:text-brand-ink transition-colors ${FOCUS}`}>Yoga y meditación 1:1</Link>
-        </p>
+        <Rule className="my-8 mx-auto" />
+        <p className="text-base text-muted-foreground max-w-[26ch] mx-auto">Elige lo que más se parece a tu momento.</p>
+
       </motion.div>
       <div className="mt-12"><LineSidebar items={START_OPTIONS} /></div>
     </div>
