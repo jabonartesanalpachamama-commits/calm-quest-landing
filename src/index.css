@@ -397,13 +397,17 @@
 .reviews-text-stage { touch-action: pan-y; }
 .lux .reviews-static .review-arrow { width: 48px; height: 48px; border-radius: 50%; border-color: hsl(var(--brand-ink)); background: hsl(var(--brand-cream)); color: hsl(var(--brand-ink)); }
 .lux .reviews-static .review-arrow:hover { background: hsl(var(--brand-ink)); color: hsl(var(--brand-cream)); }
-.lux .newsletter-section { background: hsl(var(--brand-cream)); font-family: var(--font-body); }
+.lux .newsletter-section { background: hsl(var(--background)); font-family: var(--font-body); }
 .lux.reviews-static > div, .lux.newsletter-section > div { background-color: transparent; }
 .newsletter-section :is(input, button, label, p, a) { font-family: var(--font-body); }
-.newsletter-portrait::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, hsl(var(--brand-cream)), transparent 24%); }
+.newsletter-photo {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-composite: source-in;
+}
 @media (min-width: 768px) {
   .lux .reviews-static .review-literal { font-size: 18px; }
-  .newsletter-portrait::after { background: linear-gradient(to right, hsl(var(--brand-cream)), transparent 25%), linear-gradient(to top, hsl(var(--brand-cream)), transparent 20%); }
 }
 .depth-carousel { width: 100%; max-width: 960px; margin-inline: auto; }
 .depth-stage { position: relative; perspective: 1400px; transform-style: preserve-3d; height: 230px; touch-action: pan-y; cursor: grab; }

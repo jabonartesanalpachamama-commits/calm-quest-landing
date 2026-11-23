@@ -9,7 +9,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Honeypot from '@/components/Honeypot';
 import { supabase } from '@/integrations/supabase/client';
 import { newsletterSchema } from '@/lib/newsletter';
-import portrait from '@/assets/fransury-acompana.webp';
+import portrait from '@/assets/fransury-sentada-piso-bn.webp.asset.json';
+import portraitMobile from '@/assets/fransury-sentada-piso-bn-800.webp.asset.json';
 
 export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' | 'testimonios' }) {
   const id = useId();
@@ -34,7 +35,7 @@ export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' |
     } catch { setError('No pudimos guardar tu suscripción. Intenta de nuevo más tarde.'); setStatus('error'); }
     finally { sending.current = false; }
   }
-  return <section aria-label="Newsletter" className="lux newsletter-section bg-brand-cream px-6 py-20 md:py-28">
+  return <section aria-label="Newsletter" className="lux newsletter-section bg-background px-6 py-20 md:py-16">
     <motion.div initial={reduce ? false : 'hidden'} whileInView="show" viewport={{ once: true, amount: .15 }} variants={fadeUp} className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1.2fr_1fr] md:gap-16">
       <div className="min-w-0">
         <RevealTitle text="CONECTEMOS" className="newsletter-title text-brand-ink" />
@@ -59,7 +60,7 @@ export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' |
         </form>
       </div>
       <div className="newsletter-portrait relative mx-auto w-full max-w-sm overflow-hidden md:max-w-none">
-        <img src={portrait} alt="Fransury González sonriendo, sentada en un sofá claro con una camisa blanca." loading="lazy" className="h-[300px] w-full object-cover object-[50%_25%] md:h-[520px]" />
+        <img src={portrait.url} srcSet={`${portraitMobile.url} 800w, ${portrait.url} 1024w`} sizes="(max-width: 767px) 227px, 320px" width={1024} height={1536} alt="Fransury González sentada, sonriendo, con las manos sobre la rodilla" loading="lazy" className="newsletter-photo mx-auto block h-auto max-h-[340px] w-auto max-w-full object-contain object-[50%_25%] md:max-h-[480px]" />
       </div>
     </motion.div>
   </section>;
