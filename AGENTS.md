@@ -3,7 +3,7 @@
 - Long-read pages (Filosofía, Términos) use landing/StickyToc (SideToc + PillToc + useActiveSection); why: one scroll-spy index pattern.
 - Brand logo: header/footer use src/assets/santosha-logo-blanco.png (Header paints it as a mask); why: the white-background version shows a white oval on cream.
 - Editable site lists (e.g. participaciones logos) live in src/data/*.ts; why: content changes in one place without touching components.
-- All public review blocks and Testimonios reuse landing/Resenas: one literal text review from data/resenas at a time, no autoplay, with keyboard/touch controls; why: readable mobile text replaces screenshot-based depth scenes.
+- Public review blocks use the ordered featured subset in data/resenas; Testimonios groups the full dataset and both reuse ReviewCapture with a scrollable enlargement dialog; why: original screenshots remain the source of credibility and mobile readers can enlarge them without transcriptions.
 - Framed reviews share ResenaImage's fixed-aspect contain wrapper and switch instantly without depth under reduced motion; why: original screenshots remain unaltered.
 - Site-wide editorial theme lives in the `.lux` CSS scope (index.css), applied by ThemeScope in App.tsx to an allow-list of routes; why: CMS writes vars on :root, and clase gratuita / admin must keep their own look.
 - Every public landing (including Sabiduría Cíclica) uses components/Header + SiteFooter; LegacyHeader is unused; why: one centered-logo header with identical scroll behaviour.

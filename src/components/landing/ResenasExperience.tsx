@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { EASE, REDUCED_MOTION, RevealTitle, RotatingOrnament } from "@/components/landing";
 import { Button } from "@/components/ui/button";
-import { ResenaStatic, resenaReveal, RESENA_LINK } from "./Resenas";
+import { ResenasGallery, resenaReveal, RESENA_LINK } from "./Resenas";
 import cover from "@/assets/fransury-acompana.webp";
 
 const intro = [
@@ -42,4 +42,4 @@ export const ResenasCover = ({ href, onFreeClass }: { href: string; onFreeClass:
   </section>;
 };
 
-export const ResenasExperience = () => <ResenaStatic id="all" />;
+export const ResenasExperience = () => <ResenasGallery />;

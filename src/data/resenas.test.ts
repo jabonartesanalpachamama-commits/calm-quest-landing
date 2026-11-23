@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { agruparResenas, RESENAS } from "./resenas";
+import { agruparResenas, FEATURED_RESENAS, RESENAS } from "./resenas";
 
 describe("Google review categories", () => {
+  it("limits shared reviews to the four client-selected screenshots in order", () => {
+    expect(FEATURED_RESENAS.map(r => r.id)).toEqual(["luii-gomez", "ana-preciado", "jessika-florez", "marcos-jesus"]);
+  });
+  it("retains all fifteen screenshots for the grouped gallery", () => {
+    expect(agruparResenas().flatMap(group => group.resenas)).toHaveLength(15);
+  });
   it("groups the twelve individual therapy reviews in the requested order", () => {
     expect(agruparResenas()[0].resenas.map((r) => r.id)).toEqual([
       "marcos-jesus", "luii-gomez", "roxana-hernandez", "paula-jaramillo", "ana-preciado", "martha-gaitan",

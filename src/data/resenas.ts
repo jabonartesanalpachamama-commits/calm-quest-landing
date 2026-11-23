@@ -47,6 +47,8 @@ export const agruparResenas = (resenas: Resena[] = RESENAS) => CATEGORIAS_RESENA
 
 export const porIdsResena = (ids: string[]): Resena[] => ids.map((id) => RESENAS.find((r) => r.id === id)).filter((r): r is Resena => r !== undefined);
 
+export const FEATURED_RESENAS = porIdsResena(["luii-gomez", "ana-preciado", "jessika-florez", "marcos-jesus"]);
+
 /** Original dimensions reserve space without cropping the screenshots. */
 export const RESENA_DIMENSIONS: Record<string, { width: number; height: number }> = {
   "marcos-jesus": { width: 1200, height: 264 },
