@@ -431,6 +431,24 @@
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%);
   -webkit-mask-composite: source-in;
 }
+@media (max-width: 767px) {
+  .newsletter-banner { flex-direction: column; align-items: stretch; min-height: 0; padding-top: 60px; }
+  .newsletter-copy { margin: 0; width: 100%; padding: 0 24px; }
+  .lux h2.newsletter-title { font-size: clamp(28px, 1.875rem, 32px); white-space: nowrap; overflow-wrap: normal; word-break: normal; }
+  .lux .newsletter-description { font-size: 15px; line-height: 1.7; margin-top: 20px; }
+  .newsletter-form { margin-top: 20px; }
+  .newsletter-controls { gap: 16px; }
+  .newsletter-controls :is(input, button) { height: 52px; }
+  .newsletter-consent { margin-top: 20px; }
+  .newsletter-consent label { font-size: 12px; line-height: 1.7; }
+  .lux .newsletter-unsubscribe { margin-top: 16px; font-size: 12px; line-height: 1.7; }
+  .newsletter-portrait { position: relative; right: auto; bottom: auto; width: 240.469px; height: 380px; margin: 24px auto 0; }
+  .newsletter-photo {
+    height: 100%;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
 @media (min-width: 768px) {
   .newsletter-banner { min-height: 540px; }
   .newsletter-copy { margin-left: 4%; width: 54%; }

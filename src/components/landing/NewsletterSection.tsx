@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { newsletterSchema } from '@/lib/newsletter';
 import portrait from '@/assets/fransury-sentada-piso-bn.webp.asset.json';
 import portraitMobile from '@/assets/fransury-sentada-piso-bn-800.webp.asset.json';
+import portraitCropped from '@/assets/fransury-sentada-piso-bn-mobile-soft.webp.asset.json';
 
 export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' | 'testimonios' }) {
   const id = useId();
@@ -60,7 +61,10 @@ export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' |
         </form>
       </motion.div>
       <div className="newsletter-portrait">
-        <img src={portrait.url} srcSet={`${portraitMobile.url} 800w, ${portrait.url} 1024w`} sizes="(max-width: 767px) 42vw, (max-width: 1023px) 38vw, 35vw" width={1024} height={1536} alt="Fransury González sentada, sonriendo, con las manos sobre la rodilla" loading="lazy" className="newsletter-photo" />
+        <picture>
+          <source media="(max-width: 767px)" srcSet={portraitCropped.url} width={810} height={1280} />
+          <img src={portrait.url} srcSet={`${portraitMobile.url} 800w, ${portrait.url} 1024w`} sizes="(max-width: 1023px) 38vw, 35vw" width={1024} height={1536} alt="Fransury González sentada, sonriendo, con las manos sobre la rodilla" loading="lazy" className="newsletter-photo" />
+        </picture>
       </div>
     </div>
   </section>;
