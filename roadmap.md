@@ -14,3 +14,4 @@
 - [x] Align review typography with the editorial heading/body tokens and verify at 360/1280 without publishing.
 - [x] Adapt React Bits LineSidebar for the five Home paths, AccordionGallery for Cultivar and window ScrollStack for Programas only.
 - [x] Verify photographs, keyboard/touch, stable hover, AA contrast, reduced motion and no overflow at 360/768/1280; compare preview JS payload (3,721,044 → 3,793,766 bytes; production bundle stats unavailable), commit without publishing. Shared preview ref warnings remain outside requested scope; no runtime exceptions.
+- [x] Add only the QuienSoy video section with TiltedCard and three accessible autoplay dialogs; verified thumbnails, native mobile snap, keyboard, Escape/unmount/focus, reduced motion at 360/768/1280 and live YouTube playback; commit without publishing. Preview ref warnings remain, no runtime exceptions.

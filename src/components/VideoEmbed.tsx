@@ -4,10 +4,11 @@ import { Play } from "lucide-react";
 type VideoEmbedProps = {
   title: string;
   vertical?: boolean;
+  autoplay?: boolean;
 } & ({ youtubeId: string; vimeoId?: never } | { vimeoId: string; youtubeId?: never });
 
-const VideoEmbed = ({ youtubeId, vimeoId, title, vertical = false }: VideoEmbedProps) => {
-  const [playing, setPlaying] = useState(false);
+const VideoEmbed = ({ youtubeId, vimeoId, title, vertical = false, autoplay = false }: VideoEmbedProps) => {
+  const [playing, setPlaying] = useState(autoplay);
 
   const src = youtubeId
     ? `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=1`

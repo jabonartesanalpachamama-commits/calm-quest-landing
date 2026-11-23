@@ -1,0 +1,18 @@
+.rb-tilted { perspective: 800px; }
+.rb-tilted-button { box-shadow: var(--tc-shadow); }
+.rb-tilted {
+  --tc-shadow: 0 5px 18px hsl(var(--brand-ink) / .12);
+  --tc-glare-background: radial-gradient(farthest-corner circle at var(--tc-gx, 50%) var(--tc-gy, 50%), hsl(var(--brand-cream) / .14), transparent 60%);
+}
+.rb-tilted-glare { background: var(--tc-glare-background); opacity: var(--tc-glare, 0); }
+.conoceme-video-track { scrollbar-width: thin; scrollbar-color: hsl(var(--brand-mauve)) hsl(var(--brand-cream)); }
+.conoceme-video-section .conoceme-video-title { font-family: var(--font-heading); font-weight: 300; font-size: 17px; line-height: 1.5; letter-spacing: .08em; }
+.conoceme-video-section :is(p, a) { font-family: var(--font-body); }
+.conoceme-play svg { width: 28px; height: 28px; }
+.conoceme-video-dialog { font-family: var(--font-body); }
+.conoceme-video-dialog, .conoceme-video-dialog > div { border-radius: 2px; }
+.conoceme-video-dialog > button { min-width: 44px; min-height: 44px; top: 4px; right: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .rb-tilted-button { transform: none !important; }
+  .conoceme-video-dialog { animation: none !important; transition: none !important; }
+}

@@ -13,3 +13,4 @@
 - Waitlist admin edits update only estado and verify the returned row before confirming success; why: column grants protect all other registration fields and failed saves must roll back locally.
 - Public insert forms use components/Honeypot and DB rate-limit trigger enforce_public_insert_rate_limit (60/min per table); why: no IP available client-side, spam protection lives in the database.
 - React Bits source adaptations live in components/reactbits with scoped editorial CSS; share existing path photographs via data/caminos and use native window scrolling with a normal reduced-motion list, so unrelated sections and reviews remain unchanged.
+- Video gallery dialogs reuse VideoEmbed with opt-in autoplay and conditionally mount the player; restore focus to the originating card on close so playback stops without changing other embeds.

@@ -12,6 +12,7 @@ import { useVisualSettings } from "@/hooks/useVisualSettings";
 import fransuryAcompana from "@/assets/fransury-acompana.webp";
 import { DrawLine, RevealImage } from "@/components/landing/ScrollReveal";
 import { fadeUp, inView, RevealTitle } from "@/components/landing";
+import ConocemeVideos from "@/components/landing/ConocemeVideos";
 
 // Estructura "editorial": foto sticky + relato corrido.
 const HERO_IMAGE = fransuryAcompana;
@@ -187,6 +188,8 @@ const QuienSoy = () => {
             </motion.div>
           </motion.div>
         </section>
+
+        <ConocemeVideos headingClassName={H2} />
 
         {/* Formación + cursos lado a lado */}
         <section className="px-6 py-14 md:py-16">
