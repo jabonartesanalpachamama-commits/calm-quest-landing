@@ -39,7 +39,7 @@ export default function NewsletterSection({ sourcePage }: { sourcePage: 'home' |
     <div className="newsletter-banner">
       <motion.div initial={reduce ? false : 'hidden'} whileInView="show" viewport={{ once: true, amount: .15 }} variants={fadeUp} className="newsletter-copy min-w-0">
         <RevealTitle text="CONECTEMOS" className="newsletter-title text-brand-ink" />
-        <p className="newsletter-description text-brand-mauve"><span className="hidden md:inline">Suscríbete a mi newsletter y recibe reflexiones y herramientas para cuidar de ti, directamente en tu correo.</span><span className="md:hidden">Reflexiones y herramientas para cuidar de ti, en tu correo.</span></p>
+        <p className="newsletter-description text-brand-mauve"><span className="hidden md:inline">Suscríbete a mi newsletter y recibe reflexiones y herramientas para cuidar de ti, al alcance de tu correo.</span><span className="md:hidden">Reflexiones y herramientas para cuidar de ti, en tu correo.</span></p>
         <form onSubmit={submit} noValidate className="newsletter-form" aria-busy={status === 'sending'}>
           <Honeypot ref={trap} />
           <label htmlFor={`${id}-email`} className="sr-only">Correo electrónico</label>
