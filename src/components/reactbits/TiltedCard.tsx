@@ -88,7 +88,7 @@ const TiltedCard = forwardRef<HTMLButtonElement, TiltedCardProps>(({ children, l
         if (typeof forwardedRef === "function") forwardedRef(element);
         else if (forwardedRef) forwardedRef.current = element;
       }} type="button" variant="ghost" aria-label={label} onClick={onClick}
-        className="rb-tilted-button relative h-full w-full p-0 overflow-hidden rounded-sm bg-brand-ink hover:bg-brand-ink focus-visible:ring-brand-gold [transform-style:preserve-3d]"
+        className="rb-tilted-button relative flex h-full w-full p-0 overflow-hidden rounded-sm bg-brand-ink hover:bg-brand-ink focus-visible:ring-brand-gold [transform-style:preserve-3d]"
         style={{ "--tc-glare": 0 } as CSSProperties}>
         {children}
         <span aria-hidden="true" className="rb-tilted-glare pointer-events-none absolute inset-0" />

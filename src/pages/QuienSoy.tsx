@@ -189,7 +189,7 @@ const QuienSoy = () => {
           </motion.div>
         </section>
 
-        <ConocemeVideos headingClassName="[font-family:var(--font-heading)] text-3xl md:text-4xl font-light text-foreground" />
+        <ConocemeVideos />
 
         {/* Formación + cursos lado a lado */}
         <section className="px-6 py-14 md:py-16">
