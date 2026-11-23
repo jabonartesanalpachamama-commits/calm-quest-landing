@@ -23,6 +23,8 @@ import { fadeUp, inView } from "@/components/landing";
 import LogoMarquee from "@/components/landing/LogoMarquee";
 import { Highlight } from "@/components/landing/Highlight";
 import { ResenaStatic } from "@/components/landing/Resenas";
+import LineSidebar from "@/components/reactbits/LineSidebar";
+import { START_OPTIONS } from "@/data/caminos";
 
 // Foto del hero: cambiar solo esta línea para usar otra imagen (retrato vertical sobre fondo malva).
 const HERO_IMAGE = heroPhoto;
@@ -49,14 +51,6 @@ const HOME_JSONLD = [
     name: "Fransury González", jobTitle: "Psicóloga y maestra de Kundalini Yoga", url: `${SITE}/quien-soy`,
     worksFor: { "@id": `${SITE}/#organization` },
   },
-];
-
-const START_OPTIONS = [
-  { text: "Quiero comprender por qué me pasa lo que me pasa", to: "/mi-proceso-individual" },
-  { text: "Mi relación atraviesa un conflicto", to: "/proceso-de-pareja" },
-  { text: "Quiero calmar mi cuerpo y mi mente", to: "/acompanamiento-individual" },
-  { text: "Quiero aprender yoga desde cero", to: "/curso-iniciacion-yoga" },
-  { text: "Quiero comprender mi ciclo", to: "/sabiduria-ciclica-esencia-femenina" },
 ];
 
 const useMedia = (q: string) => {
@@ -220,7 +214,7 @@ const Companion = () => {
 /* ───────────── ¿Por dónde empiezo? ───────────── */
 const StartSelector = () => (
   <section aria-labelledby="empiezo-titulo" className="bg-background px-6 py-24 md:py-40">
-    <div className="max-w-5xl mx-auto grid md:grid-cols-[4fr_7fr] gap-10 md:gap-20">
+    <div className="max-w-6xl mx-auto">
       <motion.div {...inView} variants={fadeUp}>
         <h2 id="empiezo-titulo" className="text-foreground">¿Por dónde empiezo?</h2>
         <Rule className="my-8" />
@@ -229,16 +223,7 @@ const StartSelector = () => (
           ¿Buscas clases de yoga? <Link to="/acompanamiento-individual" className={`text-foreground underline decoration-brand-gold decoration-1 underline-offset-[6px] hover:text-brand-ink transition-colors ${FOCUS}`}>Yoga y meditación 1:1</Link>
         </p>
       </motion.div>
-      <motion.ul {...inView} variants={{ show: { transition: { staggerChildren: 0.12 } } }} className="border-t border-border">
-        {START_OPTIONS.map(({ text, to }) => (
-          <motion.li key={to} variants={fadeUp} className="border-b border-border">
-            <Link to={to} className={`group flex items-center justify-between gap-6 py-7 md:py-8 min-h-[56px] ${FOCUS}`}>
-              <span className="font-serif font-light uppercase tracking-[0.1em] text-[15px] md:text-lg leading-relaxed text-brand-ink transition-transform duration-500 group-hover:translate-x-1.5">{text}</span>
-              <ArrowRight aria-hidden="true" className="shrink-0 w-4 h-4 text-brand-gold transition-all duration-500 group-hover:translate-x-1 group-hover:text-brand-mauve" strokeWidth={1} />
-            </Link>
-          </motion.li>
-        ))}
-      </motion.ul>
+      <div className="mt-12"><LineSidebar items={START_OPTIONS} /></div>
     </div>
   </section>
 );

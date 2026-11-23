@@ -12,3 +12,5 @@
 - [x] Verify desktop/tablet/mobile flow, contrast, mobile screenshot text size and commit without publishing.
 - [x] Redesign the immersive static band with a 520px frame and unrestricted height, uniform frames and yoga selection; verified at 360/768/1280 without publishing.
 - [x] Align review typography with the editorial heading/body tokens and verify at 360/1280 without publishing.
+- [x] Adapt React Bits LineSidebar for the five Home paths, AccordionGallery for Cultivar and window ScrollStack for Programas only.
+- [x] Verify photographs, keyboard/touch, stable hover, AA contrast, reduced motion and no overflow at 360/768/1280; compare preview JS payload (3,721,044 → 3,793,766 bytes; production bundle stats unavailable), commit without publishing. Shared preview ref warnings remain outside requested scope; no runtime exceptions.
